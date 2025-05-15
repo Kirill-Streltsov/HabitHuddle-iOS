@@ -24,11 +24,6 @@ struct ContentView: View {
                 }
             }
             .padding(.horizontal)
-            Button {
-
-            } label: {
-                Text("Register")
-            }
         }
     }
 }
