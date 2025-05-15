@@ -25,9 +25,7 @@ struct ContentView: View {
             }
             .padding(.horizontal)
             Button {
-                print("Sending data...")
-                print("Email: \(email)")
-                print("Password: \(password)")
+
             } label: {
                 Text("Register")
             }
