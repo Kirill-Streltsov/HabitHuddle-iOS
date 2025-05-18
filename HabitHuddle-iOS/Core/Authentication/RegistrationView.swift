@@ -49,7 +49,7 @@ struct RegistrationView: View {
                 InputView(text: $name, title: "Name", placeholder: "Enter your name...")
 
                 InputView(text: $password, title: "Password", placeholder: "Enter your password...", isSecureField: false)
-                InputView(text: $confirmPassword, title: "Confirm Password", placeholder: "Enter your password again...", isSecureField: false)
+                InputView(text: $confirmPassword, title: "Confirm password", placeholder: "Enter your password again...", isSecureField: false)
             }
             .padding(.horizontal)
             .padding(12)
