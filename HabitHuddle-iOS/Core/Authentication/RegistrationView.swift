@@ -27,7 +27,7 @@ struct RegistrationView: View {
         } else if password.count < 5 {
             return "Your password should have at least 5 symbols"
         } else {
-            return "Unknown error"
+            return " "
         }
     }
 
