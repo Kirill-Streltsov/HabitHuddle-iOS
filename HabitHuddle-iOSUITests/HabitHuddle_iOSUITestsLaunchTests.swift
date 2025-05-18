@@ -8,7 +8,6 @@
 import XCTest
 
 final class HabitHuddle_iOSUITestsLaunchTests: XCTestCase {
-
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
