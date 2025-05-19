@@ -20,11 +20,11 @@ extension RegistrationView {
             let payload = RegisterUserRequest(username: username, name: name, password: password)
 
             do {
-                let user = try await NetworkingManager.shared.request(
+                let registrationData = try await NetworkingManager.shared.request(
                     endpoint: .register(),
                     method: .post,
                     body: payload,
-                    responseType: User.self
+                    responseType: RegisterUserResponse.self
                 )
             } catch {
                 if let apiError = error as? APIError {
