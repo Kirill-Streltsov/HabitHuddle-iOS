@@ -11,6 +11,7 @@ enum APIError: Error, LocalizedError {
     case invalidURL
     case requestFailed(statusCode: Int, data: Data?)
     case decodingError(Error)
+    case encodingError
     case noData
     case networkError(Error)
     case unauthorized
@@ -41,6 +42,8 @@ enum APIError: Error, LocalizedError {
             return "Request failed with status code \(statusCode)."
         case let .decodingError(error):
             return "Failed to decode response: \(error.localizedDescription)"
+        case let .encodingError:
+            return "Failed to encode data."
         case let .networkError(error):
             return "A network error occurred: \(error.localizedDescription)"
         case .invalidResponse:

@@ -17,15 +17,16 @@ extension RegistrationView {
         var errorMessage: String = ""
 
         func registerUser(username: String, name: String, password: String) async {
-            let payload = RegisterUserRequest(username: username, name: name, password: password)
+            let payload = RegisterRequest(username: username, name: name, password: password)
 
             do {
-                let registrationData = try await NetworkingManager.shared.request(
+                let registrationResponse = try await NetworkingManager.shared.request(
                     endpoint: .register(),
                     method: .post,
                     body: payload,
-                    responseType: RegisterUserResponse.self
+                    responseType: LoginResponse.self
                 )
+                print(registrationResponse)
             } catch {
                 if let apiError = error as? APIError {
                     errorMessage = apiError.localizedDescription

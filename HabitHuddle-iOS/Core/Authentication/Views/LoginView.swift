@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LoginView: View {
+    private var viewModel = ViewModel()
+    
     @State private var username = ""
     @State private var password = ""
     private var inputFieldIsEmpty: Bool {
@@ -34,7 +36,11 @@ struct LoginView: View {
                 .padding(.horizontal)
                 .padding(12)
 
-                Button {} label: {
+                Button {
+                    Task {
+                        await viewModel.loginUser(username: username, password: password)
+                    }
+                } label: {
                     HStack {
                         Text("SIGN IN")
                             .fontWeight(.semibold)
