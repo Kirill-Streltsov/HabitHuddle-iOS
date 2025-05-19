@@ -35,7 +35,6 @@ struct LoginView: View {
                 .padding(12)
 
                 Button {
-                    print("Log user in...")
                 } label: {
                     HStack {
                         Text("SIGN IN")
