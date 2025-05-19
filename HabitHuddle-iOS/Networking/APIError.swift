@@ -37,11 +37,11 @@ enum APIError: Error, LocalizedError {
             return "The server encountered an error. Please try again later."
         case .noData:
             return "No data was received from the server."
-        case .requestFailed(let statusCode, _):
+        case let .requestFailed(statusCode, _):
             return "Request failed with status code \(statusCode)."
-        case .decodingError(let error):
+        case let .decodingError(error):
             return "Failed to decode response: \(error.localizedDescription)"
-        case .networkError(let error):
+        case let .networkError(error):
             return "A network error occurred: \(error.localizedDescription)"
         case .invalidResponse:
             return "Invalid HTTP response."

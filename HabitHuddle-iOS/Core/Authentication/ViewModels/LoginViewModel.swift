@@ -9,7 +9,5 @@ import Foundation
 import Observation
 
 extension LoginView {
-    @Observable class ViewModel {
-        
-    }
+    @Observable class ViewModel {}
 }

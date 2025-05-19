@@ -34,8 +34,7 @@ struct LoginView: View {
                 .padding(.horizontal)
                 .padding(12)
 
-                Button {
-                } label: {
+                Button {} label: {
                     HStack {
                         Text("SIGN IN")
                             .fontWeight(.semibold)

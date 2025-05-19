@@ -7,11 +7,11 @@
 
 import Foundation
 
-final class TokenManager {
+enum TokenManager {
     private enum Keys {
         static let token = "authToken"
     }
-    
+
     static var token: String? {
         get {
             UserDefaults.standard.string(forKey: Keys.token)
@@ -24,7 +24,7 @@ final class TokenManager {
             }
         }
     }
-    
+
     static func clearToken() {
         UserDefaults.standard.removeObject(forKey: Keys.token)
     }
