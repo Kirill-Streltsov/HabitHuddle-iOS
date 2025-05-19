@@ -56,7 +56,6 @@ struct RegistrationView: View {
 
             Button {
                 signUpTapped = true
-                print("Sign user up...")
             } label: {
                 HStack {
                     Text("SIGN UP")
