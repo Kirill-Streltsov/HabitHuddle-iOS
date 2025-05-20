@@ -14,54 +14,69 @@ extension LoginView {
     @Observable final class ViewModel {
         private let appState: AppState
         private let modelContext: ModelContext
-
+        
         var username: String = ""
         var password: String = ""
         var errorMessage: String = ""
-
-        public init(appState: AppState, modelContext: ModelContext) {
+        
+        init(appState: AppState, modelContext: ModelContext) {
             self.appState = appState
             self.modelContext = modelContext
         }
 
         func loginUser(username: String, password: String) async {
-            let username = username
-            let password = password
-            let loginString = "\(username):\(password)"
-            guard let loginData = loginString.data(using: .utf8) else {
-                print("Could not encode login string: \(loginString)")
+            guard let base64Login = makeBase64Login(username: username, password: password) else {
+                errorMessage = "Invalid credentials format."
                 return
             }
-
-            let base64LoginString = loginData.base64EncodedString()
-
+            
             do {
-                let headers = [
-                    "Authorization": "Basic \(base64LoginString)",
-                ]
+                let headers = ["Authorization": "Basic \(base64Login)"]
                 let loginResponse = try await NetworkingManager.shared.request(
                     endpoint: .login(),
                     method: .post,
                     headers: headers,
                     responseType: LoginResponse.self
                 )
-                let decodableUser = loginResponse.user
-                let userToSave = User(id: decodableUser.id,
-                                      username: decodableUser.username,
-                                      name: decodableUser.name,
-                                      createdAt: decodableUser.createdAt,
-                                      updatedAt: decodableUser.updatedAt)
-                modelContext.insert(userToSave)
+                
+                TokenManager.token = loginResponse.token
+                saveUserIfNeeded(loginResponse.user)
+                
                 withAnimation {
                     appState.isAuthenticated = true
                 }
+            } catch let apiError as APIError {
+                errorMessage = apiError.localizedDescription
             } catch {
-                if let apiError = error as? APIError {
-                    errorMessage = apiError.localizedDescription
-                } else {
-                    errorMessage = "Something went wrong. Please try again."
-                }
+                errorMessage = "Something went wrong. Please try again."
             }
+        }
+
+        private func makeBase64Login(username: String, password: String) -> String? {
+            let loginString = "\(username):\(password)"
+            return loginString.data(using: .utf8)?.base64EncodedString()
+        }
+
+        private func saveUserIfNeeded(_ user: DecodableUser) {
+            
+            let userID = user.id
+            let descriptor = FetchDescriptor<User>(
+                predicate: #Predicate { $0.id == userID }
+            )
+
+            guard (try? modelContext.fetch(descriptor).first) == nil else {
+                return
+            }
+
+            let newUser = User(
+                id: user.id,
+                username: user.username,
+                name: user.name,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt
+            )
+
+            modelContext.insert(newUser)
         }
     }
 }
