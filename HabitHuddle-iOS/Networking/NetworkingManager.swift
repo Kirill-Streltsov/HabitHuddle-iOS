@@ -74,6 +74,7 @@ final class NetworkingManager {
     func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
         switch response.statusCode {
         case 200 ..< 300:
+            print("THIS IS SUCCESSFUL")
             let decodedData = try jsonDecoder.decode(T.self, from: data)
             return decodedData
         case 401:

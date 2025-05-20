@@ -6,19 +6,22 @@
 //
 
 import Observation
+import SwiftData
 import SwiftUI
 
 extension LoginView {
     @MainActor
     @Observable final class ViewModel {
         private let appState: AppState
+        private let modelContext: ModelContext
 
         var username: String = ""
         var password: String = ""
         var errorMessage: String = ""
 
-        public init(appState: AppState) {
+        public init(appState: AppState, modelContext: ModelContext) {
             self.appState = appState
+            self.modelContext = modelContext
         }
 
         func loginUser(username: String, password: String) async {
@@ -42,10 +45,16 @@ extension LoginView {
                     headers: headers,
                     responseType: LoginResponse.self
                 )
+                let decodableUser = loginResponse.user
+                let userToSave = User(id: decodableUser.id,
+                                      username: decodableUser.username,
+                                      name: decodableUser.name,
+                                      createdAt: decodableUser.createdAt,
+                                      updatedAt: decodableUser.updatedAt)
+                modelContext.insert(userToSave)
                 withAnimation {
                     appState.isAuthenticated = true
                 }
-                print(loginResponse)
             } catch {
                 if let apiError = error as? APIError {
                     errorMessage = apiError.localizedDescription

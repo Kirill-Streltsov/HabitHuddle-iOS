@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @State private var viewModel: ViewModel?
+    @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var appState: AppState
 
     @State private var username = ""
@@ -72,7 +73,7 @@ struct LoginView: View {
         }
         .onAppear {
             if viewModel == nil {
-                viewModel = ViewModel(appState: appState)
+                viewModel = ViewModel(appState: appState, modelContext: modelContext)
             }
         }
     }
