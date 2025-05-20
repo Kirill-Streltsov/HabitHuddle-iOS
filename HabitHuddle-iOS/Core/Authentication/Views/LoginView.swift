@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct LoginView: View {
-    private var viewModel = ViewModel()
+    
+    @State private var viewModel: ViewModel?
+    @EnvironmentObject var appState: AppState
     
     @State private var username = ""
     @State private var password = ""
     private var inputFieldIsEmpty: Bool {
         username.isEmpty || password.isEmpty
     }
-
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -38,7 +40,7 @@ struct LoginView: View {
 
                 Button {
                     Task {
-                        await viewModel.loginUser(username: username, password: password)
+                        await viewModel?.loginUser(username: username, password: password)
                     }
                 } label: {
                     HStack {
@@ -67,6 +69,11 @@ struct LoginView: View {
                     }
                     .font(.system(size: 15))
                 }
+            }
+        }
+        .onAppear {
+            if viewModel == nil {
+                viewModel = ViewModel(appState: appState)
             }
         }
     }

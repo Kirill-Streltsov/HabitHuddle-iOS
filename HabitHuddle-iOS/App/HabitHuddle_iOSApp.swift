@@ -10,9 +10,13 @@ import SwiftUI
 
 @main
 struct HabitHuddle_iOSApp: App {
+    
+    @StateObject private var appState = AppState()
+    
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            RootView()
+                .environmentObject(appState)
         }
     }
 }

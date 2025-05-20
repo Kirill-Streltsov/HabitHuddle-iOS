@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct RegistrationView: View {
-    private var viewModel = ViewModel()
+    
+    @State var viewModel: ViewModel?
+    @EnvironmentObject var appState: AppState
 
     @State private var username = ""
     @State private var name = ""
@@ -28,7 +30,7 @@ struct RegistrationView: View {
             return "Make sure both password fields are the same"
         } else if password.count < 5 {
             return "Your password should have at least 5 symbols"
-        } else if !viewModel.errorMessage.isEmpty {
+        } else if let viewModel = viewModel, !viewModel.errorMessage.isEmpty {
             return viewModel.errorMessage
         } else {
             return " "
@@ -60,7 +62,7 @@ struct RegistrationView: View {
 
             Button {
                 Task {
-                    await viewModel.registerUser(username: username, name: name, password: password)
+                    await viewModel?.registerUser(username: username, name: name, password: password)
                 }
             } label: {
                 HStack {
@@ -87,6 +89,11 @@ struct RegistrationView: View {
                         .fontWeight(.bold)
                 }
                 .font(.system(size: 14))
+            }
+        }
+        .onAppear {
+            if viewModel == nil {
+                viewModel = ViewModel(appState: appState)
             }
         }
     }

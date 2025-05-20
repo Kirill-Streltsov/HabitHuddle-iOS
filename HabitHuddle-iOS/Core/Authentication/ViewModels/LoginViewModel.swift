@@ -5,16 +5,23 @@
 //  Created by Kirill on 19.05.25.
 //
 
-import Foundation
+import SwiftUI
 import Observation
 
 extension LoginView {
     @MainActor
-    @Observable class ViewModel {
+    @Observable final class ViewModel {
+        
+        private let appState: AppState
+        
         var username: String = ""
         var password: String = ""
         var errorMessage: String = ""
-
+        
+        public init(appState: AppState) {
+            self.appState = appState
+        }
+        
         func loginUser(username: String, password: String) async {
             let username = username
             let password = password
@@ -36,6 +43,9 @@ extension LoginView {
                     headers: headers,
                     responseType: LoginResponse.self
                 )
+                withAnimation {
+                    appState.isAuthenticated = true
+                }
                 print(loginResponse)
             } catch {
                 if let apiError = error as? APIError {
