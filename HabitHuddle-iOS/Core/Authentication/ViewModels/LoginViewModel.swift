@@ -14,7 +14,7 @@ extension LoginView {
         var username: String = ""
         var password: String = ""
         var errorMessage: String = ""
-        
+
         func loginUser(username: String, password: String) async {
             let username = username
             let password = password
@@ -23,9 +23,9 @@ extension LoginView {
                 print("Could not encode login string: \(loginString)")
                 return
             }
-            
+
             let base64LoginString = loginData.base64EncodedString()
-            
+
             do {
                 let headers = [
                     "Authorization": "Basic \(base64LoginString)"
