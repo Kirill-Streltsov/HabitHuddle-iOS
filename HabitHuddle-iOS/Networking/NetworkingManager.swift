@@ -11,9 +11,11 @@ final class NetworkingManager {
     static let shared = NetworkingManager()
     private let baseURL = URL(string: "http://localhost:8080/api/")!
     let jsonDecoder: JSONDecoder
+    let jsonEncoder: JSONEncoder
 
     private init() {
         jsonDecoder = JSONDecoder()
+        jsonEncoder = JSONEncoder()
         jsonDecoder.dateDecodingStrategy = .iso8601
     }
 
@@ -36,7 +38,7 @@ final class NetworkingManager {
         }
 
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.httpBody = try JSONEncoder().encode(body)
+        urlRequest.httpBody = try jsonEncoder.encode(body)
         
 
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
