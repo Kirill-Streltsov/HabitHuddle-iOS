@@ -45,10 +45,15 @@ extension LoginView {
                 withAnimation {
                     appState.isAuthenticated = true
                 }
-            } catch let apiError as APIError {
-                errorMessage = apiError.localizedDescription
             } catch {
-                errorMessage = "Something went wrong. Please try again."
+                if let apiError = error as? APIError {
+                    errorMessage = apiError.localizedDescription
+                } else {
+                    errorMessage = "Something went wrong. Please try again."
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.errorMessage = ""
+                }
             }
         }
 

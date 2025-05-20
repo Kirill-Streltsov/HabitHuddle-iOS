@@ -27,7 +27,10 @@ struct LoginView: View {
                     .frame(height: 160)
                     .foregroundStyle(Color(.systemBlue))
 
-                VStack(spacing: 24) {
+                VStack(alignment: .leading, spacing: 24) {
+                    ErrorText(text: viewModel != nil ? viewModel!.errorMessage : "")
+                        .frame(height: 20)
+                    
                     InputView(text: $username,
                               title: "Username",
                               placeholder: "Enter your username...")

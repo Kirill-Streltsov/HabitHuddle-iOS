@@ -26,7 +26,7 @@ enum APIError: Error, LocalizedError {
         case .invalidURL:
             return "The URL is invalid."
         case .unauthorized:
-            return "You are not authorized. Please log in."
+            return "Wrong username or password."
         case .forbidden:
             return "You don’t have permission to access this resource."
         case .notFound:
@@ -34,7 +34,7 @@ enum APIError: Error, LocalizedError {
         case .conflict:
             return "There’s a conflict with the current state of the resource."
         case .serverError:
-            return "The server encountered an error. Please try again later."
+            return "This username is already taken."
         case .noData:
             return "No data was received from the server."
         case let .requestFailed(statusCode, _):

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RegistrationView: View {
     @State var viewModel: ViewModel?
+    @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var appState: AppState
 
     @State private var username = ""
@@ -18,8 +19,13 @@ struct RegistrationView: View {
     @State private var signUpTapped = false
     @Environment(\.dismiss) var dismiss
 
-    private var inputFieldIsEmpty: Bool {
+    private var inputFieldsAreEmpty: Bool {
         username.isEmpty || name.isEmpty || password.isEmpty || confirmPassword.isEmpty
+    }
+    
+    private var inputFieldsAreValid: Bool {
+        guard let viewModel = viewModel else { return false }
+        return username.count >= 3 || password == confirmPassword || password.count >= 5 || viewModel.errorMessage.isEmpty
     }
 
     private var errorText: String {
@@ -32,7 +38,7 @@ struct RegistrationView: View {
         } else if let viewModel = viewModel, !viewModel.errorMessage.isEmpty {
             return viewModel.errorMessage
         } else {
-            return " "
+            return ""
         }
     }
 
@@ -47,21 +53,25 @@ struct RegistrationView: View {
             VStack(alignment: .leading, spacing: 24) {
                 ErrorText(text: errorText)
                     .opacity(signUpTapped ? 1 : 0)
+                    .frame(height: 20)
 
                 InputView(text: $username, title: "Username", placeholder: "Enter your username...")
                     .textInputAutocapitalization(.never)
 
                 InputView(text: $name, title: "Name", placeholder: "Enter your name...")
 
-                InputView(text: $password, title: "Password", placeholder: "Enter your password...", isSecureField: false)
-                InputView(text: $confirmPassword, title: "Confirm password", placeholder: "Confirm your password...", isSecureField: false)
+                InputView(text: $password, title: "Password", placeholder: "Enter your password...", isSecureField: true)
+                InputView(text: $confirmPassword, title: "Confirm password", placeholder: "Confirm your password...", isSecureField: true)
             }
             .padding(.horizontal)
             .padding(12)
 
             Button {
-                Task {
-                    await viewModel?.registerUser(username: username, name: name, password: password)
+                signUpTapped = true
+                if inputFieldsAreValid {
+                    Task {
+                        await viewModel?.registerUser(username: username, name: name, password: password)
+                    }
                 }
             } label: {
                 HStack {
@@ -72,8 +82,8 @@ struct RegistrationView: View {
                 .foregroundStyle(.white)
                 .frame(width: UIScreen.main.bounds.width - 32, height: 48)
             }
-            .disabled(inputFieldIsEmpty)
-            .background(inputFieldIsEmpty ? Color(.systemBlue).opacity(0.5) : Color(.systemBlue))
+            .disabled(inputFieldsAreEmpty)
+            .background(inputFieldsAreEmpty ? Color(.systemBlue).opacity(0.5) : Color(.systemBlue))
             .clipShape(.rect(cornerRadius: 10))
             .padding(.top, 24)
 
@@ -92,7 +102,7 @@ struct RegistrationView: View {
         }
         .onAppear {
             if viewModel == nil {
-                viewModel = ViewModel(appState: appState)
+                viewModel = ViewModel(appState: appState, modelContext: modelContext)
             }
         }
     }
