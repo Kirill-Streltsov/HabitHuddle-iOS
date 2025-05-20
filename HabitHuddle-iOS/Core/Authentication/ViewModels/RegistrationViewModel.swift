@@ -5,20 +5,19 @@
 //  Created by Kirill on 19.05.25.
 //
 
-import SwiftUI
 import Observation
+import SwiftUI
 
 extension RegistrationView {
     @MainActor
     @Observable final class ViewModel {
-        
         private let appState: AppState
-        
+
         var username: String = ""
         var name: String = ""
         var password: String = ""
         var errorMessage: String = ""
-        
+
         public init(appState: AppState) {
             self.appState = appState
         }

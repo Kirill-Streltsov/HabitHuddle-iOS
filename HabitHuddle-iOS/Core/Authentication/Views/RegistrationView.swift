@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct RegistrationView: View {
-    
     @State var viewModel: ViewModel?
     @EnvironmentObject var appState: AppState
 

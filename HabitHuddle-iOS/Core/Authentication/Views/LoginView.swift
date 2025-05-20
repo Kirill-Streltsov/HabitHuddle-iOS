@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct LoginView: View {
-    
     @State private var viewModel: ViewModel?
     @EnvironmentObject var appState: AppState
-    
+
     @State private var username = ""
     @State private var password = ""
     private var inputFieldIsEmpty: Bool {
         username.isEmpty || password.isEmpty
     }
-    
+
     var body: some View {
         NavigationStack {
             VStack {

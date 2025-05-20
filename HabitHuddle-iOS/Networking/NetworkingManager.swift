@@ -24,7 +24,7 @@ final class NetworkingManager {
         method: HTTPMethod = .post,
         body: U,
         headers: [String: String]? = nil,
-        responseType: T.Type
+        responseType _: T.Type
     ) async throws -> T {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
         urlRequest.httpMethod = method.rawValue
@@ -39,7 +39,6 @@ final class NetworkingManager {
 
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpBody = try jsonEncoder.encode(body)
-        
 
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         guard let response = response as? HTTPURLResponse else {
@@ -47,12 +46,12 @@ final class NetworkingManager {
         }
         return try handleResponse(data: data, response: response, responseType: T.self)
     }
-    
+
     func request<T: Decodable>(
         endpoint: Endpoint,
         method: HTTPMethod = .get,
         headers: [String: String]? = nil,
-        responseType: T.Type
+        responseType _: T.Type
     ) async throws -> T {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
         urlRequest.httpMethod = method.rawValue
@@ -71,8 +70,8 @@ final class NetworkingManager {
         }
         return try handleResponse(data: data, response: response, responseType: T.self)
     }
-    
-    func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType: T.Type) throws -> T {
+
+    func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
         switch response.statusCode {
         case 200 ..< 300:
             let decodedData = try jsonDecoder.decode(T.self, from: data)

@@ -5,23 +5,22 @@
 //  Created by Kirill on 19.05.25.
 //
 
-import SwiftUI
 import Observation
+import SwiftUI
 
 extension LoginView {
     @MainActor
     @Observable final class ViewModel {
-        
         private let appState: AppState
-        
+
         var username: String = ""
         var password: String = ""
         var errorMessage: String = ""
-        
+
         public init(appState: AppState) {
             self.appState = appState
         }
-        
+
         func loginUser(username: String, password: String) async {
             let username = username
             let password = password
@@ -35,7 +34,7 @@ extension LoginView {
 
             do {
                 let headers = [
-                    "Authorization": "Basic \(base64LoginString)"
+                    "Authorization": "Basic \(base64LoginString)",
                 ]
                 let loginResponse = try await NetworkingManager.shared.request(
                     endpoint: .login(),
