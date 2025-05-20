@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import Observation
 
+@Observable
 final class AppState: ObservableObject {
-    @Published var isAuthenticated: Bool = false
+    var isAuthenticated: Bool = false
 }
