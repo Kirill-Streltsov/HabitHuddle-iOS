@@ -25,7 +25,7 @@ struct RegistrationView: View {
 
     private var inputFieldsAreValid: Bool {
         guard let viewModel = viewModel else { return false }
-        return username.count >= 3 || password == confirmPassword || password.count >= 5 || viewModel.errorMessage.isEmpty
+        return username.count >= 3 && password == confirmPassword && password.count >= 5 && viewModel.errorMessage.isEmpty
     }
 
     private var errorText: String {
