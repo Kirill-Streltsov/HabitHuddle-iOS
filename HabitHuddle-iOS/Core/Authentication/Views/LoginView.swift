@@ -6,16 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct LoginView: View {
-    @State private var viewModel: ViewModel?
-    @Environment(\.modelContext) private var modelContext
-    @EnvironmentObject var appState: AppState
+    @StateObject private var viewModel: ViewModel
 
     @State private var username = ""
     @State private var password = ""
     private var inputFieldIsEmpty: Bool {
         username.isEmpty || password.isEmpty
+    }
+    
+    init(viewModel: @autoclosure @escaping () -> ViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel())
     }
 
     var body: some View {
@@ -28,7 +31,7 @@ struct LoginView: View {
                     .foregroundStyle(Color(.systemBlue))
 
                 VStack(alignment: .leading, spacing: 24) {
-                    ErrorText(text: viewModel != nil ? viewModel!.errorMessage : "")
+                    ErrorText(text: viewModel.errorMessage)
                         .frame(height: 20)
 
                     InputView(text: $username,
@@ -43,7 +46,7 @@ struct LoginView: View {
 
                 Button {
                     Task {
-                        await viewModel?.loginUser(username: username, password: password)
+                        await viewModel.loginUser(username: username, password: password)
                     }
                 } label: {
                     HStack {
@@ -62,7 +65,8 @@ struct LoginView: View {
                 Spacer()
 
                 NavigationLink {
-                    RegistrationView()
+                    let registrationViewModel = RegistrationView.ViewModel(appState: viewModel.appState, modelContext: viewModel.modelContext)
+                    RegistrationView(viewModel: registrationViewModel)
                         .navigationBarBackButtonHidden(true)
                 } label: {
                     HStack(spacing: 2) {
@@ -74,14 +78,9 @@ struct LoginView: View {
                 }
             }
         }
-        .onAppear {
-            if viewModel == nil {
-                viewModel = ViewModel(appState: appState, modelContext: modelContext)
-            }
-        }
     }
 }
-
-#Preview {
-    LoginView()
-}
+//
+//#Preview {
+//    LoginView(viewModel: LoginView.ViewModel(appState: AppState(), modelContext: ModelContext()))
+//}

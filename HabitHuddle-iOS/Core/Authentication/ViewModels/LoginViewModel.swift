@@ -11,13 +11,13 @@ import SwiftUI
 
 extension LoginView {
     @MainActor
-    @Observable final class ViewModel {
-        private let appState: AppState
-        private let modelContext: ModelContext
+    final class ViewModel: ObservableObject {
+        let appState: AppState
+        let modelContext: ModelContext
 
-        var username: String = ""
-        var password: String = ""
-        var errorMessage: String = ""
+        @Published var username: String = ""
+        @Published var password: String = ""
+        @Published var errorMessage: String = ""
 
         init(appState: AppState, modelContext: ModelContext) {
             self.appState = appState

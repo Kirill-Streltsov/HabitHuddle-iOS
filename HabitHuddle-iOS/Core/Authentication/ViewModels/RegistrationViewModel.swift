@@ -11,11 +11,11 @@ import SwiftUI
 
 extension RegistrationView {
     @MainActor
-    @Observable final class ViewModel {
-        private let appState: AppState
-        private let modelContext: ModelContext
+    final class ViewModel: ObservableObject {
+        let appState: AppState
+        let modelContext: ModelContext
 
-        var errorMessage: String = ""
+        @Published var errorMessage: String = ""
 
         public init(appState: AppState, modelContext: ModelContext) {
             self.appState = appState

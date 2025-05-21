@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct RegistrationView: View {
-    @State var viewModel: ViewModel?
-    @Environment(\.modelContext) private var modelContext
-    @EnvironmentObject var appState: AppState
+    @StateObject private var viewModel: ViewModel
 
     @State private var username = ""
     @State private var name = ""
@@ -24,7 +22,6 @@ struct RegistrationView: View {
     }
 
     private var inputFieldsAreValid: Bool {
-        guard let viewModel = viewModel else { return false }
         return username.count >= 3 && password == confirmPassword && password.count >= 5 && viewModel.errorMessage.isEmpty
     }
 
@@ -35,11 +32,15 @@ struct RegistrationView: View {
             return "Make sure both password fields are the same"
         } else if password.count < 5 {
             return "Your password should have at least 5 symbols"
-        } else if let viewModel = viewModel, !viewModel.errorMessage.isEmpty {
+        } else if !viewModel.errorMessage.isEmpty {
             return viewModel.errorMessage
         } else {
             return ""
         }
+    }
+    
+    init(viewModel: @autoclosure @escaping () -> ViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel())
     }
 
     var body: some View {
@@ -70,7 +71,7 @@ struct RegistrationView: View {
                 signUpTapped = true
                 if inputFieldsAreValid {
                     Task {
-                        await viewModel?.registerUser(username: username, name: name, password: password)
+                        await viewModel.registerUser(username: username, name: name, password: password)
                     }
                 }
             } label: {
@@ -100,14 +101,9 @@ struct RegistrationView: View {
                 .font(.system(size: 14))
             }
         }
-        .onAppear {
-            if viewModel == nil {
-                viewModel = ViewModel(appState: appState, modelContext: modelContext)
-            }
-        }
     }
 }
-
-#Preview {
-    RegistrationView()
-}
+//
+//#Preview {
+//    RegistrationView()
+//}
