@@ -15,9 +15,6 @@ extension RegistrationView {
         private let appState: AppState
         private let modelContext: ModelContext
 
-        var username: String = ""
-        var name: String = ""
-        var password: String = ""
         var errorMessage: String = ""
 
         public init(appState: AppState, modelContext: ModelContext) {
