@@ -30,7 +30,7 @@ struct LoginView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     ErrorText(text: viewModel != nil ? viewModel!.errorMessage : "")
                         .frame(height: 20)
-                    
+
                     InputView(text: $username,
                               title: "Username",
                               placeholder: "Enter your username...")

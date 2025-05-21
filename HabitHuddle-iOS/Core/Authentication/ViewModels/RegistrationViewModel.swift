@@ -35,12 +35,12 @@ extension RegistrationView {
                     body: payload,
                     responseType: LoginResponse.self
                 )
-                
+
                 let user = registrationResponse.user
                 let userToSave = User(id: user.id, username: user.username, name: user.name, createdAt: user.createdAt, updatedAt: user.updatedAt)
                 modelContext.insert(userToSave)
                 TokenManager.token = registrationResponse.token
-                
+
                 withAnimation {
                     appState.isAuthenticated = true
                 }

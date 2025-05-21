@@ -14,11 +14,11 @@ extension LoginView {
     @Observable final class ViewModel {
         private let appState: AppState
         private let modelContext: ModelContext
-        
+
         var username: String = ""
         var password: String = ""
         var errorMessage: String = ""
-        
+
         init(appState: AppState, modelContext: ModelContext) {
             self.appState = appState
             self.modelContext = modelContext
@@ -29,7 +29,7 @@ extension LoginView {
                 errorMessage = "Invalid credentials format."
                 return
             }
-            
+
             do {
                 let headers = ["Authorization": "Basic \(base64Login)"]
                 let loginResponse = try await NetworkingManager.shared.request(
@@ -38,10 +38,10 @@ extension LoginView {
                     headers: headers,
                     responseType: LoginResponse.self
                 )
-                
+
                 TokenManager.token = loginResponse.token
                 saveUserIfNeeded(loginResponse.user)
-                
+
                 withAnimation {
                     appState.isAuthenticated = true
                 }
@@ -63,7 +63,6 @@ extension LoginView {
         }
 
         private func saveUserIfNeeded(_ user: DecodableUser) {
-            
             let userID = user.id
             let descriptor = FetchDescriptor<User>(
                 predicate: #Predicate { $0.id == userID }

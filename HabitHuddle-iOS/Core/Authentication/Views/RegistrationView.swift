@@ -22,7 +22,7 @@ struct RegistrationView: View {
     private var inputFieldsAreEmpty: Bool {
         username.isEmpty || name.isEmpty || password.isEmpty || confirmPassword.isEmpty
     }
-    
+
     private var inputFieldsAreValid: Bool {
         guard let viewModel = viewModel else { return false }
         return username.count >= 3 || password == confirmPassword || password.count >= 5 || viewModel.errorMessage.isEmpty

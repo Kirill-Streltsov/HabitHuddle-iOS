@@ -5,8 +5,8 @@
 //  Created by Kirill on 20.05.25.
 //
 
-import SwiftUI
 import Observation
+import SwiftUI
 
 @Observable
 final class AppState: ObservableObject {
