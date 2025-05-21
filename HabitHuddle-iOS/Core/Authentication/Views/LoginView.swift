@@ -80,7 +80,7 @@ struct LoginView: View {
         }
     }
 }
-//
-//#Preview {
-//    LoginView(viewModel: LoginView.ViewModel(appState: AppState(), modelContext: ModelContext()))
-//}
+
+#Preview {
+    LoginView(viewModel: LoginView.ViewModel(appState: AppState(), modelContext: ModelContainer.preview.mainContext))
+}

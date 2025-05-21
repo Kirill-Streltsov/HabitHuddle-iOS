@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct RegistrationView: View {
     @StateObject private var viewModel: ViewModel
@@ -103,7 +104,7 @@ struct RegistrationView: View {
         }
     }
 }
-//
-//#Preview {
-//    RegistrationView()
-//}
+
+#Preview {
+    RegistrationView(viewModel: RegistrationView.ViewModel(appState: AppState(), modelContext: ModelContainer.preview.mainContext))
+}
