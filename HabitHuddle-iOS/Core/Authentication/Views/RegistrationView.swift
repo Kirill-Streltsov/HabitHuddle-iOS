@@ -40,8 +40,8 @@ struct RegistrationView: View {
         }
     }
     
-    init(viewModel: @autoclosure @escaping () -> ViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel())
+    init(appState: AppState, modelContext: ModelContext) {
+        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState, modelContext: modelContext))
     }
 
     var body: some View {
@@ -106,5 +106,5 @@ struct RegistrationView: View {
 }
 
 #Preview {
-    RegistrationView(viewModel: RegistrationView.ViewModel(appState: AppState(), modelContext: ModelContainer.preview.mainContext))
+    RegistrationView(appState: AppState(), modelContext: ModelContainer.preview.mainContext)
 }

@@ -65,8 +65,7 @@ struct LoginView: View {
                 Spacer()
 
                 NavigationLink {
-                    let registrationViewModel = RegistrationView.ViewModel(appState: viewModel.appState, modelContext: viewModel.modelContext)
-                    RegistrationView(viewModel: registrationViewModel)
+                    RegistrationView(appState: viewModel.appState, modelContext: viewModel.modelContext)
                         .navigationBarBackButtonHidden(true)
                 } label: {
                     HStack(spacing: 2) {
