@@ -17,8 +17,7 @@ struct RootView: View {
                 HomeView()
                     .transition(.move(edge: .trailing))
             } else {
-                let viewModel = LoginView.ViewModel(appState: appState, modelContext: modelContext)
-                LoginView(viewModel: viewModel)
+                LoginView(appState: appState, modelContext: modelContext)
                     .transition(.move(edge: .leading))
             }
         }

@@ -17,8 +17,8 @@ struct LoginView: View {
         username.isEmpty || password.isEmpty
     }
     
-    init(viewModel: @autoclosure @escaping () -> ViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel())
+    init(appState: AppState, modelContext: ModelContext) {
+        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState, modelContext: modelContext))
     }
 
     var body: some View {
@@ -82,5 +82,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView(viewModel: LoginView.ViewModel(appState: AppState(), modelContext: ModelContainer.preview.mainContext))
+    LoginView(appState: AppState(), modelContext: ModelContainer.preview.mainContext)
 }
