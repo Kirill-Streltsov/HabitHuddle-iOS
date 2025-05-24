@@ -14,8 +14,19 @@ struct RootView: View {
     var body: some View {
         ZStack {
             if appState.isAuthenticated {
-                HomeView()
-                    .transition(.move(edge: .trailing))
+                TabView {
+                    Tab("Habits", systemImage: "brain.head.profile") {
+                        HomeView()
+                    }
+                    Tab("Home", systemImage: "house") {
+                        HomeView()
+                    }
+                    Tab("Home", systemImage: "house") {
+                        HomeView()
+                    }
+                }
+                .transition(.move(edge: .trailing))
+                
             } else {
                 LoginView(appState: appState, modelContext: modelContext)
                     .transition(.move(edge: .leading))
