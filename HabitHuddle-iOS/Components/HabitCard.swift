@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HabitCard: View {
+    
+    let title: String
     let cardWidth: CGFloat
     let habitProgress: CGFloat
     let isCheckedInToday: Bool
@@ -19,8 +21,8 @@ struct HabitCard: View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Drink water")
-                        .font(.headline)
+                    Text(title)
+                        .font(.system(size: 24, weight: .semibold))
                     Text("Streak: 14")
                         .font(.callout)
                         .foregroundStyle(.secondary)
@@ -73,6 +75,7 @@ struct HabitCard: View {
 
 #Preview {
     HabitCard(
+        title: "Drink water",
         cardWidth: 275,
         habitProgress: 0.25,
         isCheckedInToday: true,
