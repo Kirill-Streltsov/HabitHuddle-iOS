@@ -9,5 +9,6 @@ import Observation
 import SwiftUI
 
 final class AppState: ObservableObject {
-    var isAuthenticated: Bool = TokenManager.token != nil
+    //@Published var isAuthenticated: Bool = TokenManager.token != nil
+    @Published var isAuthenticated: Bool = false
 }

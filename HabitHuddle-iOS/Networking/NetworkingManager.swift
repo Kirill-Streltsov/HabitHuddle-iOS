@@ -74,7 +74,9 @@ final class NetworkingManager {
     func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
         switch response.statusCode {
         case 200 ..< 300:
+            print("DATA: \(data.prettyPrintedJSONString)")
             let decodedData = try jsonDecoder.decode(T.self, from: data)
+            print("DECODED DATA: \(decodedData)")
             return decodedData
         case 401:
             throw APIError.unauthorized
@@ -87,5 +89,18 @@ final class NetworkingManager {
         default:
             throw APIError.requestFailed(statusCode: response.statusCode, data: data)
         }
+    }
+}
+
+extension Data {
+    var prettyPrintedJSONString: NSString? {
+        guard let jsonObject = try? JSONSerialization.jsonObject(with: self, options: []),
+              let data = try? JSONSerialization.data(withJSONObject: jsonObject,
+                                                       options: [.prettyPrinted]),
+              let prettyJSON = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
+                  return nil
+               }
+
+        return prettyJSON
     }
 }

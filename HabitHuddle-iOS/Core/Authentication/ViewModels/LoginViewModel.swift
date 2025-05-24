@@ -15,8 +15,6 @@ extension LoginView {
         let appState: AppState
         let modelContext: ModelContext
 
-        @Published var username: String = ""
-        @Published var password: String = ""
         @Published var errorMessage: String = ""
 
         init(appState: AppState, modelContext: ModelContext) {

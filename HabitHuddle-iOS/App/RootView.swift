@@ -10,7 +10,7 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.modelContext) private var modelContext
-
+    
     var body: some View {
         ZStack {
             if appState.isAuthenticated {
