@@ -9,7 +9,6 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var appState: AppState
-    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         ZStack {
@@ -28,7 +27,7 @@ struct RootView: View {
                 .transition(.move(edge: .trailing))
                 
             } else {
-                LoginView(appState: appState, modelContext: modelContext)
+                LoginView(appState: appState)
                     .transition(.move(edge: .leading))
             }
         }

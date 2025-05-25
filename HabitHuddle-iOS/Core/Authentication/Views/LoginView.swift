@@ -10,6 +10,7 @@ import SwiftData
 
 struct LoginView: View {
     @StateObject private var viewModel: ViewModel
+    @Environment(\.modelContext) private var context
 
     @State private var username = ""
     @State private var password = ""
@@ -17,8 +18,8 @@ struct LoginView: View {
         username.isEmpty || password.isEmpty
     }
     
-    init(appState: AppState, modelContext: ModelContext) {
-        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState, modelContext: modelContext))
+    init(appState: AppState) {
+        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState))
     }
 
     var body: some View {
@@ -46,7 +47,9 @@ struct LoginView: View {
 
                 Button {
                     Task {
-                        await viewModel.loginUser(username: username, password: password)
+                        if let codableUser = await viewModel.loginUser(username: username, password: password) {
+                            viewModel.saveUser(codableUser, using: context)
+                        }
                     }
                 } label: {
                     HStack {
@@ -65,7 +68,7 @@ struct LoginView: View {
                 Spacer()
 
                 NavigationLink {
-                    RegistrationView(appState: viewModel.appState, modelContext: viewModel.modelContext)
+                    RegistrationView(appState: viewModel.appState)
                         .navigationBarBackButtonHidden(true)
                 } label: {
                     HStack(spacing: 2) {
@@ -81,5 +84,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView(appState: AppState(), modelContext: ModelContainer.preview.mainContext)
+    LoginView(appState: AppState())
 }

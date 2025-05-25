@@ -8,33 +8,41 @@
 import SwiftData
 import SwiftUI
 
-struct Habit: Identifiable {
+struct HabitDummy: Identifiable {
     let id = UUID()
     let title: String
 }
 
 struct HomeView: View {
+
+    @Query var users: [User]
+    
     @State private var showAllHabits = false
-    @State private var todaysHabits: [Habit] = [
-        Habit(title: "Drink Water 💧"),
-        Habit(title: "Exercise 🏋️‍♂️"),
-        Habit(title: "Read a book 📖"),
+    @State private var isShowingNewHabitView = false
+    @State private var todaysHabits: [HabitDummy] = [
+        HabitDummy(title: "Drink Water 💧"),
+        HabitDummy(title: "Exercise 🏋️‍♂️"),
+        HabitDummy(title: "Read a book 📖"),
     ]
     
-    @State private var friendsHabits: [Habit] = [
-        Habit(title: "Meditate 🧘‍♂️"),
-        Habit(title: "Sleep early 🛌"),
-        Habit(title: "Study Swift 🦅"),
+    @State private var friendsHabits: [HabitDummy] = [
+        HabitDummy(title: "Meditate 🧘‍♂️"),
+        HabitDummy(title: "Sleep early 🛌"),
+        HabitDummy(title: "Study Swift 🦅"),
     ]
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 HStack {
-                    Text("Today's Habits")
-                        .font(.title2)
-                        .bold()
-                        .padding(. horizontal)
+                    VStack(alignment: .leading) {
+                        Text("Hello \(users.first!.name)! 👋")
+                            .font(.title)
+                        Text("Today's Habits")
+                            .font(.title2)
+                    }
+                    .fontWeight(.bold)
+                    .padding(.horizontal)
                     Spacer()
                 }
                 
@@ -88,9 +96,15 @@ struct HomeView: View {
                 }
                 Spacer()
             }
-            .navigationTitle("Hello, Kirill 👋")
             .toolbar {
-                
+                Button {
+                    isShowingNewHabitView = true
+                } label: {
+                    Text("Add habit")
+                }
+            }
+            .navigationDestination(isPresented: $isShowingNewHabitView) {
+                //NewHabitView()
             }
         }
     }

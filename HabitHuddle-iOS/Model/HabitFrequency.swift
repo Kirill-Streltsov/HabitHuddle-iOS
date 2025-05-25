@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum HabitFrequency: String, Codable {
+enum HabitFrequency: String, Codable, CaseIterable {
     case daily
     case weekly
     case monthly

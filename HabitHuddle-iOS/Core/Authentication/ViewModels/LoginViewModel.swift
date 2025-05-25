@@ -5,7 +5,6 @@
 //  Created by Kirill on 19.05.25.
 //
 
-import Observation
 import SwiftData
 import SwiftUI
 
@@ -13,20 +12,16 @@ extension LoginView {
     @MainActor
     final class ViewModel: ObservableObject {
         let appState: AppState
-        let modelContext: ModelContext
 
         @Published var errorMessage: String = ""
 
-        init(appState: AppState, modelContext: ModelContext) {
+        init(appState: AppState) {
             self.appState = appState
-            self.modelContext = modelContext
         }
 
-        func loginUser(username: String, password: String) async {
-            guard let base64Login = makeBase64Login(username: username, password: password) else {
-                errorMessage = "Invalid credentials format."
-                return
-            }
+        func loginUser(username: String, password: String) async -> CodableUser? {
+            
+            let base64Login = makeBase64Login(username: username, password: password)
 
             do {
                 let headers = ["Authorization": "Basic \(base64Login)"]
@@ -38,11 +33,8 @@ extension LoginView {
                 )
 
                 TokenManager.token = loginResponse.token
-                saveUserIfNeeded(loginResponse.user)
+                return loginResponse.user
 
-                withAnimation {
-                    appState.isAuthenticated = true
-                }
             } catch {
                 if let apiError = error as? APIError {
                     errorMessage = apiError.localizedDescription
@@ -52,33 +44,44 @@ extension LoginView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     self.errorMessage = ""
                 }
+                return nil
             }
         }
 
-        private func makeBase64Login(username: String, password: String) -> String? {
+        private func makeBase64Login(username: String, password: String) -> String {
             let loginString = "\(username):\(password)"
-            return loginString.data(using: .utf8)?.base64EncodedString()
+            if let data = loginString.data(using: .utf8) {
+                return data.base64EncodedString()
+            } else {
+                fatalError("Couldn't encode your username or password")
+            }
         }
 
-        private func saveUserIfNeeded(_ user: CodableUser) {
-            let userID = user.id
-            let descriptor = FetchDescriptor<User>(
-                predicate: #Predicate { $0.id == userID }
-            )
-
-            guard (try? modelContext.fetch(descriptor).first) == nil else {
-                return
+        func saveUser(_ user: CodableUser, using context: ModelContext) {
+            let descriptor = FetchDescriptor<User>()
+            
+            do {
+                let existingUsers = try context.fetch(descriptor)
+                
+                // Delete all previous instances
+                for user in existingUsers {
+                    context.delete(user)
+                }
+                
+                let newUser = User(
+                    id: user.id,
+                    username: user.username,
+                    name: user.name,
+                    createdAt: user.createdAt,
+                    updatedAt: user.updatedAt
+                )
+                context.insert(newUser)
+                withAnimation {
+                    appState.isAuthenticated = true
+                }
+            } catch {
+                fatalError("Couldn't save user's information")
             }
-
-            let newUser = User(
-                id: user.id,
-                username: user.username,
-                name: user.name,
-                createdAt: user.createdAt,
-                updatedAt: user.updatedAt
-            )
-
-            modelContext.insert(newUser)
         }
     }
 }

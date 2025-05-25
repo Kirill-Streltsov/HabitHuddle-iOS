@@ -10,6 +10,7 @@ import SwiftData
 
 struct RegistrationView: View {
     @StateObject private var viewModel: ViewModel
+    @Environment(\.modelContext) private var context
 
     @State private var username = ""
     @State private var name = ""
@@ -40,8 +41,8 @@ struct RegistrationView: View {
         }
     }
     
-    init(appState: AppState, modelContext: ModelContext) {
-        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState, modelContext: modelContext))
+    init(appState: AppState) {
+        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState))
     }
 
     var body: some View {
@@ -62,8 +63,8 @@ struct RegistrationView: View {
 
                 InputView(text: $name, title: "Name", placeholder: "Enter your name...")
 
-                InputView(text: $password, title: "Password", placeholder: "Enter your password...", isSecureField: true)
-                InputView(text: $confirmPassword, title: "Confirm password", placeholder: "Confirm your password...", isSecureField: true)
+                InputView(text: $password, title: "Password", placeholder: "Enter your password...", isSecureField: false)
+                InputView(text: $confirmPassword, title: "Confirm password", placeholder: "Confirm your password...", isSecureField: false)
             }
             .padding(.horizontal)
             .padding(12)
@@ -72,7 +73,7 @@ struct RegistrationView: View {
                 signUpTapped = true
                 if inputFieldsAreValid {
                     Task {
-                        await viewModel.registerUser(username: username, name: name, password: password)
+                        await viewModel.registerUser(username: username, name: name, password: password, context: context)
                     }
                 }
             } label: {
@@ -106,5 +107,5 @@ struct RegistrationView: View {
 }
 
 #Preview {
-    RegistrationView(appState: AppState(), modelContext: ModelContainer.preview.mainContext)
+    RegistrationView(appState: AppState())
 }

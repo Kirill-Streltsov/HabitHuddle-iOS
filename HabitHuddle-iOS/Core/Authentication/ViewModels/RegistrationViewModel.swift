@@ -13,16 +13,14 @@ extension RegistrationView {
     @MainActor
     final class ViewModel: ObservableObject {
         let appState: AppState
-        let modelContext: ModelContext
 
         @Published var errorMessage: String = ""
 
-        public init(appState: AppState, modelContext: ModelContext) {
+        public init(appState: AppState) {
             self.appState = appState
-            self.modelContext = modelContext
         }
 
-        func registerUser(username: String, name: String, password: String) async {
+        func registerUser(username: String, name: String, password: String, context: ModelContext) async {
             let payload = RegisterRequest(username: username, name: name, password: password)
 
             do {
@@ -35,7 +33,7 @@ extension RegistrationView {
 
                 let user = registrationResponse.user
                 let userToSave = User(id: user.id, username: user.username, name: user.name, createdAt: user.createdAt, updatedAt: user.updatedAt)
-                modelContext.insert(userToSave)
+                context.insert(userToSave)
                 TokenManager.token = registrationResponse.token
 
                 withAnimation {
