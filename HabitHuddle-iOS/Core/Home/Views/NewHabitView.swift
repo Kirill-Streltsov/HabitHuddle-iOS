@@ -18,6 +18,10 @@ struct NewHabitView: View {
     
     @Query var habits: [Habit]
     
+    init() {
+        _viewModel = StateObject(wrappedValue: ViewModel())
+    }
+    
     var body: some View {
         VStack {
             TextField("Name", text: $viewModel.name)
@@ -29,7 +33,9 @@ struct NewHabitView: View {
             }
             .pickerStyle(.segmented)
             Button {
-                
+                Task {
+                    await viewModel.sendHabit()
+                }
             } label: {
                 Text("Save habit")
             }
@@ -38,5 +44,5 @@ struct NewHabitView: View {
 }
 
 #Preview {
-    NewHabitView(viewModel: NewHabitView.ViewModel())
+    NewHabitView()
 }

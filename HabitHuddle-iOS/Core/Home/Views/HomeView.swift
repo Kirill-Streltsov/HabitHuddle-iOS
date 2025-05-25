@@ -104,7 +104,7 @@ struct HomeView: View {
                 }
             }
             .navigationDestination(isPresented: $isShowingNewHabitView) {
-                //NewHabitView()
+                NewHabitView()
             }
         }
     }

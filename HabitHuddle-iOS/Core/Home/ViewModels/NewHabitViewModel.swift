@@ -12,9 +12,9 @@ extension NewHabitView {
     @MainActor
     final class ViewModel: ObservableObject {
         
-        @State var name: String = ""
-        @State var description: String = ""
-        @State var frequency: HabitFrequency = .daily
+        @Published var name: String = "This is a new habit"
+        @Published var description: String = "This is a description"
+        @Published var frequency: HabitFrequency = .daily
         @State var reminderTime: Date?
         @State var createdAt: Date?
         @State var updatedAt: Date?
@@ -29,7 +29,7 @@ extension NewHabitView {
                     body: payload,
                     responseType: CodableHabit.self)
                 
-                print(habitResponse)
+                print("THIS IS A RESPONSE: \(habitResponse)")
             } catch {
                 if let apiError = error as? APIError {
                     print(apiError.localizedDescription)

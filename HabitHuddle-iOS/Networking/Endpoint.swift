@@ -23,6 +23,6 @@ struct Endpoint {
     }
     
     static func createHabit() -> Endpoint {
-        Endpoint(path: "/habits/create")
+        Endpoint(path: "habits/create")
     }
 }
