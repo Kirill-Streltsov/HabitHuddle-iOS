@@ -60,7 +60,7 @@ extension LoginView {
             return loginString.data(using: .utf8)?.base64EncodedString()
         }
 
-        private func saveUserIfNeeded(_ user: DecodableUser) {
+        private func saveUserIfNeeded(_ user: CodableUser) {
             let userID = user.id
             let descriptor = FetchDescriptor<User>(
                 predicate: #Predicate { $0.id == userID }

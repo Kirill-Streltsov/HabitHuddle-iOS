@@ -7,5 +7,5 @@
 
 struct LoginResponse: Decodable {
     let token: String
-    let user: DecodableUser
+    let user: CodableUser
 }

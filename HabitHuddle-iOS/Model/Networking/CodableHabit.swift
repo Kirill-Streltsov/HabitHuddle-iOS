@@ -1,5 +1,5 @@
 //
-//  DecodableHabit.swift
+//  CodableHabit.swift
 //  HabitHuddle-iOS
 //
 //  Created by Kirill on 21.05.25.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct DecodableHabit: Identifiable, Decodable {
+struct CodableHabit: Codable, Identifiable {
     let id: UUID
-    let user: DecodableUser
+    let user: CodableUser
     let name: String
     let description: String
     let frequency: HabitFrequency

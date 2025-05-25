@@ -41,7 +41,6 @@ struct HomeView: View {
                 
                 // Today's habits section
                 VStack(alignment: .center, spacing: 16) {
-                    
                     ForEach(showAllHabits ? todaysHabits : Array(todaysHabits.prefix(2))) { habit in
                         HabitCard(
                             title: habit.title,
@@ -65,9 +64,7 @@ struct HomeView: View {
                         }
                     }
                 }
-                
                 Divider()
-                
                 HStack {
                     Text("Your Friends")
                         .font(.title2)
@@ -78,7 +75,6 @@ struct HomeView: View {
                 
                 // Friends section
                 VStack(alignment: .center, spacing: 16) {
-                    
                     ForEach(friendsHabits) { habit in
                         HabitCard(
                             title: habit.title,
@@ -90,11 +86,14 @@ struct HomeView: View {
                         )
                     }
                 }
-                
                 Spacer()
-                
             }
             .navigationTitle("Hello, Kirill 👋")
+            .onAppear {
+                Task {
+                    
+                }
+            }
         }
     }
 }
