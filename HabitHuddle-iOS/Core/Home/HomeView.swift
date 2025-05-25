@@ -89,10 +89,8 @@ struct HomeView: View {
                 Spacer()
             }
             .navigationTitle("Hello, Kirill 👋")
-            .onAppear {
-                Task {
-                    
-                }
+            .toolbar {
+                
             }
         }
     }
