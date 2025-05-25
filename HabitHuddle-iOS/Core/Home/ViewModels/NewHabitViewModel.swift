@@ -20,8 +20,21 @@ extension NewHabitView {
         @State var updatedAt: Date?
         
         
-        func createHabit() {
-            
+        func sendHabit() async {
+            do {
+                let payload = HabitPayload(name: name, description: description, frequency: frequency.rawValue)
+                let habitResponse = try await NetworkingManager.shared.request(
+                    endpoint: .createHabit(),
+                    method: .post,
+                    body: payload,
+                    responseType: CodableHabit.self)
+                
+                print(habitResponse)
+            } catch {
+                if let apiError = error as? APIError {
+                    print(apiError.localizedDescription)
+                }
+            }
         }
     }
 }

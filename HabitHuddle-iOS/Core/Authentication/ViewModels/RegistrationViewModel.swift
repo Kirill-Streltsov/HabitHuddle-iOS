@@ -21,7 +21,7 @@ extension RegistrationView {
         }
 
         func registerUser(username: String, name: String, password: String, context: ModelContext) async {
-            let payload = RegisterRequest(username: username, name: name, password: password)
+            let payload = RegisterPayload(username: username, name: name, password: password)
 
             do {
                 let registrationResponse = try await NetworkingManager.shared.request(

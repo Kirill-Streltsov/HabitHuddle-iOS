@@ -21,4 +21,8 @@ struct Endpoint {
     static func me() -> Endpoint {
         Endpoint(path: "auth/me")
     }
+    
+    static func createHabit() -> Endpoint {
+        Endpoint(path: "/habits/create")
+    }
 }
