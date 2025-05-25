@@ -28,7 +28,7 @@ struct HomeView: View {
     ]
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 HStack {
                     Text("Today's Habits")
