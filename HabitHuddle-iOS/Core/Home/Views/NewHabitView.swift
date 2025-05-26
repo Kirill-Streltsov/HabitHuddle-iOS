@@ -38,7 +38,7 @@ struct NewHabitView: View {
                         handleResult(result) { codableHabit in
                             let habit = Habit(
                                 id: codableHabit.id,
-                                user: user,
+                                user: codableHabit.user,
                                 name: codableHabit.name,
                                 description: codableHabit.description,
                                 frequency: codableHabit.frequency

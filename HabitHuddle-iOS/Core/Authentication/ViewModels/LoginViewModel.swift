@@ -83,5 +83,20 @@ extension LoginView {
                 fatalError("Couldn't save user's information")
             }
         }
+        
+        func getUserHabits() async -> [CodableHabit] {
+            do {
+                let habits = try await NetworkingManager.shared.request(
+                    endpoint: .getMyHabits(),
+                    method: .get,
+                    responseType: [CodableHabit].self
+                )
+                print("HABITS RESPONSE :\(habits)")
+                return habits
+            } catch {
+                print("NOTHING CAME BACK")
+                return []
+            }
+        }
     }
 }

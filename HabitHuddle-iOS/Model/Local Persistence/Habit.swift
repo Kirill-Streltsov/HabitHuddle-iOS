@@ -11,7 +11,7 @@ import SwiftData
 @Model
 final class Habit: Identifiable {
     var id: UUID
-    var user: User
+    var user: LightweightUser
     var name: String
     var habitDescription: String
     var frequency: HabitFrequency
@@ -19,7 +19,7 @@ final class Habit: Identifiable {
     var createdAt: Date?
     var updatedAt: Date?
     
-    init(id: UUID, user: User, name: String, description: String, frequency: HabitFrequency, reminderTime: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
+    init(id: UUID, user: LightweightUser, name: String, description: String, frequency: HabitFrequency, reminderTime: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
         self.id = id
         self.user = user
         self.name = name
