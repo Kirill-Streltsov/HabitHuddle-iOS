@@ -44,35 +44,9 @@ struct HomeView: View {
                         Spacer()
                     }
                     
-                    
                     // Today's habits section
-                    VStack(alignment: .center, spacing: 16) {
-                        
-                        let habitsToShow = showAllHabits ? habits : Array(habits.prefix(2))
-                        
-                        ForEach(habitsToShow) { habit in
-                            HabitCard(
-                                title: habit.name,
-                                cardWidth: 310,
-                                habitProgress: 0.25,
-                                isCheckedInToday: true,
-                                frequency: habit.frequency.rawValue,
-                                nextCheckIn: "Today, 8 PM"
-                            )
-                        }
-                        
-                        if habits.count > 2 {
-                            Button(action: {
-                                withAnimation {
-                                    showAllHabits.toggle()
-                                }
-                            }) {
-                                Text(showAllHabits ? "Show Less" : "Show More")
-                                    .foregroundColor(.blue)
-                                    .padding(.horizontal)
-                            }
-                        }
-                    }
+                    HabitsGridView(habits: habits)
+                    
                     Divider()
                     HStack {
                         Text("Your Friends")
@@ -90,8 +64,7 @@ struct HomeView: View {
                                 cardWidth: 310,
                                 habitProgress: 0.25,
                                 isCheckedInToday: true,
-                                frequency: "Daily",
-                                nextCheckIn: "Today, 8 PM"
+                                frequency: "Daily"
                             )
                         }
                     }
