@@ -16,14 +16,14 @@ struct HabitDummy: Identifiable {
 struct HomeView: View {
 
     @Query var users: [User]
+    var user: User? { users.first }
+    
+    @Query var habits: [Habit]
+    
+    @EnvironmentObject var appState: AppState
     
     @State private var showAllHabits = false
     @State private var isShowingNewHabitView = false
-    @State private var todaysHabits: [HabitDummy] = [
-        HabitDummy(title: "Drink Water 💧"),
-        HabitDummy(title: "Exercise 🏋️‍♂️"),
-        HabitDummy(title: "Read a book 📖"),
-    ]
     
     @State private var friendsHabits: [HabitDummy] = [
         HabitDummy(title: "Meditate 🧘‍♂️"),
@@ -36,7 +36,7 @@ struct HomeView: View {
             ScrollView {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("Hello \(users.first!.name)! 👋")
+                        Text("Hello \(user!.name)! 👋")
                             .font(.title)
                         Text("Today's Habits")
                             .font(.title2)
@@ -49,18 +49,21 @@ struct HomeView: View {
                 
                 // Today's habits section
                 VStack(alignment: .center, spacing: 16) {
-                    ForEach(showAllHabits ? todaysHabits : Array(todaysHabits.prefix(2))) { habit in
+                    
+                    let habitsToShow = showAllHabits ? habits : Array(habits.prefix(2))
+                    
+                    ForEach(habitsToShow) { habit in
                         HabitCard(
-                            title: habit.title,
+                            title: habit.name,
                             cardWidth: 310,
                             habitProgress: 0.25,
                             isCheckedInToday: true,
-                            frequency: "Daily",
+                            frequency: habit.frequency.rawValue,
                             nextCheckIn: "Today, 8 PM"
                         )
                     }
                     
-                    if todaysHabits.count > 2 {
+                    if habits.count > 2 {
                         Button(action: {
                             withAnimation {
                                 showAllHabits.toggle()
@@ -104,7 +107,10 @@ struct HomeView: View {
                 }
             }
             .navigationDestination(isPresented: $isShowingNewHabitView) {
-                NewHabitView()
+                NewHabitView(appState: appState)
+            }
+            .onAppear {
+                print("HABIT NUMBER: \(user!.habits)")
             }
         }
     }

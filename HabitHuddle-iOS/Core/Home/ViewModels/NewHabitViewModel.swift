@@ -12,6 +12,8 @@ extension NewHabitView {
     @MainActor
     final class ViewModel: ObservableObject {
         
+        let appState: AppState
+        
         @Published var name: String = "This is a new habit"
         @Published var description: String = "This is a description"
         @Published var frequency: HabitFrequency = .daily
@@ -19,7 +21,11 @@ extension NewHabitView {
         @Published var createdAt: Date?
         @Published var updatedAt: Date?
         
-        func sendHabit() async {
+        init(appState: AppState) {
+            self.appState = appState
+        }
+        
+        func sendHabit() async -> Result<CodableHabit, APIError> {
             do {
                 let payload = HabitPayload(name: name, description: description, frequency: frequency.rawValue)
                 let habitResponse = try await NetworkingManager.shared.request(
@@ -27,15 +33,12 @@ extension NewHabitView {
                     method: .post,
                     body: payload,
                     responseType: CodableHabit.self)
-                
-                print("THIS IS A RESPONSE: \(habitResponse)")
+                return .success(habitResponse)
+            } catch let error as APIError {
+                return .failure(error)
             } catch {
-                if let apiError = error as? APIError {
-                    print(apiError.localizedDescription)
-                }
+                return .failure(.unknown)
             }
         }
-        
-        
     }
 }

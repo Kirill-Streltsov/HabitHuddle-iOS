@@ -14,12 +14,13 @@ struct NewHabitView: View {
     var user: User? { users.first }
     
     @StateObject var viewModel: ViewModel
+    @Environment(\.modelContext) private var context
 
     
     @Query var habits: [Habit]
     
-    init() {
-        _viewModel = StateObject(wrappedValue: ViewModel())
+    init(appState: AppState) {
+        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState))
     }
     
     var body: some View {
@@ -34,7 +35,19 @@ struct NewHabitView: View {
             .pickerStyle(.segmented)
             Button {
                 Task {
-                    await viewModel.sendHabit()
+                    let result = await viewModel.sendHabit()
+                    handleResult(result) { codableHabit in
+                        let habit = Habit(
+                            id: codableHabit.id,
+                            user: user!,
+                            name: codableHabit.name,
+                            description: codableHabit.description,
+                            frequency: codableHabit.frequency
+                        )
+                        context.insert(habit)
+                    } onFailure: { error in
+                        print("❌ Failed to save habit: \(error.localizedDescription)")
+                    }
                 }
             } label: {
                 Text("Save habit")
@@ -44,5 +57,5 @@ struct NewHabitView: View {
 }
 
 #Preview {
-    NewHabitView()
+    NewHabitView(appState: AppState())
 }
