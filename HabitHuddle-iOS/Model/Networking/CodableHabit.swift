@@ -9,11 +9,16 @@ import Foundation
 
 struct CodableHabit: Codable, Identifiable {
     let id: UUID
-    let user: CodableUser
+    let user: LightweightUser
     let name: String
     let description: String
     let frequency: HabitFrequency
     let reminderTime: Date?
     let createdAt: Date?
     let updatedAt: Date?
+}
+
+// Helping struct with id to help with decoding
+struct LightweightUser: Identifiable, Codable {
+    let id: UUID
 }

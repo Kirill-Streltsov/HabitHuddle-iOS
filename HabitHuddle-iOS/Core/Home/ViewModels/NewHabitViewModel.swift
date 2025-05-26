@@ -15,10 +15,9 @@ extension NewHabitView {
         @Published var name: String = "This is a new habit"
         @Published var description: String = "This is a description"
         @Published var frequency: HabitFrequency = .daily
-        @State var reminderTime: Date?
-        @State var createdAt: Date?
-        @State var updatedAt: Date?
-        
+        @Published var reminderTime: Date?
+        @Published var createdAt: Date?
+        @Published var updatedAt: Date?
         
         func sendHabit() async {
             do {
@@ -36,5 +35,7 @@ extension NewHabitView {
                 }
             }
         }
+        
+        
     }
 }
