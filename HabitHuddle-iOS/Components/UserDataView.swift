@@ -5,8 +5,8 @@
 //  Created by Kirill on 26.05.25.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct UserDataView<Content: View>: View {
     @Query private var users: [User]

@@ -5,24 +5,21 @@
 //  Created by Kirill on 25.05.25.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct NewHabitView: View {
-    
     @StateObject var viewModel: ViewModel
     @Environment(\.modelContext) private var context
 
-    
     @Query var habits: [Habit]
-    
+
     init(appState: AppState) {
         _viewModel = StateObject(wrappedValue: ViewModel(appState: appState))
     }
-    
+
     var body: some View {
-        
-        UserDataView { user in
+        UserDataView { _ in
             VStack {
                 TextField("Name", text: $viewModel.name)
                 TextField("Description", text: $viewModel.description)
@@ -53,7 +50,6 @@ struct NewHabitView: View {
                 }
             }
         }
-        
     }
 }
 

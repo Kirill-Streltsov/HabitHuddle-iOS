@@ -20,7 +20,6 @@ extension LoginView {
         }
 
         func loginUser(username: String, password: String) async -> CodableUser? {
-            
             let base64Login = makeBase64Login(username: username, password: password)
 
             do {
@@ -59,15 +58,15 @@ extension LoginView {
 
         func saveUser(_ user: CodableUser, using context: ModelContext) {
             let descriptor = FetchDescriptor<User>()
-            
+
             do {
                 let existingUsers = try context.fetch(descriptor)
-                
+
                 // Delete all previous instances
                 for user in existingUsers {
                     context.delete(user)
                 }
-                
+
                 let newUser = User(
                     id: user.id,
                     username: user.username,
@@ -83,7 +82,7 @@ extension LoginView {
                 fatalError("Couldn't save user's information")
             }
         }
-        
+
         func getUserHabits() async -> Result<[CodableHabit], APIError> {
             do {
                 let habits = try await NetworkingManager.shared.request(

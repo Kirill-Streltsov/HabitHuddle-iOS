@@ -8,21 +8,20 @@
 import SwiftUI
 
 struct HabitCard: View {
-    
     let title: String
     let cardWidth: CGFloat
     let habitProgress: CGFloat
     @State private var isCheckedIn: Bool = false
-    
+
     let frequency: String
-    
+
     var body: some View {
         VStack(alignment: .center, spacing: 4) {
             Text(title)
                 .font(.system(size: 20, weight: .semibold))
                 .frame(maxHeight: 50)
                 .multilineTextAlignment(.center)
-            
+
             CheckedInStateView(isCheckedIn: $isCheckedIn)
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.2)) {
@@ -34,17 +33,17 @@ struct HabitCard: View {
             Text("Frequency: \(frequency)")
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            
+
             Text("4/16")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
-            
+
             ZStack(alignment: .leading) {
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))
                     .frame(height: 8)
                     .cornerRadius(4)
-                
+
                 Rectangle()
                     .fill(Color.blue)
                     .frame(width: cardWidth * habitProgress, height: 8)

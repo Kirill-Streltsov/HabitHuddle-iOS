@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var appState: AppState
-    
+
     var body: some View {
         ZStack {
             if appState.isAuthenticated {
@@ -25,7 +25,7 @@ struct RootView: View {
                     }
                 }
                 .transition(.move(edge: .trailing))
-                
+
             } else {
                 LoginView(appState: appState)
                     .transition(.move(edge: .leading))

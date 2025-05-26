@@ -15,9 +15,9 @@ func handleResult<T>(
     onFailure: ((APIError) -> Void)? = nil
 ) {
     switch result {
-    case .success(let value):
+    case let .success(value):
         onSuccess(value)
-    case .failure(let error):
+    case let .failure(error):
         if let onFailure = onFailure {
             onFailure(error)
         } else {

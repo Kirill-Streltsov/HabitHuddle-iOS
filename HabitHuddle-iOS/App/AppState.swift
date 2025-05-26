@@ -10,5 +10,5 @@ import SwiftUI
 
 final class AppState: ObservableObject {
     @Published var isAuthenticated: Bool = TokenManager.token != nil
-    //@Published var isAuthenticated: Bool = false
+    // @Published var isAuthenticated: Bool = false
 }

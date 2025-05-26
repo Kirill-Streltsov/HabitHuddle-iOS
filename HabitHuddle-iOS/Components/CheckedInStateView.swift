@@ -1,5 +1,5 @@
 //
-//  UntrackedHabitCheckmark.swift
+//  CheckedInStateView.swift
 //  HabitHuddle-iOS
 //
 //  Created by Kirill on 23.05.25.
@@ -31,6 +31,7 @@ struct CheckedInStateView: View {
         }
     }
 }
+
 #Preview {
     CheckedInStateView(isCheckedIn: .constant(true))
 }

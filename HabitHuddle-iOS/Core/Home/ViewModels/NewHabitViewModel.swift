@@ -5,26 +5,25 @@
 //  Created by Kirill on 25.05.25.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 extension NewHabitView {
     @MainActor
     final class ViewModel: ObservableObject {
-        
         let appState: AppState
-        
+
         @Published var name: String = "This is a new habit"
         @Published var description: String = "This is a description"
         @Published var frequency: HabitFrequency = .daily
         @Published var reminderTime: Date?
         @Published var createdAt: Date?
         @Published var updatedAt: Date?
-        
+
         init(appState: AppState) {
             self.appState = appState
         }
-        
+
         func sendHabit() async -> Result<CodableHabit, APIError> {
             do {
                 let payload = HabitPayload(name: name, description: description, frequency: frequency.rawValue)
@@ -32,7 +31,8 @@ extension NewHabitView {
                     endpoint: .createHabit(),
                     method: .post,
                     body: payload,
-                    responseType: CodableHabit.self)
+                    responseType: CodableHabit.self
+                )
                 return .success(habitResponse)
             } catch let error as APIError {
                 return .failure(error)

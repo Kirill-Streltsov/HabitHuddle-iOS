@@ -5,8 +5,8 @@
 //  Created by Kirill on 18.05.25.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct RegistrationView: View {
     @StateObject private var viewModel: ViewModel
@@ -40,7 +40,7 @@ struct RegistrationView: View {
             return ""
         }
     }
-    
+
     init(appState: AppState) {
         _viewModel = StateObject(wrappedValue: ViewModel(appState: appState))
     }

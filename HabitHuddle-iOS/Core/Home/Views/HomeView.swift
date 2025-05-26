@@ -14,20 +14,19 @@ struct HabitDummy: Identifiable {
 }
 
 struct HomeView: View {
-    
     @Query var habits: [Habit]
-    
+
     @EnvironmentObject var appState: AppState
-    
+
     @State private var showAllHabits = false
     @State private var isShowingNewHabitView = false
-    
+
     @State private var friendsHabits: [HabitDummy] = [
         HabitDummy(title: "Meditate 🧘‍♂️"),
         HabitDummy(title: "Sleep early 🛌"),
         HabitDummy(title: "Study Swift 🦅"),
     ]
-    
+
     var body: some View {
         UserDataView { user in
             NavigationStack {
@@ -43,10 +42,10 @@ struct HomeView: View {
                         .padding(.horizontal)
                         Spacer()
                     }
-                    
+
                     // Today's habits section
                     HabitsGridView(habits: habits)
-                    
+
                     Divider()
                     HStack {
                         Text("Your Friends")
@@ -55,7 +54,7 @@ struct HomeView: View {
                             .padding(.horizontal)
                         Spacer()
                     }
-                    
+
                     // Friends section
                     VStack(alignment: .center, spacing: 16) {
                         ForEach(friendsHabits) { habit in
