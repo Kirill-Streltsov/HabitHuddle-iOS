@@ -23,7 +23,6 @@ struct HabitsGridView: View {
                     title: habit.name,
                     cardWidth: UIScreen.main.bounds.width / 2 - 32,
                     habitProgress: 0.25,
-                    isCheckedInToday: true,
                     frequency: habit.frequency.rawValue
                 )
             }

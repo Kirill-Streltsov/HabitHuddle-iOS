@@ -12,7 +12,7 @@ struct HabitCard: View {
     let title: String
     let cardWidth: CGFloat
     let habitProgress: CGFloat
-    let isCheckedInToday: Bool
+    @State private var isCheckedIn: Bool = false
     
     let frequency: String
     
@@ -23,15 +23,13 @@ struct HabitCard: View {
                 .frame(maxHeight: 50)
                 .multilineTextAlignment(.center)
             
-            if isCheckedInToday {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundStyle(.green)
-                    .font(.system(size: 50))
-            } else {
-                UntrackedHabitCheckmark()
-                    .foregroundStyle(.gray)
-                    .font(.system(size: 50))
-            }
+            CheckedInStateView(isCheckedIn: $isCheckedIn)
+                .onTapGesture {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        isCheckedIn.toggle()
+                    }
+                }
+                .frame(width: 50, height: 50)
 
             Text("Frequency: \(frequency)")
                 .font(.caption)
@@ -69,14 +67,12 @@ struct HabitCard: View {
                 title: "Ride a bycicle",
                 cardWidth: 175,
                 habitProgress: 0.25,
-                isCheckedInToday: true,
                 frequency: "Daily",
             )
             HabitCard(
                 title: "Drink water",
                 cardWidth: 175,
                 habitProgress: 0.25,
-                isCheckedInToday: true,
                 frequency: "Daily",
             )
         }
@@ -85,14 +81,12 @@ struct HabitCard: View {
                 title: "Eat a lot of protein",
                 cardWidth: 175,
                 habitProgress: 0.25,
-                isCheckedInToday: true,
                 frequency: "Daily",
             )
             HabitCard(
                 title: "Drink water",
                 cardWidth: 175,
                 habitProgress: 0.25,
-                isCheckedInToday: true,
                 frequency: "Daily",
             )
         }

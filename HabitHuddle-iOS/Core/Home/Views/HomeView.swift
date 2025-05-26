@@ -63,7 +63,6 @@ struct HomeView: View {
                                 title: habit.title,
                                 cardWidth: 310,
                                 habitProgress: 0.25,
-                                isCheckedInToday: true,
                                 frequency: "Daily"
                             )
                         }
