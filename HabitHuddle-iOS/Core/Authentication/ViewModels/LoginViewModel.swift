@@ -84,18 +84,18 @@ extension LoginView {
             }
         }
         
-        func getUserHabits() async -> [CodableHabit] {
+        func getUserHabits() async -> Result<[CodableHabit], APIError> {
             do {
                 let habits = try await NetworkingManager.shared.request(
                     endpoint: .getMyHabits(),
                     method: .get,
                     responseType: [CodableHabit].self
                 )
-                print("HABITS RESPONSE :\(habits)")
-                return habits
+                return .success(habits)
+            } catch let error as APIError {
+                return .failure(error)
             } catch {
-                print("NOTHING CAME BACK")
-                return []
+                return .failure(.unknown)
             }
         }
     }

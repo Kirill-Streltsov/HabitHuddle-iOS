@@ -48,13 +48,16 @@ struct LoginView: View {
                 Button {
                     Task {
                         if let codableUser = await viewModel.loginUser(username: username, password: password) {
-                            let codableHabits = await viewModel.getUserHabits()
-                            for codableHabit in codableHabits {
-                                let habit = Habit(id: codableHabit.id, user: codableHabit.user, name: codableHabit.name, description: codableHabit.description, frequency: codableHabit.frequency)
-                                context.insert(habit)
+                            let codableHabitsResult = await viewModel.getUserHabits()
+                            handleResult(codableHabitsResult) { codableHabits in
+                                for codableHabit in codableHabits {
+                                    let habit = Habit(id: codableHabit.id, user: codableHabit.user, name: codableHabit.name, description: codableHabit.description, frequency: codableHabit.frequency)
+                                    context.insert(habit)
+                                }
+                                viewModel.saveUser(codableUser, using: context)
+                            } onFailure: { apiError in
+                                print("Couldn't load user habits: \(apiError.localizedDescription)")
                             }
-                            viewModel.saveUser(codableUser, using: context)
-                            
                         }
                     }
                 } label: {
