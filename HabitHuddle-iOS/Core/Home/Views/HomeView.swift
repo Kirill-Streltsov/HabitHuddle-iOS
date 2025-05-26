@@ -14,9 +14,6 @@ struct HabitDummy: Identifiable {
 }
 
 struct HomeView: View {
-
-    @Query var users: [User]
-    var user: User? { users.first }
     
     @Query var habits: [Habit]
     
@@ -32,85 +29,84 @@ struct HomeView: View {
     ]
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("Hello \(user!.name)! 👋")
-                            .font(.title)
-                        Text("Today's Habits")
-                            .font(.title2)
-                    }
-                    .fontWeight(.bold)
-                    .padding(.horizontal)
-                    Spacer()
-                }
-                
-                
-                // Today's habits section
-                VStack(alignment: .center, spacing: 16) {
-                    
-                    let habitsToShow = showAllHabits ? habits : Array(habits.prefix(2))
-                    
-                    ForEach(habitsToShow) { habit in
-                        HabitCard(
-                            title: habit.name,
-                            cardWidth: 310,
-                            habitProgress: 0.25,
-                            isCheckedInToday: true,
-                            frequency: habit.frequency.rawValue,
-                            nextCheckIn: "Today, 8 PM"
-                        )
+        UserDataView { user in
+            NavigationStack {
+                ScrollView {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Hello \(user.name)! 👋")
+                                .font(.title)
+                            Text("Today's Habits")
+                                .font(.title2)
+                        }
+                        .fontWeight(.bold)
+                        .padding(.horizontal)
+                        Spacer()
                     }
                     
-                    if habits.count > 2 {
-                        Button(action: {
-                            withAnimation {
-                                showAllHabits.toggle()
+                    
+                    // Today's habits section
+                    VStack(alignment: .center, spacing: 16) {
+                        
+                        let habitsToShow = showAllHabits ? habits : Array(habits.prefix(2))
+                        
+                        ForEach(habitsToShow) { habit in
+                            HabitCard(
+                                title: habit.name,
+                                cardWidth: 310,
+                                habitProgress: 0.25,
+                                isCheckedInToday: true,
+                                frequency: habit.frequency.rawValue,
+                                nextCheckIn: "Today, 8 PM"
+                            )
+                        }
+                        
+                        if habits.count > 2 {
+                            Button(action: {
+                                withAnimation {
+                                    showAllHabits.toggle()
+                                }
+                            }) {
+                                Text(showAllHabits ? "Show Less" : "Show More")
+                                    .foregroundColor(.blue)
+                                    .padding(.horizontal)
                             }
-                        }) {
-                            Text(showAllHabits ? "Show Less" : "Show More")
-                                .foregroundColor(.blue)
-                                .padding(.horizontal)
                         }
                     }
-                }
-                Divider()
-                HStack {
-                    Text("Your Friends")
-                        .font(.title2)
-                        .bold()
-                        .padding(.horizontal)
+                    Divider()
+                    HStack {
+                        Text("Your Friends")
+                            .font(.title2)
+                            .bold()
+                            .padding(.horizontal)
+                        Spacer()
+                    }
+                    
+                    // Friends section
+                    VStack(alignment: .center, spacing: 16) {
+                        ForEach(friendsHabits) { habit in
+                            HabitCard(
+                                title: habit.title,
+                                cardWidth: 310,
+                                habitProgress: 0.25,
+                                isCheckedInToday: true,
+                                frequency: "Daily",
+                                nextCheckIn: "Today, 8 PM"
+                            )
+                        }
+                    }
                     Spacer()
                 }
-                
-                // Friends section
-                VStack(alignment: .center, spacing: 16) {
-                    ForEach(friendsHabits) { habit in
-                        HabitCard(
-                            title: habit.title,
-                            cardWidth: 310,
-                            habitProgress: 0.25,
-                            isCheckedInToday: true,
-                            frequency: "Daily",
-                            nextCheckIn: "Today, 8 PM"
-                        )
+                .toolbar {
+                    Button {
+                        isShowingNewHabitView = true
+                    } label: {
+                        Text("Add habit")
                     }
                 }
-                Spacer()
-            }
-            .toolbar {
-                Button {
-                    isShowingNewHabitView = true
-                } label: {
-                    Text("Add habit")
+                .navigationDestination(isPresented: $isShowingNewHabitView) {
+                    NewHabitView(appState: appState)
                 }
-            }
-            .navigationDestination(isPresented: $isShowingNewHabitView) {
-                NewHabitView(appState: appState)
-            }
-            .onAppear {
-                print("HABIT NUMBER: \(user!.habits)")
             }
         }
     }
