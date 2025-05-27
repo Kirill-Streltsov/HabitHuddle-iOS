@@ -16,9 +16,6 @@ extension NewHabitView {
         @Published var name: String = "This is a new habit"
         @Published var description: String = "This is a description"
         @Published var frequency: HabitFrequency = .daily
-        @Published var reminderTime: Date?
-        @Published var createdAt: Date?
-        @Published var updatedAt: Date?
 
         init(appState: AppState) {
             self.appState = appState
