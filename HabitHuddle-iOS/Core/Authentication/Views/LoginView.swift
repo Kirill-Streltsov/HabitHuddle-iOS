@@ -47,7 +47,7 @@ struct LoginView: View {
 
                 Button {
                     Task {
-                        if let codableUser = await viewModel.loginUser(username: username, password: password) {
+                        if let cu = await viewModel.loginUser(username: username, password: password) {
                             let codableHabitsResult = await viewModel.getUserHabits()
                             handleResult(codableHabitsResult) { codableHabits in
                                 for codableHabit in codableHabits {
