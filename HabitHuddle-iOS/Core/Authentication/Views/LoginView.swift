@@ -60,7 +60,7 @@ struct LoginView: View {
                                     )
                                     context.insert(habit)
                                 }
-                                viewModel.saveUser(codableUser, using: context)
+                                viewModel.saveUser(cu, using: context)
                             } onFailure: { apiError in
                                 print("Couldn't load user habits: \(apiError.localizedDescription)")
                             }
