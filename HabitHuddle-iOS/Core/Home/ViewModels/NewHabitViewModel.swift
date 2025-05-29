@@ -13,8 +13,8 @@ extension NewHabitView {
     final class ViewModel: ObservableObject {
         let appState: AppState
 
-        @Published var name: String = "Drink water"
-        @Published var description: String = "Gotta stay hydrated :)"
+        @Published var name: String = ""
+        @Published var description: String = ""
         @Published var frequency: HabitFrequency = .daily
         @Published var hasReminder: Bool = false
         @Published var reminderTime: Date = Date()

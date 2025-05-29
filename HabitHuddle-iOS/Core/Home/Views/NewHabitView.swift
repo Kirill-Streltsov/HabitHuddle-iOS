@@ -51,7 +51,7 @@ struct NewHabitView: View {
                     InputFormView {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Frequency")
-                                .font(.headline)
+                                .font(.subheadline)
 
                             Picker("Frequency", selection: $viewModel.frequency) {
                                 ForEach(HabitFrequency.allCases, id: \.self) { frequency in
