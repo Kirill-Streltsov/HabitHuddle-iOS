@@ -16,6 +16,8 @@ extension NewHabitView {
         @Published var name: String = "Drink water"
         @Published var description: String = "Gotta stay hydrated :)"
         @Published var frequency: HabitFrequency = .daily
+        @Published var hasReminder: Bool = false
+        @Published var reminderTime: Date = Date()
 
         init(appState: AppState) {
             self.appState = appState
@@ -23,7 +25,15 @@ extension NewHabitView {
 
         func sendHabit() async -> Result<CodableHabit, APIError> {
             do {
-                let payload = HabitPayload(name: name, description: description, frequency: frequency.rawValue)
+                let reminder: Date? = hasReminder ? reminderTime : nil
+
+                let payload = HabitPayload(
+                    name: name,
+                    description: description.isEmpty ? nil : description,
+                    frequency: frequency.rawValue,
+                    reminderTime: reminder
+                )
+
                 let habitResponse = try await NetworkingManager.shared.request(
                     endpoint: .createHabit(),
                     method: .post,
@@ -31,6 +41,7 @@ extension NewHabitView {
                     responseType: CodableHabit.self
                 )
                 return .success(habitResponse)
+
             } catch let error as APIError {
                 return .failure(error)
             } catch {

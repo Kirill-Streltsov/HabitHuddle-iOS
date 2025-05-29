@@ -5,8 +5,11 @@
 //  Created by Kirill on 26.05.25.
 //
 
-struct HabitPayload: Encodable {
+import Foundation
+
+struct HabitPayload: Codable {
     let name: String
-    let description: String
+    let description: String?
     let frequency: String
+    let reminderTime: Date?
 }
