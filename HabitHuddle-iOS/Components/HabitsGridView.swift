@@ -18,7 +18,7 @@ struct HabitsGridView: View {
 
     var body: some View {
         LazyVGrid(columns: columns, spacing: 16) {
-            ForEach(habits) { habit in
+            ForEach(habits, id: \.self) { habit in
                 HabitCard(
                     title: habit.name,
                     cardWidth: UIScreen.main.bounds.width / 2 - 32,
