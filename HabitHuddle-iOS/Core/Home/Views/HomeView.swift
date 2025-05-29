@@ -70,6 +70,15 @@ struct HomeView: View {
                     }
                     Spacer()
                 }
+                .toolbar {
+                    if !habits.isEmpty {
+                        Button {
+                            isShowingNewHabitView = true
+                        } label: {
+                            Text("Add a habit")
+                        }
+                    }
+                }
                 .navigationDestination(isPresented: $isShowingNewHabitView) {
                     NewHabitView(appState: appState)
                 }
