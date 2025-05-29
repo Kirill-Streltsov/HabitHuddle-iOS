@@ -42,9 +42,15 @@ struct HomeView: View {
                         .padding(.horizontal)
                         Spacer()
                     }
-
-                    // Today's habits section
-                    HabitsGridView(habits: habits)
+                    
+                    if habits.isEmpty {
+                        EmptyStateView(title: "You don't have any habits yet", subtitle: "Add your first one!") {
+                            isShowingNewHabitView = true
+                        }
+                    } else {
+                        // Today's habits section
+                        HabitsGridView(habits: habits)
+                    }
 
                     Divider()
                     HStack {
@@ -67,13 +73,6 @@ struct HomeView: View {
                         }
                     }
                     Spacer()
-                }
-                .toolbar {
-                    Button {
-                        isShowingNewHabitView = true
-                    } label: {
-                        Text("Add habit")
-                    }
                 }
                 .navigationDestination(isPresented: $isShowingNewHabitView) {
                     NewHabitView(appState: appState)
