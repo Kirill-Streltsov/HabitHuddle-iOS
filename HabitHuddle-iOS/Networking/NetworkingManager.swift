@@ -40,7 +40,6 @@ final class NetworkingManager {
 
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpBody = try jsonEncoder.encode(body)
-        print("DATA: \(body)")
 
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         guard let response = response as? HTTPURLResponse else {
