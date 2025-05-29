@@ -32,14 +32,10 @@ struct HomeView: View {
             NavigationStack {
                 ScrollView {
                     HStack {
-                        VStack(alignment: .leading) {
-                            Text("Hello \(user.name)! 👋")
-                                .font(.title)
-                            Text("Today's Habits")
-                                .font(.title2)
-                        }
-                        .fontWeight(.bold)
-                        .padding(.horizontal)
+                        Text(user.name)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.horizontal)
                         Spacer()
                     }
                     
@@ -54,7 +50,7 @@ struct HomeView: View {
 
                     Divider()
                     HStack {
-                        Text("Your Friends")
+                        Text("Your friends")
                             .font(.title2)
                             .bold()
                             .padding(.horizontal)
@@ -77,6 +73,7 @@ struct HomeView: View {
                 .navigationDestination(isPresented: $isShowingNewHabitView) {
                     NewHabitView(appState: appState)
                 }
+                .navigationTitle("Habits of the day")
             }
         }
     }
