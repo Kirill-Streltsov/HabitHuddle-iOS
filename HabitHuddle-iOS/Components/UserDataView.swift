@@ -43,5 +43,5 @@ struct UserDataView<Content: View>: View {
     return UserDataView { user in
         Text("Previewing \(user.name)")
     }
-    //.modelContainer(container)
+    .modelContainer(container)
 }
