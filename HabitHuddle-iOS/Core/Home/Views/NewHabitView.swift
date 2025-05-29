@@ -25,7 +25,7 @@ struct NewHabitView: View {
                     // MARK: - Header
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Create a New Habit")
-                            .font(.largeTitle.bold())
+                            .font(.largeTitle.weight(.semibold))
                         Text("Stay consistent by tracking what matters.")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
@@ -35,13 +35,15 @@ struct NewHabitView: View {
                     // MARK: - Input Card
                     InputFormView {
                         VStack(spacing: 16) {
-                            TextField("Habit name", text: $viewModel.name)
-                                .textFieldStyle(.roundedBorder)
-                                .autocapitalization(.sentences)
+                            CustomStyledTextField(
+                                placeholder: "Habit name",
+                                text: $viewModel.name
+                            )
 
-                            TextField("Description (optional)", text: $viewModel.description)
-                                .textFieldStyle(.roundedBorder)
-                                .autocapitalization(.sentences)
+                            CustomStyledTextField(
+                                placeholder: "Description (optional)",
+                                text: $viewModel.description
+                            )
                         }
                     }
 
@@ -90,8 +92,6 @@ struct NewHabitView: View {
                 }
                 .padding(.top)
             }
-            .navigationTitle("New Habit")
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
 
