@@ -24,6 +24,10 @@ struct HabitHuddle_iOSApp: App {
     }()
 
     @StateObject private var appState = AppState()
+    
+    init() {
+        AppLaunchChecker.clearKeychainIfFreshInstall()
+    }
 
     var body: some Scene {
         WindowGroup {
