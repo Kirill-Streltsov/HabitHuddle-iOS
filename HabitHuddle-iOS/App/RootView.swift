@@ -17,12 +17,6 @@ struct RootView: View {
                     Tab("Habits", systemImage: "brain.head.profile") {
                         HomeView()
                     }
-                    Tab("Home", systemImage: "house") {
-                        HomeView()
-                    }
-                    Tab("Home", systemImage: "house") {
-                        HomeView()
-                    }
                 }
                 .transition(.move(edge: .trailing))
 
