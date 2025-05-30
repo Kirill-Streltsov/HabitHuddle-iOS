@@ -25,8 +25,12 @@ struct Endpoint {
     static func createHabit() -> Endpoint {
         Endpoint(path: "habits/create")
     }
+    
+    static func updateHabit(habitID: UUID) -> Endpoint {
+        Endpoint(path: "habits/\(habitID)")
+    }
 
     static func getMyHabits() -> Endpoint {
-        Endpoint(path: "habits")
+        Endpoint(path: "habits/")
     }
 }
