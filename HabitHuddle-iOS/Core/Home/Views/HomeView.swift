@@ -9,7 +9,9 @@ import SwiftData
 import SwiftUI
 
 struct HomeView: View {
-    @Query var habits: [Habit]
+    
+    @Query(sort: [SortDescriptor(\Habit.updatedAt, order: .reverse)])
+    var habits: [Habit]
 
     @EnvironmentObject var appState: AppState
 

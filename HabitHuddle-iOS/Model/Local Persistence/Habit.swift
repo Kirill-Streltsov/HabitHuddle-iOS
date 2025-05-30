@@ -19,7 +19,7 @@ final class Habit: Identifiable, Hashable {
     var createdAt: Date?
     var updatedAt: Date?
 
-    init(id: UUID, user: LightweightUser, name: String, description: String, frequency: HabitFrequency, reminderTime: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
+    init(id: UUID, user: LightweightUser, name: String, description: String, frequency: HabitFrequency, reminderTime: Date? = nil, createdAt: Date = .now, updatedAt: Date = .now) {
         self.id = id
         self.user = user
         self.name = name

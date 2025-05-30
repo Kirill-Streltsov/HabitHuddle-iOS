@@ -150,6 +150,7 @@ struct HabitFormView: View {
                     habit?.habitDescription = codableHabit.description
                     habit?.frequency = codableHabit.frequency
                     habit?.reminderTime = codableHabit.reminderTime
+                    habit?.updatedAt = .now
                 }
                 do {
                     try context.save()
