@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Habit: Identifiable {
+final class Habit: Identifiable, Hashable {
     var id: UUID
     var user: LightweightUser
     var name: String

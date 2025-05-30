@@ -11,7 +11,6 @@ import SwiftUI
 extension NewHabitView {
     @MainActor
     final class ViewModel: ObservableObject {
-        let appState: AppState
 
         @Published var name: String = ""
         @Published var description: String = ""
@@ -19,9 +18,6 @@ extension NewHabitView {
         @Published var hasReminder: Bool = false
         @Published var reminderTime: Date = Date()
 
-        init(appState: AppState) {
-            self.appState = appState
-        }
 
         func sendHabit() async -> Result<CodableHabit, APIError> {
             do {

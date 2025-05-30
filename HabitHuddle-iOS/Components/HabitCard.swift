@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct HabitCard: View {
-    let title: String
-    let cardWidth: CGFloat
-    let habitProgress: CGFloat
+    let habit: Habit
+    let cardWidth: CGFloat =  UIScreen.main.bounds.width / 2 - 32
+    let habitProgress: CGFloat = 0.25
     @State private var isCheckedIn: Bool = false
-
-    let frequency: String
 
     var body: some View {
         VStack(alignment: .center, spacing: 4) {
-            Text(title)
+            Text(habit.name)
                 .font(.system(size: 20, weight: .semibold))
                 .frame(maxHeight: 50)
                 .multilineTextAlignment(.center)
@@ -30,7 +28,7 @@ struct HabitCard: View {
                 }
                 .frame(width: 50, height: 50)
 
-            Text("Frequency: \(frequency)")
+            Text("Frequency: \(habit.frequency)")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -60,34 +58,10 @@ struct HabitCard: View {
 }
 
 #Preview {
+    let habit = Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "Demo Habit", description: "This is some description", frequency: .daily)
     VStack {
         HStack(spacing: 16) {
-            HabitCard(
-                title: "Ride a bycicle",
-                cardWidth: 175,
-                habitProgress: 0.25,
-                frequency: "Daily",
-            )
-            HabitCard(
-                title: "Drink water",
-                cardWidth: 175,
-                habitProgress: 0.25,
-                frequency: "Daily",
-            )
-        }
-        HStack(spacing: 16) {
-            HabitCard(
-                title: "Eat a lot of protein",
-                cardWidth: 175,
-                habitProgress: 0.25,
-                frequency: "Daily",
-            )
-            HabitCard(
-                title: "Drink water",
-                cardWidth: 175,
-                habitProgress: 0.25,
-                frequency: "Daily",
-            )
+            HabitCard(habit: habit)
         }
     }
 }
