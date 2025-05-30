@@ -47,10 +47,10 @@ struct HomeView: View {
                     }
                 }
                 .navigationDestination(isPresented: $isShowingNewHabitView) {
-                    NewHabitView()
+                    HabitFormView()
                 }
                 .navigationDestination(for: Habit.self) { habit in
-                    NewHabitView(habit: habit)
+                    HabitFormView(habit: habit)
                 }
                 .navigationTitle("Habits of the day")
             }

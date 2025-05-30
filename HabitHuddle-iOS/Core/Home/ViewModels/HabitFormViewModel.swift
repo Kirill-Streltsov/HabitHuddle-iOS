@@ -1,5 +1,5 @@
 //
-//  NewHabitViewModel.swift
+//  HabitFormViewModel.swift
 //  HabitHuddle-iOS
 //
 //  Created by Kirill on 25.05.25.
@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-extension NewHabitView {
+extension HabitFormView {
     @MainActor
     final class ViewModel: ObservableObject {
 

@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct NewHabitView: View {
+struct HabitFormView: View {
     
     enum Mode {
         case editing
@@ -86,7 +86,7 @@ struct NewHabitView: View {
                 
                 // MARK: - Submit Button
                 Button(action: saveHabit) {
-                    Text("Save Habit")
+                    Text("Save")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : Color.accentColor)
@@ -157,5 +157,5 @@ struct NewHabitView: View {
 }
 
 #Preview {
-    NewHabitView()
+    HabitFormView()
 }
