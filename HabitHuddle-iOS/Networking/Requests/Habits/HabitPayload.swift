@@ -10,6 +10,6 @@ import Foundation
 struct HabitPayload: Codable {
     let name: String
     let description: String?
-    let frequency: String
+    let duration: String
     let reminderTime: Date?
 }

@@ -27,6 +27,7 @@ struct HabitHuddle_iOSApp: App {
     
     init() {
         AppLaunchChecker.clearKeychainIfFreshInstall()
+        print("TOKEN MANAGER: \(TokenManager.token)")
     }
 
     var body: some Scene {

@@ -14,7 +14,8 @@ extension HabitFormView {
 
         @Published var name: String = ""
         @Published var description: String = ""
-        @Published var frequency: HabitFrequency = .daily
+        @Published var hasCheckedIn: Bool = false
+        @Published var duration: HabitDuration = .oneMonth
         @Published var hasReminder: Bool = false
         @Published var reminderTime: Date = Date()
 
@@ -26,7 +27,7 @@ extension HabitFormView {
                 let payload = HabitPayload(
                     name: name,
                     description: description,
-                    frequency: frequency.rawValue,
+                    duration: duration.rawValue,
                     reminderTime: reminder
                 )
 
@@ -52,7 +53,7 @@ extension HabitFormView {
                 let payload = HabitPayload(
                     name: name,
                     description: description,
-                    frequency: frequency.rawValue,
+                    duration: duration.rawValue,
                     reminderTime: reminder
                 )
 

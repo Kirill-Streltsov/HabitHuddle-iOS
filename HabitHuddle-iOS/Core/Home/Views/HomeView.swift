@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @Query(sort: [SortDescriptor(\Habit.updatedAt, order: .reverse)])
+    @Query(sort: [SortDescriptor(\Habit.createdAt, order: .reverse)])
     var habits: [Habit]
 
     @EnvironmentObject var appState: AppState

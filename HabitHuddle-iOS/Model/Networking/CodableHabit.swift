@@ -12,7 +12,7 @@ struct CodableHabit: Codable, Identifiable {
     let user: LightweightUser
     let name: String
     let description: String
-    let frequency: HabitFrequency
+    let duration: HabitDuration
     let reminderTime: Date?
     let createdAt: Date?
     let updatedAt: Date?

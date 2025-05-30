@@ -20,17 +20,9 @@ struct HabitCard: View {
                 .frame(maxHeight: 50)
                 .multilineTextAlignment(.center)
 
-            CheckedInStateView(isCheckedIn: $isCheckedIn)
-                .onTapGesture {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        isCheckedIn.toggle()
-                    }
-                }
+            CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 50)
                 .frame(width: 50, height: 50)
-
-            Text("Frequency: \(habit.frequency)")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+                .padding(.vertical)
 
             Text("4/16")
                 .font(.subheadline)
@@ -58,7 +50,7 @@ struct HabitCard: View {
 }
 
 #Preview {
-    let habit = Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "Demo Habit", description: "This is some description", frequency: .daily)
+    let habit = Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "Demo Habit", description: "This is some description", duration: .oneWeek)
     VStack {
         HStack(spacing: 16) {
             HabitCard(habit: habit)

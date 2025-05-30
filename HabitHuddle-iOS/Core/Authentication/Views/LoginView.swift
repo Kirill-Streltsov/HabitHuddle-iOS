@@ -56,7 +56,7 @@ struct LoginView: View {
                                         user: codableHabit.user,
                                         name: codableHabit.name,
                                         description: codableHabit.description,
-                                        frequency: codableHabit.frequency
+                                        duration: codableHabit.duration
                                     )
                                     context.insert(habit)
                                 }
