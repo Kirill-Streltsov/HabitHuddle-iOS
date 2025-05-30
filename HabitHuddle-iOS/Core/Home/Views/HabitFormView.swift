@@ -125,7 +125,7 @@ struct HabitFormView: View {
         switch mode {
         case .adding:
             Task {
-                let result = await viewModel.sendHabit()
+                let result = await viewModel.createHabit()
                 handleResult(result) { codableHabit in
                     let habit = Habit(
                         id: codableHabit.id,
@@ -142,15 +142,21 @@ struct HabitFormView: View {
                 }
             }
         case .editing:
-            habit?.name = viewModel.name
-            habit?.habitDescription = viewModel.description
-            habit?.frequency = viewModel.frequency
-            habit?.reminderTime = viewModel.reminderTime
-            do {
-                try context.save()
-                dismiss()
-            } catch {
-                print("❌ Failed to save an already existing habit: \(error.localizedDescription)")
+            Task {
+                guard let habitID = habit?.id else { return }
+                let result = await viewModel.updateHabit(habitID: habitID)
+                handleResult(result) { codableHabit in
+                    habit?.name = codableHabit.name
+                    habit?.habitDescription = codableHabit.description
+                    habit?.frequency = codableHabit.frequency
+                    habit?.reminderTime = codableHabit.reminderTime
+                }
+                do {
+                    try context.save()
+                    dismiss()
+                } catch {
+                    print("❌ Failed to save an already existing habit: \(error.localizedDescription)")
+                }
             }
         }
     }
