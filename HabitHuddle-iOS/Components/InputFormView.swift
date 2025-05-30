@@ -17,6 +17,5 @@ struct InputFormView<Content: View>: View {
             .cornerRadius(16)
             .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
             .padding(.horizontal)
-            .animation(.easeInOut(duration: 0.25), value: UUID()) // smooth transitions
     }
 }

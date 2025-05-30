@@ -25,7 +25,7 @@ extension HabitFormView {
 
                 let payload = HabitPayload(
                     name: name,
-                    description: description.isEmpty ? nil : description,
+                    description: description,
                     frequency: frequency.rawValue,
                     reminderTime: reminder
                 )
@@ -51,7 +51,7 @@ extension HabitFormView {
 
                 let payload = HabitPayload(
                     name: name,
-                    description: description.isEmpty ? nil : description,
+                    description: description,
                     frequency: frequency.rawValue,
                     reminderTime: reminder
                 )

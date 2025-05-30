@@ -122,42 +122,45 @@ struct HabitFormView: View {
     }
     
     private func saveHabit() {
-        switch mode {
-        case .adding:
-            Task {
-                let result = await viewModel.createHabit()
-                handleResult(result) { codableHabit in
-                    let habit = Habit(
-                        id: codableHabit.id,
-                        user: codableHabit.user,
-                        name: codableHabit.name,
-                        description: codableHabit.description,
-                        frequency: codableHabit.frequency,
-                        reminderTime: codableHabit.reminderTime
-                    )
-                    context.insert(habit)
-                    dismiss()
-                } onFailure: { error in
-                    print("❌ Failed to save new habit: \(error.localizedDescription)")
-                }
-            }
-        case .editing:
-            Task {
-                guard let habitID = habit?.id else { return }
-                let result = await viewModel.updateHabit(habitID: habitID)
-                handleResult(result) { codableHabit in
-                    habit?.name = codableHabit.name
-                    habit?.habitDescription = codableHabit.description
-                    habit?.frequency = codableHabit.frequency
-                    habit?.reminderTime = codableHabit.reminderTime
-                    habit?.updatedAt = .now
-                }
-                do {
-                    try context.save()
-                    dismiss()
-                } catch {
-                    print("❌ Failed to save an already existing habit: \(error.localizedDescription)")
-                }
+        Task {
+            switch mode {
+            case .adding:
+                    let result = await viewModel.createHabit()
+                    handleResult(result) { codableHabit in
+                        let habit = Habit(
+                            id: codableHabit.id,
+                            user: codableHabit.user,
+                            name: codableHabit.name,
+                            description: codableHabit.description,
+                            frequency: codableHabit.frequency,
+                            reminderTime: codableHabit.reminderTime,
+                            createdAt: .now,
+                            updatedAt: .now
+                        )
+                        context.insert(habit)
+                        dismiss()
+                    } onFailure: { error in
+                        print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
+                    }
+            case .editing:
+                    guard let habitID = habit?.id else { return }
+                    let result = await viewModel.updateHabit(habitID: habitID)
+                    handleResult(result) { codableHabit in
+                        habit?.name = codableHabit.name
+                        habit?.habitDescription = codableHabit.description
+                        habit?.frequency = codableHabit.frequency
+                        habit?.reminderTime = codableHabit.reminderTime
+                        habit?.updatedAt = .now
+                        
+                        do {
+                            try context.save()
+                            dismiss()
+                        } catch {
+                            print("❌ Failed to save an already existing habit locally: \(error.localizedDescription)")
+                        }
+                    } onFailure: { error in
+                        print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
+                    }
             }
         }
     }
