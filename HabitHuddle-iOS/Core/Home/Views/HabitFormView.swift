@@ -44,9 +44,11 @@ struct HabitFormView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(mode == .adding ? "Create a New Habit" : "Update your habit")
                             .font(.largeTitle.weight(.semibold))
-                        Text("Stay consistent by tracking what matters.")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
+                        if mode == .adding {
+                            Text("Stay consistent by tracking what matters.")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
                     }
                     .padding(.horizontal)
                     
