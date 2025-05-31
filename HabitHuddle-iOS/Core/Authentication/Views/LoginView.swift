@@ -98,7 +98,7 @@ struct LoginView: View {
                 description: codableHabit.description,
                 duration: codableHabit.duration,
             )
-            codableHabit.checkIns.forEach { _ in
+            codableHabit.checkIns?.forEach { _ in
                 let checkIn = HabitCheckIn(habit: habit)
                 context.insert(checkIn)
             }

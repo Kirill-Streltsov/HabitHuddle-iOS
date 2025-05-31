@@ -16,5 +16,5 @@ struct CodableHabit: Codable, Identifiable {
     let reminderTime: Date?
     let createdAt: Date?
     let updatedAt: Date?
-    let checkIns: [CodableHabitCheckIn]
+    let checkIns: [CodableHabitCheckIn]?
 }
