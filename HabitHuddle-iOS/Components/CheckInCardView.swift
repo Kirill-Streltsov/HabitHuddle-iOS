@@ -10,6 +10,7 @@ import SwiftUI
 struct CheckInCardView: View {
     
     @Environment(\.modelContext) private var context
+    @State private var scale = 1.0
     let habit: Habit
     let action: () -> ()
 
@@ -18,11 +19,17 @@ struct CheckInCardView: View {
             HapticManager.trigger(.success)
             habit.toggleCheckIn(in: context)
             action()
+            scale += 0.075
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                scale -= 0.075
+            }
         } label: {
             VStack(spacing: 16) {
                 HStack {
                     AnimatableRing(habit: habit)
                         .frame(width: 175, height: 175)
+                        .scaleEffect(scale)
+                        .animation(.easeInOut(duration: 0.2), value: scale)
                 }
                 Text(habit.isCheckedInToday ? "You're all set for today!" : "Tap to Check In")
                     .font(.headline)

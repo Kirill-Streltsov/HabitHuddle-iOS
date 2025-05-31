@@ -189,7 +189,6 @@ struct StatisticsView: View {
                     Text("Keep up the amazing work! 🔥")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                        .fontWeight(.light)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 Image(systemName: "chart.line.uptrend.xyaxis")
