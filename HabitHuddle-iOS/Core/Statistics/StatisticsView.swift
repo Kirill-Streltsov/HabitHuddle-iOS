@@ -146,26 +146,28 @@ struct StatisticsView: View {
     // MARK: Body
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 30) {
-                headerSection
-                CardView {
-                    VStack(alignment: .trailing) {
-                        HStack {
-                            completionRateSection
-                            missedDaysSection
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 30) {
+                    headerSection
+                    CardView {
+                        VStack(alignment: .trailing) {
+                            HStack {
+                                completionRateSection
+                                missedDaysSection
+                            }
+                            Text(missedDaysText)
+                                .font(.subheadline)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.secondary)
                         }
-                        Text(missedDaysText)
-                            .font(.subheadline)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.secondary)
                     }
-                }
-                CardView {
-                    streaksSection
-                }
-                CardView {
-                    checkInTimeDistributionSection
+                    CardView {
+                        streaksSection
+                    }
+                    CardView {
+                        checkInTimeDistributionSection
+                    }
                 }
             }
             .navigationTitle(habit.name + " Statistics")
@@ -175,17 +177,28 @@ struct StatisticsView: View {
     // MARK: Sections
     
     private var headerSection: some View {
-        VStack(spacing: 4) {
-            Text(habit.habitDescription)
-                .font(.body)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-            
-            Text("Created on \(habit.createdAt.formatted(date: .abbreviated, time: .omitted))")
-                .font(.footnote)
-                .foregroundColor(.gray)
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                VStack {
+                    Text("+24%")
+                        .font(.title)
+                        .bold()
+                        .foregroundStyle(.green)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text("Keep up the amazing work! 🔥")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .fontWeight(.light)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                Image(systemName: "chart.line.uptrend.xyaxis")
+                    .foregroundStyle(.green.opacity(0.8))
+                    .font(.system(size: 75))
+            }
+            .padding(.horizontal)
         }
+        .padding(.horizontal)
     }
     
     private var completionRateSection: some View {
