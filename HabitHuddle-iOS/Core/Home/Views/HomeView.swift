@@ -23,7 +23,7 @@ struct HomeView: View {
             NavigationStack {
                 ScrollView {
                     HStack {
-                        Text(user.name)
+                        Text("Hello, \(user.name) 👋")
                             .font(.title2)
                             .fontWeight(.bold)
                             .padding(.horizontal)

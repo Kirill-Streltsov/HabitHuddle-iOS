@@ -18,7 +18,7 @@ struct HabitCard: View {
                 .frame(maxHeight: 50)
                 .multilineTextAlignment(.center)
 
-            CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 50)
+            CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 65)
                 .padding(.vertical)
 
             Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays)")
