@@ -68,59 +68,73 @@ extension Habit {
 
 // MARK: Creating a custom habit
 extension Habit {
-    static func createTestHabitWithCheckIns() -> Habit {
-        
-        
-        let habit = Habit(
-            id: UUID(),
-            user: LightweightUser(id: UUID()),
-            name: "Read Books",
-            description: "Read at least 20 pages every day",
-            duration: .oneMonth,
-            reminderTime: Calendar.current.date(bySettingHour: 20, minute: 0, second: 0, of: .now)
-        )
-        
-        let calendar = Calendar.current
-        let now = Date()
-        
-        let maxCount = 21
-        
-        var uniqueDates: [Date] = []
-        var usedDays = Set<String>() // To track day components like "yyyy-MM-dd"
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        while uniqueDates.count < maxCount {
-            let randomDayOffset = Int.random(in: 0..<30)
-            let randomHour = Int.random(in: 0..<24)
-            let randomMinute = Int.random(in: 0..<60)
-            let randomSecond = Int.random(in: 0..<60)
-            
-            guard let randomDateBase = calendar.date(byAdding: .day, value: -randomDayOffset, to: now),
-                  let randomDate = calendar.date(bySettingHour: randomHour, minute: randomMinute, second: randomSecond, of: randomDateBase)
-            else {
-                continue
-            }
-            
-            let dayString = dateFormatter.string(from: randomDate)
-            
-            // Check if day already used
-            if !usedDays.contains(dayString) {
-                usedDays.insert(dayString)
-                uniqueDates.append(randomDate)
+    static func createTestHabitsWithCheckIns() -> [Habit] {
+        let namesAndDescriptions: [(String, String)] = [
+            ("Morning Run", "Go for a run every morning before 8 AM"),
+            ("Meditate", "Practice meditation for 10 minutes daily"),
+            ("Drink Water", "Drink at least 2 liters of water per day"),
+            ("Write Journal", "Write a daily journal entry before bed"),
+            ("Stretching", "Stretch for 5 minutes after waking up"),
+            ("Learn German", "Practice German vocabulary daily"),
+            ("Code Practice", "Solve 1 coding problem every day"),
+            ("No Sugar", "Avoid all sugary foods for a month"),
+            ("Gratitude List", "Write 3 things you're grateful for"),
+            ("Sleep by 11", "Go to bed before 11 PM")
+        ]
+
+        func days(for duration: HabitDuration) -> Int {
+            switch duration {
+            case .oneWeek: return 7
+            case .twoWeeks: return 14
+            case .oneMonth: return 30
             }
         }
-        
-        uniqueDates.sort()
-        
-        var checkIns: [HabitCheckIn] = []
-        for i in 0..<maxCount {
-            checkIns.append(HabitCheckIn(date: uniqueDates[i], habit: habit))
+
+        var habits: [Habit] = []
+
+        for i in 0..<namesAndDescriptions.count {
+            let (name, description) = namesAndDescriptions[i]
+            let duration: HabitDuration = [.oneWeek, .twoWeeks, .oneMonth].randomElement()!
+            let numberOfDays = days(for: duration)
+
+            // Random start date within the last 2 weeks
+            let calendar = Calendar.current
+            let now = Date()
+            let randomOffset = Int.random(in: 0..<14)
+            guard let createdAt = calendar.date(byAdding: .day, value: -randomOffset, to: now) else { continue }
+
+            let habit = Habit(
+                id: UUID(),
+                user: LightweightUser(id: UUID()),
+                name: name,
+                description: description,
+                duration: duration,
+                reminderTime: calendar.date(bySettingHour: Int.random(in: 6...22), minute: 0, second: 0, of: now)
+            )
+            habit.createdAt = createdAt
+
+            // Calculate valid date range
+            let endDate = calendar.date(byAdding: .day, value: numberOfDays - 1, to: createdAt)!
+
+            // Simulate some check-ins within that valid range
+            var checkIns: [HabitCheckIn] = []
+            for dayOffset in 0..<numberOfDays {
+                let date = calendar.date(byAdding: .day, value: dayOffset, to: createdAt)!
+                if Bool.random() { // 50% chance the user checked in
+                    let checkInTime = calendar.date(
+                        bySettingHour: Int.random(in: 6...23),
+                        minute: Int.random(in: 0..<60),
+                        second: Int.random(in: 0..<60),
+                        of: date
+                    )!
+                    checkIns.append(HabitCheckIn(date: checkInTime, habit: habit))
+                }
+            }
+
+            habit.checkIns = checkIns
+            habits.append(habit)
         }
-        habit.checkIns = checkIns
-        habit.createdAt = uniqueDates[0]
-        
-        return habit
+
+        return habits
     }
 }

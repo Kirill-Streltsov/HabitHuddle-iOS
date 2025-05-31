@@ -14,6 +14,7 @@ struct HomeView: View {
     var habits: [Habit]
 
     @EnvironmentObject var appState: AppState
+    @Environment(\.modelContext) private var context
 
     @State private var showAllHabits = false
     @State private var isShowingNewHabitView = false
@@ -47,6 +48,12 @@ struct HomeView: View {
                             Text("Add a habit")
                         }
                     }
+                }
+                .onAppear {
+//                    let newHabits = Habit.createTestHabitsWithCheckIns()
+//                    for newHabit in newHabits {
+//                        context.insert(newHabit)
+//                    }
                 }
                 .navigationDestination(isPresented: $isShowingNewHabitView) {
                     HabitFormView()
