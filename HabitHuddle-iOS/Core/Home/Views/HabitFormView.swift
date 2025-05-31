@@ -19,6 +19,7 @@ struct HabitFormView: View {
     let mode: Mode
     
     @State private var isCheckedIn = false
+    @State private var birthDate = Date.now
     @StateObject private var viewModel: ViewModel
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -80,6 +81,7 @@ struct HabitFormView: View {
                                     Image(systemName: "calendar.badge.clock")
                                         .foregroundStyle(.secondary)
                                     Text(mode == .adding ? Date.now.longFormatted : habit!.createdAt.fullFormatted)
+                                        .foregroundStyle(.secondary)
                                 }
                             }
                             
