@@ -83,7 +83,7 @@ extension Habit {
         let calendar = Calendar.current
         let now = Date()
         
-        let maxCount = 15
+        let maxCount = 21
         
         var uniqueDates: [Date] = []
         var usedDays = Set<String>() // To track day components like "yyyy-MM-dd"

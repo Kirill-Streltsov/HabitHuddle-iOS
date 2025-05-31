@@ -29,21 +29,6 @@ struct Streak {
 struct StatisticsView: View {
     let habit: Habit
 
-    @State private var selectedTimeRange: TimeRange = .month
-
-    enum TimeRange: String, CaseIterable, Identifiable {
-        case week = "Week"
-        case month = "Month"
-
-        var id: String { rawValue }
-        var days: Int {
-            switch self {
-            case .week: return 7
-            case .month: return 30
-            }
-        }
-    }
-
     // MARK: Computed properties
 
     private var totalDays: Int {
@@ -57,30 +42,6 @@ struct StatisticsView: View {
 
     private var missedDays: Int {
         totalDays - habit.checkIns.count
-    }
-
-    private var checkInsInRange: [HabitCheckIn] {
-        let calendar = Calendar.current
-        let cutoff = calendar.date(byAdding: .day, value: -selectedTimeRange.days, to: Date()) ?? Date()
-        return habit.checkIns.filter { $0.date >= cutoff }
-    }
-
-    private var dailyCheckIns: [CheckInDayCount] {
-        let calendar = Calendar.current
-
-        // Group checkIns by day within range
-        let grouped = Dictionary(grouping: checkInsInRange) { checkIn in
-            calendar.startOfDay(for: checkIn.date)
-        }
-
-        // Create array for all days in range, with zero if no checkins
-        let daysRange = (0..<selectedTimeRange.days).compactMap { offset -> Date? in
-            calendar.date(byAdding: .day, value: -offset, to: Date())
-        }.reversed()
-
-        return daysRange.map { date in
-            CheckInDayCount(date: date, count: grouped[calendar.startOfDay(for: date)]?.count ?? 0)
-        }
     }
 
     // Calculate longest consecutive streak
@@ -146,20 +107,23 @@ struct StatisticsView: View {
         ScrollView {
             VStack(spacing: 30) {
                 headerSection
-
-                Picker("Time Range", selection: $selectedTimeRange) {
-                    ForEach(TimeRange.allCases) { range in
-                        Text(range.rawValue).tag(range)
+                VStack{
+                    HStack {
+                        completionRateSection
+                            .background(.red)
+                        missedDaysSection
+                            .background(.blue)
+                    }
+                    HStack {
+                        Spacer()
+                        Text("\(habit.duration.numberOfDays - habit.checkIns.count) days missed out of \(habit.duration.numberOfDays)")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
                     }
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-
-                completionRateSection
+                
                 streaksSection
-                missedDaysSection
                 checkInTimeDistributionSection
-                frequencyHeatmapSection
             }
             .padding()
             .navigationTitle(habit.name + " Statistics")
@@ -208,8 +172,38 @@ struct StatisticsView: View {
                 .animation(.easeInOut, value: completionRate)
 
                 Text(String(format: "%.0f%%", completionRate))
-                    .font(.largeTitle.bold())
+                    .font(.title)
+                    .fontWeight(.semibold)
             }
+        }
+    }
+    
+    private var missedDaysSection: some View {
+        VStack(spacing: 8) {
+            Text("Missed Days")
+                .font(.headline)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            Chart {
+                SectorMark(
+                    angle: .value("Checked In", Double(habit.checkIns.count)),
+                    innerRadius: .ratio(0.6),
+                    angularInset: 1
+                )
+                .foregroundStyle(
+                    Color.green.gradient
+                    )
+
+                SectorMark(
+                    angle: .value("Missed", Double(habit.duration.numberOfDays - habit.checkIns.count)),
+                    innerRadius: .ratio(0.6),
+                    angularInset: 1
+                )
+                .foregroundStyle(
+                    Color.red.gradient
+                    )
+            }
+            .frame(height: 140)
         }
     }
 
@@ -245,39 +239,6 @@ struct StatisticsView: View {
                         .frame(maxWidth: 120)
                 }
             }
-        }
-    }
-
-    private var missedDaysSection: some View {
-        VStack(spacing: 8) {
-            Text("Missed Days")
-                .font(.headline)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            Chart {
-                SectorMark(
-                    angle: .value("Checked In", Double(habit.checkIns.count)),
-                    innerRadius: .ratio(0.6),
-                    angularInset: 1
-                )
-                .foregroundStyle(
-                    Color.green.gradient
-                    )
-
-                SectorMark(
-                    angle: .value("Missed", Double(habit.duration.numberOfDays - habit.checkIns.count)),
-                    innerRadius: .ratio(0.6),
-                    angularInset: 1
-                )
-                .foregroundStyle(
-                    Color.red.gradient
-                    )
-            }
-            .frame(height: 140)
-
-            Text("\(habit.duration.numberOfDays - habit.checkIns.count) days missed out of \(habit.duration.numberOfDays)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
         }
     }
     
@@ -328,22 +289,18 @@ struct StatisticsView: View {
                 }
             }
             .chartYAxis {
-                AxisMarks(values: Array(stride(from: 0, through: 23, by: 3))) // 0,3,6,...21,24
+                AxisMarks(values: Array(stride(from: 0, through: 23, by: 3))) { value in
+                    AxisValueLabel() {
+                        if let hourDouble = value.as(Double.self) {
+                            let hourInt = Int(hourDouble)
+                            Text("\(hourInt):00")
+                        } else {
+                            Text("-")
+                        }
+                    }
+                }
             }
             .frame(height: 200)
-        }
-    }
-
-    // Placeholder: Implement a calendar heatmap here if you want
-    private var frequencyHeatmapSection: some View {
-        VStack(spacing: 8) {
-            Text("Check-in Frequency Heatmap")
-                .font(.headline)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            Text("Feature coming soon...")
-                .foregroundColor(.gray)
-                .italic()
         }
     }
 }
