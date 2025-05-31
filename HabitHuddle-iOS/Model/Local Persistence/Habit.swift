@@ -91,17 +91,19 @@ extension Habit {
         }
 
         var habits: [Habit] = []
+        let calendar = Calendar.current
+        let now = Date()
 
         for i in 0..<namesAndDescriptions.count {
             let (name, description) = namesAndDescriptions[i]
             let duration: HabitDuration = [.oneWeek, .twoWeeks, .oneMonth].randomElement()!
             let numberOfDays = days(for: duration)
 
-            // Random start date within the last 2 weeks
-            let calendar = Calendar.current
-            let now = Date()
-            let randomOffset = Int.random(in: 0..<14)
-            guard let createdAt = calendar.date(byAdding: .day, value: -randomOffset, to: now) else { continue }
+            // Random creation date up to 14 days ago
+            guard let createdAt = calendar.date(byAdding: .day, value: -Int.random(in: 0..<14), to: now) else { continue }
+
+            // Compute end date
+            guard let endDate = calendar.date(byAdding: .day, value: numberOfDays - 1, to: createdAt) else { continue }
 
             let habit = Habit(
                 id: UUID(),
@@ -113,22 +115,22 @@ extension Habit {
             )
             habit.createdAt = createdAt
 
-            // Calculate valid date range
-            let endDate = calendar.date(byAdding: .day, value: numberOfDays - 1, to: createdAt)!
-
-            // Simulate some check-ins within that valid range
+            // Build all valid dates between createdAt and endDate (inclusive)
             var checkIns: [HabitCheckIn] = []
-            for dayOffset in 0..<numberOfDays {
-                let date = calendar.date(byAdding: .day, value: dayOffset, to: createdAt)!
-                if Bool.random() { // 50% chance the user checked in
-                    let checkInTime = calendar.date(
+            var currentDate = createdAt
+            while currentDate <= endDate {
+                if Bool.random() {
+                    // Random time during the day
+                    if let checkInTime = calendar.date(
                         bySettingHour: Int.random(in: 6...23),
                         minute: Int.random(in: 0..<60),
                         second: Int.random(in: 0..<60),
-                        of: date
-                    )!
-                    checkIns.append(HabitCheckIn(date: checkInTime, habit: habit))
+                        of: currentDate
+                    ) {
+                        checkIns.append(HabitCheckIn(date: checkInTime, habit: habit))
+                    }
                 }
+                currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
             }
 
             habit.checkIns = checkIns
@@ -138,3 +140,4 @@ extension Habit {
         return habits
     }
 }
+
