@@ -13,9 +13,9 @@ struct CardView<Content: View>: View {
     var body: some View {
         content()
             .padding()
-            .background(.black.opacity(0.03))
+            .background(Color(.systemBackground))
             .cornerRadius(16)
-            //.shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+            .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
             .padding(.horizontal)
     }
 }
