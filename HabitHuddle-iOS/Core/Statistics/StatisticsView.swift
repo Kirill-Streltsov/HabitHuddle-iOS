@@ -170,7 +170,7 @@ struct StatisticsView: View {
                     }
                 }
             }
-            .navigationTitle(habit.name + " Statistics")
+            .navigationTitle("Statistic")
         }
     }
     
