@@ -6,17 +6,7 @@
 //
 
 import SwiftUI
-
-import SwiftUI
 import Charts
-
-// MARK: - Models for Chart Data
-
-struct CheckInDayCount: Identifiable, Equatable {
-    let id = UUID()
-    let date: Date
-    let count: Int
-}
 
 struct Streak {
     let length: Int
@@ -27,6 +17,7 @@ struct Streak {
 // MARK: - Main Statistics View
 
 struct StatisticsView: View {
+    
     let habit: Habit
     
     // MARK: Computed properties
@@ -41,12 +32,6 @@ struct StatisticsView: View {
     }
     
     private var missedDays: Int {
-        print("HABIT DURATION: \(habit.duration.numberOfDays)")
-        print("HABIT CHECK IN COUNT: \(habit.checkIns.count)")
-        print("CHECK INS")
-        for checkIn in habit.checkIns {
-            print(checkIn.date)
-        }
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
         let startDate = calendar.startOfDay(for: habit.createdAt)
@@ -126,6 +111,19 @@ struct StatisticsView: View {
             }
         }
         return streak
+    }
+    
+    private var checkInTimeDistribution: [(date: Date, hour: Int)] {
+        
+        let calendar = Calendar.current
+        let filteredCheckIns = habit.checkIns.sorted(by: { $0.date < $1.date })
+        
+        return filteredCheckIns.map { checkIn in
+            (
+                date: calendar.startOfDay(for: checkIn.date),
+                hour: calendar.component(.hour, from: checkIn.date)
+            )
+        }
     }
     
     private var missedDaysText: String {
@@ -281,20 +279,7 @@ struct StatisticsView: View {
         }
         .frame(maxWidth: .infinity)
     }
-    
-    private var checkInTimeDistribution: [(date: Date, hour: Int)] {
-        
-        let calendar = Calendar.current
-        let filteredCheckIns = habit.checkIns.sorted(by: { $0.date < $1.date })
-        
-        return filteredCheckIns.map { checkIn in
-            (
-                date: calendar.startOfDay(for: checkIn.date),
-                hour: calendar.component(.hour, from: checkIn.date)
-            )
-        }
-    }
-    
+
     private var checkInTimeDistributionSection: some View {
         VStack(spacing: 8) {
             Text("Check-in Time Distribution")
