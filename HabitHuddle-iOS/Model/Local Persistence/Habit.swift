@@ -92,7 +92,6 @@ extension Habit {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         while uniqueDates.count < maxCount {
-            // Random day offset 0 to 29 days ago
             let randomDayOffset = Int.random(in: 0..<30)
             let randomHour = Int.random(in: 0..<24)
             let randomMinute = Int.random(in: 0..<60)
@@ -113,11 +112,14 @@ extension Habit {
             }
         }
         
+        uniqueDates.sort()
+        
         var checkIns: [HabitCheckIn] = []
         for i in 0..<maxCount {
             checkIns.append(HabitCheckIn(date: uniqueDates[i], habit: habit))
         }
         habit.checkIns = checkIns
+        habit.createdAt = uniqueDates[0]
         
         return habit
     }
