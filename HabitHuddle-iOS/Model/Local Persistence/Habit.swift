@@ -20,7 +20,7 @@ final class Habit: Identifiable, Hashable {
     var updatedAt: Date
     @Relationship(deleteRule: .cascade, inverse: \HabitCheckIn.habit)
     var checkIns: [HabitCheckIn] = []
-
+    
     init(
         id: UUID,
         user: LightweightUser,
@@ -50,17 +50,17 @@ extension Habit {
             Calendar.current.isDate($0.date, inSameDayAs: today)
         }
     }
-
+    
     func toggleCheckIn(in context: ModelContext) {
         let today = Calendar.current.startOfDay(for: .now)
-
+        
         if let existingCheckIn = checkIns.first(where: { Calendar.current.isDate($0.date, inSameDayAs: today) }) {
             context.delete(existingCheckIn)
         } else {
             let newCheckIn = HabitCheckIn(date: today, habit: self)
             checkIns.append(newCheckIn)
         }
-
+        
         updatedAt = .now
         try? context.save()
     }
@@ -81,23 +81,44 @@ extension Habit {
         )
         
         let calendar = Calendar.current
-        let today = Date()
-
-        // Create an array of dates by adding days from 1 to 14 (example)
-        var dates: [Date] = []
-
-        for i in 0...14 {
-            if let newDate = calendar.date(byAdding: .day, value: -i, to: today) {
-                dates.append(newDate)
+        let now = Date()
+        
+        let maxCount = 15
+        
+        var uniqueDates: [Date] = []
+        var usedDays = Set<String>() // To track day components like "yyyy-MM-dd"
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        while uniqueDates.count < maxCount {
+            // Random day offset 0 to 29 days ago
+            let randomDayOffset = Int.random(in: 0..<30)
+            let randomHour = Int.random(in: 0..<24)
+            let randomMinute = Int.random(in: 0..<60)
+            let randomSecond = Int.random(in: 0..<60)
+            
+            guard let randomDateBase = calendar.date(byAdding: .day, value: -randomDayOffset, to: now),
+                  let randomDate = calendar.date(bySettingHour: randomHour, minute: randomMinute, second: randomSecond, of: randomDateBase)
+            else {
+                continue
+            }
+            
+            let dayString = dateFormatter.string(from: randomDate)
+            
+            // Check if day already used
+            if !usedDays.contains(dayString) {
+                usedDays.insert(dayString)
+                uniqueDates.append(randomDate)
             }
         }
         
         var checkIns: [HabitCheckIn] = []
-        for i in 0...14 {
-            checkIns.append(HabitCheckIn(date: dates[i], habit: habit))
+        for i in 0..<maxCount {
+            checkIns.append(HabitCheckIn(date: uniqueDates[i], habit: habit))
         }
         habit.checkIns = checkIns
-
+        
         return habit
     }
 }

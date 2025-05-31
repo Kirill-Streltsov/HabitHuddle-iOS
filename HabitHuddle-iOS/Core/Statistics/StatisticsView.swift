@@ -34,14 +34,12 @@ struct StatisticsView: View {
     enum TimeRange: String, CaseIterable, Identifiable {
         case week = "Week"
         case month = "Month"
-        case year = "Year"
 
         var id: String { rawValue }
         var days: Int {
             switch self {
             case .week: return 7
             case .month: return 30
-            case .year: return 365
             }
         }
     }
@@ -158,7 +156,6 @@ struct StatisticsView: View {
                 .padding(.horizontal)
 
                 completionRateSection
-                dailyCheckInsSection
                 streaksSection
                 missedDaysSection
                 checkInTimeDistributionSection
@@ -216,33 +213,6 @@ struct StatisticsView: View {
         }
     }
 
-    private var dailyCheckInsSection: some View {
-        VStack(spacing: 8) {
-            Text("Daily Check-ins")
-                .font(.headline)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            Chart(dailyCheckIns) { data in
-                BarMark(
-                    x: .value("Day", data.date, unit: .day),
-                    y: .value("Check-Ins", data.count)
-                )
-                .foregroundStyle(Color.blue.gradient)
-                .cornerRadius(4)
-            }
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .day, count: selectedTimeRange == .week ? 1 : 7)) { val in
-                    AxisValueLabel(format: .dateTime.weekday(.abbreviated))
-                }
-            }
-            .chartYAxis {
-                AxisMarks(position: .leading)
-            }
-            .frame(height: 180)
-            .animation(.spring(), value: dailyCheckIns)
-        }
-    }
-
     private var streaksSection: some View {
         VStack(spacing: 12) {
             Text("Streaks")
@@ -290,34 +260,77 @@ struct StatisticsView: View {
                     innerRadius: .ratio(0.6),
                     angularInset: 1
                 )
-                .foregroundStyle(Color.green.gradient)
+                .foregroundStyle(
+                    Color.green.gradient
+                    )
 
                 SectorMark(
-                    angle: .value("Missed", Double(missedDays)),
+                    angle: .value("Missed", Double(habit.duration.numberOfDays - habit.checkIns.count)),
                     innerRadius: .ratio(0.6),
                     angularInset: 1
                 )
-                .foregroundStyle(Color.red.opacity(0.3))
+                .foregroundStyle(
+                    Color.red.gradient
+                    )
             }
             .frame(height: 140)
-            .animation(.easeInOut, value: missedDays)
 
-            Text("\(missedDays) days missed out of \(totalDays)")
+            Text("\(habit.duration.numberOfDays - habit.checkIns.count) days missed out of \(habit.duration.numberOfDays)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
     }
+    
+    private var checkInTimeDistribution: [(date: Date, hour: Int)] {
+        let calendar = Calendar.current
+        // Consider check-ins in the last 30 days only:
+        let cutoff = calendar.date(byAdding: .day, value: -30, to: Date()) ?? Date()
 
-    // Placeholder example: You can enhance this with actual time-of-day check-in data if you store it.
+        // Filter and map habit.checkIns to tuples of (day, hour)
+        // Use startOfDay to group check-ins by day (ignore time part)
+        let filteredCheckIns = habit.checkIns.filter { $0.date >= cutoff }.sorted(by: { $0.date < $1.date })
+        
+        print("THESE ARE THE HOURS")
+        for checkIn in filteredCheckIns {
+            print("DAY: \(calendar.component(.day, from: checkIn.date)) HOUR: \(calendar.component(.hour, from: checkIn.date))")
+        }
+        
+
+        return filteredCheckIns.map { checkIn in
+            (
+                date: calendar.startOfDay(for: checkIn.date),
+                hour: calendar.component(.hour, from: checkIn.date)
+            )
+        }
+    }
+
     private var checkInTimeDistributionSection: some View {
         VStack(spacing: 8) {
             Text("Check-in Time Distribution")
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            Text("Data not available")
-                .foregroundColor(.gray)
-                .italic()
+            Chart(checkInTimeDistribution, id: \.date) { data in
+                BarMark(
+                    x: .value("Date", data.date, unit: .day),
+                    y: .value("Hour", data.hour)
+                )
+                .foregroundStyle(.blue)
+            }
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day, count: 2)) { val in
+                    AxisValueLabel {
+                        if let date = val.as(Date.self) {
+                            Text(date, format: Date.FormatStyle().day(.twoDigits))
+                                .font(.caption2)
+                        }
+                    }
+                }
+            }
+            .chartYAxis {
+                AxisMarks(values: Array(stride(from: 0, through: 23, by: 3))) // 0,3,6,...21,24
+            }
+            .frame(height: 200)
         }
     }
 
