@@ -15,10 +15,9 @@ extension HabitFormView {
         @Published var name: String = ""
         @Published var description: String = ""
         @Published var hasCheckedIn: Bool = false
-        @Published var duration: HabitDuration = .oneMonth
+        @Published var duration: HabitDuration = .oneWeek
         @Published var hasReminder: Bool = false
         @Published var reminderTime: Date = Date()
-
 
         func createHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
             do {
