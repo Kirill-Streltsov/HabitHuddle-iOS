@@ -143,6 +143,9 @@ struct HabitFormView: View {
                     try? context.save()
                 }
             }
+            .onDisappear {
+                saveHabit()
+            }
         }
     }
     
@@ -161,7 +164,7 @@ struct HabitFormView: View {
     
     private func checkIntoHabit(_ habit: Habit) {
         Task {
-            let result = await viewModel.checkIntoHabit(habitID: habit.id)
+            let result = await viewModel.checkIntoHabit(with: habit.id)
             handleResult(result) { checkedIn in
                 print("THE USER HAS CHECKED IN: \(checkedIn)")
             } onFailure: { error in
@@ -174,39 +177,38 @@ struct HabitFormView: View {
         Task {
             switch mode {
             case .adding:
-                let result = await viewModel.createHabit()
-                handleResult(result) { codableHabit in
-                    let habit = Habit(
-                        id: codableHabit.id,
-                        user: codableHabit.user,
-                        name: codableHabit.name,
-                        description: codableHabit.description,
-                        duration: codableHabit.duration,
-                        reminderTime: codableHabit.reminderTime,
-                        createdAt: .now,
-                        updatedAt: .now
-                    )
-                    context.insert(habit)
+                guard let user = try? context.fetch(FetchDescriptor<User>()).first else { return }
+                let habitID = UUID()
+                print("CREATING HABIT WITH NAME: \(habit?.name)")
+                let habit = Habit(
+                    id: habitID,
+                    user: LightweightUser(id: user.id),
+                    name: viewModel.name,
+                    description: viewModel.description,
+                    duration: viewModel.duration,
+                    reminderTime: viewModel.reminderTime,
+                    createdAt: .now,
+                    updatedAt: .now
+                )
+                context.insert(habit)
+                let result = await viewModel.createHabit(with: habitID)
+                handleResult(result) { _ in
                     dismiss()
                 } onFailure: { error in
                     print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
                 }
             case .editing:
-                guard let habitID = habit?.id else { return }
-                let result = await viewModel.updateHabit(habitID: habitID)
-                handleResult(result) { codableHabit in
-                    habit?.name = codableHabit.name
-                    habit?.habitDescription = codableHabit.description
-                    habit?.duration = codableHabit.duration
-                    habit?.reminderTime = codableHabit.reminderTime
-                    habit?.updatedAt = .now
-                    
-                    do {
-                        try context.save()
-                        dismiss()
-                    } catch {
-                        print("❌ Failed to save an already existing habit locally: \(error.localizedDescription)")
-                    }
+                guard let habit = habit else { return }
+                let result = await viewModel.updateHabit(with: habit.id)
+                habit.name = viewModel.name
+                habit.habitDescription = viewModel.description
+                habit.duration = viewModel.duration
+                habit.reminderTime = viewModel.reminderTime
+                habit.updatedAt = .now
+                try? context.save()
+                print("SAVING CHANGES FOR HABIT WITH NAME: \(habit.name)")
+                handleResult(result) { _ in
+                    dismiss()
                 } onFailure: { error in
                     print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
                 }

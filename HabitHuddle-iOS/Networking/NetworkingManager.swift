@@ -100,7 +100,6 @@ final class NetworkingManager {
     func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
         switch response.statusCode {
         case 200 ..< 300:
-            print("DATA: \(data.prettyPrintedJSONString)")
             do {
                 let decodedData = try jsonDecoder.decode(T.self, from: data)
                 return decodedData

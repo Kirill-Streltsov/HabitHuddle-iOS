@@ -20,11 +20,12 @@ extension HabitFormView {
         @Published var reminderTime: Date = Date()
 
 
-        func createHabit() async -> Result<CodableHabit, APIError> {
+        func createHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
             do {
                 let reminder: Date? = hasReminder ? reminderTime : nil
 
                 let payload = HabitPayload(
+                    id: id,
                     name: name,
                     description: description,
                     duration: duration.rawValue,
@@ -46,11 +47,12 @@ extension HabitFormView {
             }
         }
         
-        func updateHabit(habitID: UUID) async -> Result<CodableHabit, APIError> {
+        func updateHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
             do {
                 let reminder: Date? = hasReminder ? reminderTime : nil
 
                 let payload = HabitPayload(
+                    id: id,
                     name: name,
                     description: description,
                     duration: duration.rawValue,
@@ -58,7 +60,7 @@ extension HabitFormView {
                 )
 
                 let habitResponse = try await NetworkingManager.shared.request(
-                    endpoint: .updateHabit(habitID: habitID),
+                    endpoint: .updateHabit(with: id),
                     method: .put,
                     body: payload,
                     responseType: CodableHabit.self
@@ -71,10 +73,10 @@ extension HabitFormView {
             }
         }
         
-        func checkIntoHabit(habitID: UUID) async -> Result<HTTPStatus, APIError> {
+        func checkIntoHabit(with id: UUID) async -> Result<HTTPStatus, APIError> {
             do {
                 let checkInResponse = try await NetworkingManager.shared.requestStatusCode(
-                    endpoint: .checkIntoHabit(habitID: habitID),
+                    endpoint: .checkIntoHabit(with: id),
                     method: .post
                 )
                 return .success(checkInResponse)

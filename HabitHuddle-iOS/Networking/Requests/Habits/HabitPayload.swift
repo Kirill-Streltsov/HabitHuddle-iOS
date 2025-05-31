@@ -8,6 +8,7 @@
 import Foundation
 
 struct HabitPayload: Codable {
+    let id: UUID
     let name: String
     let description: String?
     let duration: String
