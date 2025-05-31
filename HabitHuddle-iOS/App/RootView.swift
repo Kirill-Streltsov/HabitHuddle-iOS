@@ -14,9 +14,13 @@ struct RootView: View {
         ZStack {
             if appState.isAuthenticated {
                 TabView {
-                    Tab("Habits", systemImage: "brain.head.profile") {
+                    Tab("Habits", systemImage: "checklist") {
                         HomeView()
                     }
+                    Tab("Statistics", systemImage: "chart.bar") {
+                        StatisticsView(habit: Habit.createTestHabitWithCheckIns())
+                    }
+                    
                 }
                 .transition(.move(edge: .trailing))
 

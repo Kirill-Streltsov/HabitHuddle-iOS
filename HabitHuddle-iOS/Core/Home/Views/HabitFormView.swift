@@ -20,6 +20,8 @@ struct HabitFormView: View {
     
     @State private var isCheckedIn = false
     @State private var birthDate = Date.now
+    @State private var saveButtonPressed = false
+    @State private var deleteButtonPressed = false
     @StateObject private var viewModel: ViewModel
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -46,7 +48,7 @@ struct HabitFormView: View {
                     
                     // MARK: - Header
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(mode == .adding ? "Create a New Habit" : "Update your habit")
+                        Text(mode == .adding ? "Create a new habit" : "Update your habit")
                             .font(.largeTitle.weight(.semibold))
                         if mode == .adding {
                             Text("Stay consistent by tracking what matters.")
@@ -115,7 +117,11 @@ struct HabitFormView: View {
                     }
                     
                     // MARK: - Submit
-                    Button(action: saveHabit) {
+                    Button {
+                        saveButtonPressed = true
+                        saveHabit()
+                        dismiss()
+                    } label: {
                         Text("Save")
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -131,6 +137,18 @@ struct HabitFormView: View {
                 }
                 .padding(.top)
             }
+            .toolbar {
+                if mode == .editing {
+                    Button {
+                        deleteButtonPressed = true
+                        deleteHabit()
+                        dismiss()
+                    } label: {
+                        Image(systemName: "trash")
+                            .foregroundStyle(.red)
+                    }
+                }
+            }
             .onAppear {
                 if let habit = habit {
                     populateFields(with: habit)
@@ -144,13 +162,18 @@ struct HabitFormView: View {
                 }
             }
             .onDisappear {
-                saveHabit()
+                syncWithServerBeforeQuitting()
             }
         }
     }
     
+    private func syncWithServerBeforeQuitting() {
+        if !deleteButtonPressed && !saveButtonPressed && !viewModel.name.isEmpty {
+            saveHabit()
+        }
+    }
+    
     private func populateFields(with habit: Habit) {
-        
         viewModel.name = habit.name
         viewModel.description = habit.habitDescription
         viewModel.duration = habit.duration
@@ -173,13 +196,25 @@ struct HabitFormView: View {
         }
     }
     
+    private func deleteHabit() {
+        Task {
+            guard let habit = habit else { return }
+            let result = await viewModel.deleteHabit(with: habit.id)
+            context.delete(habit)
+            handleResult(result) { codableHabit in
+                print("✅ Deleted the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
+            } onFailure: { error in
+                print("❌ Failed to delete the habit on the server: \(error.localizedDescription)")
+            }
+        }
+    }
+    
     private func saveHabit() {
         Task {
             switch mode {
             case .adding:
                 guard let user = try? context.fetch(FetchDescriptor<User>()).first else { return }
                 let habitID = UUID()
-                print("CREATING HABIT WITH NAME: \(habit?.name)")
                 let habit = Habit(
                     id: habitID,
                     user: LightweightUser(id: user.id),
@@ -192,8 +227,8 @@ struct HabitFormView: View {
                 )
                 context.insert(habit)
                 let result = await viewModel.createHabit(with: habitID)
-                handleResult(result) { _ in
-                    dismiss()
+                handleResult(result) { codableHabit in
+                    print("✅ Saved the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
                 } onFailure: { error in
                     print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
                 }
@@ -207,8 +242,8 @@ struct HabitFormView: View {
                 habit.updatedAt = .now
                 try? context.save()
                 print("SAVING CHANGES FOR HABIT WITH NAME: \(habit.name)")
-                handleResult(result) { _ in
-                    dismiss()
+                handleResult(result) { codableHabit in
+                    print("✅ Updated the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
                 } onFailure: { error in
                     print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
                 }

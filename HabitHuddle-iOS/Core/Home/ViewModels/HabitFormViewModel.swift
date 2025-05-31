@@ -86,5 +86,20 @@ extension HabitFormView {
                 return .failure(.unknown)
             }
         }
+        
+        func deleteHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
+            do {
+                let deletedHabitResponse = try await NetworkingManager.shared.request(
+                    endpoint: .deleteHabit(with: id),
+                    method: .delete,
+                    responseType: CodableHabit.self
+                )
+                return .success(deletedHabitResponse)
+            } catch let error as APIError {
+                return .failure(error)
+            } catch {
+                return .failure(.unknown)
+            }
+        }
     }
 }

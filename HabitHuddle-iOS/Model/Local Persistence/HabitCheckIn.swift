@@ -12,7 +12,7 @@ import SwiftData
 final class HabitCheckIn: Identifiable, Hashable {
     var id: UUID
     var date: Date
-    var habit: Habit
+    var habit: Habit?
 
     init(id: UUID = .init(), date: Date = .now, habit: Habit) {
         self.id = id

@@ -42,6 +42,7 @@ final class Habit: Identifiable, Hashable {
     }
 }
 
+// MARK: Checking in for today
 extension Habit {
     var isCheckedInToday: Bool {
         let today = Calendar.current.startOfDay(for: .now)
@@ -62,5 +63,41 @@ extension Habit {
 
         updatedAt = .now
         try? context.save()
+    }
+}
+
+// MARK: Creating a custom habit
+extension Habit {
+    static func createTestHabitWithCheckIns() -> Habit {
+        
+        
+        let habit = Habit(
+            id: UUID(),
+            user: LightweightUser(id: UUID()),
+            name: "Read Books",
+            description: "Read at least 20 pages every day",
+            duration: .oneMonth,
+            reminderTime: Calendar.current.date(bySettingHour: 20, minute: 0, second: 0, of: .now)
+        )
+        
+        let calendar = Calendar.current
+        let today = Date()
+
+        // Create an array of dates by adding days from 1 to 14 (example)
+        var dates: [Date] = []
+
+        for i in 0...14 {
+            if let newDate = calendar.date(byAdding: .day, value: -i, to: today) {
+                dates.append(newDate)
+            }
+        }
+        
+        var checkIns: [HabitCheckIn] = []
+        for i in 0...14 {
+            checkIns.append(HabitCheckIn(date: dates[i], habit: habit))
+        }
+        habit.checkIns = checkIns
+
+        return habit
     }
 }
