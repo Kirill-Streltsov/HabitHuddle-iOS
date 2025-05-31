@@ -48,18 +48,10 @@ struct LoginView: View {
                 Button {
                     Task {
                         if let cu = await viewModel.loginUser(username: username, password: password) {
+                            print("TOKEN MANAGER: \(String(describing: TokenManager.token))")
                             let codableHabitsResult = await viewModel.getUserHabits()
                             handleResult(codableHabitsResult) { codableHabits in
-                                for codableHabit in codableHabits {
-                                    let habit = Habit(
-                                        id: codableHabit.id,
-                                        user: codableHabit.user,
-                                        name: codableHabit.name,
-                                        description: codableHabit.description,
-                                        duration: codableHabit.duration
-                                    )
-                                    context.insert(habit)
-                                }
+                                saveHabitsLocally(codableHabits)
                                 viewModel.saveUser(cu, using: context)
                             } onFailure: { apiError in
                                 print("Could not load user habits: \(apiError.localizedDescription)")
@@ -94,6 +86,23 @@ struct LoginView: View {
                     .font(.system(size: 15))
                 }
             }
+        }
+    }
+    
+    private func saveHabitsLocally(_ codableHabits: [CodableHabit]) {
+        for codableHabit in codableHabits {
+            let habit = Habit(
+                id: codableHabit.id,
+                user: codableHabit.user,
+                name: codableHabit.name,
+                description: codableHabit.description,
+                duration: codableHabit.duration,
+            )
+            codableHabit.checkIns.forEach { _ in
+                let checkIn = HabitCheckIn(habit: habit)
+                context.insert(checkIn)
+            }
+            context.insert(habit)
         }
     }
 }

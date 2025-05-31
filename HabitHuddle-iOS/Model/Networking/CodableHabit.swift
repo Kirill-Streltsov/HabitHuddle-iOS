@@ -16,9 +16,5 @@ struct CodableHabit: Codable, Identifiable {
     let reminderTime: Date?
     let createdAt: Date?
     let updatedAt: Date?
-}
-
-// Helping struct with id to help with decoding
-struct LightweightUser: Identifiable, Codable {
-    let id: UUID
+    let checkIns: [CodableHabitCheckIn]
 }
