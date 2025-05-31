@@ -47,11 +47,16 @@ struct RegistrationView: View {
 
     var body: some View {
         VStack {
-            Text("Create an account")
-                .font(.system(size: 24))
-                .fontWeight(.bold)
-                .frame(height: 160)
-                .foregroundStyle(Color(.systemBlue))
+            VStack(spacing: 8) {
+                Text("Create an account")
+                    .font(.system(size: 24))
+                    .fontWeight(.bold)
+                Image(systemName: "person")
+                    .font(.system(size: 75))
+            }
+            .foregroundStyle(Color(.systemBlue))
+            .frame(height: 160)
+            
 
             VStack(alignment: .leading, spacing: 24) {
                 ErrorText(text: errorText)
@@ -100,7 +105,7 @@ struct RegistrationView: View {
                     Text("Sign in")
                         .fontWeight(.bold)
                 }
-                .font(.system(size: 14))
+                .font(.system(size: 16))
             }
         }
     }

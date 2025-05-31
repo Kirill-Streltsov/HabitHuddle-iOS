@@ -25,11 +25,15 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Log into your account")
-                    .font(.system(size: 24))
-                    .fontWeight(.bold)
-                    .frame(height: 160)
-                    .foregroundStyle(Color(.systemBlue))
+                VStack(spacing: 8) {
+                    Text("Log into your account")
+                        .font(.system(size: 24))
+                        .fontWeight(.bold)
+                    Image(systemName: "person.fill")
+                        .font(.system(size: 75))
+                }
+                .foregroundStyle(Color(.systemBlue))
+                .frame(height: 160)
 
                 VStack(alignment: .leading, spacing: 24) {
                     ErrorText(text: viewModel.errorMessage)
@@ -83,7 +87,7 @@ struct LoginView: View {
                         Text("Sign up")
                             .fontWeight(.bold)
                     }
-                    .font(.system(size: 15))
+                    .font(.system(size: 16))
                 }
             }
         }
