@@ -128,25 +128,48 @@ struct StatisticsView: View {
         return streak
     }
     
+    private var missedDaysText: String {
+        if missedDays > 0 {
+            if missedDays == 1 {
+                if totalDays == 1 {
+                    return "Check into your habit ⚡️"
+                } else {
+                    return "You have missed 1 day\nStill no reason to give up!"
+                }
+                
+            } else {
+                return "\(missedDays) days missed out of \(totalDays)"
+            }
+        } else {
+            return "You haven't missed a day!\nWell done 🎉"
+        }
+    }
+    
     // MARK: Body
     
     var body: some View {
         ScrollView {
             VStack(spacing: 30) {
                 headerSection
-                VStack(alignment: .trailing) {
-                    HStack {
-                        completionRateSection
-                        missedDaysSection
+                CardView {
+                    VStack(alignment: .trailing) {
+                        HStack {
+                            completionRateSection
+                            missedDaysSection
+                        }
+                        Text(missedDaysText)
+                            .font(.subheadline)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.secondary)
                     }
-                    Text("\(missedDays) days missed out of \(totalDays)")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
                 }
-                streaksSection
-                checkInTimeDistributionSection
+                CardView {
+                    streaksSection
+                }
+                CardView {
+                    checkInTimeDistributionSection
+                }
             }
-            .padding()
             .navigationTitle(habit.name + " Statistics")
         }
     }
@@ -171,7 +194,6 @@ struct StatisticsView: View {
         VStack(spacing: 8) {
             Text("Completion Rate")
                 .font(.headline)
-                .frame(maxWidth: .infinity, alignment: .leading)
             
             ZStack {
                 Chart {
@@ -201,7 +223,6 @@ struct StatisticsView: View {
         VStack(spacing: 8) {
             Text("Missed Days")
                 .font(.headline)
-                .frame(maxWidth: .infinity, alignment: .leading)
             
             Chart {
                 SectorMark(
@@ -214,7 +235,7 @@ struct StatisticsView: View {
                 )
                 
                 SectorMark(
-                    angle: .value("Missed", Double(habit.duration.numberOfDays - habit.checkIns.count)),
+                    angle: .value("Missed", Double(missedDays)),
                     innerRadius: .ratio(0.6),
                     angularInset: 1
                 )
@@ -227,12 +248,11 @@ struct StatisticsView: View {
     }
     
     private var streaksSection: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 8) {
             Text("Streaks")
                 .font(.headline)
-                .frame(maxWidth: .infinity, alignment: .leading)
             
-            HStack(spacing: 40) {
+            HStack(alignment: .top, spacing: 40) {
                 VStack {
                     Text("Current Streak")
                         .font(.subheadline)
@@ -240,7 +260,7 @@ struct StatisticsView: View {
                     Text("\(currentStreak) days")
                         .font(.title2.bold())
                         .foregroundColor(.green)
-                    ProgressRing(progress: Double(currentStreak) / 30.0, color: .green)
+                    ProgressRing(progress: Double(currentStreak) / Double(longestStreak.length), color: .green)
                         .frame(width: 60, height: 60)
                 }
                 
@@ -259,6 +279,7 @@ struct StatisticsView: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity)
     }
     
     private var checkInTimeDistribution: [(date: Date, hour: Int)] {
@@ -278,7 +299,6 @@ struct StatisticsView: View {
         VStack(spacing: 8) {
             Text("Check-in Time Distribution")
                 .font(.headline)
-                .frame(maxWidth: .infinity, alignment: .leading)
             
             Chart(checkInTimeDistribution, id: \.date) { data in
                 BarMark(

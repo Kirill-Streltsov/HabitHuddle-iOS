@@ -59,7 +59,7 @@ struct HabitFormView: View {
                     .padding(.horizontal)
                     
                     // MARK: - Input Card
-                    InputFormView {
+                    CardView {
                         VStack(spacing: 16) {
                             CustomStyledTextField(
                                 placeholder: "Habit name",
@@ -73,7 +73,7 @@ struct HabitFormView: View {
                         }
                     }
                     
-                    InputFormView {
+                    CardView {
                         VStack(alignment: .leading, spacing: 20) {
                             VStack(alignment: .leading, spacing: 12) {
                                 Text("Start date:")
@@ -105,7 +105,7 @@ struct HabitFormView: View {
                     }
                     
                     // MARK: - Reminder
-                    InputFormView {
+                    CardView {
                         VStack(alignment: .leading, spacing: 12) {
                             Toggle("Enable Reminder", isOn: $viewModel.hasReminder.animation())
                             

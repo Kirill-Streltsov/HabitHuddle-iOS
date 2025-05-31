@@ -20,7 +20,6 @@ struct RootView: View {
                     Tab("Statistics", systemImage: "chart.bar") {
                         StatisticsView(habit: Habit.createTestHabitWithCheckIns())
                     }
-                    
                 }
                 .transition(.move(edge: .trailing))
 

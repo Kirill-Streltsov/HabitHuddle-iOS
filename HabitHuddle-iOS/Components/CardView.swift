@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct InputFormView<Content: View>: View {
+struct CardView<Content: View>: View {
     let content: () -> Content
 
     var body: some View {
