@@ -22,7 +22,7 @@ struct HabitFormView: View {
     @StateObject private var viewModel: ViewModel
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-
+    
     init(habit: Habit? = nil) {
         _viewModel = StateObject(wrappedValue: ViewModel())
         self.habit = habit
@@ -36,7 +36,10 @@ struct HabitFormView: View {
                     
                     if mode == .editing {
                         if let habit = habit {
-                            CheckInCardView(habit: habit)
+                            CheckInCardView(habit: habit) {
+                                checkIntoHabit(habit)
+                            }
+                            
                         }
                     }
                     
@@ -69,31 +72,31 @@ struct HabitFormView: View {
                     
                     InputFormView {
                         VStack(alignment: .leading, spacing: 20) {
-                                VStack(alignment: .leading, spacing: 12) {
-                                    Text("Start date:")
-                                        .fontWeight(.semibold)
-                                    
-                                    HStack {
-                                        Image(systemName: "calendar.badge.clock")
-                                            .foregroundStyle(.secondary)
-                                        Text(mode == .adding ? Date.now.longFormatted : habit!.createdAt.fullFormatted)
-                                    }
-                                }
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Start date:")
+                                    .fontWeight(.semibold)
                                 
-                                VStack(alignment: .leading, spacing: 12) {
-                                    
-                                    Text("Desired duration")
-                                        .fontWeight(.semibold)
-                                    
-                                    Picker("Duration", selection: $viewModel.duration) {
-                                        ForEach(HabitDuration.allCases) { option in
-                                            Text(option.displayName)
-                                                .tag(option)
-                                        }
-                                    }
-                                    .pickerStyle(.segmented)
+                                HStack {
+                                    Image(systemName: "calendar.badge.clock")
+                                        .foregroundStyle(.secondary)
+                                    Text(mode == .adding ? Date.now.longFormatted : habit!.createdAt.fullFormatted)
                                 }
                             }
+                            
+                            VStack(alignment: .leading, spacing: 12) {
+                                
+                                Text("Desired duration")
+                                    .fontWeight(.semibold)
+                                
+                                Picker("Duration", selection: $viewModel.duration) {
+                                    ForEach(HabitDuration.allCases) { option in
+                                        Text(option.displayName)
+                                            .tag(option)
+                                    }
+                                }
+                                .pickerStyle(.segmented)
+                            }
+                        }
                         
                     }
                     
@@ -132,6 +135,12 @@ struct HabitFormView: View {
                     isCheckedIn = habit.isCheckedInToday
                 }
             }
+            .onChange(of: viewModel.duration) { oldValue, newValue in
+                if let habit = habit {
+                    habit.duration = newValue
+                    try? context.save()
+                }
+            }
         }
     }
     
@@ -147,47 +156,58 @@ struct HabitFormView: View {
             viewModel.hasReminder = false
         }
     }
-        
+    
+    private func checkIntoHabit(_ habit: Habit) {
+        Task {
+            let result = await viewModel.checkIntoHabit(habitID: habit.id)
+            handleResult(result) { checkedIn in
+                print("THE USER HAS CHECKED IN: \(checkedIn)")
+            } onFailure: { error in
+                print("ERROR WHILE POSTING THE CHECK IN: \(error)")
+            }
+        }
+    }
+    
     private func saveHabit() {
         Task {
             switch mode {
             case .adding:
-                    let result = await viewModel.createHabit()
-                    handleResult(result) { codableHabit in
-                        let habit = Habit(
-                            id: codableHabit.id,
-                            user: codableHabit.user,
-                            name: codableHabit.name,
-                            description: codableHabit.description,
-                            duration: codableHabit.duration,
-                            reminderTime: codableHabit.reminderTime,
-                            createdAt: .now,
-                            updatedAt: .now
-                        )
-                        context.insert(habit)
-                        dismiss()
-                    } onFailure: { error in
-                        print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
-                    }
+                let result = await viewModel.createHabit()
+                handleResult(result) { codableHabit in
+                    let habit = Habit(
+                        id: codableHabit.id,
+                        user: codableHabit.user,
+                        name: codableHabit.name,
+                        description: codableHabit.description,
+                        duration: codableHabit.duration,
+                        reminderTime: codableHabit.reminderTime,
+                        createdAt: .now,
+                        updatedAt: .now
+                    )
+                    context.insert(habit)
+                    dismiss()
+                } onFailure: { error in
+                    print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
+                }
             case .editing:
-                    guard let habitID = habit?.id else { return }
-                    let result = await viewModel.updateHabit(habitID: habitID)
-                    handleResult(result) { codableHabit in
-                        habit?.name = codableHabit.name
-                        habit?.habitDescription = codableHabit.description
-                        habit?.duration = codableHabit.duration
-                        habit?.reminderTime = codableHabit.reminderTime
-                        habit?.updatedAt = .now
-                        
-                        do {
-                            try context.save()
-                            dismiss()
-                        } catch {
-                            print("❌ Failed to save an already existing habit locally: \(error.localizedDescription)")
-                        }
-                    } onFailure: { error in
-                        print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
+                guard let habitID = habit?.id else { return }
+                let result = await viewModel.updateHabit(habitID: habitID)
+                handleResult(result) { codableHabit in
+                    habit?.name = codableHabit.name
+                    habit?.habitDescription = codableHabit.description
+                    habit?.duration = codableHabit.duration
+                    habit?.reminderTime = codableHabit.reminderTime
+                    habit?.updatedAt = .now
+                    
+                    do {
+                        try context.save()
+                        dismiss()
+                    } catch {
+                        print("❌ Failed to save an already existing habit locally: \(error.localizedDescription)")
                     }
+                } onFailure: { error in
+                    print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
+                }
             }
         }
     }

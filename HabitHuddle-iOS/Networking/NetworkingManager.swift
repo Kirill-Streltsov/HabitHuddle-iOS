@@ -22,7 +22,7 @@ final class NetworkingManager {
 
     func request<T: Decodable, U: Encodable>(
         endpoint: Endpoint,
-        method: HTTPMethod = .post,
+        method: HTTPMethod,
         body: U,
         headers: [String: String]? = nil,
         responseType _: T.Type
@@ -50,7 +50,7 @@ final class NetworkingManager {
 
     func request<T: Decodable>(
         endpoint: Endpoint,
-        method: HTTPMethod = .get,
+        method: HTTPMethod,
         headers: [String: String]? = nil,
         responseType _: T.Type
     ) async throws -> T {
@@ -70,6 +70,31 @@ final class NetworkingManager {
             throw APIError.unknown
         }
         return try handleResponse(data: data, response: response, responseType: T.self)
+    }
+    
+    func requestStatusCode(
+        endpoint: Endpoint,
+        method: HTTPMethod,
+        headers: [String: String]? = nil
+    ) async throws -> HTTPStatus {
+        var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
+        urlRequest.httpMethod = method.rawValue
+
+        if let token = TokenManager.token {
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+
+        headers?.forEach { key, value in
+            urlRequest.setValue(value, forHTTPHeaderField: key)
+        }
+
+        let (_, response) = try await URLSession.shared.data(for: urlRequest)
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError.unknown
+        }
+
+        return HTTPStatus(statusCode: httpResponse.statusCode)
     }
 
     func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {

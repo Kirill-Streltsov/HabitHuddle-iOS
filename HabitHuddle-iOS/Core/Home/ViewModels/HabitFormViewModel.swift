@@ -64,7 +64,20 @@ extension HabitFormView {
                     responseType: CodableHabit.self
                 )
                 return .success(habitResponse)
-
+            } catch let error as APIError {
+                return .failure(error)
+            } catch {
+                return .failure(.unknown)
+            }
+        }
+        
+        func checkIntoHabit(habitID: UUID) async -> Result<HTTPStatus, APIError> {
+            do {
+                let checkInResponse = try await NetworkingManager.shared.requestStatusCode(
+                    endpoint: .checkIntoHabit(habitID: habitID),
+                    method: .post
+                )
+                return .success(checkInResponse)
             } catch let error as APIError {
                 return .failure(error)
             } catch {

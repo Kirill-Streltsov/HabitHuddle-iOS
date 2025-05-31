@@ -11,21 +11,24 @@ struct CheckInCardView: View {
     
     @Environment(\.modelContext) private var context
     let habit: Habit
+    let action: () -> ()
 
     var body: some View {
         Button {
             HapticManager.trigger(.success)
             habit.toggleCheckIn(in: context)
+            action()
         } label: {
             VStack(spacing: 16) {
-                CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 100)
-
+                HStack {
+                    AnimatableRing(habit: habit)
+                        .frame(width: 175, height: 175)
+                }
                 Text(habit.isCheckedInToday ? "You're all set for today!" : "Tap to Check In")
                     .font(.headline)
                     .foregroundStyle(habit.isCheckedInToday ? .green : .primary)
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 150)
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
@@ -39,5 +42,5 @@ struct CheckInCardView: View {
 }
 
 #Preview {
-    CheckInCardView(habit: Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "New Habit", description: "Some description", duration: .oneMonth, reminderTime: .now, createdAt: .now, updatedAt: .now))
+    CheckInCardView(habit: Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "New Habit", description: "Some description", duration: .oneMonth, reminderTime: .now, createdAt: .now, updatedAt: .now), action: {})
 }

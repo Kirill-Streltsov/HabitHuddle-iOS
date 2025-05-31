@@ -21,4 +21,12 @@ enum HabitDuration: String, CaseIterable, Identifiable, Codable {
         case .oneMonth: return "1 Month"
         }
     }
+    
+    var numberOfDays: Int {
+        switch self {
+        case .oneWeek: return 7
+        case .twoWeeks: return 14
+        case .oneMonth: return 30
+        }
+    }
 }

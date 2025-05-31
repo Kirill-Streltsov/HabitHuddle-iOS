@@ -10,8 +10,6 @@ import SwiftUI
 struct HabitCard: View {
     let habit: Habit
     let cardWidth: CGFloat =  UIScreen.main.bounds.width / 2 - 32
-    let habitProgress: CGFloat = 0.25
-    @State private var isCheckedIn: Bool = false
 
     var body: some View {
         VStack(alignment: .center, spacing: 4) {
@@ -21,10 +19,9 @@ struct HabitCard: View {
                 .multilineTextAlignment(.center)
 
             CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 50)
-                .frame(width: 50, height: 50)
                 .padding(.vertical)
 
-            Text("4/16")
+            Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays)")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
@@ -36,7 +33,7 @@ struct HabitCard: View {
 
                 Rectangle()
                     .fill(Color.blue)
-                    .frame(width: cardWidth * habitProgress, height: 8)
+                    .frame(width: cardWidth * CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays), height: 8)
                     .cornerRadius(4)
             }
         }
