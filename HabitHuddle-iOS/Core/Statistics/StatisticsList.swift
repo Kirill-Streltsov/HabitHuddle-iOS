@@ -17,11 +17,15 @@ struct StatisticsList: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                ForEach(habits) { habit in
-                    NavigationLink(value: habit) {
-                        HabitStatsCard(habit: habit)
+                if habits.isEmpty {
+                    EmptyStatisticsView()
+                } else {
+                    ForEach(habits) { habit in
+                        NavigationLink(value: habit) {
+                            HabitStatsCard(habit: habit)
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
             }
             .navigationDestination(for: Habit.self) { habit in

@@ -21,7 +21,7 @@ struct RootView: View {
                         StatisticsList()
                     }
                     Tab("Demo", systemImage: "checklist") {
-                        HabitStatsCard(habit: Habit.createTestHabitsWithCheckIns()[0])
+                        EmptyStatisticsView()
                     }
                 }
                 .transition(.move(edge: .trailing))

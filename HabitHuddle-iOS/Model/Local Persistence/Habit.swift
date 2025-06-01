@@ -63,6 +63,23 @@ extension Habit {
         
         updatedAt = .now
         try? context.save()
+        toggleCheckInRemotely()
+    }
+    
+    func toggleCheckInRemotely() {
+        Task {
+            do {
+                _ = try await NetworkingManager.shared.requestStatusCode(
+                    endpoint: .checkIntoHabit(with: id),
+                    method: .post
+                )
+                print("✅ Checked into habit from the HomeView: \(self.name)")
+            } catch let error as APIError {
+                print("❌ Could not check into habit from the HomeView: \(self.name), error: \(error.localizedDescription)")
+            } catch {
+                print("❌ Could not check into habit from the HomeView: \(self.name)")
+            }
+        }
     }
 }
 

@@ -17,7 +17,7 @@ struct HomeView: View {
     @Environment(\.modelContext) private var context
 
     @State private var showAllHabits = false
-    @State private var isShowingNewHabitView = false
+    @State private var showNewHabitView = false
 
     var body: some View {
         UserDataView { user in
@@ -32,9 +32,7 @@ struct HomeView: View {
                     }
                     
                     if habits.isEmpty {
-                        EmptyStateView(title: "You don't have any habits yet", subtitle: "Add your first one!") {
-                            isShowingNewHabitView = true
-                        }
+                        EmptyHabitsView(onAddHabit: { showNewHabitView = true })
                     } else {
                         // Today's habits section
                         HabitsGridView(habits: habits)
@@ -43,7 +41,7 @@ struct HomeView: View {
                 .toolbar {
                     if !habits.isEmpty {
                         Button {
-                            isShowingNewHabitView = true
+                            showNewHabitView = true
                         } label: {
                             Text("Add a habit")
                         }
@@ -55,7 +53,7 @@ struct HomeView: View {
 //                        context.insert(newHabit)
 //                    }
                 }
-                .navigationDestination(isPresented: $isShowingNewHabitView) {
+                .navigationDestination(isPresented: $showNewHabitView) {
                     HabitFormView()
                 }
                 .navigationDestination(for: Habit.self) { habit in

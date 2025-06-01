@@ -10,8 +10,8 @@ import Foundation
 final class NetworkingManager {
     static let shared = NetworkingManager()
     private let baseURL = URL(string: "http://localhost:8080/api/")!
-    let jsonDecoder: JSONDecoder
-    let jsonEncoder: JSONEncoder
+    private let jsonDecoder: JSONDecoder
+    private let jsonEncoder: JSONEncoder
 
     private init() {
         jsonDecoder = JSONDecoder()

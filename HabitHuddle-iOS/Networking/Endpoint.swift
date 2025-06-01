@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Endpoint {
+struct Endpoint: Encodable {
     let path: String
 
     static func login() -> Endpoint {
