@@ -15,7 +15,7 @@ struct OnboardingView: View {
     let pages: [OnboardingPageData] = [
         OnboardingPageData(
             symbol: "hand.wave.fill",
-            title: "Welcome to Habit Huddle",
+            title: "Welcome to\nHabit Huddle",
             text: "Create powerful habits, stay on track,\nand become your best self — one step at a time.",
             customView: AnyView(
                 HabitCard(habit: Habit.demoHabitWithRecentCheckIns())
@@ -25,7 +25,7 @@ struct OnboardingView: View {
         OnboardingPageData(
             symbol: "person.2.fill",
             title: "Challenge your friends",
-            text: "Stay accountable by sending and accepting habit challenges.\nProgress together 💪",
+            text: "Stay accountable by sending and accepting habit challenges.\nProgress together.",
             customView: AnyView(
                 VStack {
                     ChallengeCardView(
@@ -33,8 +33,8 @@ struct OnboardingView: View {
                             id: UUID(),
                             initiatorName: "Alice",
                             receiverName: "You",
-                            habitName: "Morning Run",
-                            type: .competitive,
+                            habitName: "No caffeine before sleep",
+                            type: .supportive,
                             status: .pending,
                             startDate: Date(),
                             endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
@@ -48,7 +48,7 @@ struct OnboardingView: View {
                             initiatorName: "James",
                             receiverName: "You",
                             habitName: "Read 20 pages a day",
-                            type: .supportive,
+                            type: .competitive,
                             status: .pending,
                             startDate: Date(),
                             endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!
@@ -62,7 +62,7 @@ struct OnboardingView: View {
         OnboardingPageData(
             symbol: "flame.fill",
             title: "Track streaks & progress",
-            text: "Keep an eye on your daily check-ins, current streak, and completion rate 🔥",
+            text: "Keep an eye on your daily check-ins, current streak, and completion rate.",
             customView: AnyView(
                 HabitStatsCard(habit: Habit.demoHabitWithRecentCheckIns())
                     .offset(y: 24)
