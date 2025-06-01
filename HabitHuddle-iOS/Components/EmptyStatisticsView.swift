@@ -20,7 +20,7 @@ struct EmptyStatisticsView: View {
                 .font(.title3.weight(.semibold))
                 .foregroundColor(.primary.opacity(0.7))
             
-            Text("You don't have any habits yet, so there are no statistics to display. Start building your habits and watch your progress here!")
+            Text("You don't have any habits yet, so there are no statistics to display.\nStart building your habits and watch your progress here!")
                 .font(.body)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
