@@ -20,7 +20,7 @@ final class Habit: Identifiable, Hashable {
     var updatedAt: Date
     @Relationship(deleteRule: .cascade, inverse: \HabitCheckIn.habit)
     var checkIns: [HabitCheckIn] = []
-    
+
     init(
         id: UUID,
         user: LightweightUser,
@@ -43,8 +43,8 @@ final class Habit: Identifiable, Hashable {
 }
 
 // MARK: Creating a custom habit
+
 extension Habit {
-    
     static func createTestHabitsWithCheckIns() -> [Habit] {
         let namesAndDescriptions: [(String, String)] = [
             ("Morning Run", "Go for a run every morning before 8 AM"),
@@ -56,9 +56,9 @@ extension Habit {
             ("Code Practice", "Solve 1 coding problem every day"),
             ("No Sugar", "Avoid all sugary foods for a month"),
             ("Gratitude List", "Write 3 things you're grateful for"),
-            ("Sleep by 11", "Go to bed before 11 PM")
+            ("Sleep by 11", "Go to bed before 11 PM"),
         ]
-        
+
         func days(for duration: HabitDuration) -> Int {
             switch duration {
             case .oneWeek: return 7
@@ -66,32 +66,32 @@ extension Habit {
             case .oneMonth: return 30
             }
         }
-        
+
         var habits: [Habit] = []
         let calendar = Calendar.current
         let now = Date()
-        
-        for i in 0..<namesAndDescriptions.count {
+
+        for i in 0 ..< namesAndDescriptions.count {
             let (name, description) = namesAndDescriptions[i]
             let duration: HabitDuration = [.oneWeek, .twoWeeks, .oneMonth].randomElement()!
             let numberOfDays = days(for: duration)
-            
+
             // Random creation date up to 14 days ago
-            guard let createdAt = calendar.date(byAdding: .day, value: -Int.random(in: 0..<14), to: now) else { continue }
-            
+            guard let createdAt = calendar.date(byAdding: .day, value: -Int.random(in: 0 ..< 14), to: now) else { continue }
+
             // Compute end date
             guard let endDate = calendar.date(byAdding: .day, value: numberOfDays - 1, to: createdAt) else { continue }
-            
+
             let habit = Habit(
                 id: UUID(),
                 user: LightweightUser(id: UUID()),
                 name: name,
                 description: description,
                 duration: duration,
-                reminderTime: calendar.date(bySettingHour: Int.random(in: 6...22), minute: 0, second: 0, of: now)
+                reminderTime: calendar.date(bySettingHour: Int.random(in: 6 ... 22), minute: 0, second: 0, of: now)
             )
             habit.createdAt = createdAt
-            
+
             // Build all valid dates between createdAt and endDate (inclusive)
             var checkIns: [HabitCheckIn] = []
             var currentDate = createdAt
@@ -99,9 +99,9 @@ extension Habit {
                 if Bool.random() {
                     // Random time during the day
                     if let checkInTime = calendar.date(
-                        bySettingHour: Int.random(in: 6...23),
-                        minute: Int.random(in: 0..<60),
-                        second: Int.random(in: 0..<60),
+                        bySettingHour: Int.random(in: 6 ... 23),
+                        minute: Int.random(in: 0 ..< 60),
+                        second: Int.random(in: 0 ..< 60),
                         of: currentDate
                     ) {
                         checkIns.append(HabitCheckIn(date: checkInTime, habit: habit))
@@ -109,14 +109,14 @@ extension Habit {
                 }
                 currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
             }
-            
+
             habit.checkIns = checkIns
             habits.append(habit)
         }
-        
+
         return habits
     }
-    
+
     static func demoHabitWithRecentCheckIns() -> Habit {
         let calendar = Calendar.current
         let now = Date()
@@ -136,18 +136,18 @@ extension Habit {
         // Check-in days (relative to today), including a recent 6-day streak
         let offsets: [Int] = [
             20, 18, 15, 12, 10, 8, // earlier scattered
-            5, 4, 3, 2, 1, 0       // recent streak!
+            5, 4, 3, 2, 1, 0, // recent streak!
         ]
 
         habit.checkIns = offsets.map { offset in
             let day = calendar.date(byAdding: .day, value: -offset, to: now)!
-            let checkInTime = calendar.date(bySettingHour: Int.random(in: 7...9), minute: 0, second: 0, of: day)!
+            let checkInTime = calendar.date(bySettingHour: Int.random(in: 7 ... 9), minute: 0, second: 0, of: day)!
             return HabitCheckIn(date: checkInTime, habit: habit)
         }
 
         return habit
     }
-    
+
     static func demoHabitWithFullCheckIns() -> Habit {
         let calendar = Calendar.current
         let now = Date()
@@ -168,16 +168,15 @@ extension Habit {
         let offsets: [Int] = [
             0, 1, 3, 5, 6, 9, 11, 12, 14, 17, 20, 22, 25, 28, 30,
             33, 36, 38, 40, 42, 45, 49, 50, 53, 57, 60, 62, 64, 66, 69,
-            70, 72, 75, 78, 80, 83, 85, 88, 89
+            70, 72, 75, 78, 80, 83, 85, 88, 89,
         ]
 
         habit.checkIns = offsets.map { offset in
             let day = calendar.date(byAdding: .day, value: -offset, to: now)!
-            let checkInTime = calendar.date(bySettingHour: Int.random(in: 7...22), minute: 0, second: 0, of: day)!
+            let checkInTime = calendar.date(bySettingHour: Int.random(in: 7 ... 22), minute: 0, second: 0, of: day)!
             return HabitCheckIn(date: checkInTime, habit: habit)
         }
 
         return habit
     }
 }
-

@@ -25,7 +25,7 @@ struct HapticManager {
             UINotificationFeedbackGenerator().notificationOccurred(.warning)
         case .error:
             UINotificationFeedbackGenerator().notificationOccurred(.error)
-        case .impact(let style):
+        case let .impact(style):
             UIImpactFeedbackGenerator(style: style).impactOccurred()
         case .selection:
             UISelectionFeedbackGenerator().selectionChanged()

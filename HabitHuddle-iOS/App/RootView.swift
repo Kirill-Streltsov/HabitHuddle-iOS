@@ -13,7 +13,6 @@ struct RootView: View {
 
     var body: some View {
         ZStack {
-            
             if hasSeenOnboarding {
                 if appState.isAuthenticated {
                     TabView {

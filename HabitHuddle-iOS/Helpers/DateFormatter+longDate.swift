@@ -14,7 +14,7 @@ extension DateFormatter {
         formatter.timeStyle = .none
         return formatter
     }()
-    
+
     static let fullDate: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .full
@@ -27,7 +27,7 @@ extension Date {
     var longFormatted: String {
         DateFormatter.longDate.string(from: self)
     }
-    
+
     var fullFormatted: String {
         DateFormatter.fullDate.string(from: self)
     }

@@ -5,7 +5,6 @@
 //  Created by Kirill on 01.06.25.
 //
 
-
 import SwiftUI
 
 struct ChallengeCardView: View {
@@ -22,10 +21,10 @@ struct ChallengeCardView: View {
                     (Text(challenge.initiatorName)
                         .font(.headline)
                         .fontWeight(.bold)
-                    + Text(" challenged you!"))
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                    
+                        + Text(" challenged you!"))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+
                     Text("\(challenge.habitName)")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)

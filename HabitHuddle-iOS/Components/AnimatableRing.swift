@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct AnimatableRing: View {
-    
     let habit: Habit
     @State private var progress: CGFloat = 0.0
-    
+
     var body: some View {
         ZStack {
             // Background circle
             Circle()
                 .stroke(Color.gray.opacity(0.2), lineWidth: 20)
-            
+
             // Animated ring
             RingShape(progress: progress)
                 .stroke(
@@ -25,7 +24,7 @@ struct AnimatableRing: View {
                     style: StrokeStyle(lineWidth: 20, lineCap: .round)
                 )
                 .rotationEffect(.degrees(-90)) // Start from top
-            
+
             // Center label
             Text("\(habit.checkIns.count)/\(habit.duration.numberOfDays) days")
                 .font(.title2)
@@ -37,18 +36,18 @@ struct AnimatableRing: View {
                 calculateProgress()
             }
         }
-        .onChange(of: habit.checkIns.count) { _, newValue in
+        .onChange(of: habit.checkIns.count) { _, _ in
             withAnimation(.easeOut(duration: 0.5)) {
                 calculateProgress()
             }
         }
-        .onChange(of: habit.duration) { _, newValue in
+        .onChange(of: habit.duration) { _, _ in
             withAnimation(.easeOut(duration: 0.5)) {
                 calculateProgress()
             }
         }
     }
-    
+
     private func calculateProgress() {
         progress = CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays)
     }
@@ -56,7 +55,7 @@ struct AnimatableRing: View {
 
 struct RingShape: Shape {
     var progress: CGFloat
-    
+
     func path(in rect: CGRect) -> Path {
         var path = Path()
         path.addArc(center: CGPoint(x: rect.midX, y: rect.midY),
@@ -66,7 +65,7 @@ struct RingShape: Shape {
                     clockwise: false)
         return path
     }
-    
+
     var animatableData: CGFloat {
         get { progress }
         set { progress = newValue }

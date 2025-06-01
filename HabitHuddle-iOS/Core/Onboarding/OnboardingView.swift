@@ -79,11 +79,10 @@ struct OnboardingView: View {
                             .font(.headline)
                         HeatmapView(habit: Habit.demoHabitWithFullCheckIns())
                     }
-                    
                 }
-                    .offset(y: 30)
+                .offset(y: 30)
             )
-        )
+        ),
     ]
 
     var body: some View {

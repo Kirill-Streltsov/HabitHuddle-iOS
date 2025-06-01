@@ -9,7 +9,6 @@ import SwiftData
 import SwiftUI
 
 struct HomeView: View {
-    
     @Query(sort: [SortDescriptor(\Habit.createdAt, order: .reverse)])
     var habits: [Habit]
 
@@ -30,7 +29,7 @@ struct HomeView: View {
                             .padding(.horizontal)
                         Spacer()
                     }
-                    
+
                     if habits.isEmpty {
                         EmptyHabitsView(onAddHabit: { showNewHabitView = true })
                     } else {

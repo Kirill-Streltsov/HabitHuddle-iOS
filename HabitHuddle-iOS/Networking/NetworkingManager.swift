@@ -71,7 +71,7 @@ final class NetworkingManager {
         }
         return try handleResponse(data: data, response: response, responseType: T.self)
     }
-    
+
     func requestStatusCode(
         endpoint: Endpoint,
         method: HTTPMethod,

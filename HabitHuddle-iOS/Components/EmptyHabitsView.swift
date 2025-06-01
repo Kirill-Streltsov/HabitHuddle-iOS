@@ -19,17 +19,17 @@ struct EmptyHabitsView: View {
                 .scaledToFit()
                 .frame(width: 70, height: 70)
                 .foregroundStyle(.gray.opacity(0.4))
-            
+
             Text("No habits yet")
                 .font(.title2.weight(.semibold))
                 .foregroundColor(.primary.opacity(0.7))
-            
+
             Text("Start building your daily routines to see your progress here.")
                 .font(.body)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
-            
+
             Button(action: onAddHabit) {
                 Text("Add your first habit")
                     .font(.headline)

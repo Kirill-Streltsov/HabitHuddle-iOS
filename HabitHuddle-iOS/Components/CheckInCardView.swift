@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct CheckInCardView: View {
-    
     @Environment(\.modelContext) private var context
     @State private var scale = 1.0
     let habit: Habit
-    let action: () -> ()
+    let action: () -> Void
 
     var body: some View {
         Button {

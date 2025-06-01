@@ -11,13 +11,12 @@ import SwiftUI
 extension HabitFormView {
     @MainActor
     final class ViewModel: ObservableObject {
-
         @Published var name: String = ""
         @Published var description: String = ""
         @Published var hasCheckedIn: Bool = false
         @Published var duration: HabitDuration = .oneWeek
         @Published var hasReminder: Bool = false
-        @Published var reminderTime: Date = Date()
+        @Published var reminderTime: Date = .init()
 
         func createHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
             do {
@@ -45,7 +44,7 @@ extension HabitFormView {
                 return .failure(.unknown)
             }
         }
-        
+
         func updateHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
             do {
                 let reminder: Date? = hasReminder ? reminderTime : nil
@@ -71,7 +70,7 @@ extension HabitFormView {
                 return .failure(.unknown)
             }
         }
-        
+
         func checkIntoHabit(with id: UUID) async -> Result<HTTPStatus, APIError> {
             do {
                 let checkInResponse = try await NetworkingManager.shared.requestStatusCode(
@@ -85,7 +84,7 @@ extension HabitFormView {
                 return .failure(.unknown)
             }
         }
-        
+
         func deleteHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
             do {
                 let deletedHabitResponse = try await NetworkingManager.shared.request(

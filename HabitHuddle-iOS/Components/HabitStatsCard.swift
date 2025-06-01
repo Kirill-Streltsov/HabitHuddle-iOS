@@ -9,28 +9,28 @@ import SwiftUI
 
 struct HabitStatsCard: View {
     let habit: Habit
-    
+
     // Computed properties for some quick stats
     var totalCheckIns: Int {
         habit.checkIns.count
     }
-    
+
     private var missedDays: Int {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
         let startDate = calendar.startOfDay(for: habit.createdAt)
-        
+
         // Total days from createdAt to today (inclusive)
         guard let totalDays = calendar.dateComponents([.day], from: startDate, to: today).day else {
             return 0
         }
-        
+
         // Create a Set of check-in dates normalized to day
         let checkInDays: Set<Date> = Set(habit.checkIns.map { calendar.startOfDay(for: $0.date) })
-        
+
         // Iterate over each day and count days without check-in
         var missed = 0
-        for dayOffset in 0...totalDays {
+        for dayOffset in 0 ... totalDays {
             if let dateToCheck = calendar.date(byAdding: .day, value: dayOffset, to: startDate) {
                 if !checkInDays.contains(dateToCheck) {
                     missed += 1
@@ -39,22 +39,22 @@ struct HabitStatsCard: View {
         }
         return missed
     }
-    
+
     private var completionPercentage: Int {
         let completionPercentageDouble = Double(habit.checkIns.count) / Double(habit.duration.numberOfDays)
         return Int(completionPercentageDouble * 100)
     }
-    
+
     private var longestStreak: Int {
         // Simple example: count max consecutive days from checkIns dates (assume sorted)
         let dates = habit.checkIns.map { Calendar.current.startOfDay(for: $0.date) }.sorted()
         guard !dates.isEmpty else { return 0 }
-        
+
         var maxStreak = 1
         var currentStreak = 1
-        
-        for i in 1..<dates.count {
-            let diff = Calendar.current.dateComponents([.day], from: dates[i-1], to: dates[i]).day ?? 0
+
+        for i in 1 ..< dates.count {
+            let diff = Calendar.current.dateComponents([.day], from: dates[i - 1], to: dates[i]).day ?? 0
             if diff == 1 {
                 currentStreak += 1
                 maxStreak = max(maxStreak, currentStreak)
@@ -64,36 +64,36 @@ struct HabitStatsCard: View {
         }
         return maxStreak
     }
-    
+
     @State private var progress: Double = 0.0
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text(habit.name)
                     .font(.title3)
                     .fontWeight(.semibold)
-                
+
                 Spacer()
-                
+
                 Image(systemName: "chart.bar.fill")
                     .foregroundStyle(habit.checkIns.isEmpty ? Color(.secondaryLabel) : Color.green)
                     .imageScale(.large)
             }
-            
+
             Text(habit.habitDescription)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .lineLimit(2)
-            
+
             Divider()
-            
+
             HStack(spacing: 24) {
                 StatItem(title: "Total Check-Ins", value: "\(totalCheckIns)")
                 StatItem(title: "Longest Streak", value: "\(longestStreak) days")
                 StatItem(title: "Completion", value: "\(completionPercentage)%")
             }
-            
+
             ProgressView(value: progress)
                 .tint(.green)
                 .progressViewStyle(LinearProgressViewStyle())
@@ -116,10 +116,10 @@ struct HabitStatsCard: View {
     }
 }
 
-fileprivate struct StatItem: View {
+private struct StatItem: View {
     let title: String
     let value: String
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text(value)

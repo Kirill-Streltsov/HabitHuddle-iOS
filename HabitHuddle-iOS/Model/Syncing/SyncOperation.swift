@@ -6,8 +6,9 @@
 //
 
 import Foundation
+
 struct SyncOperation: Codable, Identifiable, Hashable {
-    var id: UUID = UUID()
+    var id: UUID = .init()
     let habitID: UUID
     let action: SyncAction
 }

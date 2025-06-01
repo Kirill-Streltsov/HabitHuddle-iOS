@@ -5,15 +5,14 @@
 //  Created by Kirill on 01.06.25.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct StatisticsList: View {
-    
     @Environment(\.modelContext) private var context
     @Query(sort: [SortDescriptor(\Habit.createdAt, order: .reverse)])
     var habits: [Habit]
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {

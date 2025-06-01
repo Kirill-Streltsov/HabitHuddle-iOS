@@ -8,30 +8,29 @@
 import SwiftUI
 
 struct HeatmapView: View {
-    
     let habit: Habit
-    
+
     private let calendar: Calendar = {
         var cal = Calendar(identifier: .iso8601)
         cal.firstWeekday = 2 // Monday
         cal.timeZone = .current // ← important!
         return cal
     }()
-    
+
     private var weekDays: [String] {
         let formatter = DateFormatter()
         formatter.locale = Locale.current
         let symbols = formatter.shortWeekdaySymbols
         let firstWeekdayIndex = calendar.firstWeekday - 1
         if let symbols = symbols {
-            return Array(symbols[firstWeekdayIndex..<symbols.count]) + symbols[0..<firstWeekdayIndex]
+            return Array(symbols[firstWeekdayIndex ..< symbols.count]) + symbols[0 ..< firstWeekdayIndex]
         } else {
             return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
         }
     }
-    
+
     @State private var checkInData: [Date: Int] = [:]
-    
+
     private var allDates: [Date] {
         let calendar = Calendar.current
 
@@ -59,18 +58,18 @@ struct HeatmapView: View {
 
         return dates
     }
-    
+
     private var weeks: [[Date]] {
         let grouped = Dictionary(grouping: allDates) { date in
             calendar.component(.weekOfYear, from: date) + calendar.component(.yearForWeekOfYear, from: date) * 100
         }
-        
+
         return grouped
             .keys
             .sorted()
             .compactMap { grouped[$0]?.sorted() }
     }
-    
+
     private func color(for value: Int) -> Color {
 //        switch value {
 //        case 1: return .green.opacity(0.3)
@@ -84,7 +83,7 @@ struct HeatmapView: View {
             return Color.green
         }
     }
-    
+
     private func monthLabel(for date: Date?) -> String? {
         guard let date = date else { return nil }
         let day = calendar.component(.day, from: date)
@@ -95,12 +94,11 @@ struct HeatmapView: View {
         }
         return nil
     }
-    
+
     init(habit: Habit) {
         self.habit = habit
-        
     }
-    
+
     var body: some View {
         HStack(alignment: .top, spacing: 4) {
             // Weekday labels
@@ -112,7 +110,7 @@ struct HeatmapView: View {
                         .frame(height: 20)
                 }
             }
-            
+
             // Heatmap grid
             HStack(spacing: 4) {
                 ForEach(weeks.indices, id: \.self) { index in

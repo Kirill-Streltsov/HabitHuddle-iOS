@@ -92,7 +92,7 @@ struct LoginView: View {
             }
         }
     }
-    
+
     private func saveHabitsLocally(_ codableHabits: [CodableHabit]) {
         for codableHabit in codableHabits {
             let habit = Habit(

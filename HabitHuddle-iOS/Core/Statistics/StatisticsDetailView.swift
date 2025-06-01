@@ -1,12 +1,12 @@
 //
-//  StatisticsView.swift
+//  StatisticsDetailView.swift
 //  HabitHuddle-iOS
 //
 //  Created by Kirill on 31.05.25.
 //
 
-import SwiftUI
 import Charts
+import SwiftUI
 
 struct Streak {
     let length: Int
@@ -17,36 +17,35 @@ struct Streak {
 // MARK: - Main Statistics View
 
 struct StatisticsDetailView: View {
-    
     let habit: Habit
-    
+
     // MARK: Computed properties
-    
+
     private var totalDays: Int {
         let days = Calendar.current.dateComponents([.day], from: habit.createdAt, to: Date()).day ?? 1
         return max(days, 1)
     }
-    
+
     private var completionRate: Double {
         (Double(habit.checkIns.count) / Double(habit.duration.numberOfDays)) * 100
     }
-    
+
     private var missedDays: Int {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
         let startDate = calendar.startOfDay(for: habit.createdAt)
-        
+
         // Total days from createdAt to today (inclusive)
         guard let totalDays = calendar.dateComponents([.day], from: startDate, to: today).day else {
             return 0
         }
-        
+
         // Create a Set of check-in dates normalized to day
         let checkInDays: Set<Date> = Set(habit.checkIns.map { calendar.startOfDay(for: $0.date) })
-        
+
         // Iterate over each day and count days without check-in
         var missed = 0
-        for dayOffset in 0...totalDays {
+        for dayOffset in 0 ... totalDays {
             if let dateToCheck = calendar.date(byAdding: .day, value: dayOffset, to: startDate) {
                 if !checkInDays.contains(dateToCheck) {
                     missed += 1
@@ -55,7 +54,7 @@ struct StatisticsDetailView: View {
         }
         return missed
     }
-    
+
     // Calculate longest consecutive streak
     private var longestStreak: Streak {
         let calendar = Calendar.current
@@ -63,14 +62,14 @@ struct StatisticsDetailView: View {
         guard !sortedCheckIns.isEmpty else {
             return Streak(length: 0, startDate: Date(), endDate: Date())
         }
-        
+
         var maxLength = 1
         var currentLength = 1
         var maxStart = sortedCheckIns[0]
         var currentStart = sortedCheckIns[0]
-        
-        for i in 1..<sortedCheckIns.count {
-            let diff = calendar.dateComponents([.day], from: sortedCheckIns[i-1], to: sortedCheckIns[i]).day ?? 0
+
+        for i in 1 ..< sortedCheckIns.count {
+            let diff = calendar.dateComponents([.day], from: sortedCheckIns[i - 1], to: sortedCheckIns[i]).day ?? 0
             if diff == 1 {
                 currentLength += 1
             } else if diff > 1 {
@@ -82,26 +81,26 @@ struct StatisticsDetailView: View {
                 currentLength = 1
             }
         }
-        
+
         // Check last streak
         if currentLength > maxLength {
             maxLength = currentLength
             maxStart = currentStart
         }
-        
+
         let maxEnd = calendar.date(byAdding: .day, value: maxLength - 1, to: maxStart) ?? maxStart
         return Streak(length: maxLength, startDate: maxStart, endDate: maxEnd)
     }
-    
+
     // Calculate current streak ending today (or yesterday if missed today)
     private var currentStreak: Int {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
         let sortedDates = habit.checkIns.map { calendar.startOfDay(for: $0.date) }.sorted(by: >)
-        
+
         var streak = 0
         var expectedDate = today
-        
+
         for date in sortedDates {
             if calendar.isDate(date, inSameDayAs: expectedDate) {
                 streak += 1
@@ -112,12 +111,11 @@ struct StatisticsDetailView: View {
         }
         return streak
     }
-    
+
     private var checkInTimeDistribution: [(date: Date, hour: Int)] {
-        
         let calendar = Calendar.current
         let filteredCheckIns = habit.checkIns.sorted(by: { $0.date < $1.date })
-        
+
         return filteredCheckIns.map { checkIn in
             (
                 date: calendar.startOfDay(for: checkIn.date),
@@ -125,7 +123,7 @@ struct StatisticsDetailView: View {
             )
         }
     }
-    
+
     private var missedDaysText: String {
         if missedDays > 0 {
             if missedDays == 1 {
@@ -141,7 +139,7 @@ struct StatisticsDetailView: View {
             return "You haven't missed a day!\nWell done 🎉"
         }
     }
-    
+
     private var motivationalText: String {
         if habit.checkIns.isEmpty {
             return "✅ Check into your habit!"
@@ -157,9 +155,9 @@ struct StatisticsDetailView: View {
             return "🎉 Done! Habit complete! 🏆"
         }
     }
-    
+
     // MARK: Body
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 30) {
@@ -195,7 +193,7 @@ struct StatisticsDetailView: View {
         }
         .navigationTitle(habit.name)
     }
-    
+
     private var habitProgressBar: some View {
         VStack(alignment: .leading) {
             Text(motivationalText)
@@ -211,9 +209,9 @@ struct StatisticsDetailView: View {
         }
         .padding(.top)
     }
-    
+
     // MARK: Sections
-    
+
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
@@ -223,7 +221,7 @@ struct StatisticsDetailView: View {
                         .bold()
                         .foregroundStyle(.green)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    
+
                     Text("Keep up the amazing work! 🔥")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -237,12 +235,12 @@ struct StatisticsDetailView: View {
         }
         .padding(.horizontal)
     }
-    
+
     private var completionRateSection: some View {
         VStack(spacing: 8) {
             Text("Completion Rate")
                 .font(.headline)
-            
+
             ZStack {
                 Chart {
                     SectorMark(
@@ -251,7 +249,7 @@ struct StatisticsDetailView: View {
                         angularInset: 1
                     )
                     .foregroundStyle(Color.green)
-                    
+
                     SectorMark(
                         angle: .value("Remaining", 100 - completionRate),
                         innerRadius: .ratio(0.6),
@@ -266,12 +264,12 @@ struct StatisticsDetailView: View {
             }
         }
     }
-    
+
     private var missedDaysSection: some View {
         VStack(spacing: 8) {
             Text("Missed Days")
                 .font(.headline)
-            
+
             ZStack {
                 Chart {
                     SectorMark(
@@ -282,7 +280,7 @@ struct StatisticsDetailView: View {
                     .foregroundStyle(
                         Color.green
                     )
-                    
+
                     SectorMark(
                         angle: .value("Missed", Double(missedDays)),
                         innerRadius: .ratio(0.6),
@@ -299,12 +297,12 @@ struct StatisticsDetailView: View {
             }
         }
     }
-    
+
     private var streaksSection: some View {
         VStack(spacing: 8) {
             Text("Streaks")
                 .font(.headline)
-            
+
             HStack(alignment: .top, spacing: 40) {
                 VStack {
                     Text("Current Streak")
@@ -316,7 +314,7 @@ struct StatisticsDetailView: View {
                     ProgressRing(progress: Double(currentStreak) / Double(longestStreak.length), color: .green)
                         .frame(width: 60, height: 60)
                 }
-                
+
                 VStack {
                     Text("Longest Streak")
                         .font(.subheadline)
@@ -334,12 +332,12 @@ struct StatisticsDetailView: View {
         }
         .frame(maxWidth: .infinity)
     }
-    
+
     private var checkInTimeDistributionSection: some View {
         VStack(spacing: 8) {
             Text("Check-in Time Distribution")
                 .font(.headline)
-            
+
             Chart(checkInTimeDistribution, id: \.date) { data in
                 BarMark(
                     x: .value("Date", data.date, unit: .day),
@@ -359,7 +357,7 @@ struct StatisticsDetailView: View {
             }
             .chartYAxis {
                 AxisMarks(values: Array(stride(from: 0, through: 23, by: 3))) { value in
-                    AxisValueLabel() {
+                    AxisValueLabel {
                         if let hourDouble = value.as(Double.self) {
                             let hourInt = Int(hourDouble)
                             Text("\(hourInt):00")
@@ -379,7 +377,7 @@ struct StatisticsDetailView: View {
 struct ProgressRing: View {
     var progress: Double // 0...1
     var color: Color = .blue
-    
+
     var body: some View {
         ZStack {
             Circle()
@@ -392,5 +390,3 @@ struct ProgressRing: View {
         }
     }
 }
-
-

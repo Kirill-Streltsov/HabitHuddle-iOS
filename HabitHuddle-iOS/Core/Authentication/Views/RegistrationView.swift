@@ -56,7 +56,6 @@ struct RegistrationView: View {
             }
             .foregroundStyle(Color.accentColor)
             .frame(height: 160)
-            
 
             VStack(alignment: .leading, spacing: 24) {
                 ErrorText(text: errorText)

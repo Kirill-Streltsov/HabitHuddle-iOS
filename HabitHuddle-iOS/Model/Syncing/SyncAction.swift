@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 enum SyncAction: String, Codable {
     case create, update, delete, checkIn
 }

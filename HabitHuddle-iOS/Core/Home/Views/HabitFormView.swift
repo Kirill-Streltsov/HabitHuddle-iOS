@@ -1,23 +1,22 @@
 //
-//  NewHabitView.swift
+//  HabitFormView.swift
 //  HabitHuddle-iOS
 //
 //  Created by Kirill on 25.05.25.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct HabitFormView: View {
-    
     enum Mode {
         case editing
         case adding
     }
-    
+
     var habit: Habit?
     let mode: Mode
-    
+
     @State private var isCheckedIn = false
     @State private var birthDate = Date.now
     @State private var saveButtonPressed = false
@@ -25,28 +24,27 @@ struct HabitFormView: View {
     @StateObject private var viewModel: ViewModel
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-    
+
     init(habit: Habit? = nil) {
         _viewModel = StateObject(wrappedValue: ViewModel())
         self.habit = habit
         mode = habit == nil ? .adding : .editing
     }
-    
+
     var body: some View {
         ZStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    
                     if mode == .editing {
                         if let habit = habit {
                             CheckInCardView(habit: habit) {
                                 checkIntoHabit(habit)
                             }
-                            
                         }
                     }
-                    
+
                     // MARK: - Header
+
                     VStack(alignment: .leading, spacing: 8) {
                         Text(mode == .adding ? "Create a new habit" : "Update your habit")
                             .font(.largeTitle.weight(.semibold))
@@ -57,28 +55,29 @@ struct HabitFormView: View {
                         }
                     }
                     .padding(.horizontal)
-                    
+
                     // MARK: - Input Card
+
                     CardView {
                         VStack(spacing: 16) {
                             CustomStyledTextField(
                                 placeholder: "Habit name",
                                 text: $viewModel.name
                             )
-                            
+
                             CustomStyledTextField(
                                 placeholder: "Description (optional)",
                                 text: $viewModel.description
                             )
                         }
                     }
-                    
+
                     CardView {
                         VStack(alignment: .leading, spacing: 20) {
                             VStack(alignment: .leading, spacing: 12) {
                                 Text("Start date:")
                                     .fontWeight(.semibold)
-                                
+
                                 HStack {
                                     Image(systemName: "calendar.badge.clock")
                                         .foregroundStyle(.secondary)
@@ -86,12 +85,11 @@ struct HabitFormView: View {
                                         .foregroundStyle(.secondary)
                                 }
                             }
-                            
+
                             VStack(alignment: .leading, spacing: 12) {
-                                
                                 Text("Desired duration")
                                     .fontWeight(.semibold)
-                                
+
                                 Picker("Duration", selection: $viewModel.duration) {
                                     ForEach(HabitDuration.allCases) { option in
                                         Text(option.displayName)
@@ -101,22 +99,23 @@ struct HabitFormView: View {
                                 .pickerStyle(.segmented)
                             }
                         }
-                        
                     }
-                    
+
                     // MARK: - Reminder
+
                     CardView {
                         VStack(alignment: .leading, spacing: 12) {
                             Toggle("Enable Reminder", isOn: $viewModel.hasReminder.animation())
-                            
+
                             if viewModel.hasReminder {
                                 DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
                                     .transition(.opacity.combined(with: .slide))
                             }
                         }
                     }
-                    
+
                     // MARK: - Submit
+
                     Button {
                         saveButtonPressed = true
                         saveHabit()
@@ -133,7 +132,6 @@ struct HabitFormView: View {
                     .disabled(viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty)
                     .padding(.horizontal)
                     .padding(.bottom, 20)
-                    
                 }
                 .padding(.top)
             }
@@ -155,7 +153,7 @@ struct HabitFormView: View {
                     isCheckedIn = habit.isCheckedInToday
                 }
             }
-            .onChange(of: viewModel.duration) { oldValue, newValue in
+            .onChange(of: viewModel.duration) { _, newValue in
                 if let habit = habit {
                     habit.duration = newValue
                     try? context.save()
@@ -166,13 +164,13 @@ struct HabitFormView: View {
             }
         }
     }
-    
+
     private func syncWithServerBeforeQuitting() {
         if !deleteButtonPressed && !saveButtonPressed && !viewModel.name.isEmpty {
             saveHabit()
         }
     }
-    
+
     private func populateFields(with habit: Habit) {
         viewModel.name = habit.name
         viewModel.description = habit.habitDescription
@@ -184,7 +182,7 @@ struct HabitFormView: View {
             viewModel.hasReminder = false
         }
     }
-    
+
     private func checkIntoHabit(_ habit: Habit) {
         Task {
             let result = await viewModel.checkIntoHabit(with: habit.id)
@@ -195,7 +193,7 @@ struct HabitFormView: View {
             }
         }
     }
-    
+
     private func deleteHabit() {
         Task {
             guard let habit = habit else { return }
@@ -209,7 +207,7 @@ struct HabitFormView: View {
             }
         }
     }
-    
+
     private func saveHabit() {
         Task {
             switch mode {
