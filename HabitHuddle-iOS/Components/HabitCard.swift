@@ -15,10 +15,16 @@ struct HabitCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(habit.name)
-                .font(.system(size: 20, weight: .semibold))
-                .frame(maxHeight: 50)
-                .multilineTextAlignment(.leading)
+            HStack {
+                Text(habit.name)
+                    .font(.system(size: 20, weight: .semibold))
+                    .frame(maxHeight: 50)
+                    .multilineTextAlignment(.leading)
+                Spacer()
+                Image(systemName: habit.reminderTime != nil ? "bell" : "bell.slash")
+                    .foregroundStyle(.gray.opacity(0.4))
+            }
+            
 
             HStack {
                 Text(habit.isCheckedInToday ? "Checked in!" : "Tap to check in")

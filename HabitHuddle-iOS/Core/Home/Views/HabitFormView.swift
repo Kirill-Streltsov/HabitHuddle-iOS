@@ -220,7 +220,7 @@ struct HabitFormView: View {
                     name: viewModel.name,
                     description: viewModel.description,
                     duration: viewModel.duration,
-                    reminderTime: viewModel.reminderTime,
+                    reminderTime: viewModel.hasReminder ? viewModel.reminderTime : nil,
                     createdAt: .now,
                     updatedAt: .now
                 )
@@ -238,7 +238,7 @@ struct HabitFormView: View {
                 habit.name = viewModel.name
                 habit.habitDescription = viewModel.description
                 habit.duration = viewModel.duration
-                habit.reminderTime = viewModel.reminderTime
+                habit.reminderTime = viewModel.hasReminder ? viewModel.reminderTime : nil
                 habit.updatedAt = .now
                 try? context.save()
                 print("SAVING CHANGES FOR HABIT WITH NAME: \(habit.name)")
