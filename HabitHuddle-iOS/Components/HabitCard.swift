@@ -46,15 +46,15 @@ struct HabitCard: View {
                 .foregroundStyle(.secondary)
 
             HabitProgressView(
+                habit: habit,
                 width: cardWidth,
-                height: 8,
-                calculatedProgress: CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays)
+                height: 8
             )
         }
         .padding()
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16))
-        .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 4)
+        .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .frame(maxWidth: cardWidth)
         .frame(maxHeight: 225)
         .scaleEffect(scale)

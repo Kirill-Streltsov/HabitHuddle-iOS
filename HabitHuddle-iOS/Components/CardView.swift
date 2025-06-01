@@ -15,7 +15,7 @@ struct CardView<Content: View>: View {
             .padding()
             .background(Color(.systemBackground))
             .cornerRadius(16)
-            .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 4)
+            .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
             .padding(.horizontal)
     }
 }

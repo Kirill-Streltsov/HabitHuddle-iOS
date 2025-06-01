@@ -200,11 +200,11 @@ struct StatisticsDetailView: View {
                 .font(.title3)
                 .fontWeight(.semibold)
             HabitProgressView(
+                habit: habit,
                 width: 300,
                 height: 25,
                 cornerRadius: 12,
-                color: Color.gray.opacity(0.1),
-                calculatedProgress: CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays)
+                color: Color.gray.opacity(0.1)
             )
         }
         .padding(.top)

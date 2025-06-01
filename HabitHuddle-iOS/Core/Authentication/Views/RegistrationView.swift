@@ -54,7 +54,7 @@ struct RegistrationView: View {
                 Image(systemName: "person")
                     .font(.system(size: 75))
             }
-            .foregroundStyle(Color(.systemBlue))
+            .foregroundStyle(Color.accentColor)
             .frame(height: 160)
             
 
@@ -91,7 +91,7 @@ struct RegistrationView: View {
                 .frame(width: UIScreen.main.bounds.width - 32, height: 48)
             }
             .disabled(inputFieldsAreEmpty)
-            .background(inputFieldsAreEmpty ? Color(.systemBlue).opacity(0.5) : Color(.systemBlue))
+            .background(inputFieldsAreEmpty ? Color.accentColor.opacity(0.5) : Color.accentColor)
             .clipShape(.rect(cornerRadius: 10))
             .padding(.top, 24)
 

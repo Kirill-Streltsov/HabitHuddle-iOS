@@ -32,7 +32,7 @@ struct LoginView: View {
                     Image(systemName: "person.fill")
                         .font(.system(size: 75))
                 }
-                .foregroundStyle(Color(.systemBlue))
+                .foregroundStyle(Color.accentColor)
                 .frame(height: 160)
 
                 VStack(alignment: .leading, spacing: 24) {
@@ -72,7 +72,7 @@ struct LoginView: View {
                     .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                 }
                 .disabled(inputFieldIsEmpty)
-                .background(inputFieldIsEmpty ? Color(.systemBlue).opacity(0.5) : Color(.systemBlue))
+                .background(inputFieldIsEmpty ? Color.accentColor.opacity(0.5) : Color.accentColor)
                 .clipShape(.rect(cornerRadius: 10))
                 .padding(.top, 24)
 

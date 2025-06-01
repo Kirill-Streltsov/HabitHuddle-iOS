@@ -40,7 +40,7 @@ struct CheckInCardView: View {
             .background(
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                     .fill(Color(.systemBackground))
-                    .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+                    .shadow(color: Color(.label).opacity(0.1), radius: 8, x: 0, y: 4)
             )
             .padding(.horizontal)
         }

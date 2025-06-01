@@ -109,7 +109,7 @@ struct HabitStatsCard: View {
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color(.systemBackground))
-                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 4)
+                .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         )
         .padding(.horizontal)
         .buttonStyle(.plain)
