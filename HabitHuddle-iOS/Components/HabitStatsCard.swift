@@ -72,7 +72,7 @@ struct HabitStatsCard: View {
             HStack {
                 Text(habit.name)
                     .font(.title3)
-                    .fontWeight(.bold)
+                    .fontWeight(.semibold)
                 
                 Spacer()
                 

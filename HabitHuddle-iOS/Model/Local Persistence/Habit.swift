@@ -126,7 +126,7 @@ extension Habit {
             id: UUID(),
             user: user,
             name: "Morning Meditation",
-            description: "Take 10 minutes every morning to breathe and reset.",
+            description: "Take 10 minutes every morning to reset.",
             duration: .twoWeeks,
             reminderTime: calendar.date(bySettingHour: 8, minute: 0, second: 0, of: now)!
         )

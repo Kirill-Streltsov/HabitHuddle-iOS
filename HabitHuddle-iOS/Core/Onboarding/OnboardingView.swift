@@ -26,7 +26,36 @@ struct OnboardingView: View {
             title: "Challenge your friends",
             text: "Stay accountable by sending and accepting habit challenges.\nProgress together 💪",
             customView: AnyView(
-                Text("Hi there")
+                VStack {
+                    ChallengeCardView(
+                        challenge: ChallengeDTO(
+                            id: UUID(),
+                            initiatorName: "Alice",
+                            receiverName: "You",
+                            habitName: "Morning Run",
+                            type: .competitive,
+                            status: .pending,
+                            startDate: Date(),
+                            endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
+                        ),
+                        onAccept: {},
+                        onReject: {}
+                    )
+                    ChallengeCardView(
+                        challenge: ChallengeDTO(
+                            id: UUID(),
+                            initiatorName: "James",
+                            receiverName: "You",
+                            habitName: "Read 20 pages a day",
+                            type: .supportive,
+                            status: .pending,
+                            startDate: Date(),
+                            endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!
+                        ),
+                        onAccept: {},
+                        onReject: {}
+                    )
+                }
             )
         ),
         OnboardingPageData(
@@ -35,6 +64,7 @@ struct OnboardingView: View {
             text: "Keep an eye on your daily check-ins, current streak, and completion rate 🔥",
             customView: AnyView(
                 HabitStatsCard(habit: Habit.demoHabitWithRecentCheckIns())
+                    .offset(y: 24)
             )
         ),
         OnboardingPageData(
@@ -42,7 +72,11 @@ struct OnboardingView: View {
             title: "Ready to grow?",
             text: "Let’s build habits that stick — and have fun doing it.",
             customView: AnyView(
+                
                 HeatmapView(habit: Habit.demoHabitWithFullCheckIns())
+                    .padding()
+                    .clipShape(.rect(cornerRadius: 16))
+                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 4)
                     .offset(y: 30)
             )
         )
@@ -87,7 +121,6 @@ struct OnboardingView: View {
                 .padding(.horizontal)
                 .frame(height: 50)
             }
-            .padding()
             .animation(.easeInOut(duration: 0.4), value: pageIndex)
         }
     }

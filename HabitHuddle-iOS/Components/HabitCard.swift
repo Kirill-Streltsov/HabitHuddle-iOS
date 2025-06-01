@@ -44,11 +44,11 @@ struct HabitCard: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
-            HabitProgressView(fillingWidth: cardWidth * (CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays)), height: 8)
-                .onAppear {
-                    print("CHECK INS: \(habit.checkIns.count)")
-                    print("NUMBER OF TOTAL DAYS: \(habit.duration.numberOfDays)")
-                }
+            HabitProgressView(
+                width: cardWidth,
+                height: 8,
+                calculatedProgress: CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays)
+            )
         }
         .padding()
         .background(Color(.systemBackground))

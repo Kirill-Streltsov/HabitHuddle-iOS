@@ -9,26 +9,34 @@ import SwiftUI
 
 struct HabitProgressView: View {
     
-    let fillingWidth: CGFloat
+    let width: CGFloat
     let height: CGFloat
     var cornerRadius: CGFloat = 4
     var color: Color = Color.gray.opacity(0.3)
+    
+    let calculatedProgress: Double
+    @State private var progress: Double = 0.0
     
     var body: some View {
         ZStack(alignment: .leading) {
             Rectangle()
                 .fill(color)
-                .frame(height: height)
+                .frame(width: width, height: height)
                 .cornerRadius(cornerRadius)
 
             Rectangle()
                 .fill(Color.green)
-                .frame(width: fillingWidth, height: height)
+                .frame(width: width * CGFloat(progress), height: height)
                 .cornerRadius(cornerRadius)
+        }
+        .onAppear {
+            withAnimation(.easeOut) {
+                progress = calculatedProgress
+            }
         }
     }
 }
 
 #Preview {
-    HabitProgressView(fillingWidth: 50, height: 50)
+    HabitProgressView(width: 50, height: 50, calculatedProgress: 0.5)
 }

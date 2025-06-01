@@ -33,7 +33,7 @@ struct OnboardingContent: View {
 
             page.customView
         }
-        .padding(.top, 60)
+        .padding(.top, 32)
         .animation(.easeInOut, value: page.title)
     }
 }
