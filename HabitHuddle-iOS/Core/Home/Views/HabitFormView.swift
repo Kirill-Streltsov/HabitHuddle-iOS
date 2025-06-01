@@ -204,6 +204,7 @@ struct HabitFormView: View {
             handleResult(result) { codableHabit in
                 print("✅ Deleted the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
             } onFailure: { error in
+                // MARK: Save habitID in UserDefaults and periodically try to update the server
                 print("❌ Failed to delete the habit on the server: \(error.localizedDescription)")
             }
         }
@@ -230,6 +231,7 @@ struct HabitFormView: View {
                 handleResult(result) { codableHabit in
                     print("✅ Saved the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
                 } onFailure: { error in
+                    // MARK: Save habitID in UserDefaults and periodically try to update the server
                     print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
                 }
             case .editing:
@@ -245,6 +247,7 @@ struct HabitFormView: View {
                 handleResult(result) { codableHabit in
                     print("✅ Updated the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
                 } onFailure: { error in
+                    // MARK: Save habitID in UserDefaults and periodically try to update the server
                     print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
                 }
             }
