@@ -31,6 +31,7 @@ struct HabitCard: View {
                 Spacer()
                 CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 47)
                     .onTapGesture {
+                        HapticManager.trigger(.success)
                         habit.toggleCheckIn(in: context)
                         scale += 0.075
                         DispatchQueue.main.asyncAfter(deadline: .now()) {
@@ -39,7 +40,7 @@ struct HabitCard: View {
                     }
             }
 
-            Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays)")
+            Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays) days")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 

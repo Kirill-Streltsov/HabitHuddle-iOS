@@ -9,12 +9,15 @@ import SwiftUI
 
 struct HeatmapView: View {
     
+    let habit: Habit
+    
     private let calendar: Calendar = {
         var cal = Calendar(identifier: .iso8601)
         cal.firstWeekday = 2 // Monday
         cal.timeZone = .current // ← important!
         return cal
     }()
+    
     private var weekDays: [String] {
         let formatter = DateFormatter()
         formatter.locale = Locale.current
@@ -30,37 +33,14 @@ struct HeatmapView: View {
     // MARK: - Hardcoded realistic data
     private var checkInData: [Date: Int] {
         var data: [Date: Int] = [:]
-        let today = calendar.startOfDay(for: Date())
-        
-        for i in 0..<60 {
-            let date = calendar.date(byAdding: .day, value: -i, to: today)!
-            let weekday = calendar.component(.weekday, from: date)
-            
-            let value: Int
-            switch i {
-            case 0...5: value = [1, 2, 4, 0, 3, 5][i]
-            case 6...13: value = i % 3 == 0 ? 0 : 2
-            case 14...20: value = i % 2 == 0 ? 3 : 1
-            case 21...30: value = weekday == 1 ? 0 : 4
-            case 31...45: value = [0, 1, 0, 2, 0, 1, 0][i % 7]
-            case 46...60: value = i % 4 == 0 ? 5 : 0
-            case 61...75: value = 2
-            case 76...89: value = (i % 5 == 0 ? 0 : 1)
-            default: value = 0
-            }
-            
-            data[date] = value
+        for checkIn in habit.checkIns {
+            data[checkIn.date] = 1
         }
-        
-        for item in data.sorted(by: { $0.0 < $1.0 }) {
-            print("DATE: \(item.key). CHECKINS: \(item.value)")
-        }
-        
         return data
     }
     
     private var allDates: [Date] {
-        let start = calendar.date(byAdding: .day, value: -90, to: Date())!
+        let start = calendar.date(byAdding: .day, value: -69, to: Date())!
         var date = start
         var dates: [Date] = []
         while date <= Date() {
@@ -82,11 +62,16 @@ struct HeatmapView: View {
     }
     
     private func color(for value: Int) -> Color {
-        switch value {
-        case 1: return .green.opacity(0.3)
-        case 2...4: return .green.opacity(0.6)
-        case 5...: return .green
-        default: return .gray.opacity(0.1)
+//        switch value {
+//        case 1: return .green.opacity(0.3)
+//        case 2...4: return .green.opacity(0.6)
+//        case 5...: return .green
+//        default: return .gray.opacity(0.1)
+//        }
+        if value == 0 {
+            return Color.gray.opacity(0.1)
+        } else {
+            return Color.green
         }
     }
     
@@ -101,50 +86,54 @@ struct HeatmapView: View {
         return nil
     }
     
+    init(habit: Habit) {
+        self.habit = habit
+        
+    }
+    
     var body: some View {
-        ScrollView(.horizontal) {
-            HStack(alignment: .top, spacing: 4) {
-                // Weekday labels
-                VStack(alignment: .trailing, spacing: 4) {
-                    ForEach(weekDays, id: \.self) { day in
-                        Text(day)
-                            .foregroundStyle(.secondary)
-                            .font(.caption2)
-                            .frame(height: 20)
-                    }
+        HStack(alignment: .top, spacing: 4) {
+            // Weekday labels
+            VStack(alignment: .trailing, spacing: 4) {
+                ForEach(weekDays, id: \.self) { day in
+                    Text(day)
+                        .foregroundStyle(.secondary)
+                        .font(.caption2)
+                        .frame(height: 20)
                 }
-                
-                // Heatmap grid
-                HStack(spacing: 4) {
-                    ForEach(weeks.indices, id: \.self) { index in
-                        let week = weeks[index]
-                        VStack(spacing: 4) {
-                            ForEach(week, id: \.self) { date in
-                                let value = checkInData[calendar.startOfDay(for: date)] ?? 0
-                                Rectangle()
-                                    .fill(color(for: value))
-                                    .frame(width: 20, height: 20)
-                                    .cornerRadius(4)
-                                
-                            }
+            }
+            
+            // Heatmap grid
+            HStack(spacing: 4) {
+                ForEach(weeks.indices, id: \.self) { index in
+                    let week = weeks[index]
+                    VStack(spacing: 4) {
+                        ForEach(week, id: \.self) { date in
+                            let value = checkInData[calendar.startOfDay(for: date)] ?? 0
+                            Rectangle()
+                                .fill(color(for: value))
+                                .frame(width: 20, height: 20)
+                                .cornerRadius(4)
+                            
                         }
-                        .overlay(alignment: .top) {
-                            if let label = monthLabel(for: week.first) {
-                                Text(label)
-                                    .foregroundStyle(.secondary)
-                                    .font(.caption)
-                                    .frame(width: 30)
-                                    .offset(y: -16) // move it above the grid
-                            }
+                    }
+                    .overlay(alignment: .top) {
+                        if let label = monthLabel(for: week.first) {
+                            Text(label)
+                                .foregroundStyle(.secondary)
+                                .font(.caption)
+                                .frame(width: 30)
+                                .offset(y: -16) // move it above the grid
                         }
                     }
                 }
             }
-            .padding()
         }
+        .padding()
     }
 }
 
 #Preview {
-    HeatmapView()
+    let habit = Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Gotta stay hydrated", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now)
+    HeatmapView(habit: habit)
 }

@@ -148,28 +148,29 @@ struct StatisticsDetailView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 30) {
-                headerSection
-                CardView {
-                    VStack(alignment: .trailing) {
-                        HStack {
-                            completionRateSection
-                            missedDaysSection
-                        }
-                        Text(missedDaysText)
-                            .font(.subheadline)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.secondary)
+                VStack {
+                    Text("Frequency of your check ins")
+                        .font(.headline)
+                    HeatmapView(habit: habit)
+                }
+                VStack(alignment: .trailing) {
+                    HStack {
+                        completionRateSection
+                        missedDaysSection
                     }
+                    Text(missedDaysText)
+                        .font(.subheadline)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.secondary)
                 }
-                CardView {
-                    streaksSection
-                }
-                CardView {
+                streaksSection
+                if habit.checkIns.count > 1 {
                     checkInTimeDistributionSection
                 }
             }
+            .padding(.horizontal)
         }
-        
+        .navigationTitle(habit.name)
     }
     
     // MARK: Sections
