@@ -234,26 +234,31 @@ struct StatisticsView: View {
             Text("Missed Days")
                 .font(.headline)
             
-            Chart {
-                SectorMark(
-                    angle: .value("Checked In", Double(habit.checkIns.count)),
-                    innerRadius: .ratio(0.6),
-                    angularInset: 1
-                )
-                .foregroundStyle(
-                    Color.green.gradient
-                )
-                
-                SectorMark(
-                    angle: .value("Missed", Double(missedDays)),
-                    innerRadius: .ratio(0.6),
-                    angularInset: 1
-                )
-                .foregroundStyle(
-                    Color.red.gradient
-                )
+            ZStack {
+                Chart {
+                    SectorMark(
+                        angle: .value("Checked In", Double(habit.checkIns.count)),
+                        innerRadius: .ratio(0.6),
+                        angularInset: 1
+                    )
+                    .foregroundStyle(
+                        Color.green.gradient
+                    )
+                    
+                    SectorMark(
+                        angle: .value("Missed", Double(missedDays)),
+                        innerRadius: .ratio(0.6),
+                        angularInset: 1
+                    )
+                    .foregroundStyle(
+                        Color.pink.gradient
+                    )
+                }
+                .frame(height: 140)
+                Text("\(missedDays)")
+                    .font(.title)
+                    .fontWeight(.semibold)
             }
-            .frame(height: 140)
         }
     }
     
