@@ -24,7 +24,62 @@ struct RootView: View {
                             StatisticsList()
                         }
                         Tab("Demo", systemImage: "checklist") {
-                            EmptyStatisticsView()
+                            ChallengeCardView(
+                                challenge: ChallengeDTO(
+                                    id: UUID(),
+                                    initiatorName: "Alice",
+                                    receiverName: "You",
+                                    habitName: "No caffeine before sleep",
+                                    type: .supportive,
+                                    status: .pending,
+                                    startDate: Date(),
+                                    endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
+                                ),
+                                onAccept: {},
+                                onReject: {}
+                            )
+                            ChallengeCardView(
+                                challenge: ChallengeDTO(
+                                    id: UUID(),
+                                    initiatorName: "James",
+                                    receiverName: "You",
+                                    habitName: "Read 20 pages a day",
+                                    type: .competitive,
+                                    status: .pending,
+                                    startDate: Date(),
+                                    endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!
+                                ),
+                                onAccept: {},
+                                onReject: {}
+                            )
+                            ChallengeCardView(
+                                challenge: ChallengeDTO(
+                                    id: UUID(),
+                                    initiatorName: "Alice",
+                                    receiverName: "You",
+                                    habitName: "No caffeine before sleep",
+                                    type: .supportive,
+                                    status: .pending,
+                                    startDate: Date(),
+                                    endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
+                                ),
+                                onAccept: {},
+                                onReject: {}
+                            )
+                            ChallengeCardView(
+                                challenge: ChallengeDTO(
+                                    id: UUID(),
+                                    initiatorName: "James",
+                                    receiverName: "You",
+                                    habitName: "Read 20 pages a day",
+                                    type: .competitive,
+                                    status: .pending,
+                                    startDate: Date(),
+                                    endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!
+                                ),
+                                onAccept: {},
+                                onReject: {}
+                            )
                         }
                     }
                     .transition(.move(edge: .trailing))

@@ -33,13 +33,30 @@ struct HeatmapView: View {
     @State private var checkInData: [Date: Int] = [:]
     
     private var allDates: [Date] {
-        let start = calendar.date(byAdding: .day, value: -69, to: Date())!
+        let calendar = Calendar.current
+
+        // Get today's date
+        let today = Date()
+
+        // Find the next Sunday (including today if it's already Sunday)
+        var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)
+        components.weekday = 1 // 1 = Sunday in Gregorian calendar
+
+        // This gives us the nearest upcoming Sunday (or today if already Sunday)
+        let upcomingSunday = calendar.nextDate(after: today, matching: components, matchingPolicy: .nextTimePreservingSmallerComponents) ?? today
+
+        // Start date is 69 days before the upcoming Sunday
+        let start = calendar.date(byAdding: .day, value: -69, to: upcomingSunday)!
+
+        // Generate all dates from start to upcoming Sunday
         var date = start
         var dates: [Date] = []
-        while date <= Date() {
+
+        while date <= upcomingSunday {
             dates.append(date)
             date = calendar.date(byAdding: .day, value: 1, to: date)!
         }
+
         return dates
     }
     
