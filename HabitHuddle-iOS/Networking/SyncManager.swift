@@ -10,25 +10,25 @@ import SwiftData
 
 final class SyncManager: ObservableObject {
     static let shared = SyncManager()
-
+    
     private let filename = "sync_queue.json"
     private var fileURL: URL? {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?
             .appendingPathComponent(filename)
     }
-
+    
     private(set) var operations: [SyncOperation] = []
-
+    
     private init() {
         load()
     }
-
+    
     // MARK: - Persistence
-
+    
     private func load() {
         guard let url = fileURL,
               FileManager.default.fileExists(atPath: url.path) else { return }
-
+        
         do {
             let data = try Data(contentsOf: url)
             operations = try JSONDecoder().decode([SyncOperation].self, from: data)
@@ -36,10 +36,10 @@ final class SyncManager: ObservableObject {
             print("❌ Failed to load sync queue: \(error.localizedDescription)")
         }
     }
-
+    
     private func save() {
         guard let url = fileURL else { return }
-
+        
         do {
             let data = try JSONEncoder().encode(operations)
             try data.write(to: url)
@@ -47,38 +47,36 @@ final class SyncManager: ObservableObject {
             print("❌ Failed to save sync queue: \(error.localizedDescription)")
         }
     }
-
+    
     // MARK: - Public API
-
+    
     func add(_ op: SyncOperation) {
         operations.append(op)
         save()
     }
-
+    
     func remove(_ op: SyncOperation) {
         operations.removeAll { $0.id == op.id }
         save()
     }
-
+    
     func clear() {
         operations.removeAll()
         save()
     }
-
-    func retry() async {
-        print("OPARATIONS: \(operations)")
+    
+    func retry(from context: ModelContext) async {
         for op in operations {
             do {
-                try await perform(op)
-                print("SUCCESS!")
+                try await perform(op, from: context)
                 remove(op)
             } catch {
                 print("🔁 Retry failed for operation \(op.id): \(error)")
             }
         }
     }
-
-    private func perform(_ op: SyncOperation, in context: ModelContext? = nil) async throws {
+    
+    private func perform(_ op: SyncOperation, from context: ModelContext? = nil) async throws {
         let fetchDescriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.id == op.habitID })
         switch op.action {
         case .checkIn:
@@ -89,6 +87,7 @@ final class SyncManager: ObservableObject {
             print("✅ Successful sync for \(op.habitID). Operation: Delete")
         case .update:
             if let habit = try? context?.fetch(fetchDescriptor).first {
+                print("FOUND HABIT TO UPDATE: \(habit.name)")
                 let payload = HabitPayload(
                     id: habit.id,
                     name: habit.name,
@@ -96,17 +95,13 @@ final class SyncManager: ObservableObject {
                     duration: habit.duration.rawValue,
                     reminderTime: habit.reminderTime
                 )
-                do {
-                    let _ = try await NetworkingManager.shared.request(
-                        endpoint: .updateHabit(with: habit.id),
-                        method: .put,
-                        body: payload,
-                        responseType: CodableHabit.self
-                    )
-                    print("✅ Successful sync for \(op.habitID). Operation: Update")
-                } catch {
-                    print("ATTENTION!!! SOME ERROR OCCURED WHILE UPDATING HABIT")
-                }
+                let _ = try await NetworkingManager.shared.request(
+                    endpoint: .updateHabit(with: habit.id),
+                    method: .put,
+                    body: payload,
+                    responseType: CodableHabit.self
+                )
+                print("✅ Successful sync for \(op.habitID). Operation: Update")
             }
         case .create:
             if let habit = try? context?.fetch(fetchDescriptor).first {
@@ -117,17 +112,13 @@ final class SyncManager: ObservableObject {
                     duration: habit.duration.rawValue,
                     reminderTime: habit.reminderTime
                 )
-                do {
-                    let _ = try await NetworkingManager.shared.request(
-                        endpoint: .createHabit(),
-                        method: .post,
-                        body: payload,
-                        responseType: CodableHabit.self
-                    )
-                    print("✅ Successful sync for \(op.habitID). Operation: Create")
-                } catch {
-                    print("ATTENTION!!! SOME ERROR OCCURED WHILE CREATING HABIT")
-                }
+                let _ = try await NetworkingManager.shared.request(
+                    endpoint: .createHabit(),
+                    method: .post,
+                    body: payload,
+                    responseType: CodableHabit.self
+                )
+                print("✅ Successful sync for \(op.habitID). Operation: Create")
             }
         }
     }

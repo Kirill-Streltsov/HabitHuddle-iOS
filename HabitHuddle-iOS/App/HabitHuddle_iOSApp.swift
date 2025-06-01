@@ -34,9 +34,6 @@ struct HabitHuddle_iOSApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(appState)
-                .task {
-                    await SyncManager.shared.retry()
-                }
         }
         .modelContainer(sharedModelContainer)
     }

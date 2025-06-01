@@ -143,26 +143,47 @@ struct StatisticsDetailView: View {
         }
     }
     
+    private var motivationalText: String {
+        if habit.checkIns.isEmpty || completionRate < 10 {
+            return "🚀 One check-in at a time. You're starting strong!"
+        } else if completionRate >= 10 && completionRate < 40 {
+            return "🎯 You're building momentum — keep it up!"
+        } else if completionRate >= 40 && completionRate < 70 {
+            return "🔥 Halfway there — stay focused!"
+        } else if completionRate >= 70 && completionRate < 90 {
+            return "💪 Almost done — push through!"
+        } else {
+            return "🎉 Done! Habit complete! 🏆"
+        }
+    }
+    
     // MARK: Body
     
     var body: some View {
         ScrollView {
             VStack(spacing: 30) {
+                habitProgressBar
                 VStack {
                     Text("Frequency of your check ins")
                         .font(.headline)
                     HeatmapView(habit: habit)
                 }
-                VStack(alignment: .trailing) {
-                    HStack {
+                HStack(alignment: .top) {
+                    VStack {
                         completionRateSection
-                        missedDaysSection
+                        Text("\(habit.duration.numberOfDays - habit.checkIns.count) days left")
+                            .foregroundStyle(.secondary)
+                            .frame(height: 40)
                     }
-                    Text(missedDaysText)
-                        .font(.subheadline)
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.secondary)
+                    VStack {
+                        missedDaysSection
+                        Text(missedDaysText)
+                            .foregroundStyle(.secondary)
+                            .frame(height: 40)
+                    }
                 }
+                .font(.subheadline)
+                .multilineTextAlignment(.center)
                 streaksSection
                 if habit.checkIns.count > 1 {
                     checkInTimeDistributionSection
@@ -171,6 +192,21 @@ struct StatisticsDetailView: View {
             .padding(.horizontal)
         }
         .navigationTitle(habit.name)
+    }
+    
+    private var habitProgressBar: some View {
+        VStack(alignment: .leading) {
+            Text(motivationalText)
+                .font(.title3)
+                .fontWeight(.semibold)
+            HabitProgressView(
+                fillingWidth: 300 * CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays),
+                height: 25,
+                cornerRadius: 12,
+                color: Color.gray.opacity(0.1)
+            )
+        }
+        .padding(.top)
     }
     
     // MARK: Sections
@@ -295,7 +331,7 @@ struct StatisticsDetailView: View {
         }
         .frame(maxWidth: .infinity)
     }
-
+    
     private var checkInTimeDistributionSection: some View {
         VStack(spacing: 8) {
             Text("Check-in Time Distribution")

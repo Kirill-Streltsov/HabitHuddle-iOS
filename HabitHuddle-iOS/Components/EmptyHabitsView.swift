@@ -14,11 +14,11 @@ struct EmptyHabitsView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Image(systemName: "leaf")
+            Image(systemName: "figure.martial.arts")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 70, height: 70)
-                .foregroundStyle(.green.opacity(0.6))
+                .foregroundStyle(.gray.opacity(0.4))
             
             Text("No habits yet")
                 .font(.title2.weight(.semibold))
@@ -33,12 +33,11 @@ struct EmptyHabitsView: View {
             Button(action: onAddHabit) {
                 Text("Add your first habit")
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .padding()
                     .frame(maxWidth: 220)
-                    .background(Color.green)
+                    .background(Color(.systemBlue))
                     .cornerRadius(12)
-                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 4)
             }
         }
         .padding()

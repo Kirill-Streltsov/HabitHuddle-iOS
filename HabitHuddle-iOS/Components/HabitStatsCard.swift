@@ -15,7 +15,37 @@ struct HabitStatsCard: View {
         habit.checkIns.count
     }
     
-    var longestStreak: Int {
+    private var missedDays: Int {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let startDate = calendar.startOfDay(for: habit.createdAt)
+        
+        // Total days from createdAt to today (inclusive)
+        guard let totalDays = calendar.dateComponents([.day], from: startDate, to: today).day else {
+            return 0
+        }
+        
+        // Create a Set of check-in dates normalized to day
+        let checkInDays: Set<Date> = Set(habit.checkIns.map { calendar.startOfDay(for: $0.date) })
+        
+        // Iterate over each day and count days without check-in
+        var missed = 0
+        for dayOffset in 0...totalDays {
+            if let dateToCheck = calendar.date(byAdding: .day, value: dayOffset, to: startDate) {
+                if !checkInDays.contains(dateToCheck) {
+                    missed += 1
+                }
+            }
+        }
+        return missed
+    }
+    
+    private var completionPercentage: Int {
+        let completionPercentageDouble = Double(habit.checkIns.count) / Double(habit.duration.numberOfDays)
+        return Int(completionPercentageDouble * 100)
+    }
+    
+    private var longestStreak: Int {
         // Simple example: count max consecutive days from checkIns dates (assume sorted)
         let dates = habit.checkIns.map { Calendar.current.startOfDay(for: $0.date) }.sorted()
         guard !dates.isEmpty else { return 0 }
@@ -34,6 +64,8 @@ struct HabitStatsCard: View {
         }
         return maxStreak
     }
+    
+    @State private var progress: Double = 0.0
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -62,9 +94,16 @@ struct HabitStatsCard: View {
                 StatItem(title: "Completion", value: "\(completionPercentage)%")
             }
             
-            ProgressView(value: 0.72)
+            ProgressView(value: progress)
                 .tint(.green)
                 .progressViewStyle(LinearProgressViewStyle())
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        withAnimation(.easeOut(duration: 1.2)) {
+                            progress = CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays)
+                        }
+                    }
+                }
         }
         .padding()
         .background(
@@ -74,15 +113,6 @@ struct HabitStatsCard: View {
         )
         .padding(.horizontal)
         .buttonStyle(.plain)
-    }
-    
-    private var completionPercentageDouble: Double {
-        let daysSinceStart = Calendar.current.dateComponents([.day], from: habit.createdAt, to: .now).day ?? 1
-        return daysSinceStart == 0 ? 0 : Double(totalCheckIns) / Double(daysSinceStart)
-    }
-    
-    private var completionPercentage: Int {
-        Int(completionPercentageDouble * 100)
     }
 }
 

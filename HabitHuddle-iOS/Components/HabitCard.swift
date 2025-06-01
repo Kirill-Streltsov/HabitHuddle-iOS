@@ -44,17 +44,7 @@ struct HabitCard: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.3))
-                    .frame(height: 8)
-                    .cornerRadius(4)
-
-                Rectangle()
-                    .fill(Color.blue)
-                    .frame(width: cardWidth * CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays), height: 8)
-                    .cornerRadius(4)
-            }
+            HabitProgressView(fillingWidth: cardWidth * CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays), height: 8)
         }
         .padding()
         .background(Color(.systemBackground))
