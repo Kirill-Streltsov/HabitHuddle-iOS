@@ -144,7 +144,9 @@ struct StatisticsDetailView: View {
     }
     
     private var motivationalText: String {
-        if habit.checkIns.isEmpty || completionRate < 10 {
+        if habit.checkIns.isEmpty {
+            return "✅ Check into your habit!"
+        } else if completionRate > 0 && completionRate < 10 {
             return "🚀 One check-in at a time. You're starting strong!"
         } else if completionRate >= 10 && completionRate < 40 {
             return "🎯 You're building momentum — keep it up!"
