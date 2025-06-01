@@ -248,7 +248,7 @@ struct StatisticsDetailView: View {
                         innerRadius: .ratio(0.6),
                         angularInset: 1
                     )
-                    .foregroundStyle(Color.green.gradient)
+                    .foregroundStyle(Color.green)
                     
                     SectorMark(
                         angle: .value("Remaining", 100 - completionRate),
@@ -278,7 +278,7 @@ struct StatisticsDetailView: View {
                         angularInset: 1
                     )
                     .foregroundStyle(
-                        Color.green.gradient
+                        Color.green
                     )
                     
                     SectorMark(
@@ -287,7 +287,7 @@ struct StatisticsDetailView: View {
                         angularInset: 1
                     )
                     .foregroundStyle(
-                        Color.pink.gradient
+                        Color.pink
                     )
                 }
                 .frame(height: 140)
