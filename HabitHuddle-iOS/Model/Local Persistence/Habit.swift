@@ -42,47 +42,6 @@ final class Habit: Identifiable, Hashable {
     }
 }
 
-// MARK: Checking in for today
-extension Habit {
-    var isCheckedInToday: Bool {
-        let today = Calendar.current.startOfDay(for: .now)
-        return checkIns.contains {
-            Calendar.current.isDate($0.date, inSameDayAs: today)
-        }
-    }
-    
-    func toggleCheckIn(in context: ModelContext) {
-        let today = Calendar.current.startOfDay(for: .now)
-        
-        if let existingCheckIn = checkIns.first(where: { Calendar.current.isDate($0.date, inSameDayAs: today) }) {
-            context.delete(existingCheckIn)
-        } else {
-            let newCheckIn = HabitCheckIn(date: today, habit: self)
-            checkIns.append(newCheckIn)
-        }
-        
-        updatedAt = .now
-        try? context.save()
-        toggleCheckInRemotely()
-    }
-    
-    func toggleCheckInRemotely() {
-        Task {
-            do {
-                _ = try await NetworkingManager.shared.requestStatusCode(
-                    endpoint: .checkIntoHabit(with: id),
-                    method: .post
-                )
-                print("✅ Checked into habit from the HomeView: \(self.name)")
-            } catch let error as APIError {
-                print("❌ Could not check into habit from the HomeView: \(self.name), error: \(error.localizedDescription)")
-            } catch {
-                print("❌ Could not check into habit from the HomeView: \(self.name)")
-            }
-        }
-    }
-}
-
 // MARK: Creating a custom habit
 extension Habit {
     static func createTestHabitsWithCheckIns() -> [Habit] {
