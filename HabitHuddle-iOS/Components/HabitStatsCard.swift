@@ -77,7 +77,7 @@ struct HabitStatsCard: View {
                 Spacer()
                 
                 Image(systemName: "chart.bar.fill")
-                    .foregroundColor(.green)
+                    .foregroundStyle(habit.checkIns.isEmpty ? Color(.secondaryLabel) : Color.green)
                     .imageScale(.large)
             }
             
