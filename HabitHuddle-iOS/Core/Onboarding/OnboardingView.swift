@@ -19,6 +19,7 @@ struct OnboardingView: View {
             text: "Create powerful habits, stay on track,\nand become your best self — one step at a time.",
             customView: AnyView(
                 HabitCard(habit: Habit.demoHabitWithRecentCheckIns())
+                    .disabled(true)
             )
         ),
         OnboardingPageData(
@@ -72,11 +73,14 @@ struct OnboardingView: View {
             title: "Ready to grow?",
             text: "Let’s build habits that stick — and have fun doing it.",
             customView: AnyView(
-                
-                HeatmapView(habit: Habit.demoHabitWithFullCheckIns())
-                    .padding()
-                    .clipShape(.rect(cornerRadius: 16))
-                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 4)
+                CardView {
+                    VStack(alignment: .center) {
+                        Text("Your activity in the last 2 months")
+                            .font(.headline)
+                        HeatmapView(habit: Habit.demoHabitWithFullCheckIns())
+                    }
+                    
+                }
                     .offset(y: 30)
             )
         )

@@ -39,6 +39,7 @@ struct HabitCard: View {
                         }
                     }
             }
+            .frame(width: cardWidth)
 
             Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays) days")
                 .font(.subheadline)
