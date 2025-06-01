@@ -11,7 +11,7 @@ struct HabitCard: View {
     @Environment(\.modelContext) private var context
     @State private var scale = 1.0
     let habit: Habit
-    let cardWidth: CGFloat = UIScreen.main.bounds.width / 2 - 24
+    let cardWidth: CGFloat = UIScreen.main.bounds.width / 2 - 48
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
