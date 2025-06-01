@@ -134,7 +134,6 @@ struct StatisticsDetailView: View {
                 } else {
                     return "You have missed 1 day\nStill no reason to give up!"
                 }
-                
             } else {
                 return "\(missedDays) days missed out of \(totalDays)"
             }
