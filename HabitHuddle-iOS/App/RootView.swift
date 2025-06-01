@@ -9,26 +9,33 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var appState: AppState
+    @AppStorage("hasSeenOnboarding") var hasSeenOnboarding = false
 
     var body: some View {
         ZStack {
-            if appState.isAuthenticated {
-                TabView {
-                    Tab("Habits", systemImage: "checklist") {
-                        HomeView()
+            
+            if hasSeenOnboarding {
+                if appState.isAuthenticated {
+                    TabView {
+                        Tab("Habits", systemImage: "checklist") {
+                            HomeView()
+                        }
+                        Tab("Statistics", systemImage: "chart.bar") {
+                            StatisticsList()
+                        }
+                        Tab("Demo", systemImage: "checklist") {
+                            EmptyStatisticsView()
+                        }
                     }
-                    Tab("Statistics", systemImage: "chart.bar") {
-                        StatisticsList()
-                    }
-                    Tab("Demo", systemImage: "checklist") {
-                        EmptyStatisticsView()
-                    }
-                }
-                .transition(.move(edge: .trailing))
+                    .transition(.move(edge: .trailing))
 
+                } else {
+                    LoginView(appState: appState)
+                        .transition(.move(edge: .leading))
+                }
             } else {
-                LoginView(appState: appState)
-                    .transition(.move(edge: .leading))
+                OnboardingView()
+                    .transition(.opacity)
             }
         }
         .animation(.easeInOut, value: appState.isAuthenticated)

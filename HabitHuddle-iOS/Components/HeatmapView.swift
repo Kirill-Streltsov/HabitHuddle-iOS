@@ -30,14 +30,7 @@ struct HeatmapView: View {
         }
     }
     
-    // MARK: - Hardcoded realistic data
-    private var checkInData: [Date: Int] {
-        var data: [Date: Int] = [:]
-        for checkIn in habit.checkIns {
-            data[checkIn.date] = 1
-        }
-        return data
-    }
+    @State private var checkInData: [Date: Int] = [:]
     
     private var allDates: [Date] {
         let start = calendar.date(byAdding: .day, value: -69, to: Date())!
@@ -114,7 +107,6 @@ struct HeatmapView: View {
                                 .fill(color(for: value))
                                 .frame(width: 20, height: 20)
                                 .cornerRadius(4)
-                            
                         }
                     }
                     .overlay(alignment: .top) {
@@ -130,10 +122,16 @@ struct HeatmapView: View {
             }
         }
         .padding()
+        .onAppear {
+            for checkIn in habit.checkIns {
+                let day = calendar.startOfDay(for: checkIn.date)
+                checkInData[day] = 1
+            }
+        }
     }
 }
 
 #Preview {
-    let habit = Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Gotta stay hydrated", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now)
+    let habit = Habit.createTestHabitsWithCheckIns()[0]
     HeatmapView(habit: habit)
 }

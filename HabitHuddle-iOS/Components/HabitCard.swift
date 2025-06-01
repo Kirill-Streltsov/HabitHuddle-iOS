@@ -20,7 +20,7 @@ struct HabitCard: View {
             Text(habit.name)
                 .font(.system(size: 20, weight: .semibold))
                 .frame(maxHeight: 50)
-                .multilineTextAlignment(.center)
+                .multilineTextAlignment(.leading)
 
             HStack {
                 Text(habit.isCheckedInToday ? "Checked in!" : "Tap to check in")
@@ -44,7 +44,11 @@ struct HabitCard: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
-            HabitProgressView(fillingWidth: cardWidth * CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays), height: 8)
+            HabitProgressView(fillingWidth: cardWidth * (CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays)), height: 8)
+                .onAppear {
+                    print("CHECK INS: \(habit.checkIns.count)")
+                    print("NUMBER OF TOTAL DAYS: \(habit.duration.numberOfDays)")
+                }
         }
         .padding()
         .background(Color(.systemBackground))
