@@ -16,7 +16,7 @@ struct Streak {
 
 // MARK: - Main Statistics View
 
-struct StatisticsView: View {
+struct StatisticsDetailView: View {
     
     let habit: Habit
     
