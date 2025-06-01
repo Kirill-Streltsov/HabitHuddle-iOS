@@ -19,9 +19,9 @@ struct CheckInCardView: View {
             HapticManager.trigger(.success)
             habit.toggleCheckIn(in: context)
             action()
-            scale += 0.075
+            scale += 0.1
             DispatchQueue.main.asyncAfter(deadline: .now()) {
-                scale -= 0.075
+                scale -= 0.1
             }
         } label: {
             VStack(spacing: 16) {

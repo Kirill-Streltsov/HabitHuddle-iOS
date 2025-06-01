@@ -8,17 +8,36 @@
 import SwiftUI
 
 struct HabitCard: View {
+    
+    @Environment(\.modelContext) private var context
+    @State private var scale = 1.0
     let habit: Habit
-    let cardWidth: CGFloat =  UIScreen.main.bounds.width / 2 - 32
+    let cardWidth: CGFloat =  UIScreen.main.bounds.width / 2 - 24
+    
 
     var body: some View {
-        VStack(alignment: .center, spacing: 4) {
+        VStack(alignment: .leading, spacing: 4) {
             Text(habit.name)
                 .font(.system(size: 20, weight: .semibold))
                 .frame(maxHeight: 50)
                 .multilineTextAlignment(.center)
 
-            CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 65)
+            HStack {
+                Text(habit.isCheckedInToday ? "Checked in!" : "Tap to check in")
+                    .frame(height: 60)
+                    .multilineTextAlignment(.leading)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                Spacer()
+                CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 47)
+                    .onTapGesture {
+                        habit.toggleCheckIn(in: context)
+                        scale += 0.075
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                            scale -= 0.075
+                        }
+                    }
+            }
 
             Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays)")
                 .font(.subheadline)
@@ -42,6 +61,8 @@ struct HabitCard: View {
         .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 4)
         .frame(maxWidth: cardWidth)
         .frame(maxHeight: 225)
+        .scaleEffect(scale)
+        .animation(.easeInOut(duration: 0.2), value: scale)
     }
 }
 

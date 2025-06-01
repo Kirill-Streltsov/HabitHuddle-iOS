@@ -24,10 +24,10 @@ struct StatisticsList: View {
                     .buttonStyle(.plain)
                 }
             }
+            .navigationDestination(for: Habit.self) { habit in
+                StatisticsDetailView(habit: habit)
+            }
             .navigationTitle("Statistics")
-        }
-        .navigationDestination(for: Habit.self) { habit in
-            StatisticsDetailView(habit: habit)
         }
     }
 }

@@ -146,32 +146,30 @@ struct StatisticsDetailView: View {
     // MARK: Body
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 30) {
-                    headerSection
-                    CardView {
-                        VStack(alignment: .trailing) {
-                            HStack {
-                                completionRateSection
-                                missedDaysSection
-                            }
-                            Text(missedDaysText)
-                                .font(.subheadline)
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(.secondary)
+        ScrollView {
+            VStack(spacing: 30) {
+                headerSection
+                CardView {
+                    VStack(alignment: .trailing) {
+                        HStack {
+                            completionRateSection
+                            missedDaysSection
                         }
-                    }
-                    CardView {
-                        streaksSection
-                    }
-                    CardView {
-                        checkInTimeDistributionSection
+                        Text(missedDaysText)
+                            .font(.subheadline)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.secondary)
                     }
                 }
+                CardView {
+                    streaksSection
+                }
+                CardView {
+                    checkInTimeDistributionSection
+                }
             }
-            .navigationTitle("Statistic")
         }
+        
     }
     
     // MARK: Sections
