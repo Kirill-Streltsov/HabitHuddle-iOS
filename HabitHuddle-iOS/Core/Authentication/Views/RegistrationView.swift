@@ -47,7 +47,7 @@ struct RegistrationView: View {
 
     var body: some View {
         VStack {
-            VStack(spacing: 8) {
+            VStack(spacing: 24) {
                 Text("Create an account")
                     .font(.system(size: 24))
                     .fontWeight(.bold)

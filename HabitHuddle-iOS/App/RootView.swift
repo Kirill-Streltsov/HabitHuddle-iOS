@@ -28,10 +28,9 @@ struct RootView: View {
                         }
                     }
                     .transition(.move(edge: .trailing))
-
                 } else {
                     LoginView(appState: appState)
-                        .transition(.move(edge: .leading))
+                        .transition(.opacity)
                 }
             } else {
                 OnboardingView()

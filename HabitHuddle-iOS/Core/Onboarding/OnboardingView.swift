@@ -113,6 +113,7 @@ struct OnboardingView: View {
                     } else {
                         Button("Start!") {
                             withAnimation(.easeInOut(duration: 0.6)) {
+                                HapticManager.trigger(.success)
                                 hasSeenOnboarding = true
                             }
                         }
