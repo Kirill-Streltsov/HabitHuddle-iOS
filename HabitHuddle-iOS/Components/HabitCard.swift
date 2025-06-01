@@ -15,15 +15,16 @@ struct HabitCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            HStack {
+            HStack(alignment: .top) {
                 Text(habit.name)
                     .font(.system(size: 20, weight: .semibold))
-                    .frame(maxHeight: 50)
                     .multilineTextAlignment(.leading)
-                Spacer()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .lineLimit(2)
                 Image(systemName: habit.reminderTime != nil ? "bell" : "bell.slash")
-                    .foregroundStyle(.gray.opacity(0.4))
+                    .foregroundStyle(.gray)
             }
+            .frame(width: cardWidth)
             
 
             HStack {
