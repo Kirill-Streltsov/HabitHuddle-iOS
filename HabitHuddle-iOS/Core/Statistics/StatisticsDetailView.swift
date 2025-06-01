@@ -201,9 +201,9 @@ struct StatisticsDetailView: View {
                 .fontWeight(.semibold)
             HabitProgressView(
                 habit: habit,
-                width: 300,
+                width: 350,
                 height: 25,
-                cornerRadius: 12,
+                cornerRadius: 8,
                 color: Color.gray.opacity(0.1)
             )
         }
