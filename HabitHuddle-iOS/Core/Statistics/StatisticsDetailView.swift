@@ -190,6 +190,7 @@ struct StatisticsDetailView: View {
                 }
             }
             .padding(.horizontal)
+            .padding(.bottom)
         }
         .navigationTitle(habit.name)
     }
@@ -255,7 +256,7 @@ struct StatisticsDetailView: View {
                         innerRadius: .ratio(0.6),
                         angularInset: 1
                     )
-                    .foregroundStyle(Color.gray.opacity(0.25))
+                    .foregroundStyle(Color.gray.opacity(0.2))
                 }
                 .frame(height: 140)
                 Text(String(format: "%.0f%%", completionRate))
