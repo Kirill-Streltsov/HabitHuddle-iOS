@@ -99,7 +99,7 @@ struct HabitStatsCard: View {
                 .progressViewStyle(LinearProgressViewStyle())
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        withAnimation(.easeOut(duration: 1.2)) {
+                        withAnimation(.easeOut(duration: 0.8)) {
                             progress = CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays)
                         }
                     }

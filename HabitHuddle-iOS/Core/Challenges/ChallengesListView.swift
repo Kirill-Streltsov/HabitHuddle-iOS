@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChallengesList: View {
+struct ChallengesListView: View {
     
     @EnvironmentObject var appState: AppState
     
@@ -15,7 +15,7 @@ struct ChallengesList: View {
         NavigationStack {
             ScrollView {
                 if !appState.isAuthenticated {
-                    UnauthenticatedChallengesView()
+                    EmptyFriendsView()
                 }
             }
             .navigationTitle("Challenges")
@@ -24,5 +24,5 @@ struct ChallengesList: View {
 }
 
 #Preview {
-    ChallengesList()
+    ChallengesListView()
 }

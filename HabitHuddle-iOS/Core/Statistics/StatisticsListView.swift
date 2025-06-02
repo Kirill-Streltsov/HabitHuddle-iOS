@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct StatisticsList: View {
+struct StatisticsListView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: [SortDescriptor(\Habit.createdAt, order: .reverse)])
     var habits: [Habit]
@@ -36,5 +36,5 @@ struct StatisticsList: View {
 }
 
 #Preview {
-    StatisticsList()
+    StatisticsListView()
 }

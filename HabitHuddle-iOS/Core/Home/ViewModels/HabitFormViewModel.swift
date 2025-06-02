@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-extension HabitFormView {
+extension HabitDetailView {
     @MainActor
     final class ViewModel: ObservableObject {
         @Published var name: String = ""

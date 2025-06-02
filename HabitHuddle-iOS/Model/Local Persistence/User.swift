@@ -27,6 +27,46 @@ final class User: Identifiable {
     }
 }
 
+extension User {
+    static let sampleFriends: [User] = [
+        User(
+            id: UUID(),
+            username: "mountain_goat",
+            name: "Alice Johnson",
+            createdAt: Date(timeIntervalSinceNow: -60 * 60 * 24 * 365 * 2), // 2 years ago
+            updatedAt: nil
+        ),
+        User(
+            id: UUID(),
+            username: "pixelwizard",
+            name: "Bruno Schmidt",
+            createdAt: Date(timeIntervalSinceNow: -60 * 60 * 24 * 250),
+            updatedAt: nil
+        ),
+        User(
+            id: UUID(),
+            username: "hiking_jane",
+            name: "Jane Peterson",
+            createdAt: Date(timeIntervalSinceNow: -60 * 60 * 24 * 100),
+            updatedAt: nil
+        ),
+        User(
+            id: UUID(),
+            username: "coder_42",
+            name: "Liam Garcia",
+            createdAt: Date(timeIntervalSinceNow: -60 * 60 * 24 * 730), // ~2 years
+            updatedAt: nil
+        ),
+        User(
+            id: UUID(),
+            username: "plantlover",
+            name: "Olivia Davis",
+            createdAt: Date(timeIntervalSinceNow: -60 * 60 * 24 * 45),
+            updatedAt: nil
+        )
+    ]
+}
+
 // Create a preview container and context
 extension ModelContainer {
     static var preview: ModelContainer = {

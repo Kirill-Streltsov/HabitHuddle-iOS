@@ -45,8 +45,8 @@ struct ChallengeProgressCardView: View {
 
             // Progress bars
             VStack(alignment: .leading) {
-                ProgressRow(name: challenge.receiverName, progress: receiverProgress, color: .green)
-                ProgressRow(name: challenge.initiatorName, progress: initiatorProgress, color: .pink)
+                ProgressRow(name: challenge.receiverName, calculatedProgress: receiverProgress, color: .green)
+                ProgressRow(name: challenge.initiatorName, calculatedProgress: initiatorProgress, color: .pink)
             }
 
         }
@@ -66,8 +66,9 @@ struct ChallengeProgressCardView: View {
 
 struct ProgressRow: View {
     let name: String
-    let progress: Double
+    let calculatedProgress: Double
     let color: Color
+    @State private var progress: Double = 0.0
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -80,18 +81,17 @@ struct ProgressRow: View {
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
-
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 6)
-                        .frame(height: 8)
-                        .foregroundColor(Color.gray.opacity(0.2))
-                    RoundedRectangle(cornerRadius: 6)
-                        .frame(width: CGFloat(progress) * geo.size.width, height: 8)
-                        .foregroundColor(color)
+            
+            ProgressView(value: progress)
+                .tint(color)
+                .progressViewStyle(LinearProgressViewStyle())
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        withAnimation(.easeOut(duration: 0.4)) {
+                            progress = calculatedProgress
+                        }
+                    }
                 }
-            }
-            .frame(height: 8)
         }
     }
 }

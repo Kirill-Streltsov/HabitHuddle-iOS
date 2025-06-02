@@ -1,5 +1,5 @@
 //
-//  HabitFormView.swift
+//  HabitDetailView.swift
 //  HabitHuddle-iOS
 //
 //  Created by Kirill on 25.05.25.
@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct HabitFormView: View {
+struct HabitDetailView: View {
     enum Mode {
         case editing
         case adding
@@ -272,5 +272,5 @@ struct HabitFormView: View {
 }
 
 #Preview {
-    HabitFormView()
+    HabitDetailView()
 }
