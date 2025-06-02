@@ -142,17 +142,17 @@ struct StatisticsDetailView: View {
 
     private var motivationalText: String {
         if habit.checkIns.isEmpty {
-            return "✅ Check into your habit!"
+            return "Check into your habit!"
         } else if completionRate > 0 && completionRate < 10 {
-            return "🚀 One check-in at a time. You're starting strong!"
+            return "One check-in at a time. You're starting strong!"
         } else if completionRate >= 10 && completionRate < 40 {
-            return "🎯 You're building momentum — keep it up!"
+            return "You're building momentum — keep it up!"
         } else if completionRate >= 40 && completionRate < 70 {
-            return "🔥 Halfway there — stay focused!"
+            return "Halfway there — stay focused!"
         } else if completionRate >= 70 && completionRate < 90 {
-            return "💪 Almost done — push through!"
+            return "Almost done — push through!"
         } else {
-            return "🎉 Done! Habit complete! 🏆"
+            return "Done! Habit complete! 🏆"
         }
     }
 
