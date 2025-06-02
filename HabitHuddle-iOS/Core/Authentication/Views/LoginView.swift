@@ -58,6 +58,7 @@ struct LoginView: View {
                             handleResult(codableHabitsResult) { codableHabits in
                                 saveHabitsLocally(codableHabits)
                                 viewModel.saveUser(cu, using: context)
+                                print("TOKEN: \(TokenManager.token)")
                                 dismiss()
                             } onFailure: { apiError in
                                 print("Could not load user habits: \(apiError.localizedDescription)")

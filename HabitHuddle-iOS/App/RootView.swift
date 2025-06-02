@@ -41,10 +41,10 @@ struct RootView: View {
         }
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {
-            print("🔁 Retrying syncing all data")
-            Task {
-                await SyncManager.shared.retry(from: context)
-            }
+            print("TOKEN: \(TokenManager.token)")
+//            Task {
+//                await SyncManager.shared.retry(from: context)
+//            }
         }
     }
 }

@@ -15,6 +15,8 @@ struct Endpoint {
         self.path = path
         self.queryItems = queryItems
     }
+    
+    // MARK: Authentication
 
     static func login() -> Endpoint {
         Endpoint(path: "auth/login")
@@ -28,6 +30,8 @@ struct Endpoint {
         Endpoint(path: "auth/me")
     }
 
+    // MARK: Habits
+    
     static func createHabit() -> Endpoint {
         Endpoint(path: "habits/create")
     }
@@ -48,6 +52,8 @@ struct Endpoint {
         Endpoint(path: "habits/")
     }
     
+    // MARK: Users and Friendships
+    
     static func searchForUser(username: String) -> Endpoint {
         Endpoint(
             path: "users/search",
@@ -55,7 +61,23 @@ struct Endpoint {
         )
     }
     
-    static func addFriend(with id: UUID) -> Endpoint {
-        Endpoint(path: "friends/add")
+    static func requestFriend(with id: UUID) -> Endpoint {
+        Endpoint(path: "friends/request")
+    }
+    
+    static func acceptFriend(with id: UUID) -> Endpoint {
+        Endpoint(path: "friends/accept/\(id)")
+    }
+    
+    static func rejectFriend(with id: UUID) -> Endpoint {
+        Endpoint(path: "friends/reject/\(id)")
+    }
+    
+    static func deleteFriend(with id: UUID) -> Endpoint {
+        Endpoint(path: "friends/\(id)")
+    }
+    
+    static func getFriendshipRequests() -> Endpoint {
+        Endpoint(path: "friends/requests")
     }
 }

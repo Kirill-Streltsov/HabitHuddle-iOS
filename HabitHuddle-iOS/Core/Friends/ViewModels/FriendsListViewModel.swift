@@ -55,10 +55,11 @@ extension FriendsListView {
         func addFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
             do {
                 let payload = MakeFriendsRequest(friendID: id)
-                let addFriendResponse = try await NetworkingManager.shared.requestStatusCode(
-                    endpoint: .addFriend(with: id),
+                let requestFriendResponse = try await NetworkingManager.shared.requestStatusCode(
+                    endpoint: .requestFriend(with: id),
                     method: .post,
                     body: payload)
+                print("RESPONSE: \(requestFriendResponse)")
                 return .success(.ok)
             } catch {
                 print("DIDN'T ADD FRIEND")
