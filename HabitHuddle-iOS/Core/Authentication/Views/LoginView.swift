@@ -79,24 +79,42 @@ struct LoginView: View {
 
                 Spacer()
             }
+            .onDisappear {
+                Task {
+                    await SyncManager.shared.retry(from: context)
+                }
+            }
         }
     }
 
     private func saveHabitsLocally(_ codableHabits: [CodableHabit]) {
         for codableHabit in codableHabits {
+            // Skip if habit with same ID already exists
+            if habitExists(withId: codableHabit.id) {
+                print("HABIT WITH NAME \(codableHabit.name) ALREADY EXISTS")
+                continue
+            }
+
             let habit = Habit(
                 id: codableHabit.id,
                 user: codableHabit.user,
                 name: codableHabit.name,
                 description: codableHabit.description,
-                duration: codableHabit.duration,
+                duration: codableHabit.duration
             )
+
             codableHabit.checkIns?.forEach { _ in
                 let checkIn = HabitCheckIn(habit: habit)
                 context.insert(checkIn)
             }
+
             context.insert(habit)
         }
+    }
+    
+    private func habitExists(withId id: UUID) -> Bool {
+        let descriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.id == id })
+        return (try? context.fetchCount(descriptor)) ?? 0 > 0
     }
 }
 

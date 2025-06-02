@@ -121,7 +121,7 @@ struct OnboardingView: View {
                                         pageIndex += 1
                                     } else {
                                         HapticManager.trigger(.success)
-                                        userManager.profile = LocalUser(id: UUID(), username: "guest", name: "New Person")
+                                        userManager.profile = LocalUser(id: UUID(), username: "guest", name: "New Person", isSignedInToServer: false)
                                         hasSeenOnboarding = true
                                     }
                                 }
