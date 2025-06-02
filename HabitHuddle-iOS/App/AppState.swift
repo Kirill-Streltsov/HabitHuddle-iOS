@@ -11,8 +11,10 @@ import SwiftUI
 final class AppState: ObservableObject {
     @Published var isAuthenticated: Bool = TokenManager.token != nil
     
-    func logout() {
-        TokenManager.clearToken()
+    func logout(userManager: LocalUserManager) {
+        isAuthenticated = false
+        userManager.profile = LocalUser(id: UUID(), username: "guest", name: "New Person")
+        TokenManager.token = nil
     }
     // @Published var isAuthenticated: Bool = false
 }

@@ -11,8 +11,8 @@ import SwiftUI
 struct SettingsView: View {
     
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var userManager: LocalUserManager
+    @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var userManager: LocalUserManager
 
     var body: some View {
         NavigationStack {
@@ -34,7 +34,9 @@ struct SettingsView: View {
                             }
 
                         Button(role: .destructive) {
-                            appState.logout()
+                            withAnimation {
+                                appState.logout(userManager: userManager)
+                            }
                         } label: {
                             Label("Log Out", systemImage: "arrow.backward.square")
                         }

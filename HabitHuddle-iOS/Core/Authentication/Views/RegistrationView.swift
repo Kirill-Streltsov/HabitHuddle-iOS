@@ -52,7 +52,7 @@ struct RegistrationView: View {
                 Text("Create an account")
                     .font(.system(size: 24))
                     .fontWeight(.bold)
-                Image(systemName: "person")
+                Image(systemName: "person.badge.plus")
                     .font(.system(size: 75))
             }
             .foregroundStyle(Color.accentColor)
@@ -81,6 +81,7 @@ struct RegistrationView: View {
                         let result = try await viewModel.registerUser(username: username, name: name, password: password, context: context)
                         handleResult(result) { codableUser in
                             userManager.profile = LocalUser(id: codableUser.id, username: codableUser.username, name: codableUser.name)
+                            dismiss()
                         } onFailure: { error in
                             print("❌ Couldn't load the user after registration - no response")
                         }
