@@ -188,11 +188,13 @@ struct HabitFormView: View {
 
     private func checkIntoHabit(_ habit: Habit) {
         Task {
-            let result = await viewModel.checkIntoHabit(with: habit.id)
-            handleResult(result) { checkedIn in
-                print("THE USER HAS CHECKED IN: \(checkedIn)")
-            } onFailure: { error in
-                print("ERROR WHILE POSTING THE CHECK IN: \(error)")
+            if userManager.profile.isSignedInToServer {
+                let result = await viewModel.checkIntoHabit(with: habit.id)
+                handleResult(result) { checkedIn in
+                    print("THE USER HAS CHECKED IN: \(checkedIn)")
+                } onFailure: { error in
+                    print("ERROR WHILE POSTING THE CHECK IN: \(error)")
+                }
             }
         }
     }
@@ -201,12 +203,14 @@ struct HabitFormView: View {
         Task {
             guard let habit = habit else { return }
             context.delete(habit)
-            let result = await viewModel.deleteHabit(with: habit.id)
-            handleResult(result) { codableHabit in
-                print("✅ Deleted the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
-            } onFailure: { error in
-                SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .delete))
-                print("❌ Failed to delete the habit on the server: \(error.localizedDescription)")
+            if userManager.profile.isSignedInToServer {
+                let result = await viewModel.deleteHabit(with: habit.id)
+                handleResult(result) { codableHabit in
+                    print("✅ Deleted the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
+                } onFailure: { error in
+                    SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .delete))
+                    print("❌ Failed to delete the habit on the server: \(error.localizedDescription)")
+                }
             }
         }
     }
@@ -232,12 +236,13 @@ struct HabitFormView: View {
         habit.updatedAt = .now
         try? context.save()
         print("SAVING CHANGES FOR HABIT WITH NAME: \(habit.name)")
-        if 
-        handleResult(result) { codableHabit in
-            print("✅ Updated the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
-        } onFailure: { error in
-            SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .update))
-            print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
+        if userManager.profile.isSignedInToServer {
+            handleResult(result) { codableHabit in
+                print("✅ Updated the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
+            } onFailure: { error in
+                SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .update))
+                print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -254,12 +259,14 @@ struct HabitFormView: View {
             updatedAt: .now
         )
         context.insert(habit)
-        let result = await viewModel.createHabit(with: habitID)
-        handleResult(result) { codableHabit in
-            print("✅ Saved the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
-        } onFailure: { error in
-            SyncManager.shared.add(SyncOperation(habitID: habitID, action: .create))
-            print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
+        if userManager.profile.isSignedInToServer {
+            let result = await viewModel.createHabit(with: habitID)
+            handleResult(result) { codableHabit in
+                print("✅ Saved the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
+            } onFailure: { error in
+                SyncManager.shared.add(SyncOperation(habitID: habitID, action: .create))
+                print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
+            }
         }
     }
 }
