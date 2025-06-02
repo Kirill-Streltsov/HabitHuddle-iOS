@@ -165,7 +165,7 @@ struct StatisticsDetailView: View {
                 VStack {
                     Text("Frequency of your check ins")
                         .font(.headline)
-                    HeatmapView(habit: habit)
+                    HeatmapView(habits: [habit])
                 }
                 HStack(alignment: .top) {
                     VStack {

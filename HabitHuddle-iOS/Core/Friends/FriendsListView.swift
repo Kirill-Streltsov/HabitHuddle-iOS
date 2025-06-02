@@ -26,7 +26,7 @@ struct FriendsListView: View {
                 .padding(.top)
             }
             .navigationDestination(for: User.self) { friend in
-                FriendDetailView(friend: )
+                FriendDetailView(friend: friend)
             }
             .navigationTitle("Your Friends")
             .background(Color(.systemGroupedBackground))

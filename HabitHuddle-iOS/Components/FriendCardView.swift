@@ -12,7 +12,7 @@ struct FriendCardView: View {
     var onChallenge: () -> Void
 
     var body: some View {
-        HStack(alignment: .top, spacing: 16) {
+        HStack(spacing: 16) {
             // Profile icon
             Image(systemName: "person.circle.fill")
                 .resizable()
@@ -38,23 +38,8 @@ struct FriendCardView: View {
             Spacer()
 
             // Challenge button
-            VStack {
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(.secondary)
-                    .offset(x: 40)
-                Spacer()
-                Button(action: onChallenge) {
-                    Text("Challenge")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 8)
-                        .background(Color.blue.opacity(0.9))
-                        .foregroundColor(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                }
-            }
+            Image(systemName: "chevron.right")
+                .foregroundStyle(.secondary)
             
         }
         .padding()

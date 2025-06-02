@@ -30,7 +30,8 @@ struct RootView: View {
                         ChallengesListView()
                     }
                     Tab("Settings", systemImage: "gear", value: 4) {
-                        SettingsView()
+                        //SettingsView()
+                        
                     }
                 }
                 .transition(.opacity)

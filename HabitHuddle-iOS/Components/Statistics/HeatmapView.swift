@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HeatmapView: View {
-    let habit: Habit
+    let habits: [Habit]
 
     private let calendar: Calendar = {
         var cal = Calendar(identifier: .iso8601)
@@ -71,16 +71,19 @@ struct HeatmapView: View {
     }
 
     private func color(for value: Int) -> Color {
-//        switch value {
-//        case 1: return .green.opacity(0.3)
-//        case 2...4: return .green.opacity(0.6)
-//        case 5...: return .green
-//        default: return .gray.opacity(0.1)
-//        }
-        if value == 0 {
-            return Color.gray.opacity(0.2)
+        if habits.count == 1 {
+            if value == 0 {
+                return Color.gray.opacity(0.2)
+            } else {
+                return Color.green
+            }
         } else {
-            return Color.green
+            switch value {
+            case 1: return .green.opacity(0.3)
+            case 2...4: return .green.opacity(0.6)
+            case 5...: return .green
+            default: return .gray.opacity(0.1)
+            }
         }
     }
 
@@ -95,8 +98,8 @@ struct HeatmapView: View {
         return nil
     }
 
-    init(habit: Habit) {
-        self.habit = habit
+    init(habits: [Habit]) {
+        self.habits = habits
     }
 
     var body: some View {
@@ -138,9 +141,22 @@ struct HeatmapView: View {
         }
         .padding()
         .onAppear {
-            for checkIn in habit.checkIns {
-                let day = calendar.startOfDay(for: checkIn.date)
-                checkInData[day] = 1
+            if habits.count == 1 {
+                for checkIn in habits[0].checkIns {
+                    let day = calendar.startOfDay(for: checkIn.date)
+                    checkInData[day] = 1
+                }
+            } else {
+                for habit in habits {
+                    for checkIn in habit.checkIns {
+                        let day = calendar.startOfDay(for: checkIn.date)
+                        if let checkInDataOnDay = checkInData[day] {
+                            checkInData[day] = checkInDataOnDay + 1
+                        } else {
+                            checkInData[day] = 1
+                        }
+                    }
+                }
             }
         }
     }
@@ -148,5 +164,5 @@ struct HeatmapView: View {
 
 #Preview {
     let habit = Habit.createTestHabitsWithCheckIns()[0]
-    HeatmapView(habit: habit)
+    HeatmapView(habits: [habit])
 }

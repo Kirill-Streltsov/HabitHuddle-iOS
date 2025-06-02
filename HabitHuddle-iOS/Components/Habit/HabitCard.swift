@@ -21,8 +21,8 @@ struct HabitCard: View {
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .lineLimit(2)
-                Image(systemName: habit.reminderTime != nil ? "bell" : "bell.slash")
-                    .foregroundStyle(.gray)
+                Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
+                    .foregroundColor(habit.reminderTime != nil ? .orange : .gray)
             }
             .frame(width: cardWidth)
             

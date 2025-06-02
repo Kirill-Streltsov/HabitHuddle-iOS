@@ -78,7 +78,7 @@ struct OnboardingView: View {
                     VStack(alignment: .center) {
                         Text("Your activity in the last 2 months")
                             .font(.headline)
-                        HeatmapView(habit: Habit.demoHabitWithFullCheckIns())
+                        HeatmapView(habits: [Habit.demoHabitWithFullCheckIns()])
                     }
                 }
                     .offset(y: 30)
