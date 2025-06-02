@@ -7,8 +7,14 @@
 
 import Foundation
 
-struct Endpoint: Encodable {
+struct Endpoint {
     let path: String
+    let queryItems: [URLQueryItem]?
+    
+    init(path: String, queryItems: [URLQueryItem]? = nil) {
+        self.path = path
+        self.queryItems = queryItems
+    }
 
     static func login() -> Endpoint {
         Endpoint(path: "auth/login")
@@ -40,5 +46,12 @@ struct Endpoint: Encodable {
 
     static func getMyHabits() -> Endpoint {
         Endpoint(path: "habits/")
+    }
+    
+    static func searchForUser(username: String) -> Endpoint {
+        Endpoint(
+            path: "users/search",
+            queryItems: [URLQueryItem(name: "query", value: username)]
+        )
     }
 }

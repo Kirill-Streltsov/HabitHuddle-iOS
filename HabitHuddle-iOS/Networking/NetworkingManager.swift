@@ -27,7 +27,14 @@ final class NetworkingManager {
         headers: [String: String]? = nil,
         responseType _: T.Type
     ) async throws -> T {
-        var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
+        guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
+            throw APIError.invalidURL
+        }
+        components.queryItems = endpoint.queryItems
+        guard let finalURL = components.url else {
+            throw APIError.invalidURL
+        }
+        var urlRequest = URLRequest(url: finalURL)
         urlRequest.httpMethod = method.rawValue
 
         if let token = TokenManager.token {
@@ -54,7 +61,14 @@ final class NetworkingManager {
         headers: [String: String]? = nil,
         responseType _: T.Type
     ) async throws -> T {
-        var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
+        guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
+            throw APIError.invalidURL
+        }
+        components.queryItems = endpoint.queryItems
+        guard let finalURL = components.url else {
+            throw APIError.invalidURL
+        }
+        var urlRequest = URLRequest(url: finalURL)
         urlRequest.httpMethod = method.rawValue
 
         if let token = TokenManager.token {
