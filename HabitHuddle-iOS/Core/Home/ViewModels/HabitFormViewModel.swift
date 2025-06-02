@@ -37,7 +37,6 @@ extension HabitFormView {
                     responseType: CodableHabit.self
                 )
                 return .success(habitResponse)
-
             } catch let error as APIError {
                 return .failure(error)
             } catch {

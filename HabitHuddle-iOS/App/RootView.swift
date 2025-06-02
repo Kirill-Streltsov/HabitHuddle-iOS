@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct RootView: View {
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding = false
     @AppStorage("selectedTab") var selectedTab = 0
+    @Environment(\.modelContext) private var context
     
     var body: some View {
         ZStack {
@@ -35,6 +37,12 @@ struct RootView: View {
             }
         }
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
+        .onAppear {
+            print("🔁 Retrying syncing all data")
+            Task {
+                await SyncManager.shared.retry(from: context)
+            }
+        }
     }
 }
 

@@ -200,8 +200,8 @@ struct HabitFormView: View {
     private func deleteHabit() {
         Task {
             guard let habit = habit else { return }
-            let result = await viewModel.deleteHabit(with: habit.id)
             context.delete(habit)
+            let result = await viewModel.deleteHabit(with: habit.id)
             handleResult(result) { codableHabit in
                 print("✅ Deleted the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
             } onFailure: { error in
@@ -215,42 +215,51 @@ struct HabitFormView: View {
         Task {
             switch mode {
             case .adding:
-                let habitID = UUID()
-                let habit = Habit(
-                    id: habitID,
-                    user: LightweightUser(id: userManager.profile.id),
-                    name: viewModel.name,
-                    description: viewModel.description,
-                    duration: viewModel.duration,
-                    reminderTime: viewModel.hasReminder ? viewModel.reminderTime : nil,
-                    createdAt: .now,
-                    updatedAt: .now
-                )
-                context.insert(habit)
-                let result = await viewModel.createHabit(with: habitID)
-                handleResult(result) { codableHabit in
-                    print("✅ Saved the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
-                } onFailure: { error in
-                    SyncManager.shared.add(SyncOperation(habitID: habitID, action: .create))
-                    print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
-                }
+                await addHabit()
             case .editing:
-                guard let habit = habit else { return }
-                let result = await viewModel.updateHabit(with: habit.id)
-                habit.name = viewModel.name
-                habit.habitDescription = viewModel.description
-                habit.duration = viewModel.duration
-                habit.reminderTime = viewModel.hasReminder ? viewModel.reminderTime : nil
-                habit.updatedAt = .now
-                try? context.save()
-                print("SAVING CHANGES FOR HABIT WITH NAME: \(habit.name)")
-                handleResult(result) { codableHabit in
-                    print("✅ Updated the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
-                } onFailure: { error in
-                    SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .update))
-                    print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
-                }
+                await editHabit()
             }
+        }
+    }
+    
+    private func editHabit() async {
+        guard let habit = habit else { return }
+        let result = await viewModel.updateHabit(with: habit.id)
+        habit.name = viewModel.name
+        habit.habitDescription = viewModel.description
+        habit.duration = viewModel.duration
+        habit.reminderTime = viewModel.hasReminder ? viewModel.reminderTime : nil
+        habit.updatedAt = .now
+        try? context.save()
+        print("SAVING CHANGES FOR HABIT WITH NAME: \(habit.name)")
+        if 
+        handleResult(result) { codableHabit in
+            print("✅ Updated the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
+        } onFailure: { error in
+            SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .update))
+            print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
+        }
+    }
+    
+    private func addHabit() async {
+        let habitID = UUID()
+        let habit = Habit(
+            id: habitID,
+            user: LightweightUser(id: userManager.profile.id),
+            name: viewModel.name,
+            description: viewModel.description,
+            duration: viewModel.duration,
+            reminderTime: viewModel.hasReminder ? viewModel.reminderTime : nil,
+            createdAt: .now,
+            updatedAt: .now
+        )
+        context.insert(habit)
+        let result = await viewModel.createHabit(with: habitID)
+        handleResult(result) { codableHabit in
+            print("✅ Saved the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
+        } onFailure: { error in
+            SyncManager.shared.add(SyncOperation(habitID: habitID, action: .create))
+            print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
         }
     }
 }

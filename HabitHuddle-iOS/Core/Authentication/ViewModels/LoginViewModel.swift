@@ -38,7 +38,8 @@ extension LoginView {
                 userManager.profile = LocalUser(
                     id: user.id,
                     username: user.username,
-                    name: user.name)
+                    name: user.name,
+                    isSignedInToServer: true)
                 return loginResponse.user
 
             } catch {

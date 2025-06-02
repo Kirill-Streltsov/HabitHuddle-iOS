@@ -17,7 +17,7 @@ struct HomeView: View {
     @Environment(\.modelContext) private var context
     
     @State private var showAllHabits = false
-    @State private var showNewHabitView = false
+    @State private var showNewHabitView = false    
     
     var body: some View {
         NavigationStack {
@@ -47,6 +47,9 @@ struct HomeView: View {
                 }
             }
             .onAppear {
+                Task {
+                    await SyncManager.shared.retry(from: context)
+                }
                 //                    let newHabits = Habit.createTestHabitsWithCheckIns()
                 //                    for newHabit in newHabits {
                 //                        context.insert(newHabit)

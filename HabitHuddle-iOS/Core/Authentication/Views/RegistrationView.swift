@@ -80,7 +80,7 @@ struct RegistrationView: View {
                     Task {
                         let result = try await viewModel.registerUser(username: username, name: name, password: password, context: context)
                         handleResult(result) { codableUser in
-                            userManager.profile = LocalUser(id: codableUser.id, username: codableUser.username, name: codableUser.name)
+                            userManager.profile = LocalUser(id: codableUser.id, username: codableUser.username, name: codableUser.name, isSignedInToServer: true)
                             dismiss()
                         } onFailure: { error in
                             print("❌ Couldn't load the user after registration - no response")

@@ -11,6 +11,7 @@ struct LocalUser: Codable {
     let id: UUID
     let username: String
     let name: String
+    let isSignedInToServer: Bool
 
-    static let `default` = LocalUser(id: UUID(), username: "guest", name: "New Person")
+    static let `default` = LocalUser(id: UUID(), username: "guest", name: "New Person", isSignedInToServer: false)
 }

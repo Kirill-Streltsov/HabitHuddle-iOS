@@ -36,6 +36,11 @@ struct HabitHuddle_iOSApp: App {
             RootView()
                 .environmentObject(appState)
                 .environmentObject(user)
+                .onAppear {
+                    for op in SyncManager.shared.operations {
+                        print("OPERATION: \(op)")
+                    }
+                }
             
         }
         .modelContainer(sharedModelContainer)
