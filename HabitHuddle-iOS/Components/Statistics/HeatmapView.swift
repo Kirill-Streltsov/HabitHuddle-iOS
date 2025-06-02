@@ -78,7 +78,7 @@ struct HeatmapView: View {
 //        default: return .gray.opacity(0.1)
 //        }
         if value == 0 {
-            return Color.gray.opacity(0.1)
+            return Color.gray.opacity(0.2)
         } else {
             return Color.green
         }

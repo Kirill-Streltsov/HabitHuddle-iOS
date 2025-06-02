@@ -80,14 +80,13 @@ struct RootView: View {
                             )
                         }
                     }
-                    .transition(.move(edge: .top))
-
+                    .transition(.opacity)
             } else {
                 OnboardingView()
                     .transition(.opacity)
             }
         }
-        .animation(.easeInOut, value: appState.isAuthenticated)
+        .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
     }
 }
 

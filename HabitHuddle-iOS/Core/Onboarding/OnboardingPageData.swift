@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct OnboardingPageData {
+struct OnboardingPageData: Identifiable {
+    let id = UUID()
     var symbol: String
     var title: String
     var text: String

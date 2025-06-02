@@ -11,7 +11,7 @@ struct OnboardingView: View {
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding = false
     @State private var pageIndex = 0
     @Namespace private var animation
-
+    
     let pages: [OnboardingPageData] = [
         OnboardingPageData(
             symbol: "hand.wave.fill",
@@ -69,7 +69,7 @@ struct OnboardingView: View {
             )
         ),
         OnboardingPageData(
-            symbol: "figure.martial.arts",
+            symbol: "figure.run",
             title: "Ready to grow?",
             text: "Let’s build habits that stick — and have fun doing it.",
             customView: AnyView(
@@ -80,54 +80,71 @@ struct OnboardingView: View {
                         HeatmapView(habit: Habit.demoHabitWithFullCheckIns())
                     }
                 }
-                .offset(y: 30)
+                    .offset(y: 30)
             )
         ),
     ]
-
+    
     var body: some View {
         ZStack {
-            VStack(spacing: 40) {
-                OnboardingContent(page: pages[pageIndex], namespace: animation)
+            ForEach(Array(pages.enumerated()), id: \.1.id) { index, page in
+                if index == pageIndex {
+                    VStack {
+                        OnboardingContent(page: page)
+                            .frame(height: 650)
 
-                Spacer()
+                        Spacer()
 
-                HStack(spacing: 16) {
-                    if pageIndex > 0 {
-                        Button("Back") {
-                            withAnimation {
-                                pageIndex -= 1
+                        HStack(spacing: 12) {
+                            // Back Button with animated appearance
+                            if pageIndex != 0 {
+                                Button {
+                                    withAnimation(.easeInOut(duration: 0.4)) {
+                                        pageIndex -= 1
+                                    }
+                                } label: {
+                                    Text("Back")
+                                        .font(.headline)
+                                        .padding()
+                                        .frame(maxWidth: .infinity)
+                                        .background(Color(.systemGray5))
+                                        .foregroundStyle(.primary)
+                                        .cornerRadius(12)
+                                }
+                                .transition(.scale.combined(with: .opacity))
+                            }
+
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.4)) {
+                                    if pageIndex < pages.count - 1 {
+                                        pageIndex += 1
+                                    } else {
+                                        hasSeenOnboarding = true
+                                    }
+                                }
+                            } label: {
+                                Text(pageIndex == pages.count - 1 ? "Start" : "Next")
+                                    .font(.headline)
+                                    .foregroundStyle(Color(.systemBackground))
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color(.systemBlue))
+                                    .cornerRadius(12)
                             }
                         }
-                        .buttonStyle(OnboardingButtonStyle(style: .secondary))
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity)
+                        .animation(.easeInOut(duration: 0.3), value: pageIndex)
+
+                        Spacer()
                     }
-
-                    if pageIndex < pages.count - 1 {
-                        Button("Next") {
-                            withAnimation {
-                                pageIndex += 1
-                            }
-                        }
-                        .buttonStyle(OnboardingButtonStyle(style: .primary))
-                    } else {
-                        Button("Start!") {
-                            withAnimation(.easeInOut(duration: 0.6)) {
-                                HapticManager.trigger(.success)
-                                hasSeenOnboarding = true
-                            }
-                        }
-                        .buttonStyle(OnboardingButtonStyle(style: .primary))
-                        .matchedGeometryEffect(id: "startButton", in: animation)
-                        .transition(.scale.combined(with: .opacity))
-                    }
+                    .transition(.opacity)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal)
-                .frame(height: 50)
             }
-            .animation(.easeInOut(duration: 0.4), value: pageIndex)
         }
-    }
+        .animation(.easeInOut(duration: 0.4), value: pageIndex)
+
+        }
 }
 
 #Preview {
