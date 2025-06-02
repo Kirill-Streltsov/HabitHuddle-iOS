@@ -17,6 +17,7 @@ struct HabitFormView: View {
     var habit: Habit?
     let mode: Mode
 
+    @AppStorage("userID") private var userID: String?
     @State private var isCheckedIn = false
     @State private var birthDate = Date.now
     @State private var saveButtonPressed = false
@@ -212,11 +213,14 @@ struct HabitFormView: View {
         Task {
             switch mode {
             case .adding:
-                guard let user = try? context.fetch(FetchDescriptor<User>()).first else { return }
+                guard let userIDString = userID, let userID = UUID(uuidString: userIDString) else {
+                    print("NO USER ID")
+                    return
+                }
                 let habitID = UUID()
                 let habit = Habit(
                     id: habitID,
-                    user: LightweightUser(id: user.id),
+                    user: LightweightUser(id: userID),
                     name: viewModel.name,
                     description: viewModel.description,
                     duration: viewModel.duration,

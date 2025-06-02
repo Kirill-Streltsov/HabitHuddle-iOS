@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding = false
+    @AppStorage("userID") private var userID: String?
     @State private var pageIndex = 0
     @Namespace private var animation
     
@@ -117,8 +118,10 @@ struct OnboardingView: View {
                             Button {
                                 withAnimation(.easeInOut(duration: 0.4)) {
                                     if pageIndex < pages.count - 1 {
+                                        userID = UUID().uuidString
                                         pageIndex += 1
                                     } else {
+                                        userID = UUID().uuidString
                                         hasSeenOnboarding = true
                                     }
                                 }
