@@ -37,17 +37,7 @@ struct HabitDetailView: View {
     var body: some View {
         ZStack {
             ScrollView {
-                VStack(spacing: 20) {
-                    if mode == .editing {
-                        if let habit = habit {
-                            CheckInCardView(habit: habit) {
-                                checkIntoHabit(habit)
-                            }
-                        }
-                    }
-
-                    // MARK: - Header
-
+                VStack(spacing: 16) {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(mode == .adding ? "Create a new habit" : "Update your habit")
                             .font(.largeTitle.weight(.semibold))
@@ -57,62 +47,62 @@ struct HabitDetailView: View {
                                 .foregroundColor(.secondary)
                         }
                     }
+                    
                     .padding(.horizontal)
-
-                    // MARK: - Input Card
-
-                    CardView {
-                        VStack(spacing: 16) {
-                            CustomStyledTextField(
-                                placeholder: "Habit name",
-                                text: $viewModel.name
-                            )
-
-                            CustomStyledTextField(
-                                placeholder: "Description (optional)",
-                                text: $viewModel.description
-                            )
+                    if mode == .editing {
+                        if let habit = habit {
+                            CheckInCardView(habit: habit) {
+                                checkIntoHabit(habit)
+                            }
                         }
                     }
 
                     CardView {
-                        VStack(alignment: .leading, spacing: 20) {
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text("Start date:")
-                                    .fontWeight(.semibold)
+                        VStack(spacing: 24) {
+                            VStack(spacing: 16) {
+                                CustomStyledTextField(
+                                    placeholder: "Habit name",
+                                    text: $viewModel.name
+                                )
 
-                                HStack {
-                                    Image(systemName: "calendar.badge.clock")
-                                        .foregroundStyle(.secondary)
-                                    Text(mode == .adding ? Date.now.longFormatted : habit!.createdAt.fullFormatted)
-                                        .foregroundStyle(.secondary)
-                                }
+                                CustomStyledTextField(
+                                    placeholder: "Description (optional)",
+                                    text: $viewModel.description
+                                )
                             }
+                            VStack(alignment: .leading, spacing: 20) {
+                                VStack(alignment: .leading, spacing: 12) {
+                                    Text("Start date:")
+                                        .fontWeight(.semibold)
 
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text("Desired duration")
-                                    .fontWeight(.semibold)
-
-                                Picker("Duration", selection: $viewModel.duration) {
-                                    ForEach(HabitDuration.allCases) { option in
-                                        Text(option.displayName)
-                                            .tag(option)
+                                    HStack {
+                                        Image(systemName: "calendar.badge.clock")
+                                            .foregroundStyle(.secondary)
+                                        Text(mode == .adding ? Date.now.longFormatted : habit!.createdAt.fullFormatted)
+                                            .foregroundStyle(.secondary)
                                     }
                                 }
-                                .pickerStyle(.segmented)
+
+                                VStack(alignment: .leading, spacing: 12) {
+                                    Text("Desired duration")
+                                        .fontWeight(.semibold)
+
+                                    Picker("Duration", selection: $viewModel.duration) {
+                                        ForEach(HabitDuration.allCases) { option in
+                                            Text(option.displayName)
+                                                .tag(option)
+                                        }
+                                    }
+                                    .pickerStyle(.segmented)
+                                }
                             }
-                        }
-                    }
+                            VStack(alignment: .leading, spacing: 12) {
+                                Toggle("Enable Reminder", isOn: $viewModel.hasReminder.animation())
 
-                    // MARK: - Reminder
-
-                    CardView {
-                        VStack(alignment: .leading, spacing: 12) {
-                            Toggle("Enable Reminder", isOn: $viewModel.hasReminder.animation())
-
-                            if viewModel.hasReminder {
-                                DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
-                                    .transition(.opacity.combined(with: .slide))
+                                if viewModel.hasReminder {
+                                    DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
+                                        .transition(.opacity.combined(with: .slide))
+                                }
                             }
                         }
                     }

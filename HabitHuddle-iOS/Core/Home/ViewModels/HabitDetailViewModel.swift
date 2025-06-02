@@ -1,5 +1,5 @@
 //
-//  HabitFormViewModel.swift
+//  HabitDetailViewModel.swift
 //  HabitHuddle-iOS
 //
 //  Created by Kirill on 25.05.25.
