@@ -14,7 +14,6 @@ struct RootView: View {
     var body: some View {
         ZStack {
             if hasSeenOnboarding {
-                if appState.isAuthenticated {
                     TabView {
                         Tab("Habits", systemImage: "checklist") {
                             HomeView()
@@ -81,11 +80,8 @@ struct RootView: View {
                             )
                         }
                     }
-                    .transition(.move(edge: .trailing))
-                } else {
-                    LoginView(appState: appState)
-                        .transition(.opacity)
-                }
+                    .transition(.move(edge: .top))
+
             } else {
                 OnboardingView()
                     .transition(.opacity)

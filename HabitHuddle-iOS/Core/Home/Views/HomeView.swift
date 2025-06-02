@@ -11,56 +11,56 @@ import SwiftUI
 struct HomeView: View {
     @Query(sort: [SortDescriptor(\Habit.createdAt, order: .reverse)])
     var habits: [Habit]
-
+    
     @EnvironmentObject var appState: AppState
     @Environment(\.modelContext) private var context
-
+    
     @State private var showAllHabits = false
     @State private var showNewHabitView = false
-
+    
     var body: some View {
-        UserDataView { user in
-            NavigationStack {
-                ScrollView {
-                    HStack {
-                        Text("Hello, \(user.name) 👋")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding(.horizontal)
-                        Spacer()
-                    }
-
-                    if habits.isEmpty {
-                        EmptyHabitsView(onAddHabit: { showNewHabitView = true })
-                    } else {
-                        // Today's habits section
-                        HabitsGridView(habits: habits)
-                    }
+        NavigationStack {
+            ScrollView {
+                HStack {
+                    // TODO: Change to username
+                    Text("Hello, Kirill 👋")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal)
+                    Spacer()
                 }
-                .toolbar {
-                    if !habits.isEmpty {
-                        Button {
-                            showNewHabitView = true
-                        } label: {
-                            Text("Add a habit")
-                        }
-                    }
+                
+                if habits.isEmpty {
+                    EmptyHabitsView(onAddHabit: { showNewHabitView = true })
+                } else {
+                    // Today's habits section
+                    HabitsGridView(habits: habits)
                 }
-                .onAppear {
-//                    let newHabits = Habit.createTestHabitsWithCheckIns()
-//                    for newHabit in newHabits {
-//                        context.insert(newHabit)
-//                    }
-                }
-                .navigationDestination(isPresented: $showNewHabitView) {
-                    HabitFormView()
-                }
-                .navigationDestination(for: Habit.self) { habit in
-                    HabitFormView(habit: habit)
-                }
-                .navigationTitle("Habits of the day")
             }
+            .toolbar {
+                if !habits.isEmpty {
+                    Button {
+                        showNewHabitView = true
+                    } label: {
+                        Text("Add a habit")
+                    }
+                }
+            }
+            .onAppear {
+                //                    let newHabits = Habit.createTestHabitsWithCheckIns()
+                //                    for newHabit in newHabits {
+                //                        context.insert(newHabit)
+                //                    }
+            }
+            .navigationDestination(isPresented: $showNewHabitView) {
+                HabitFormView()
+            }
+            .navigationDestination(for: Habit.self) { habit in
+                HabitFormView(habit: habit)
+            }
+            .navigationTitle("Habits of the day")
         }
+        
     }
 }
 
