@@ -25,7 +25,7 @@ struct FriendsListView: View {
                     .cornerRadius(10)
                     .padding(.horizontal)
                     .padding(.top)
-                    .onChange(of: searchText) { newValue in
+                    .onChange(of: searchText) { _, newValue in
                         viewModel.searchUsers(query: newValue)
                     }
                 
@@ -53,12 +53,29 @@ struct FriendsListView: View {
                                         .foregroundColor(.white)
                                 )
                             
-                            
                             Text(user.username)
                                 .font(.body)
                                 .foregroundColor(.primary)
+                            
+                            Spacer()
+                            
+                            SlimButton(title: "Add Friend") {
+                                Task {
+                                    let result = await viewModel.addFriend(with: user.id)
+                                    handleResult(result) { result in
+                                        print("RESULT: \(result)")
+                                    } onFailure: { error in
+                                        print("RESULT ERROR: \(error)")
+                                    }
+                                }
+                            }
+                            .buttonStyle(.plain)
+
                         }
                         .padding(.vertical, 6)
+                        .onAppear {
+                            print("USER ID: \(user.id)")
+                        }
                     }
                     .listStyle(PlainListStyle())
                 }

@@ -76,7 +76,7 @@ extension HabitDetailView {
                     endpoint: .checkIntoHabit(with: id),
                     method: .post
                 )
-                return .success(checkInResponse)
+                return .success(.ok)
             } catch let error as APIError {
                 return .failure(error)
             } catch {

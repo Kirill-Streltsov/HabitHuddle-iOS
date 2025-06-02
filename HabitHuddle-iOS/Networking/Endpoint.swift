@@ -54,4 +54,8 @@ struct Endpoint {
             queryItems: [URLQueryItem(name: "query", value: username)]
         )
     }
+    
+    static func addFriend(with id: UUID) -> Endpoint {
+        Endpoint(path: "friends/add")
+    }
 }

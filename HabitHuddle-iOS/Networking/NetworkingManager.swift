@@ -110,6 +110,34 @@ final class NetworkingManager {
 
         return HTTPStatus(statusCode: httpResponse.statusCode)
     }
+    
+    func requestStatusCode<U: Encodable>(
+        endpoint: Endpoint,
+        method: HTTPMethod,
+        body: U,
+        headers: [String: String]? = nil
+    ) async throws -> HTTPStatus {
+        var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
+        urlRequest.httpMethod = method.rawValue
+
+        if let token = TokenManager.token {
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+
+        headers?.forEach { key, value in
+            urlRequest.setValue(value, forHTTPHeaderField: key)
+        }
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpBody = try jsonEncoder.encode(body)
+
+        let (_, response) = try await URLSession.shared.data(for: urlRequest)
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError.unknown
+        }
+
+        return HTTPStatus(statusCode: httpResponse.statusCode)
+    }
 
     func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
         switch response.statusCode {
