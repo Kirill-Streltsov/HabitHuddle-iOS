@@ -17,14 +17,16 @@ struct HabitFormView: View {
     var habit: Habit?
     let mode: Mode
 
-    @AppStorage("userID") private var userID: String?
     @State private var isCheckedIn = false
     @State private var birthDate = Date.now
     @State private var saveButtonPressed = false
     @State private var deleteButtonPressed = false
+    
     @StateObject private var viewModel: ViewModel
+    
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var userManager: LocalUserManager
 
     init(habit: Habit? = nil) {
         _viewModel = StateObject(wrappedValue: ViewModel())
@@ -213,14 +215,10 @@ struct HabitFormView: View {
         Task {
             switch mode {
             case .adding:
-                guard let userIDString = userID, let userID = UUID(uuidString: userIDString) else {
-                    print("NO USER ID")
-                    return
-                }
                 let habitID = UUID()
                 let habit = Habit(
                     id: habitID,
-                    user: LightweightUser(id: userID),
+                    user: LightweightUser(id: userManager.profile.id),
                     name: viewModel.name,
                     description: viewModel.description,
                     duration: viewModel.duration,

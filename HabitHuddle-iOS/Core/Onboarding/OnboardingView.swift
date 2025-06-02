@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding = false
-    @AppStorage("userID") private var userID: String?
+    @EnvironmentObject private var userManager: LocalUserManager
     @State private var pageIndex = 0
     @Namespace private var animation
     
@@ -24,17 +24,40 @@ struct OnboardingView: View {
             )
         ),
         OnboardingPageData(
+            symbol: "flame.fill",
+            title: "Track streaks & progress",
+            text: "Keep an eye on your daily check-ins, current streak, and completion rate.",
+            customView: AnyView(
+                HabitStatsCard(habit: Habit.demoHabitWithRecentCheckIns())
+                    .offset(y: 24)
+            )
+        ),
+        OnboardingPageData(
             symbol: "person.2.fill",
             title: "Challenge your friends",
             text: "Stay accountable by sending and accepting habit challenges.\nProgress together.",
             customView: AnyView(
                 VStack {
-                    ChallengeCardView(
+                    ChallengeProgressCardView(
                         challenge: ChallengeDTO(
                             id: UUID(),
                             initiatorName: "Alice",
                             receiverName: "You",
-                            habitName: "No caffeine before sleep",
+                            habitName: "Read 20 pages a day",
+                            type: .competitive,
+                            status: .accepted,
+                            startDate: Date(),
+                            endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
+                        ),
+                        initiatorProgress: 0.62,
+                        receiverProgress: 0.83
+                    )
+                    ChallengeCardView(
+                        challenge: ChallengeDTO(
+                            id: UUID(),
+                            initiatorName: "Jennifer",
+                            receiverName: "You",
+                            habitName: "Morning runs together",
                             type: .supportive,
                             status: .pending,
                             startDate: Date(),
@@ -43,30 +66,7 @@ struct OnboardingView: View {
                         onAccept: {},
                         onReject: {}
                     )
-                    ChallengeCardView(
-                        challenge: ChallengeDTO(
-                            id: UUID(),
-                            initiatorName: "James",
-                            receiverName: "You",
-                            habitName: "Read 20 pages a day",
-                            type: .competitive,
-                            status: .pending,
-                            startDate: Date(),
-                            endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!
-                        ),
-                        onAccept: {},
-                        onReject: {}
-                    )
                 }
-            )
-        ),
-        OnboardingPageData(
-            symbol: "flame.fill",
-            title: "Track streaks & progress",
-            text: "Keep an eye on your daily check-ins, current streak, and completion rate.",
-            customView: AnyView(
-                HabitStatsCard(habit: Habit.demoHabitWithRecentCheckIns())
-                    .offset(y: 24)
             )
         ),
         OnboardingPageData(
@@ -92,7 +92,7 @@ struct OnboardingView: View {
                 if index == pageIndex {
                     VStack {
                         OnboardingContent(page: page)
-                            .frame(height: 650)
+                            .frame(height: 675)
 
                         Spacer()
 
@@ -118,10 +118,10 @@ struct OnboardingView: View {
                             Button {
                                 withAnimation(.easeInOut(duration: 0.4)) {
                                     if pageIndex < pages.count - 1 {
-                                        userID = UUID().uuidString
                                         pageIndex += 1
                                     } else {
-                                        userID = UUID().uuidString
+                                        HapticManager.trigger(.success)
+                                        userManager.profile = LocalUser(id: UUID(), username: "new_person", name: "New Person")
                                         hasSeenOnboarding = true
                                     }
                                 }

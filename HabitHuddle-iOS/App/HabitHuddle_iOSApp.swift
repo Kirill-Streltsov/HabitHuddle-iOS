@@ -24,6 +24,7 @@ struct HabitHuddle_iOSApp: App {
     }()
 
     @StateObject private var appState = AppState()
+    @StateObject private var user = LocalUserManager()
 
     init() {
         AppLaunchChecker.clearKeychainIfFreshInstall()
@@ -34,6 +35,8 @@ struct HabitHuddle_iOSApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(appState)
+                .environmentObject(user)
+            
         }
         .modelContainer(sharedModelContainer)
     }

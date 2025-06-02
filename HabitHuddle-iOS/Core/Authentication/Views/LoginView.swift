@@ -11,6 +11,7 @@ import SwiftUI
 struct LoginView: View {
     @StateObject private var viewModel: ViewModel
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
 
     @State private var username = ""
     @State private var password = ""
@@ -18,8 +19,8 @@ struct LoginView: View {
         username.isEmpty || password.isEmpty
     }
 
-    init(appState: AppState) {
-        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState))
+    init(appState: AppState, userManager: LocalUserManager) {
+        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState, userManager: userManager))
     }
 
     var body: some View {
@@ -52,11 +53,12 @@ struct LoginView: View {
                 Button {
                     Task {
                         if let cu = await viewModel.loginUser(username: username, password: password) {
-                            print("TOKEN MANAGER: \(String(describing: TokenManager.token))")
+                            print("TOKEN: \(String(describing: TokenManager.token))")
                             let codableHabitsResult = await viewModel.getUserHabits()
                             handleResult(codableHabitsResult) { codableHabits in
                                 saveHabitsLocally(codableHabits)
                                 viewModel.saveUser(cu, using: context)
+                                dismiss()
                             } onFailure: { apiError in
                                 print("Could not load user habits: \(apiError.localizedDescription)")
                             }
@@ -66,7 +68,6 @@ struct LoginView: View {
                     HStack {
                         Text("SIGN IN")
                             .fontWeight(.semibold)
-                        Image(systemName: "arrow.right")
                     }
                     .foregroundStyle(.white)
                     .frame(width: UIScreen.main.bounds.width - 32, height: 48)
@@ -77,18 +78,6 @@ struct LoginView: View {
                 .padding(.top, 24)
 
                 Spacer()
-
-                NavigationLink {
-                    RegistrationView(appState: viewModel.appState)
-                        .navigationBarBackButtonHidden(true)
-                } label: {
-                    HStack(spacing: 2) {
-                        Text("Don't have an account?")
-                        Text("Sign up")
-                            .fontWeight(.bold)
-                    }
-                    .font(.system(size: 16))
-                }
             }
         }
     }
@@ -112,5 +101,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView(appState: AppState())
+    LoginView(appState: AppState(), userManager: LocalUserManager())
 }

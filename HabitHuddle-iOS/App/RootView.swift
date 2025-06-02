@@ -8,37 +8,27 @@
 import SwiftUI
 
 struct RootView: View {
-    @EnvironmentObject var appState: AppState
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding = false
-
+    @AppStorage("selectedTab") var selectedTab = 0
+    
     var body: some View {
         ZStack {
             if hasSeenOnboarding {
-                    TabView {
-                        Tab("Habits", systemImage: "checklist") {
-                            HomeView()
-                        }
-                        Tab("Statistics", systemImage: "chart.bar") {
-                            StatisticsList()
-                        }
-                        Tab("Demo", systemImage: "checklist") {
-                            ChallengeProgressCardView(
-                                challenge: ChallengeDTO(
-                                    id: UUID(),
-                                    initiatorName: "Alice",
-                                    receiverName: "You",
-                                    habitName: "Daily Reading",
-                                    type: .competitive,
-                                    status: .accepted,
-                                    startDate: Date(),
-                                    endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
-                                ),
-                                initiatorProgress: 0.67,
-                                receiverProgress: 0.828
-                            )
-                        }
+                TabView(selection: $selectedTab) {
+                    Tab("Habits", systemImage: "checklist", value: 0) {
+                        HomeView()
                     }
-                    .transition(.opacity)
+                    Tab("Statistics", systemImage: "chart.bar", value: 1) {
+                        StatisticsList()
+                    }
+                    Tab("Challenges", systemImage: "trophy", value: 2) {
+                        ChallengesList()
+                    }
+                    Tab("Settings", systemImage: "gear", value: 3) {
+                        SettingsView()
+                    }
+                }
+                .transition(.opacity)
             } else {
                 OnboardingView()
                     .transition(.opacity)

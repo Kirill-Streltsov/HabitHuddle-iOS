@@ -13,7 +13,7 @@ struct ErrorText: View {
     var body: some View {
         Text(text)
             .foregroundStyle(.red)
-            .fontWeight(.semibold)
+            .fontWeight(.regular)
     }
 }
 

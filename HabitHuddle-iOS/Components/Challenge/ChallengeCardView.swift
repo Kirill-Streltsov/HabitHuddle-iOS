@@ -48,7 +48,7 @@ struct ChallengeCardView: View {
             }
             .foregroundStyle(.secondary)
 
-            HStack(spacing: 12) {
+            HStack {
                 Button(action: onReject) {
                     Text("Reject")
                         .fontWeight(.semibold)
@@ -58,7 +58,7 @@ struct ChallengeCardView: View {
                         .foregroundStyle(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-
+                Spacer()
                 Button(action: onAccept) {
                     Text("Accept")
                         .fontWeight(.semibold)
@@ -68,8 +68,6 @@ struct ChallengeCardView: View {
                         .foregroundStyle(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-
-                Spacer()
             }
             .padding(.top, 4)
         }

@@ -11,7 +11,8 @@ import SwiftUI
 struct HomeView: View {
     @Query(sort: [SortDescriptor(\Habit.createdAt, order: .reverse)])
     var habits: [Habit]
-    
+        
+    @EnvironmentObject var userManager: LocalUserManager
     @EnvironmentObject var appState: AppState
     @Environment(\.modelContext) private var context
     
@@ -22,8 +23,7 @@ struct HomeView: View {
         NavigationStack {
             ScrollView {
                 HStack {
-                    // TODO: Change to username
-                    Text("Hello, Kirill 👋")
+                    Text("Hello, \(userManager.profile.name) 👋")
                         .font(.title2)
                         .fontWeight(.bold)
                         .padding(.horizontal)

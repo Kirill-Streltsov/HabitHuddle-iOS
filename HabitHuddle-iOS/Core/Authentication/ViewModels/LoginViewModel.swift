@@ -12,11 +12,13 @@ extension LoginView {
     @MainActor
     final class ViewModel: ObservableObject {
         let appState: AppState
+        let userManager: LocalUserManager
 
         @Published var errorMessage: String = ""
 
-        init(appState: AppState) {
+        init(appState: AppState, userManager: LocalUserManager) {
             self.appState = appState
+            self.userManager = userManager
         }
 
         func loginUser(username: String, password: String) async -> CodableUser? {
@@ -32,6 +34,11 @@ extension LoginView {
                 )
 
                 TokenManager.token = loginResponse.token
+                let user = loginResponse.user
+                userManager.profile = LocalUser(
+                    id: user.id,
+                    username: user.username,
+                    name: user.name)
                 return loginResponse.user
 
             } catch {
@@ -75,9 +82,7 @@ extension LoginView {
                     updatedAt: user.updatedAt
                 )
                 context.insert(newUser)
-                withAnimation {
-                    appState.isAuthenticated = true
-                }
+                appState.isAuthenticated = true
             } catch {
                 fatalError("Couldn't save user's information")
             }

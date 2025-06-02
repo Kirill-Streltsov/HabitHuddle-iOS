@@ -10,14 +10,15 @@ import SwiftUI
 
 struct RegistrationView: View {
     @StateObject private var viewModel: ViewModel
+    @EnvironmentObject var userManager: LocalUserManager
     @Environment(\.modelContext) private var context
-
+    @Environment(\.dismiss) private var dismiss
+    
     @State private var username = ""
     @State private var name = ""
     @State private var password = ""
     @State private var confirmPassword = ""
     @State private var signUpTapped = false
-    @Environment(\.dismiss) var dismiss
 
     private var inputFieldsAreEmpty: Bool {
         username.isEmpty || name.isEmpty || password.isEmpty || confirmPassword.isEmpty
@@ -41,8 +42,8 @@ struct RegistrationView: View {
         }
     }
 
-    init(appState: AppState) {
-        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState))
+    init(appState: AppState, userManager: LocalUserManager) {
+        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState, userManager: userManager))
     }
 
     var body: some View {
@@ -77,14 +78,18 @@ struct RegistrationView: View {
                 signUpTapped = true
                 if inputFieldsAreValid {
                     Task {
-                        await viewModel.registerUser(username: username, name: name, password: password, context: context)
+                        let result = try await viewModel.registerUser(username: username, name: name, password: password, context: context)
+                        handleResult(result) { codableUser in
+                            userManager.profile = LocalUser(id: codableUser.id, username: codableUser.username, name: codableUser.name)
+                        } onFailure: { error in
+                            print("❌ Couldn't load the user after registration - no response")
+                        }
                     }
                 }
             } label: {
                 HStack {
                     Text("SIGN UP")
                         .fontWeight(.semibold)
-                    Image(systemName: "arrow.right")
                 }
                 .foregroundStyle(.white)
                 .frame(width: UIScreen.main.bounds.width - 32, height: 48)
@@ -95,21 +100,10 @@ struct RegistrationView: View {
             .padding(.top, 24)
 
             Spacer()
-
-            Button {
-                dismiss()
-            } label: {
-                HStack(spacing: 2) {
-                    Text("Already have an account?")
-                    Text("Sign in")
-                        .fontWeight(.bold)
-                }
-                .font(.system(size: 16))
-            }
         }
     }
 }
 
 #Preview {
-    RegistrationView(appState: AppState())
+    RegistrationView(appState: AppState(), userManager: LocalUserManager())
 }
