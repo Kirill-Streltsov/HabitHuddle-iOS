@@ -29,9 +29,6 @@ struct EmptyFriendsView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
 
-            Button("Go to the Settings tab to log in or create an account.") {
-                selectedTab = 1
-            }
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
