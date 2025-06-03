@@ -31,12 +31,16 @@ struct FoundUserView: View {
             Spacer()
             
             if requestIsSent {
-                RequestSentLabel()
-            } else {
-                SlimButton(title: "Add Friend") {
-                    action()
+                withAnimation {
+                    RequestSentLabel()
                 }
-                .buttonStyle(.plain)
+            } else {
+                withAnimation {
+                    SlimButton(title: "Add Friend") {
+                        action()
+                    }
+                    .buttonStyle(.plain)
+                }
             }
         }
     }

@@ -48,7 +48,11 @@ struct FriendsListView: View {
                             .foregroundStyle(.secondary)
                             .padding()
                     } else {
-                        EmptyFriendsView()
+                        FoundUserView(username: "some_user", requestIsSent: $requestIsSent, action: {})
+                        FoundUserView(username: "some_user", requestIsSent: $requestIsSent, action: {})
+                        FoundUserView(username: "some_user", requestIsSent: $requestIsSent, action: {})
+                        FriendRequestCardView(user: User(id: UUID(), username: "other_user", name: "Jack", createdAt: .now, updatedAt: .now), onAccept: {}, onIgnore: {})
+//                        EmptyFriendsView()
 //                        ForEach(viewModel.results) { user in
 //                            FoundUserView(username: user.username, requestIsSent: $requestIsSent) {
 //                                Task {
