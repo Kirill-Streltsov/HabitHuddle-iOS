@@ -80,11 +80,6 @@ struct LoginView: View {
 
                 Spacer()
             }
-            .onDisappear {
-                Task {
-                    await SyncManager.shared.retry(from: context)
-                }
-            }
         }
     }
 

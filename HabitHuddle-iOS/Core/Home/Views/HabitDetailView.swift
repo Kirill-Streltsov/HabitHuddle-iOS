@@ -132,7 +132,9 @@ struct HabitDetailView: View {
                 if mode == .editing {
                     Button {
                         deleteButtonPressed = true
-                        deleteHabit()
+                        Task {
+                            await deleteHabit()
+                        }
                         dismiss()
                     } label: {
                         Image(systemName: "trash")
@@ -144,12 +146,17 @@ struct HabitDetailView: View {
                 if let habit = habit {
                     populateFields(with: habit)
                     isCheckedIn = habit.isCheckedInToday
+                    viewModel.habit = habit
                 }
             }
             .onChange(of: viewModel.duration) { _, newValue in
                 if let habit = habit {
-                    habit.duration = newValue
-                    try? context.save()
+                    Task {
+                        await MainActor.run {
+                            habit.duration = newValue
+                            try? context.save()
+                        }
+                    }
                 }
             }
             .onDisappear {
@@ -189,10 +196,12 @@ struct HabitDetailView: View {
         }
     }
 
-    private func deleteHabit() {
-        Task {
-            guard let habit = habit else { return }
+    private func deleteHabit() async {
+        guard let habit = habit else { return }
+        await MainActor.run {
             context.delete(habit)
+        }
+        Task {
             if userManager.profile.isSignedInToServer {
                 let result = await viewModel.deleteHabit(with: habit.id)
                 handleResult(result) { codableHabit in
@@ -219,12 +228,14 @@ struct HabitDetailView: View {
     private func editHabit() async {
         guard let habit = habit else { return }
         let result = await viewModel.updateHabit(with: habit.id)
-        habit.name = viewModel.name
-        habit.habitDescription = viewModel.description
-        habit.duration = viewModel.duration
-        habit.reminderTime = viewModel.hasReminder ? viewModel.reminderTime : nil
-        habit.updatedAt = .now
-        try? context.save()
+        await MainActor.run {
+            habit.name = viewModel.name
+            habit.habitDescription = viewModel.description
+            habit.duration = viewModel.duration
+            habit.reminderTime = viewModel.hasReminder ? viewModel.reminderTime : nil
+            habit.updatedAt = .now
+            try? context.save()
+        }
         print("SAVING CHANGES FOR HABIT WITH NAME: \(habit.name)")
         if userManager.profile.isSignedInToServer {
             handleResult(result) { codableHabit in
@@ -238,17 +249,19 @@ struct HabitDetailView: View {
     
     private func addHabit() async {
         let habitID = UUID()
-        let habit = Habit(
-            id: habitID,
-            user: LightweightUser(id: userManager.profile.id),
-            name: viewModel.name,
-            description: viewModel.description,
-            duration: viewModel.duration,
-            reminderTime: viewModel.hasReminder ? viewModel.reminderTime : nil,
-            createdAt: .now,
-            updatedAt: .now
-        )
-        context.insert(habit)
+        await MainActor.run {
+            let habit = Habit(
+                id: habitID,
+                user: LightweightUser(id: userManager.profile.id),
+                name: viewModel.name,
+                description: viewModel.description,
+                duration: viewModel.duration,
+                reminderTime: viewModel.hasReminder ? viewModel.reminderTime : nil,
+                createdAt: .now,
+                updatedAt: .now
+            )
+            context.insert(habit)
+        }
         if userManager.profile.isSignedInToServer {
             let result = await viewModel.createHabit(with: habitID)
             handleResult(result) { codableHabit in

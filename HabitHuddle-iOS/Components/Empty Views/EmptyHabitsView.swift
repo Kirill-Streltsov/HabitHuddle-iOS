@@ -14,7 +14,7 @@ struct EmptyHabitsView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Image(systemName: "figure.martial.arts")
+            Image(systemName: "brain.head.profile")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 70, height: 70)

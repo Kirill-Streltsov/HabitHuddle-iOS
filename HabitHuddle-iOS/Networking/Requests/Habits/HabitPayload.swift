@@ -13,4 +13,10 @@ struct HabitPayload: Codable {
     let description: String?
     let duration: String
     let reminderTime: Date?
+    let checkIns: [LightweightCheckIn]
+}
+
+struct LightweightCheckIn: Codable {
+    let id: UUID
+    let date: Date
 }

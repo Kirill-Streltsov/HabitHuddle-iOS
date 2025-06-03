@@ -17,6 +17,7 @@ extension HabitDetailView {
         @Published var duration: HabitDuration = .oneWeek
         @Published var hasReminder: Bool = false
         @Published var reminderTime: Date = .init()
+        var habit: Habit?
 
         func createHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
             do {
@@ -27,7 +28,8 @@ extension HabitDetailView {
                     name: name,
                     description: description,
                     duration: duration.rawValue,
-                    reminderTime: reminder
+                    reminderTime: reminder,
+                    checkIns: []
                 )
 
                 let habitResponse = try await NetworkingManager.shared.request(
@@ -46,6 +48,7 @@ extension HabitDetailView {
 
         func updateHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
             do {
+                guard let habit = habit else { return .failure(.notFound) }
                 let reminder: Date? = hasReminder ? reminderTime : nil
 
                 let payload = HabitPayload(
@@ -53,7 +56,8 @@ extension HabitDetailView {
                     name: name,
                     description: description,
                     duration: duration.rawValue,
-                    reminderTime: reminder
+                    reminderTime: reminder,
+                    checkIns: habit.checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) }
                 )
 
                 let habitResponse = try await NetworkingManager.shared.request(
@@ -76,7 +80,7 @@ extension HabitDetailView {
                     endpoint: .checkIntoHabit(with: id),
                     method: .post
                 )
-                return .success(.ok)
+                return .success(checkInResponse)
             } catch let error as APIError {
                 return .failure(error)
             } catch {
