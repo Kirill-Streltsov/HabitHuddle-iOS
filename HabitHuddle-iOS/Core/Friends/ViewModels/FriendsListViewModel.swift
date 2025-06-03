@@ -47,7 +47,7 @@ extension FriendsListView {
                     // Do nothing – task was cancelled
                 } catch {
                     results = []
-                    errorMessage = "Failed to fetch users: \(error.localizedDescription)"
+                    errorMessage = "Failed to fetch users: login or register to add friends!"
                 }
                 
                 isLoading = false
@@ -86,10 +86,8 @@ extension FriendsListView {
                     endpoint: .requestFriend(with: id),
                     method: .post,
                     body: payload)
-                print("RESPONSE: \(requestFriendResponse)")
                 return .success(.ok)
             } catch {
-                print("DIDN'T REQUEST FRIEND")
                 return .failure(.decodingError(error))
             }
         }
@@ -99,24 +97,19 @@ extension FriendsListView {
                 let requestFriendResponse = try await NetworkingManager.shared.requestStatusCode(
                     endpoint: .acceptFriend(with: id),
                     method: .post)
-                print("RESPONSE: \(requestFriendResponse)")
                 return .success(.ok)
             } catch {
-                print("DIDN'T ACCEPT FRIEND")
                 return .failure(.decodingError(error))
             }
         }
         
         func rejectFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
             do {
-                let payload = MakeFriendsRequest(friendID: id)
                 let requestFriendResponse = try await NetworkingManager.shared.requestStatusCode(
                     endpoint: .rejectFriend(with: id),
                     method: .post)
-                print("RESPONSE: \(requestFriendResponse)")
-                return .success(.ok)
+                return .success(requestFriendResponse)
             } catch {
-                print("DIDN'T REJECT FRIEND")
                 return .failure(.decodingError(error))
             }
         }

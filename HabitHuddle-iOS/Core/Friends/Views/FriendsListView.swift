@@ -135,8 +135,7 @@ struct FriendsListView: View {
                                 requestIsSent: $requestIsSent
                             ) {
                                 Task {
-                                    let result = await viewModel.requestFriend(with: user.id)
-                                    // handle result here if needed
+                                    await viewModel.requestFriend(with: user.id)
                                 }
                             }
                             .padding(.vertical, 6)

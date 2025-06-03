@@ -19,18 +19,21 @@ extension Habit {
     }
 
     func toggleCheckIn(in context: ModelContext) {
-        let today = Calendar.current.startOfDay(for: .now)
-
-        if let existingCheckIn = checkIns.first(where: { Calendar.current.isDate($0.date, inSameDayAs: today) }) {
-            context.delete(existingCheckIn)
-        } else {
-            let newCheckIn = HabitCheckIn(date: today, habit: self)
-            checkIns.append(newCheckIn)
+        let calendar = Calendar.current
+        let finishDate = calendar.date(byAdding: .day, value: self.duration.numberOfDays, to: self.createdAt)
+        let today = calendar.startOfDay(for: .now)
+        
+        if let finish = finishDate, today <= finish {
+            if let existingCheckIn = checkIns.first(where: { Calendar.current.isDate($0.date, inSameDayAs: today) }) {
+                context.delete(existingCheckIn)
+            } else {
+                let newCheckIn = HabitCheckIn(date: today, habit: self)
+                checkIns.append(newCheckIn)
+            }
+            updatedAt = .now
+            try? context.save()
+            toggleCheckInRemotely()
         }
-
-        updatedAt = .now
-        try? context.save()
-        toggleCheckInRemotely()
     }
 
     func toggleCheckInRemotely() {
