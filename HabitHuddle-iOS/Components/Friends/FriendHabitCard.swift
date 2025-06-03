@@ -9,8 +9,32 @@
 import SwiftUI
 
 struct FriendHabitCard: View {
-    let habit: Habit
+    let habit: CodableHabit
     let cardWidth: CGFloat = UIScreen.main.bounds.width - 32
+    
+    var checkIns: [CodableHabitCheckIn] {
+        if let checkIns = habit.checkIns {
+            return checkIns
+        } else {
+            return []
+        }
+    }
+    
+    var createdAt: String {
+        if let createdAt = habit.createdAt {
+            return dateFormatter.string(from: createdAt)
+        } else {
+            return "No info"
+        }
+    }
+    
+    var updatedAt: String {
+        if let updatedAt = habit.updatedAt {
+            return dateFormatter.string(from: updatedAt)
+        } else {
+            return "No info"
+        }
+    }
     
     @State private var showActionSheet = false
     @State private var selectedOption = ""
@@ -25,11 +49,11 @@ struct FriendHabitCard: View {
 
     private var checkInsLast30DaysCount: Int {
         let thirtyDaysAgo = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
-        return habit.checkIns.filter { $0.date >= thirtyDaysAgo }.count
+        return checkIns.filter { $0.date >= thirtyDaysAgo }.count
     }
 
     private var progressRatio: CGFloat {
-        min(CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays), 1.0)
+        min(CGFloat(checkIns.count) / CGFloat(habit.duration.numberOfDays), 1.0)
     }
 
     var body: some View {
@@ -46,8 +70,8 @@ struct FriendHabitCard: View {
             }
 
             // Description
-            if !habit.habitDescription.isEmpty {
-                Text(habit.habitDescription)
+            if !habit.description.isEmpty {
+                Text(habit.description)
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .lineLimit(3)
@@ -61,7 +85,7 @@ struct FriendHabitCard: View {
                 
                 Spacer()
 
-                Label("\(habit.checkIns.count) / \(habit.duration.numberOfDays) check-ins", systemImage: "checkmark.circle")
+                Label("\(checkIns.count) / \(habit.duration.numberOfDays) check-ins", systemImage: "checkmark.circle")
                     .font(.footnote)
                     .foregroundStyle(.green)
             }
@@ -69,7 +93,7 @@ struct FriendHabitCard: View {
             // Progress bar + percent text
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 6)
-                    .fill(Color.gray.opacity(0.3))
+                    .fill(Color.gray.opacity(0.25))
                     .frame(height: 14)
                 RoundedRectangle(cornerRadius: 6)
                     .fill(Color.green)
@@ -89,7 +113,7 @@ struct FriendHabitCard: View {
                     Text("Created:")
                         .font(.caption.bold())
                         .foregroundStyle(.secondary)
-                    Text(dateFormatter.string(from: habit.createdAt))
+                    Text(createdAt)
                         .font(.caption)
                 }
                 Spacer()
@@ -106,7 +130,7 @@ struct FriendHabitCard: View {
                     Text("Updated:")
                         .font(.caption.bold())
                         .foregroundStyle(.secondary)
-                    Text(dateFormatter.string(from: habit.updatedAt))
+                    Text(updatedAt)
                         .font(.caption)
                 }
             }
@@ -122,5 +146,5 @@ struct FriendHabitCard: View {
 }
 
 #Preview {
-    FriendHabitCard(habit: Habit.demoHabitWithRecentCheckIns())
+    FriendHabitCard(habit: CodableHabit(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Drink 2 liters a day", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: []))
 }

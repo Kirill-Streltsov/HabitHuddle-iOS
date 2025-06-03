@@ -10,7 +10,7 @@ import SwiftUI
 struct FriendDetailView: View {
     
     @StateObject private var viewModel = ViewModel()
-    let friend: User
+    let friend: CodableUser
     
     var body: some View {
         ScrollView {
@@ -27,7 +27,9 @@ struct FriendDetailView: View {
                         Text("\(friend.name)'s habits")
                             .font(.title2)
                             .fontWeight(.semibold)
-                        FriendHabitCard(habit: Habit.demoHabitWithRecentCheckIns())
+                        ForEach(viewModel.habits) { habit in
+                            FriendHabitCard(habit: habit)
+                        }
                     }
                     Divider()
                     VStack(alignment: .center) {
@@ -63,7 +65,7 @@ struct FriendDetailView: View {
 }
 
 #Preview {
-    FriendDetailView(friend: User(id: UUID(), username: "username", name: "Jack", createdAt: .now, updatedAt: .now, habits: []))
+    FriendDetailView(friend: CodableUser(id: UUID(), username: "username", name: "Jack", createdAt: .now, updatedAt: .now))
 }
 
 

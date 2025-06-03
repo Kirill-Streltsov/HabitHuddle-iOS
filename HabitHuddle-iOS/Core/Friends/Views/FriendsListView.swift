@@ -73,7 +73,12 @@ struct FriendsListView: View {
                     .padding(.horizontal)
                 ) {
                     ForEach(viewModel.friends) { friend in
-                        FriendCardView(friend: friend, onChallenge: {})
+                        NavigationLink {
+                            FriendDetailView(friend: friend)
+                        } label: {
+                            FriendCardView(friend: friend, onChallenge: {})
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
             }
