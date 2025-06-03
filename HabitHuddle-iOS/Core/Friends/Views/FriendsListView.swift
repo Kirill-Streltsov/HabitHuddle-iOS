@@ -43,34 +43,15 @@ struct FriendsListView: View {
                         .padding()
                 } else {
                     List(viewModel.results) { user in
-                        HStack(spacing: 12) {
-
-                            Circle()
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(width: 40, height: 40)
-                                .overlay(
-                                    Image(systemName: "person.fill")
-                                        .foregroundColor(.white)
-                                )
-                            
-                            Text(user.username)
-                                .font(.body)
-                                .foregroundColor(.primary)
-                            
-                            Spacer()
-                            
-                            SlimButton(title: "Add Friend") {
-                                Task {
-                                    let result = await viewModel.addFriend(with: user.id)
-                                    handleResult(result) { result in
-                                        print("RESULT: \(result)")
-                                    } onFailure: { error in
-                                        print("RESULT ERROR: \(error)")
-                                    }
+                        FoundUserView(username: user.username) {
+                            Task {
+                                let result = await viewModel.addFriend(with: user.id)
+                                handleResult(result) { result in
+                                    print("RESULT: \(result)")
+                                } onFailure: { error in
+                                    print("RESULT ERROR: \(error)")
                                 }
                             }
-                            .buttonStyle(.plain)
-
                         }
                         .padding(.vertical, 6)
                         .onAppear {
@@ -80,6 +61,7 @@ struct FriendsListView: View {
                     .listStyle(PlainListStyle())
                 }
             }
+            .background(.red)
             //            ScrollView {
             //
             //                VStack(spacing: 16) {

@@ -29,7 +29,7 @@ struct FriendCardView: View {
                     .foregroundColor(.secondary)
 
                 if let joinDate = user.createdAt {
-                    Text("Member since \(formattedDate(joinDate))")
+                    Text("Member since \(joinDate.formattedAsMonthYear())")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -49,12 +49,6 @@ struct FriendCardView: View {
                 .shadow(color: Color(.label).opacity(0.1), radius: 8, x: 0, y: 4)
         )
         .padding(.horizontal)
-    }
-
-    private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM yyyy"
-        return formatter.string(from: date)
     }
 }
 
