@@ -52,9 +52,7 @@ struct FriendHabitCard: View {
         return checkIns.filter { $0.date >= thirtyDaysAgo }.count
     }
 
-    private var progressRatio: CGFloat {
-        min(CGFloat(checkIns.count) / CGFloat(habit.duration.numberOfDays), 1.0)
-    }
+    @State private var progressRatio: CGFloat = 0
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -93,20 +91,12 @@ struct FriendHabitCard: View {
             // Progress bar + percent text
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 6)
-                    .fill(Color.gray.opacity(0.25))
+                    .fill(Color.gray.opacity(0.2))
                     .frame(height: 14)
                 RoundedRectangle(cornerRadius: 6)
                     .fill(Color.green)
                     .frame(width: cardWidth * progressRatio, height: 14)
             }
-            .overlay(
-                Text(String(format: "%.0f%%", progressRatio * 100))
-                    .font(.caption.bold())
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 6),
-                alignment: .center
-            )
-
             // Created / Updated info
             HStack {
                 VStack(alignment: .leading) {
@@ -142,6 +132,11 @@ struct FriendHabitCard: View {
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .frame(maxWidth: cardWidth)
         .padding(.horizontal)
+        .onAppear {
+            withAnimation {
+                progressRatio = min(CGFloat(checkIns.count) / CGFloat(habit.duration.numberOfDays), 1.0)
+            }
+        }
     }
 }
 
