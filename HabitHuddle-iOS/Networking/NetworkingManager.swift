@@ -61,7 +61,6 @@ final class NetworkingManager {
         headers: [String: String]? = nil,
         responseType _: T.Type
     ) async throws -> T {
-        print("STARTED EXECUTING REQUEST")
         guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
             throw APIError.invalidURL
         }
@@ -81,7 +80,6 @@ final class NetworkingManager {
         }
 
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
-        print("DATA: \(data.prettyPrintedJSONString)")
         guard let response = response as? HTTPURLResponse else {
             throw APIError.unknown
         }
