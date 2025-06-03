@@ -44,7 +44,7 @@ struct HabitDetailView: View {
                         if mode == .adding {
                             Text("Stay consistent by tracking what matters.")
                                 .font(.subheadline)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                         }
                     }
                     
@@ -118,7 +118,7 @@ struct HabitDetailView: View {
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : Color.accentColor)
-                            .foregroundColor(.white)
+                            .foregroundStyle(.white)
                             .cornerRadius(12)
                             .font(.headline)
                     }

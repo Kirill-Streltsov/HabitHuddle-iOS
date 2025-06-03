@@ -307,10 +307,10 @@ struct StatisticsDetailView: View {
                 VStack {
                     Text("Current Streak")
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                     Text("\(currentStreak) days")
                         .font(.title2.bold())
-                        .foregroundColor(.green)
+                        .foregroundStyle(.green)
                     ProgressRing(progress: Double(currentStreak) / Double(longestStreak.length), color: .green)
                         .frame(width: 60, height: 60)
                 }
@@ -318,13 +318,13 @@ struct StatisticsDetailView: View {
                 VStack {
                     Text("Longest Streak")
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                     Text("\(longestStreak.length) days")
                         .font(.title2.bold())
-                        .foregroundColor(.blue)
+                        .foregroundStyle(.blue)
                     Text("From \(longestStreak.startDate.formatted(date: .numeric, time: .omitted)) to \(longestStreak.endDate.formatted(date: .numeric, time: .omitted))")
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .multilineTextAlignment(.center)
                         .frame(maxWidth: 120)
                 }

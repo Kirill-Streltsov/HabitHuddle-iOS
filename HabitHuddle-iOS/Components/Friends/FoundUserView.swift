@@ -10,6 +10,7 @@ import SwiftUI
 struct FoundUserView: View {
     
     let username: String
+    @Binding var requestIsSent: Bool
     let action: () -> ()
     
     var body: some View {
@@ -20,24 +21,27 @@ struct FoundUserView: View {
                 .frame(width: 40, height: 40)
                 .overlay(
                     Image(systemName: "person.fill")
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                 )
             
             Text(username)
                 .font(.body)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
             
             Spacer()
             
-            SlimButton(title: "Add Friend") {
-                action()
+            if requestIsSent {
+                RequestSentLabel()
+            } else {
+                SlimButton(title: "Add Friend") {
+                    action()
+                }
+                .buttonStyle(.plain)
             }
-            .buttonStyle(.plain)
-
         }
     }
 }
 
 #Preview {
-    FoundUserView(username: "big_enthusiast") {}
+    FoundUserView(username: "big_enthusiast", requestIsSent: .constant(true)) {}
 }

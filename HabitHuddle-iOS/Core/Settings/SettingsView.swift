@@ -22,7 +22,7 @@ struct SettingsView: View {
                         Label("Status", systemImage: "person.circle")
                         Spacer()
                         Text(appState.isAuthenticated ? "Signed In" : "Guest")
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                     }
 
                     if appState.isAuthenticated {
@@ -30,7 +30,7 @@ struct SettingsView: View {
                                 Label("Your Username", systemImage: "person")
                                 Spacer()
                                 Text(userManager.profile.username)
-                                    .foregroundColor(.secondary)
+                                    .foregroundStyle(.secondary)
                             }
 
                         Button(role: .destructive) {

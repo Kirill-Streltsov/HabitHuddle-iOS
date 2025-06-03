@@ -21,11 +21,11 @@ struct EmptyActivityView: View {
 
             Text("No Activity Yet")
                 .font(.title2.weight(.semibold))
-                .foregroundColor(.primary.opacity(0.7))
+                .foregroundStyle(.primary.opacity(0.7))
 
             Text("\(friendName) hasn't started any habits yet.\nSend a challenge to help get things going!")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
 

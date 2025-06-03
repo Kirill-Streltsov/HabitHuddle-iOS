@@ -26,7 +26,7 @@ struct UserDataView<Content: View>: View {
                 ProgressView()
                 Text("Loading user...")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding()

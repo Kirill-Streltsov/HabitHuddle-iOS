@@ -1,29 +1,28 @@
 //
-//  EmptyFriendsView.swift
+//  NoConnectionView.swift
 //  HabitHuddle-iOS
 //
-//  Created by Kirill on 02.06.25.
+//  Created by Kirill on 03.06.25.
 //
-
 
 import SwiftUI
 
-struct EmptyFriendsView: View {
-    @AppStorage("selectedTab") private var selectedTab: Int?
+struct NoConnectionView: View {
+    let errorMessage: String
 
     var body: some View {
         VStack(spacing: 20) {
-            Image(systemName: "person.2.slash")
+            Image(systemName: "wifi.slash")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 70, height: 70)
                 .foregroundStyle(.gray.opacity(0.4))
 
-            Text("No Friends Yet")
+            Text("No Internet Connection")
                 .font(.title2.weight(.semibold))
                 .foregroundStyle(.primary.opacity(0.7))
 
-            Text("Connect with friends to send challenges, track habits together, and stay motivated.")
+            Text(errorMessage)
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -36,5 +35,5 @@ struct EmptyFriendsView: View {
 }
 
 #Preview {
-    EmptyFriendsView()
+    NoConnectionView(errorMessage: "No WiFi")
 }

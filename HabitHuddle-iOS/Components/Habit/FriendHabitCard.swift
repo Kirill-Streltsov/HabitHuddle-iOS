@@ -42,14 +42,14 @@ struct FriendHabitCard: View {
                     .lineLimit(2)
                 Spacer()
                 Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
-                    .foregroundColor(habit.reminderTime != nil ? .orange : .gray)
+                    .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)
             }
 
             // Description
             if !habit.habitDescription.isEmpty {
                 Text(habit.habitDescription)
                     .font(.body)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .lineLimit(3)
             }
 
@@ -57,13 +57,13 @@ struct FriendHabitCard: View {
             HStack {
                 Label(habit.duration.displayName, systemImage: "timer")
                     .font(.footnote)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                 
                 Spacer()
 
                 Label("\(habit.checkIns.count) / \(habit.duration.numberOfDays) check-ins", systemImage: "checkmark.circle")
                     .font(.footnote)
-                    .foregroundColor(.green)
+                    .foregroundStyle(.green)
             }
 
             // Progress bar + percent text
@@ -78,7 +78,7 @@ struct FriendHabitCard: View {
             .overlay(
                 Text(String(format: "%.0f%%", progressRatio * 100))
                     .font(.caption.bold())
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .padding(.horizontal, 6),
                 alignment: .center
             )
@@ -88,7 +88,7 @@ struct FriendHabitCard: View {
                 VStack(alignment: .leading) {
                     Text("Created:")
                         .font(.caption.bold())
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                     Text(dateFormatter.string(from: habit.createdAt))
                         .font(.caption)
                 }
@@ -105,7 +105,7 @@ struct FriendHabitCard: View {
                 VStack(alignment: .leading) {
                     Text("Updated:")
                         .font(.caption.bold())
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                     Text(dateFormatter.string(from: habit.updatedAt))
                         .font(.caption)
                 }

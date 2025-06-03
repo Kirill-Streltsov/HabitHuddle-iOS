@@ -26,12 +26,12 @@ struct FriendCardView: View {
 
                 Text("@\(user.username)")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
 
                 if let joinDate = user.createdAt {
                     Text("Member since \(joinDate.formattedAsMonthYear())")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
             }
 

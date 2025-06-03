@@ -22,7 +22,7 @@ struct HabitCard: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .lineLimit(2)
                 Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
-                    .foregroundColor(habit.reminderTime != nil ? .orange : .gray)
+                    .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)
             }
             .frame(width: cardWidth)
             

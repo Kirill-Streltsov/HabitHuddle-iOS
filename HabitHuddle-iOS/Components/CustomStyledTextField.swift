@@ -23,6 +23,6 @@ struct CustomStyledTextField: View {
                     .stroke(Color.clear, lineWidth: 1)
             )
             .font(.body)
-            .foregroundColor(.primary)
+            .foregroundStyle(.primary)
     }
 }

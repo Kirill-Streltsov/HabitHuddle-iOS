@@ -31,7 +31,7 @@ struct ChallengeProgressCardView: View {
                     .fontWeight(.semibold)
                     .padding(8)
                     .background(challenge.type == .competitive ? Color.red.opacity(0.1) : Color.green.opacity(0.1))
-                    .foregroundColor(challenge.type == .competitive ? .red : .green)
+                    .foregroundStyle(challenge.type == .competitive ? .red : .green)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
 

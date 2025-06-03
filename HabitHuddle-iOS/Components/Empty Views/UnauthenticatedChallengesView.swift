@@ -21,11 +21,11 @@ struct UnauthenticatedChallengesView: View {
 
             Text("Not Signed In")
                 .font(.title2.weight(.semibold))
-                .foregroundColor(.primary.opacity(0.7))
+                .foregroundStyle(.primary.opacity(0.7))
 
             Text("You need to sign in to view and participate in challenges.")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
 

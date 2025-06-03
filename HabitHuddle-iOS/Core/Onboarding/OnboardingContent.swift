@@ -13,7 +13,7 @@ struct OnboardingContent: View {
         VStack(spacing: 20) {
             Image(systemName: page.symbol)
                 .font(.system(size: 60))
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
 
             Text(page.title)
                 .font(.largeTitle.bold())
@@ -22,7 +22,7 @@ struct OnboardingContent: View {
             Text(page.text)
                 .font(.headline)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .padding(.horizontal)
             
             Spacer()

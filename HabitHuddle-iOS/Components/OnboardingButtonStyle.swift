@@ -15,7 +15,7 @@ struct OnboardingButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity)
             .padding()
             .background(style == .primary ? Color.accentColor : Color.clear)
-            .foregroundColor(style == .primary ? .white : .accentColor)
+            .foregroundStyle(style == .primary ? .white : .accentColor)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(Color.accentColor, lineWidth: style == .primary ? 0 : 2)

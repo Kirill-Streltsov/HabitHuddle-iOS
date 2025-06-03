@@ -20,7 +20,7 @@ struct SlimButton: View {
                 .padding(.horizontal, 14)
                 .padding(.vertical, 8)
                 .background(color)
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
         }
     }

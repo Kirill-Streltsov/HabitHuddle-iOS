@@ -18,11 +18,11 @@ struct EmptyStatisticsView: View {
 
             Text("No stats yet")
                 .font(.title3.weight(.semibold))
-                .foregroundColor(.primary.opacity(0.7))
+                .foregroundStyle(.primary.opacity(0.7))
 
             Text("You don't have any habits yet, so there are no statistics to display.\nStart building your habits and watch your progress here!")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
         }

@@ -27,12 +27,12 @@ struct FriendRequestCardView: View {
 
                 Text("@\(user.username)")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
 
                 if let joinDate = user.createdAt {
                     Text("Joined \(joinDate.formattedAsMonthYear())")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
             }
 
@@ -47,7 +47,7 @@ struct FriendRequestCardView: View {
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .background(Color.green.opacity(0.1))
-                .foregroundColor(.green)
+                .foregroundStyle(.green)
                 .clipShape(Capsule())
 
                 Button("Ignore") {
@@ -57,7 +57,7 @@ struct FriendRequestCardView: View {
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .background(Color.gray.opacity(0.1))
-                .foregroundColor(.gray)
+                .foregroundStyle(.gray)
                 .clipShape(Capsule())
             }
         }

@@ -22,11 +22,11 @@ struct EmptyHabitsView: View {
 
             Text("No habits yet")
                 .font(.title2.weight(.semibold))
-                .foregroundColor(.primary.opacity(0.7))
+                .foregroundStyle(.primary.opacity(0.7))
 
             Text("Start building your daily routines to see your progress here.")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
 

@@ -83,7 +83,7 @@ struct HabitStatsCard: View {
 
             Text(habit.habitDescription)
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .lineLimit(2)
 
             Divider()
@@ -124,10 +124,10 @@ private struct StatItem: View {
         VStack(alignment: .leading) {
             Text(value)
                 .font(.headline)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
             Text(title)
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
         }
     }
 }
