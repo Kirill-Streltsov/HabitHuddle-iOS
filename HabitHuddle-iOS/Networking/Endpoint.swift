@@ -84,4 +84,8 @@ struct Endpoint {
     static func getFriendshipRequests() -> Endpoint {
         Endpoint(path: "friends/requests")
     }
+    
+    static func getUserHabits(for id: UUID) -> Endpoint {
+        Endpoint(path: "habits/\(id)")
+    }
 }

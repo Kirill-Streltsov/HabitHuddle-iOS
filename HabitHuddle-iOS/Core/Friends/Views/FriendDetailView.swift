@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FriendDetailView: View {
     
+    @StateObject private var viewModel = ViewModel()
     let friend: User
     
     var body: some View {
@@ -51,6 +52,9 @@ struct FriendDetailView: View {
                 } else {
                     EmptyActivityView(friendName: friend.name, onChallenge: {})
                 }
+            }
+            .task {
+                await viewModel.loadUserHabits(for: friend.id)
             }
         }
         .navigationTitle(friend.username)

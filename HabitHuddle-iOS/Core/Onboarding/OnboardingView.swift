@@ -92,11 +92,12 @@ struct OnboardingView: View {
                 text: "What should we call you?",
                 customView: AnyView(
                     VStack(spacing: 20) {
-                        TextField("Enter your name", text: $enteredName)
+                        TextField("Enter your name...", text: $enteredName)
                             .textFieldStyle(.plain)
                             .font(.largeTitle)
                             .padding()
                             .padding(.horizontal)
+                            .multilineTextAlignment(.center)
                         
                         Text("We'll use this name throughout the app.")
                             .font(.subheadline)
