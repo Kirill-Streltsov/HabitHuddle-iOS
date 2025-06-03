@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FriendCardView: View {
-    let user: User
+    let friend: CodableUser
     var onChallenge: () -> Void
 
     var body: some View {
@@ -21,14 +21,14 @@ struct FriendCardView: View {
 
             // User info
             VStack(alignment: .leading, spacing: 4) {
-                Text(user.name)
+                Text(friend.name)
                     .font(.headline)
 
-                Text("@\(user.username)")
+                Text("@\(friend.username)")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
 
-                if let joinDate = user.createdAt {
+                if let joinDate = friend.createdAt {
                     Text("Member since \(joinDate.formattedAsMonthYear())")
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -53,5 +53,5 @@ struct FriendCardView: View {
 }
 
 #Preview {
-    FriendCardView(user: User(id: UUID(), username: "username", name: "Username", createdAt: .now, updatedAt: .now), onChallenge: {})
+    FriendCardView(friend: CodableUser(id: UUID(), username: "username", name: "Username", createdAt: .now, updatedAt: .now), onChallenge: {})
 }

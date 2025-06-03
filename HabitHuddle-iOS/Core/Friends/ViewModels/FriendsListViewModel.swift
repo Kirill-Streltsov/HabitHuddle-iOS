@@ -11,7 +11,9 @@ extension FriendsListView {
     @MainActor
     final class ViewModel: ObservableObject {
         
+        @Published var friends: [CodableUser] = []
         @Published var results: [CodableUser] = []
+        @Published var friendRequests: [CodableUser] = []
         @Published var isLoading = false
         @Published var errorMessage: String?
         
@@ -52,7 +54,32 @@ extension FriendsListView {
             }
         }
         
-        func addFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
+        func getMyFriends() async {
+            do {
+                let fetchedFriends = try await NetworkingManager.shared.request(
+                    endpoint: .getMyFriends(),
+                    method: .get,
+                    responseType: [CodableUser].self)
+                friends = fetchedFriends
+            } catch {
+                print("COULDN'T FETCH FRIENDS")
+            }
+        }
+        
+        func getMyFriendRequests() async {
+            do {
+                let friends = try await NetworkingManager.shared.request(
+                    endpoint: .getFriendshipRequests(),
+                    method: .get,
+                    responseType: [CodableUser].self)
+                print("These are the friendship requests: \(friends)")
+                friendRequests = friends
+            } catch {
+                print("Couldn't get friendship requests: \(error)")
+            }
+        }
+        
+        func requestFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
             do {
                 let payload = MakeFriendsRequest(friendID: id)
                 let requestFriendResponse = try await NetworkingManager.shared.requestStatusCode(
@@ -62,7 +89,34 @@ extension FriendsListView {
                 print("RESPONSE: \(requestFriendResponse)")
                 return .success(.ok)
             } catch {
-                print("DIDN'T ADD FRIEND")
+                print("DIDN'T REQUEST FRIEND")
+                return .failure(.decodingError(error))
+            }
+        }
+        
+        func acceptFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
+            do {
+                let requestFriendResponse = try await NetworkingManager.shared.requestStatusCode(
+                    endpoint: .acceptFriend(with: id),
+                    method: .post)
+                print("RESPONSE: \(requestFriendResponse)")
+                return .success(.ok)
+            } catch {
+                print("DIDN'T ACCEPT FRIEND")
+                return .failure(.decodingError(error))
+            }
+        }
+        
+        func rejectFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
+            do {
+                let payload = MakeFriendsRequest(friendID: id)
+                let requestFriendResponse = try await NetworkingManager.shared.requestStatusCode(
+                    endpoint: .rejectFriend(with: id),
+                    method: .post)
+                print("RESPONSE: \(requestFriendResponse)")
+                return .success(.ok)
+            } catch {
+                print("DIDN'T REJECT FRIEND")
                 return .failure(.decodingError(error))
             }
         }

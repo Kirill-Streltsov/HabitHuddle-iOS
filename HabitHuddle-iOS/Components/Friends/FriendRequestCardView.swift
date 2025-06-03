@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FriendRequestCardView: View {
-    let user: User
+    let user: CodableUser
     var onAccept: () -> Void
     var onIgnore: () -> Void
 
@@ -39,17 +39,7 @@ struct FriendRequestCardView: View {
             Spacer()
 
             // Action buttons
-            VStack(spacing: 8) {
-                Button("Accept") {
-                    onAccept()
-                }
-                .font(.subheadline.bold())
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(Color.green.opacity(0.1))
-                .foregroundStyle(.green)
-                .clipShape(Capsule())
-
+            VStack(alignment: .trailing) {
                 Button("Ignore") {
                     onIgnore()
                 }
@@ -59,7 +49,18 @@ struct FriendRequestCardView: View {
                 .background(Color.gray.opacity(0.1))
                 .foregroundStyle(.gray)
                 .clipShape(Capsule())
+                
+                Button("Accept") {
+                    onAccept()
+                }
+                .font(.subheadline.bold())
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(Color.green.opacity(0.1))
+                .foregroundStyle(.green)
+                .clipShape(Capsule())
             }
+            
         }
         .padding()
         .background(
@@ -72,5 +73,5 @@ struct FriendRequestCardView: View {
 }
 
 #Preview {
-    FriendRequestCardView(user: User(id: UUID(), username: "big_enthusiast", name: "Kirill", createdAt: .now, updatedAt: .now), onAccept: {}, onIgnore: {})
+    FriendRequestCardView(user: CodableUser(id: UUID(), username: "big_enthusiast", name: "Kirill", createdAt: .now, updatedAt: .now), onAccept: {}, onIgnore: {})
 }

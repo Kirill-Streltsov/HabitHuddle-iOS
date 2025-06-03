@@ -7,92 +7,139 @@
 
 import SwiftUI
 
-
-
 struct FriendsListView: View {
     
     @StateObject private var viewModel = ViewModel()
     @State private var searchText = ""
     @State private var requestIsSent = false
-    let friends: [User] = User.sampleFriends
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack {
-                    // Search bar
-                    TextField("Search usernames...", text: $searchText)
-                        .padding(12)
-                        .background(Color(.secondarySystemBackground))
-                        .cornerRadius(10)
-                        .padding(.horizontal)
-                        .padding(.top)
-                        .onChange(of: searchText) { _, newValue in
+            VStack {
+                // Search bar
+                TextField("Search usernames...", text: $searchText)
+                    .padding(12)
+                    .background(Color(.secondarySystemBackground))
+                    .cornerRadius(10)
+                    .padding(.horizontal)
+                    .padding(.top)
+                    .onChange(of: searchText) { _, newValue in
+                        // Only search if 2 or more chars
+                        if newValue.count >= 2 {
                             viewModel.searchUsers(query: newValue)
                         }
-                    
-                    if viewModel.isLoading {
-                        ProgressView("Searching...")
-                            .padding()
-                    } else if let errorMessage = viewModel.errorMessage {
-                        NoConnectionView(errorMessage: errorMessage)
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                    withAnimation {
-                                        viewModel.errorMessage = nil
-                                    }
-                                }
-                            }
-                    } else if viewModel.results.isEmpty && searchText.count >= 2 {
-                        Text("No users found.")
-                            .foregroundStyle(.secondary)
-                            .padding()
-                    } else {
-                        FoundUserView(username: "some_user", requestIsSent: $requestIsSent, action: {})
-                        FoundUserView(username: "some_user", requestIsSent: $requestIsSent, action: {})
-                        FoundUserView(username: "some_user", requestIsSent: $requestIsSent, action: {})
-                        FriendRequestCardView(user: User(id: UUID(), username: "other_user", name: "Jack", createdAt: .now, updatedAt: .now), onAccept: {}, onIgnore: {})
-//                        EmptyFriendsView()
-//                        ForEach(viewModel.results) { user in
-//                            FoundUserView(username: user.username, requestIsSent: $requestIsSent) {
-//                                Task {
-//                                    let result = await viewModel.addFriend(with: user.id)
-//                                    handleResult(result) { result in
-//                                        print("RESULT: \(result)")
-//                                    } onFailure: { error in
-//                                        print("RESULT ERROR: \(error)")
-//                                    }
-//                                }
-//                            }
-//                            .padding(.vertical, 6)
-//                            .onAppear {
-//                                print("USER ID: \(user.id)")
-//                            }
-//                        }
-//                        .listStyle(PlainListStyle())
                     }
-                    Spacer()
+                
+                Divider()
+                    .padding(.vertical, 4)
+                
+                // Content area
+                Group {
+                    if searchText.count >= 2 {
+                        searchingStateView
+                    } else {
+                        if viewModel.friendRequests.isEmpty && viewModel.friends.isEmpty {
+                            EmptyFriendsView()
+                                .padding()
+                        } else {
+                            ScrollView {
+                                LazyVStack(spacing: 16) {
+                                    friendRequests
+                                    friends
+                                }
+                                .padding(.top)
+                            }
+                        }
+                    }
+                }
+                
+                Spacer()
+            }
+            .navigationTitle("Friends")
+            .task {
+                await viewModel.getMyFriendRequests()
+                await viewModel.getMyFriends()
+            }
+        }
+    }
+    
+    private var friends: some View {
+        Group {
+            // Friends list below
+            if !viewModel.friends.isEmpty {
+                Section(header: Text("Your Friends")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                ) {
+                    ForEach(viewModel.friends) { friend in
+                        FriendCardView(friend: friend, onChallenge: {})
+                    }
                 }
             }
-            //            ScrollView {
-            //
-            //                VStack(spacing: 16) {
-            //                    ForEach(friends, id: \.id) { friend in
-            //                        NavigationLink(value: friend) {
-            //                            FriendCardView(user: friend) {
-            //                                print("Challenge sent to \(friend.username)")
-            //                            }
-            //                        }
-            //                        .buttonStyle(.plain)
-            //                    }
-            //                }
-            //                .padding(.top)
-            //            }
-            //            .navigationDestination(for: User.self) { friend in
-            //                FriendDetailView(friend: friend)
-            //            }
-            //            .navigationTitle("Your Friends")
-            //            .background(Color(.systemGroupedBackground))
+        }
+    }
+    
+    private var friendRequests: some View {
+        Group {
+            // Friend requests on top
+            if !viewModel.friendRequests.isEmpty {
+                Section(header: Text("Friend Requests")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                ) {
+                    ForEach(viewModel.friendRequests) { request in
+                        FriendRequestCardView(user: request) {
+                            Task { await viewModel.acceptFriend(with: request.id) }
+                        } onIgnore: {
+                            Task { await viewModel.rejectFriend(with: request.id) }
+                        }
+                        .padding(.horizontal)
+                    }
+                }
+            }
+        }
+    }
+    
+    private var searchingStateView: some View {
+        Group {
+            // --- SEARCHING MODE ---
+            if viewModel.isLoading {
+                ProgressView("Searching...")
+                    .padding()
+            } else if let errorMessage = viewModel.errorMessage {
+                NoConnectionView(errorMessage: errorMessage)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            withAnimation {
+                                viewModel.errorMessage = nil
+                            }
+                        }
+                    }
+            } else if viewModel.results.isEmpty {
+                Text("No users found.")
+                    .foregroundColor(.secondary)
+                    .padding()
+            } else {
+                ScrollView {
+                    LazyVStack {
+                        ForEach(viewModel.results) { user in
+                            FoundUserView(
+                                username: user.username,
+                                requestIsSent: $requestIsSent
+                            ) {
+                                Task {
+                                    let result = await viewModel.requestFriend(with: user.id)
+                                    // handle result here if needed
+                                }
+                            }
+                            .padding(.vertical, 6)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+            }
         }
     }
 }
