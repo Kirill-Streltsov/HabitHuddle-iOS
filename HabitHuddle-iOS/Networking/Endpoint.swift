@@ -88,4 +88,10 @@ struct Endpoint {
     static func getUserHabits(for id: UUID) -> Endpoint {
         Endpoint(path: "habits/\(id)")
     }
+    
+    // MARK: Challenges
+    
+    static func sendChallenge() -> Endpoint {
+        Endpoint(path: "challenges/send")
+    }
 }
