@@ -94,4 +94,8 @@ struct Endpoint {
     static func sendChallenge() -> Endpoint {
         Endpoint(path: "challenges/send")
     }
+    
+    static func getMyChallenges() -> Endpoint {
+        Endpoint(path: "challenges/me")
+    }
 }
