@@ -103,4 +103,7 @@ struct Endpoint {
         Endpoint(path: "challenges/\(id)/accept")
     }
     
+    static func rejectChallenge(id: UUID) -> Endpoint {
+        Endpoint(path: "challenges/\(id)/reject")
+    }
 }
