@@ -98,4 +98,9 @@ struct Endpoint {
     static func getMyChallenges() -> Endpoint {
         Endpoint(path: "challenges/me")
     }
+    
+    static func acceptChallenge(id: UUID) -> Endpoint {
+        Endpoint(path: "challenges/\(id)/accept")
+    }
+    
 }
