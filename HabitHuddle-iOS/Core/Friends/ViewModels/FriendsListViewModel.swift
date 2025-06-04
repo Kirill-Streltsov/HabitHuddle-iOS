@@ -11,7 +11,6 @@ extension FriendsListView {
     @MainActor
     final class ViewModel: ObservableObject {
         
-        @Published var friends: [UserDTO] = []
         @Published var results: [UserDTO] = []
         @Published var friendRequests: [UserDTO] = []
         @Published var isLoading = false
@@ -53,19 +52,7 @@ extension FriendsListView {
                 isLoading = false
             }
         }
-        
-        func getMyFriends() async {
-            do {
-                let fetchedFriends = try await NetworkManager.shared.request(
-                    endpoint: .getMyFriends(),
-                    method: .get,
-                    responseType: [UserDTO].self)
-                friends = fetchedFriends
-            } catch {
-                print("COULDN'T FETCH FRIENDS")
-            }
-        }
-        
+                
         func getMyFriendRequests() async {
             do {
                 let friends = try await NetworkManager.shared.request(

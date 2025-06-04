@@ -9,33 +9,41 @@ import SwiftUI
 
 struct MyFriendsListView: View {
     
-    @EnvironmentObject private var viewModel: FriendsListView.ViewModel
+    @EnvironmentObject private var viewModel: ViewModel
+    let isInFriendsTab: Bool
+    var habit: Habit?
     
     var body: some View {
         Group {
             // Friends list below
             if !viewModel.friends.isEmpty {
-                Section(header: Text("Your Friends")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                ) {
-                    ForEach(viewModel.friends) { friend in
+                ForEach(viewModel.friends) { friend in
+                    if !isInFriendsTab {
+                        if let habit = habit {
+                            FriendCardView(friend: friend, showChallengeButton: false) {
+                                await viewModel.sendChallenge(to: friend.id, for: habit.id, of: .competitive, with: .now, and: .now)
+                            }
+                        }
+                    } else {
                         NavigationLink {
                             FriendDetailView(friend: friend)
                         } label: {
-                            FriendCardView(friend: friend, onChallenge: {})
+                            FriendCardView(friend: friend, showChallengeButton: true) {}
                         }
                         .buttonStyle(.plain)
                     }
                 }
+                
             } else {
                 EmptyFriendsView()
             }
+        }
+        .task {
+            await viewModel.getMyFriends()
         }
     }
 }
 
 #Preview {
-    MyFriendsListView()
+    MyFriendsListView(isInFriendsTab: true)
 }

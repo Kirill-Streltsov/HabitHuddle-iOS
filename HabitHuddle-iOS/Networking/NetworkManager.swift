@@ -26,22 +26,27 @@ actor NetworkManager {
         method: HTTPMethod,
         body: U,
         headers: [String: String]? = nil,
-        responseType _: T.Type
+        responseType _: T.Type,
+        isLoggingIn: Bool = false
     ) async throws -> T {
-        guard let token = TokenManager.token else { throw APIError.unauthorized }
+        
         guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
             throw APIError.invalidURL
         }
+        
         components.queryItems = endpoint.queryItems
         guard let finalURL = components.url else {
             throw APIError.invalidURL
         }
-
         var urlRequest = URLRequest(url: finalURL)
-        urlRequest.httpMethod = method.rawValue
-        urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-
+        if !isLoggingIn {
+            guard let token = TokenManager.token else { throw APIError.unauthorized }
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        urlRequest.httpMethod = method.rawValue
+        
         headers?.forEach { key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
@@ -60,9 +65,10 @@ actor NetworkManager {
         endpoint: Endpoint,
         method: HTTPMethod,
         headers: [String: String]? = nil,
-        responseType _: T.Type
+        responseType _: T.Type,
+        isLoggingIn: Bool = false
     ) async throws -> T {
-        guard let token = TokenManager.token else { throw APIError.unauthorized }
+        
         guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
             throw APIError.invalidURL
         }
@@ -70,14 +76,15 @@ actor NetworkManager {
         guard let finalURL = components.url else {
             throw APIError.invalidURL
         }
-
+        
         var urlRequest = URLRequest(url: finalURL)
-        urlRequest.httpMethod = method.rawValue
-
-        if let token = TokenManager.token {
+        
+        if !isLoggingIn {
+            guard let token = TokenManager.token else { throw APIError.unauthorized }
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-
+        
+        urlRequest.httpMethod = method.rawValue
         headers?.forEach { key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
@@ -92,12 +99,18 @@ actor NetworkManager {
     func requestStatusCode(
         endpoint: Endpoint,
         method: HTTPMethod,
-        headers: [String: String]? = nil
+        headers: [String: String]? = nil,
+        isLoggingIn: Bool = false
     ) async throws -> HTTPStatus {
-        guard let token = TokenManager.token else { throw APIError.unauthorized }
+        
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
+        
+        if !isLoggingIn {
+            guard let token = TokenManager.token else { throw APIError.unauthorized }
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         urlRequest.httpMethod = method.rawValue
-        urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         headers?.forEach { key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
@@ -116,13 +129,18 @@ actor NetworkManager {
         endpoint: Endpoint,
         method: HTTPMethod,
         body: U,
-        headers: [String: String]? = nil
+        headers: [String: String]? = nil,
+        isLoggingIn: Bool = false
     ) async throws -> HTTPStatus {
-        guard let token = TokenManager.token else { throw APIError.unauthorized }
+        
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
+        
+        if !isLoggingIn {
+            guard let token = TokenManager.token else { throw APIError.unauthorized }
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         urlRequest.httpMethod = method.rawValue
-        urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-
         headers?.forEach { key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
@@ -142,6 +160,7 @@ actor NetworkManager {
     private func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
         switch response.statusCode {
         case 200 ..< 300:
+            print("DATA: \(data.prettyPrintedJSONString)")
             do {
                 let decodedData = try jsonDecoder.decode(T.self, from: data)
                 return decodedData

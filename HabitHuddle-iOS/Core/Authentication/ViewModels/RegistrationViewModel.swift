@@ -30,7 +30,8 @@ extension RegistrationView {
                     endpoint: .register(),
                     method: .post,
                     body: payload,
-                    responseType: LoginResponse.self
+                    responseType: LoginResponse.self,
+                    isLoggingIn: true
                 )
                 
                 let user = registrationResponse.user

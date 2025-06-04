@@ -101,6 +101,6 @@ extension HabitDetailView {
             } catch {
                 return .failure(.unknown)
             }
-        }
+        }        
     }
 }

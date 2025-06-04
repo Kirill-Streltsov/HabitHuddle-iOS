@@ -122,8 +122,8 @@ struct HabitDetailView: View {
                 .padding(.top)
             }
             .sheet(isPresented: $challengeButtonPressed) {
-                MyFriendsListView()
-                    .presentationDetents([.medium])
+                MyFriendsListView(isInFriendsTab: false, habit: habit)
+                    .presentationDetents([.fraction(0.45)])
             }
             .toolbar {
                 if mode == .editing {
@@ -204,7 +204,7 @@ struct HabitDetailView: View {
                 handleResult(result) { codableHabit in
                     print("✅ Deleted the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
                 } onFailure: { error in
-                    SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .delete))
+                    //SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .delete))
                     print("❌ Failed to delete the habit on the server: \(error.localizedDescription)")
                 }
             }
@@ -238,7 +238,7 @@ struct HabitDetailView: View {
             handleResult(result) { codableHabit in
                 print("✅ Updated the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
             } onFailure: { error in
-                SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .update))
+                //SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .update))
                 print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
             }
         }
@@ -264,7 +264,7 @@ struct HabitDetailView: View {
             handleResult(result) { codableHabit in
                 print("✅ Saved the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
             } onFailure: { error in
-                SyncManager.shared.add(SyncOperation(habitID: habitID, action: .create))
+                //SyncManager.shared.add(SyncOperation(habitID: habitID, action: .create))
                 print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
             }
         }

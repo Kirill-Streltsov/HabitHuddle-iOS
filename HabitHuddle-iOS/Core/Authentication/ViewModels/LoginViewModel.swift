@@ -30,7 +30,8 @@ extension LoginView {
                     endpoint: .login(),
                     method: .post,
                     headers: headers,
-                    responseType: LoginResponse.self
+                    responseType: LoginResponse.self,
+                    isLoggingIn: true
                 )
 
                 TokenManager.token = loginResponse.token
