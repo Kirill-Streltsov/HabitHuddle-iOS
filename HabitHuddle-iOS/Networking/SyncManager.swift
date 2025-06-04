@@ -64,6 +64,12 @@ final class SyncManager: ObservableObject {
     }
 
     func retry(from context: ModelContext) async {
+        
+        let deleteHabitOperations = operations.filter { $0.action == .delete }
+        for op in deleteHabitOperations {
+            operations.removeAll { $0.habitID == op.habitID && $0.action != .delete }
+        }
+        
         for op in operations {
             do {
                 let habitStore = HabitStore(modelContainer: context.container)
