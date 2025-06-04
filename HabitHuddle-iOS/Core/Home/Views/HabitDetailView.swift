@@ -123,7 +123,7 @@ struct HabitDetailView: View {
             }
             .sheet(isPresented: $challengeButtonPressed) {
                 MyFriendsListView(isInFriendsTab: false, habit: habit)
-                    .presentationDetents([.fraction(0.45)])
+                    .presentationDetents([.medium])
             }
             .toolbar {
                 if mode == .editing {
