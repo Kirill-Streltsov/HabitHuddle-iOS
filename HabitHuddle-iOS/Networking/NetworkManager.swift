@@ -7,8 +7,9 @@
 
 import Foundation
 
-final class NetworkingManager {
-    static let shared = NetworkingManager()
+actor NetworkManager {
+    static let shared = NetworkManager()
+    
     private let baseURL = URL(string: "http://localhost:8080/api/")!
     private let jsonDecoder: JSONDecoder
     private let jsonEncoder: JSONEncoder
@@ -27,6 +28,7 @@ final class NetworkingManager {
         headers: [String: String]? = nil,
         responseType _: T.Type
     ) async throws -> T {
+        guard let token = TokenManager.token else { throw APIError.unauthorized }
         guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
             throw APIError.invalidURL
         }
@@ -34,12 +36,11 @@ final class NetworkingManager {
         guard let finalURL = components.url else {
             throw APIError.invalidURL
         }
+
         var urlRequest = URLRequest(url: finalURL)
         urlRequest.httpMethod = method.rawValue
-
-        if let token = TokenManager.token {
-            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
+        urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
 
         headers?.forEach { key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
@@ -61,6 +62,7 @@ final class NetworkingManager {
         headers: [String: String]? = nil,
         responseType _: T.Type
     ) async throws -> T {
+        guard let token = TokenManager.token else { throw APIError.unauthorized }
         guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
             throw APIError.invalidURL
         }
@@ -68,13 +70,14 @@ final class NetworkingManager {
         guard let finalURL = components.url else {
             throw APIError.invalidURL
         }
+
         var urlRequest = URLRequest(url: finalURL)
         urlRequest.httpMethod = method.rawValue
 
         if let token = TokenManager.token {
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-        
+
         headers?.forEach { key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
@@ -91,12 +94,10 @@ final class NetworkingManager {
         method: HTTPMethod,
         headers: [String: String]? = nil
     ) async throws -> HTTPStatus {
+        guard let token = TokenManager.token else { throw APIError.unauthorized }
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
         urlRequest.httpMethod = method.rawValue
-
-        if let token = TokenManager.token {
-            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
+        urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         headers?.forEach { key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
@@ -110,23 +111,22 @@ final class NetworkingManager {
 
         return HTTPStatus(statusCode: httpResponse.statusCode)
     }
-    
+
     func requestStatusCode<U: Encodable>(
         endpoint: Endpoint,
         method: HTTPMethod,
         body: U,
         headers: [String: String]? = nil
     ) async throws -> HTTPStatus {
+        guard let token = TokenManager.token else { throw APIError.unauthorized }
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
         urlRequest.httpMethod = method.rawValue
-
-        if let token = TokenManager.token {
-            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
+        urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         headers?.forEach { key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
+
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpBody = try jsonEncoder.encode(body)
 
@@ -139,7 +139,7 @@ final class NetworkingManager {
         return HTTPStatus(statusCode: httpResponse.statusCode)
     }
 
-    func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
+    private func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
         switch response.statusCode {
         case 200 ..< 300:
             do {

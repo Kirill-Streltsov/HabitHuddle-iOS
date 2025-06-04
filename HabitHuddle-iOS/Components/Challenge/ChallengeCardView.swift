@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ChallengeCardView: View {
     let challenge: ChallengeDTO
-    var onAccept: () -> Void
-    var onReject: () -> Void
+    var onAccept: @MainActor () async -> Void
+    var onReject: @MainActor () async -> Void
 
     @State private var isAppeared = false
 
@@ -49,7 +49,11 @@ struct ChallengeCardView: View {
             .foregroundStyle(.secondary)
 
             HStack {
-                Button(action: onReject) {
+                Button {
+                    Task {
+                        await onReject()
+                    }
+                } label: {
                     Text("Reject")
                         .fontWeight(.semibold)
                         .frame(minWidth: 80)
@@ -59,7 +63,11 @@ struct ChallengeCardView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 Spacer()
-                Button(action: onAccept) {
+                Button {
+                    Task {
+                        await onAccept()
+                    }
+                } label: {
                     Text("Accept")
                         .fontWeight(.semibold)
                         .frame(minWidth: 80)

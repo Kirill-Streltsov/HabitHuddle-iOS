@@ -26,7 +26,7 @@ extension RegistrationView {
             let payload = RegisterPayload(id: userManager.profile.id, username: username, name: name, password: password)
 
             do {
-                let registrationResponse = try await NetworkingManager.shared.request(
+                let registrationResponse = try await NetworkManager.shared.request(
                     endpoint: .register(),
                     method: .post,
                     body: payload,

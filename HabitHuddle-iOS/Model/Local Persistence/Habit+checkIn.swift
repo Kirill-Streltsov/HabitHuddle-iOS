@@ -39,7 +39,7 @@ extension Habit {
     func toggleCheckInRemotely() {
         Task {
             do {
-                _ = try await NetworkingManager.shared.requestStatusCode(
+                _ = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .checkIntoHabit(with: id),
                     method: .post
                 )

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChallengeDTO: Identifiable {
+struct ChallengeDTO: Identifiable, Codable {
     var id: UUID
     var initiatorName: String
     var receiverName: String

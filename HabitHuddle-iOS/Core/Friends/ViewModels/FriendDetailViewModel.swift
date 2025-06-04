@@ -15,7 +15,7 @@ extension FriendDetailView {
         
         func loadUserHabits(for id: UUID) async {
             do {
-                let fetchedHabits = try await NetworkingManager.shared.request(
+                let fetchedHabits = try await NetworkManager.shared.request(
                     endpoint: .getUserHabits(for: id),
                     method: .get,
                     responseType: [HabitDTO].self)

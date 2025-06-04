@@ -26,7 +26,7 @@ extension LoginView {
 
             do {
                 let headers = ["Authorization": "Basic \(base64Login)"]
-                let loginResponse = try await NetworkingManager.shared.request(
+                let loginResponse = try await NetworkManager.shared.request(
                     endpoint: .login(),
                     method: .post,
                     headers: headers,
@@ -91,7 +91,7 @@ extension LoginView {
 
         func getUserHabits() async -> Result<[HabitDTO], APIError> {
             do {
-                let habits = try await NetworkingManager.shared.request(
+                let habits = try await NetworkManager.shared.request(
                     endpoint: .getMyHabits(),
                     method: .get,
                     responseType: [HabitDTO].self

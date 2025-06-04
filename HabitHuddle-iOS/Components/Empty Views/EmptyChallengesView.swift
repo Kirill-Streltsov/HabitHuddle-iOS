@@ -16,7 +16,7 @@ struct EmptyChallengesView: View {
                 .frame(width: 70, height: 70)
                 .foregroundStyle(.gray.opacity(0.4))
 
-            Text("No Challenges Yet")
+            Text("No Active Challenges Yet")
                 .font(.title2.weight(.semibold))
                 .foregroundStyle(.primary.opacity(0.7))
 

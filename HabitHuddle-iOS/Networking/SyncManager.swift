@@ -86,14 +86,14 @@ final class SyncManager: ObservableObject {
     private func perform(_ op: SyncOperation, with payload: HabitPayload?) async throws {
         switch op.action {
         case .checkIn:
-            _ = try await NetworkingManager.shared.requestStatusCode(
+            _ = try await NetworkManager.shared.requestStatusCode(
                 endpoint: .checkIntoHabit(with: op.habitID),
                 method: .post
             )
             print("✅ Synced: Check in for \(op.habitID)")
 
         case .delete:
-            _ = try await NetworkingManager.shared.requestStatusCode(
+            _ = try await NetworkManager.shared.requestStatusCode(
                 endpoint: .deleteHabit(with: op.habitID),
                 method: .delete
             )
@@ -101,7 +101,7 @@ final class SyncManager: ObservableObject {
 
         case .create:
             guard let payload else { throw SyncError.payloadMissing }
-            _ = try await NetworkingManager.shared.request(
+            _ = try await NetworkManager.shared.request(
                 endpoint: .createHabit(),
                 method: .post,
                 body: payload,
@@ -111,7 +111,7 @@ final class SyncManager: ObservableObject {
 
         case .update:
             guard let payload else { throw SyncError.payloadMissing }
-            _ = try await NetworkingManager.shared.request(
+            _ = try await NetworkManager.shared.request(
                 endpoint: .updateHabit(with: op.habitID),
                 method: .put,
                 body: payload,

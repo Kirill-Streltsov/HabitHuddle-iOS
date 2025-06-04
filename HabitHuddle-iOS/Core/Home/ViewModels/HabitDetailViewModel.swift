@@ -32,7 +32,7 @@ extension HabitDetailView {
                     checkIns: []
                 )
 
-                let habitResponse = try await NetworkingManager.shared.request(
+                let habitResponse = try await NetworkManager.shared.request(
                     endpoint: .createHabit(),
                     method: .post,
                     body: payload,
@@ -60,7 +60,7 @@ extension HabitDetailView {
                     checkIns: habit.checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) }
                 )
 
-                let habitResponse = try await NetworkingManager.shared.request(
+                let habitResponse = try await NetworkManager.shared.request(
                     endpoint: .updateHabit(with: id),
                     method: .put,
                     body: payload,
@@ -76,7 +76,7 @@ extension HabitDetailView {
 
         func checkIntoHabit(with id: UUID) async -> Result<HTTPStatus, APIError> {
             do {
-                let checkInResponse = try await NetworkingManager.shared.requestStatusCode(
+                let checkInResponse = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .checkIntoHabit(with: id),
                     method: .post
                 )
@@ -90,7 +90,7 @@ extension HabitDetailView {
 
         func deleteHabit(with id: UUID) async -> Result<HabitDTO, APIError> {
             do {
-                let deletedHabitResponse = try await NetworkingManager.shared.request(
+                let deletedHabitResponse = try await NetworkManager.shared.request(
                     endpoint: .deleteHabit(with: id),
                     method: .delete,
                     responseType: HabitDTO.self

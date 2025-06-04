@@ -37,7 +37,7 @@ extension FriendsListView {
                     isLoading = true
                     errorMessage = nil
                     
-                    let users = try await NetworkingManager.shared.request(
+                    let users = try await NetworkManager.shared.request(
                         endpoint: .searchForUser(username: query),
                         method: .get,
                         responseType: [UserDTO].self)
@@ -56,7 +56,7 @@ extension FriendsListView {
         
         func getMyFriends() async {
             do {
-                let fetchedFriends = try await NetworkingManager.shared.request(
+                let fetchedFriends = try await NetworkManager.shared.request(
                     endpoint: .getMyFriends(),
                     method: .get,
                     responseType: [UserDTO].self)
@@ -68,7 +68,7 @@ extension FriendsListView {
         
         func getMyFriendRequests() async {
             do {
-                let friends = try await NetworkingManager.shared.request(
+                let friends = try await NetworkManager.shared.request(
                     endpoint: .getFriendshipRequests(),
                     method: .get,
                     responseType: [UserDTO].self)
@@ -82,7 +82,7 @@ extension FriendsListView {
         func requestFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
             do {
                 let payload = MakeFriendsRequest(friendID: id)
-                let requestFriendResponse = try await NetworkingManager.shared.requestStatusCode(
+                let requestFriendResponse = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .requestFriend(with: id),
                     method: .post,
                     body: payload)
@@ -94,7 +94,7 @@ extension FriendsListView {
         
         func acceptFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
             do {
-                let requestFriendResponse = try await NetworkingManager.shared.requestStatusCode(
+                let requestFriendResponse = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .acceptFriend(with: id),
                     method: .post)
                 return .success(.ok)
@@ -105,7 +105,7 @@ extension FriendsListView {
         
         func rejectFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
             do {
-                let requestFriendResponse = try await NetworkingManager.shared.requestStatusCode(
+                let requestFriendResponse = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .rejectFriend(with: id),
                     method: .post)
                 return .success(requestFriendResponse)
