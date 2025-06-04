@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FriendCardView: View {
-    let friend: CodableUser
+    let friend: UserDTO
     var onChallenge: () -> Void
 
     var body: some View {
@@ -53,5 +53,5 @@ struct FriendCardView: View {
 }
 
 #Preview {
-    FriendCardView(friend: CodableUser(id: UUID(), username: "username", name: "Username", createdAt: .now, updatedAt: .now), onChallenge: {})
+    FriendCardView(friend: UserDTO(id: UUID(), username: "username", name: "Username", createdAt: .now, updatedAt: .now), onChallenge: {})
 }

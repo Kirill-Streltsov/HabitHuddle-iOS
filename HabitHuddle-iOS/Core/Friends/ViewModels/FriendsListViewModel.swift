@@ -11,9 +11,9 @@ extension FriendsListView {
     @MainActor
     final class ViewModel: ObservableObject {
         
-        @Published var friends: [CodableUser] = []
-        @Published var results: [CodableUser] = []
-        @Published var friendRequests: [CodableUser] = []
+        @Published var friends: [UserDTO] = []
+        @Published var results: [UserDTO] = []
+        @Published var friendRequests: [UserDTO] = []
         @Published var isLoading = false
         @Published var errorMessage: String?
         
@@ -40,7 +40,7 @@ extension FriendsListView {
                     let users = try await NetworkingManager.shared.request(
                         endpoint: .searchForUser(username: query),
                         method: .get,
-                        responseType: [CodableUser].self)
+                        responseType: [UserDTO].self)
                     
                     results = users
                 } catch is CancellationError {
@@ -59,7 +59,7 @@ extension FriendsListView {
                 let fetchedFriends = try await NetworkingManager.shared.request(
                     endpoint: .getMyFriends(),
                     method: .get,
-                    responseType: [CodableUser].self)
+                    responseType: [UserDTO].self)
                 friends = fetchedFriends
             } catch {
                 print("COULDN'T FETCH FRIENDS")
@@ -71,7 +71,7 @@ extension FriendsListView {
                 let friends = try await NetworkingManager.shared.request(
                     endpoint: .getFriendshipRequests(),
                     method: .get,
-                    responseType: [CodableUser].self)
+                    responseType: [UserDTO].self)
                 print("These are the friendship requests: \(friends)")
                 friendRequests = friends
             } catch {

@@ -48,7 +48,7 @@ struct HomeView: View {
             }
             .onAppear {
                 Task {
-                    await SyncManager.shared.retry(from: context)
+                    //await SyncManager.shared.retry(from: context)
                 }
                 //                    let newHabits = Habit.createTestHabitsWithCheckIns()
                 //                    for newHabit in newHabits {

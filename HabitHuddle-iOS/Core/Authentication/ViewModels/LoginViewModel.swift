@@ -21,7 +21,7 @@ extension LoginView {
             self.userManager = userManager
         }
 
-        func loginUser(username: String, password: String) async -> CodableUser? {
+        func loginUser(username: String, password: String) async -> UserDTO? {
             let base64Login = makeBase64Login(username: username, password: password)
 
             do {
@@ -64,7 +64,7 @@ extension LoginView {
             }
         }
 
-        func saveUser(_ user: CodableUser, using context: ModelContext) {
+        func saveUser(_ user: UserDTO, using context: ModelContext) {
             let descriptor = FetchDescriptor<User>()
 
             do {
@@ -89,12 +89,12 @@ extension LoginView {
             }
         }
 
-        func getUserHabits() async -> Result<[CodableHabit], APIError> {
+        func getUserHabits() async -> Result<[HabitDTO], APIError> {
             do {
                 let habits = try await NetworkingManager.shared.request(
                     endpoint: .getMyHabits(),
                     method: .get,
-                    responseType: [CodableHabit].self
+                    responseType: [HabitDTO].self
                 )
                 return .success(habits)
             } catch let error as APIError {

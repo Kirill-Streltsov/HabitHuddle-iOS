@@ -10,7 +10,7 @@ import SwiftUI
 struct FriendDetailView: View {
     
     @StateObject private var viewModel = ViewModel()
-    let friend: CodableUser
+    let friend: UserDTO
     
     var body: some View {
         ScrollView {
@@ -65,7 +65,7 @@ struct FriendDetailView: View {
 }
 
 #Preview {
-    FriendDetailView(friend: CodableUser(id: UUID(), username: "username", name: "Jack", createdAt: .now, updatedAt: .now))
+    FriendDetailView(friend: UserDTO(id: UUID(), username: "username", name: "Jack", createdAt: .now, updatedAt: .now))
 }
 
 

@@ -99,7 +99,7 @@ final class SyncManager: ObservableObject {
                 endpoint: .createHabit(),
                 method: .post,
                 body: payload,
-                responseType: CodableHabit.self
+                responseType: HabitDTO.self
             )
             print("✅ Synced: Create \(op.habitID)")
 
@@ -109,7 +109,7 @@ final class SyncManager: ObservableObject {
                 endpoint: .updateHabit(with: op.habitID),
                 method: .put,
                 body: payload,
-                responseType: CodableHabit.self
+                responseType: HabitDTO.self
             )
             print("✅ Synced: Update \(op.habitID)")
         }

@@ -16,6 +16,8 @@ struct ChallengesListView: View {
             ScrollView {
                 if !appState.isAuthenticated {
                     EmptyFriendsView()
+                } else {
+                    
                 }
             }
             .navigationTitle("Challenges")

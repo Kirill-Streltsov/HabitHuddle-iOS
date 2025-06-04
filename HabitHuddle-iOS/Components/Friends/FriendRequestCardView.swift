@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FriendRequestCardView: View {
-    let user: CodableUser
+    let user: UserDTO
     var onAccept: () -> Void
     var onIgnore: () -> Void
 
@@ -73,5 +73,5 @@ struct FriendRequestCardView: View {
 }
 
 #Preview {
-    FriendRequestCardView(user: CodableUser(id: UUID(), username: "big_enthusiast", name: "Kirill", createdAt: .now, updatedAt: .now), onAccept: {}, onIgnore: {})
+    FriendRequestCardView(user: UserDTO(id: UUID(), username: "big_enthusiast", name: "Kirill", createdAt: .now, updatedAt: .now), onAccept: {}, onIgnore: {})
 }

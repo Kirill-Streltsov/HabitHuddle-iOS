@@ -83,7 +83,7 @@ struct LoginView: View {
         }
     }
 
-    private func saveHabitsLocally(_ codableHabits: [CodableHabit]) {
+    private func saveHabitsLocally(_ codableHabits: [HabitDTO]) {
         for codableHabit in codableHabits {
             // Skip if habit with same ID already exists
             if habitExists(withId: codableHabit.id) {

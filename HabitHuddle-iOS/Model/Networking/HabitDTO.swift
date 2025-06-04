@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CodableHabit: Codable, Identifiable {
+struct HabitDTO: Codable, Identifiable {
     let id: UUID
     let user: LightweightUser
     let name: String
@@ -16,5 +16,5 @@ struct CodableHabit: Codable, Identifiable {
     let reminderTime: Date?
     let createdAt: Date?
     let updatedAt: Date?
-    let checkIns: [CodableHabitCheckIn]?
+    let checkIns: [HabitCheckInDTO]?
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CodableHabitCheckIn: Codable, Identifiable {
+struct HabitCheckInDTO: Codable, Identifiable {
     var id: UUID
     var date: Date
     var habit: LightweightHabit

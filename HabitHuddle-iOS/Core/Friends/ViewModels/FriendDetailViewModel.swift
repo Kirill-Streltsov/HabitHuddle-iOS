@@ -11,14 +11,14 @@ extension FriendDetailView {
     @MainActor
     final class ViewModel: ObservableObject {
         
-        @Published var habits: [CodableHabit] = []
+        @Published var habits: [HabitDTO] = []
         
         func loadUserHabits(for id: UUID) async {
             do {
                 let fetchedHabits = try await NetworkingManager.shared.request(
                     endpoint: .getUserHabits(for: id),
                     method: .get,
-                    responseType: [CodableHabit].self)
+                    responseType: [HabitDTO].self)
                 habits = fetchedHabits
             } catch {
                 print("COULD NOT DECODE USER HABITS")

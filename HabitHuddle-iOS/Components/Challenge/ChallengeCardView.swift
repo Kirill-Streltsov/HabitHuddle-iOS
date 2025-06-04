@@ -85,28 +85,6 @@ struct ChallengeCardView: View {
     }
 }
 
-struct ChallengeDTO: Identifiable {
-    var id: UUID
-    var initiatorName: String
-    var receiverName: String
-    var habitName: String
-    var type: ChallengeType
-    var status: ChallengeStatus
-    var startDate: Date
-    var endDate: Date
-}
-
-enum ChallengeType: String, Codable {
-    case competitive
-    case supportive
-}
-
-enum ChallengeStatus: String, Codable {
-    case pending
-    case accepted
-    case declined
-}
-
 #Preview {
     ChallengeCardView(
         challenge: ChallengeDTO(

@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct FriendHabitCard: View {
-    let habit: CodableHabit
+    let habit: HabitDTO
     let cardWidth: CGFloat = UIScreen.main.bounds.width - 32
     
-    var checkIns: [CodableHabitCheckIn] {
+    var checkIns: [HabitCheckInDTO] {
         if let checkIns = habit.checkIns {
             return checkIns
         } else {
@@ -141,5 +141,5 @@ struct FriendHabitCard: View {
 }
 
 #Preview {
-    FriendHabitCard(habit: CodableHabit(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Drink 2 liters a day", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: []))
+    FriendHabitCard(habit: HabitDTO(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Drink 2 liters a day", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: []))
 }

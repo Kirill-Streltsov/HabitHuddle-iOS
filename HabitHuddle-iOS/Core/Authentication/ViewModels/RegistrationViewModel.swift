@@ -22,7 +22,7 @@ extension RegistrationView {
             self.userManager = userManager
         }
 
-        func registerUser(username: String, name: String, password: String, context: ModelContext) async throws -> Result<CodableUser, APIError> {
+        func registerUser(username: String, name: String, password: String, context: ModelContext) async throws -> Result<UserDTO, APIError> {
             let payload = RegisterPayload(id: userManager.profile.id, username: username, name: name, password: password)
 
             do {

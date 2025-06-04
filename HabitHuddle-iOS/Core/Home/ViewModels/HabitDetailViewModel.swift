@@ -19,7 +19,7 @@ extension HabitDetailView {
         @Published var reminderTime: Date = .init()
         var habit: Habit?
 
-        func createHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
+        func createHabit(with id: UUID) async -> Result<HabitDTO, APIError> {
             do {
                 let reminder: Date? = hasReminder ? reminderTime : nil
 
@@ -36,7 +36,7 @@ extension HabitDetailView {
                     endpoint: .createHabit(),
                     method: .post,
                     body: payload,
-                    responseType: CodableHabit.self
+                    responseType: HabitDTO.self
                 )
                 return .success(habitResponse)
             } catch let error as APIError {
@@ -46,7 +46,7 @@ extension HabitDetailView {
             }
         }
 
-        func updateHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
+        func updateHabit(with id: UUID) async -> Result<HabitDTO, APIError> {
             do {
                 guard let habit = habit else { return .failure(.notFound) }
                 let reminder: Date? = hasReminder ? reminderTime : nil
@@ -64,7 +64,7 @@ extension HabitDetailView {
                     endpoint: .updateHabit(with: id),
                     method: .put,
                     body: payload,
-                    responseType: CodableHabit.self
+                    responseType: HabitDTO.self
                 )
                 return .success(habitResponse)
             } catch let error as APIError {
@@ -88,12 +88,12 @@ extension HabitDetailView {
             }
         }
 
-        func deleteHabit(with id: UUID) async -> Result<CodableHabit, APIError> {
+        func deleteHabit(with id: UUID) async -> Result<HabitDTO, APIError> {
             do {
                 let deletedHabitResponse = try await NetworkingManager.shared.request(
                     endpoint: .deleteHabit(with: id),
                     method: .delete,
-                    responseType: CodableHabit.self
+                    responseType: HabitDTO.self
                 )
                 return .success(deletedHabitResponse)
             } catch let error as APIError {
