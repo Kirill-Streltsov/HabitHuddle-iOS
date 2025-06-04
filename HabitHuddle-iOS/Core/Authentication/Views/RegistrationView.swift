@@ -103,9 +103,6 @@ struct RegistrationView: View {
 
             Spacer()
         }
-        .onAppear {
-            name = userManager.profile.name
-        }
     }
 }
 

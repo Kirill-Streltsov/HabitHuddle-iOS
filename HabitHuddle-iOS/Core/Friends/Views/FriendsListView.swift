@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FriendsListView: View {
     
-    @StateObject private var viewModel = ViewModel()
+    @EnvironmentObject private var viewModel: ViewModel
     @State private var searchText = ""
     @State private var requestIsSent = false
     
@@ -45,7 +45,7 @@ struct FriendsListView: View {
                             ScrollView {
                                 LazyVStack(spacing: 16) {
                                     friendRequests
-                                    friends
+                                    MyFriendsListView()
                                 }
                                 .padding(.top)
                             }
@@ -63,27 +63,27 @@ struct FriendsListView: View {
         }
     }
     
-    private var friends: some View {
-        Group {
-            // Friends list below
-            if !viewModel.friends.isEmpty {
-                Section(header: Text("Your Friends")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                ) {
-                    ForEach(viewModel.friends) { friend in
-                        NavigationLink {
-                            FriendDetailView(friend: friend)
-                        } label: {
-                            FriendCardView(friend: friend, onChallenge: {})
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-            }
-        }
-    }
+//    private var friends: some View {
+//        Group {
+//            // Friends list below
+//            if !viewModel.friends.isEmpty {
+//                Section(header: Text("Your Friends")
+//                    .font(.headline)
+//                    .frame(maxWidth: .infinity, alignment: .leading)
+//                    .padding(.horizontal)
+//                ) {
+//                    ForEach(viewModel.friends) { friend in
+//                        NavigationLink {
+//                            FriendDetailView(friend: friend)
+//                        } label: {
+//                            FriendCardView(friend: friend, onChallenge: {})
+//                        }
+//                        .buttonStyle(.plain)
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     private var friendRequests: some View {
         Group {

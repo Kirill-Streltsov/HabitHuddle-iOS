@@ -18,7 +18,7 @@ struct HabitDetailView: View {
     let mode: Mode
 
     @State private var isCheckedIn = false
-    @State private var birthDate = Date.now
+    @State private var challengeButtonPressed = false
     @State private var saveButtonPressed = false
     @State private var deleteButtonPressed = false
     
@@ -106,27 +106,24 @@ struct HabitDetailView: View {
                             }
                         }
                     }
-
-                    // MARK: - Submit
-
-                    Button {
-                        saveButtonPressed = true
-                        saveHabit()
-                        dismiss()
-                    } label: {
-                        Text("Save")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : Color.accentColor)
-                            .foregroundStyle(.white)
-                            .cornerRadius(12)
-                            .font(.headline)
+                    
+                    VStack(spacing: 8) {
+                        SubmitButton(title: "Challenge a friend!", color: .orange) {
+                            challengeButtonPressed = true
+                        }
+                        SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : Color.accentColor) {
+                            saveButtonPressed = true
+                            saveHabit()
+                            dismiss()
+                        }
                     }
-                    .disabled(viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty)
                     .padding(.horizontal)
-                    .padding(.bottom, 20)
                 }
                 .padding(.top)
+            }
+            .sheet(isPresented: $challengeButtonPressed) {
+                MyFriendsListView()
+                    .presentationDetents([.medium])
             }
             .toolbar {
                 if mode == .editing {
