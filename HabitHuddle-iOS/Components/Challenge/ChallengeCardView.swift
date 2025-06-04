@@ -18,16 +18,16 @@ struct ChallengeCardView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-                    (Text(challenge.initiatorName)
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        + Text(" challenged you!"))
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-
-                    Text("\(challenge.habitName)")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+//                    (Text(challenge.initiator.name)
+//                        .font(.headline)
+//                        .fontWeight(.bold)
+//                        + Text(" challenged you!"))
+//                        .font(.subheadline)
+//                        .fontWeight(.semibold)
+//
+//                    Text("\(challenge.habit.name)")
+//                        .font(.subheadline)
+//                        .foregroundStyle(.secondary)
                 }
 
                 Spacer()
@@ -93,20 +93,20 @@ struct ChallengeCardView: View {
     }
 }
 
-#Preview {
-    ChallengeCardView(
-        challenge: ChallengeDTO(
-            id: UUID(),
-            initiatorName: "Alice",
-            receiverName: "You",
-            habitName: "Morning Run",
-            type: .competitive,
-            status: .pending,
-            startDate: Date(),
-            endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!
-        ),
-        onAccept: { print("Accepted") },
-        onReject: { print("Rejected") }
-    )
-    .padding()
-}
+//#Preview {
+//    ChallengeCardView(
+//        challenge: ChallengeDTO(
+//            id: UUID(),
+//            initiatorName: "Alice",
+//            receiverName: "You",
+//            habitName: "Morning Run",
+//            type: .competitive,
+//            status: .pending,
+//            startDate: Date(),
+//            endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!
+//        ),
+//        onAccept: { print("Accepted") },
+//        onReject: { print("Rejected") }
+//    )
+//    .padding()
+//}

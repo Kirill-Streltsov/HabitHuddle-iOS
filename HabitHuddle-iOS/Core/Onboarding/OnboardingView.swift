@@ -40,34 +40,34 @@ struct OnboardingView: View {
                 text: "Stay accountable by sending and accepting habit challenges.\nProgress together.",
                 customView: AnyView(
                     VStack {
-                        ChallengeProgressCardView(
-                            challenge: ChallengeDTO(
-                                id: UUID(),
-                                initiatorName: "Alice",
-                                receiverName: "You",
-                                habitName: "Read 20 pages a day",
-                                type: .competitive,
-                                status: .accepted,
-                                startDate: Date(),
-                                endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
-                            ),
-                            initiatorProgress: 0.62,
-                            receiverProgress: 0.83
-                        )
-                        ChallengeCardView(
-                            challenge: ChallengeDTO(
-                                id: UUID(),
-                                initiatorName: "Jennifer",
-                                receiverName: "You",
-                                habitName: "Morning runs together",
-                                type: .supportive,
-                                status: .pending,
-                                startDate: Date(),
-                                endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
-                            ),
-                            onAccept: {},
-                            onReject: {}
-                        )
+//                        ChallengeProgressCardView(
+//                            challenge: ChallengeDTO(
+//                                id: UUID(),
+//                                initiatorName: "Alice",
+//                                receiverName: "You",
+//                                habitName: "Read 20 pages a day",
+//                                type: .competitive,
+//                                status: .accepted,
+//                                startDate: Date(),
+//                                endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
+//                            ),
+//                            initiatorProgress: 0.62,
+//                            receiverProgress: 0.83
+//                        )
+//                        ChallengeCardView(
+//                            challenge: ChallengeDTO(
+//                                id: UUID(),
+//                                initiatorName: "Jennifer",
+//                                receiverName: "You",
+//                                habitName: "Morning runs together",
+//                                type: .supportive,
+//                                status: .pending,
+//                                startDate: Date(),
+//                                endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
+//                            ),
+//                            onAccept: {},
+//                            onReject: {}
+//                        )
                     }
                 )
             ),

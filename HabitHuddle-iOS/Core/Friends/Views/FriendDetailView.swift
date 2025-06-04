@@ -36,20 +36,20 @@ struct FriendDetailView: View {
                         Text("\(friend.name)'s past challenges")
                             .font(.title2)
                             .fontWeight(.semibold)
-                        ChallengeProgressCardView(
-                            challenge: ChallengeDTO(
-                                id: UUID(),
-                                initiatorName: "James",
-                                receiverName: "\(friend.name) (winner)",
-                                habitName: "Read 20 pages a day",
-                                type: .competitive,
-                                status: .accepted,
-                                startDate: Date(),
-                                endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
-                            ),
-                            initiatorProgress: 0.62,
-                            receiverProgress: 1
-                        )
+//                        ChallengeProgressCardView(
+//                            challenge: ChallengeDTO(
+//                                id: UUID(),
+//                                initiatorName: "James",
+//                                receiverName: "\(friend.name) (winner)",
+//                                habitName: "Read 20 pages a day",
+//                                type: .competitive,
+//                                status: .accepted,
+//                                startDate: Date(),
+//                                endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
+//                            ),
+//                            initiatorProgress: 0.62,
+//                            receiverProgress: 1
+//                        )
                     }
                 } else {
                     EmptyActivityView(friendName: friend.name, onChallenge: {})

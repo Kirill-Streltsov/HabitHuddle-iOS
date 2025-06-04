@@ -60,7 +60,7 @@ extension ChallengesListView {
                 let response = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .rejectChallenge(id: id),
                     method: .post)
-                print("RESPONSE FOR ACCEPT CHALLENGE: \(response)")
+                print("RESPONSE FOR REJECT CHALLENGE: \(response)")
             } catch {
                 print("COULDN'T ACCEPT CHALLENGE")
             }

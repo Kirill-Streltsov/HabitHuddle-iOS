@@ -9,11 +9,12 @@ import Foundation
 
 struct ChallengeDTO: Identifiable, Codable {
     var id: UUID
-    var initiatorName: String
-    var receiverName: String
-    var habitName: String
+    var initiator: LightweightUser
+    var receiver: LightweightUser
+    var habit: HabitDTO
     var type: ChallengeType
     var status: ChallengeStatus
     var startDate: Date
     var endDate: Date
+    var createdAt: Date
 }

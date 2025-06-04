@@ -17,11 +17,11 @@ struct ChallengeProgressCardView: View {
             // Header
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(challenge.habitName)
-                        .font(.headline)
-                    Text("\(challenge.initiatorName) vs \(challenge.receiverName)")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+//                    Text(challenge.habit.name)
+//                        .font(.headline)
+//                    Text("\(challenge.initiator.name) vs \(challenge.receiver.name)")
+//                        .font(.subheadline)
+//                        .foregroundStyle(.secondary)
                 }
 
                 Spacer()
@@ -45,8 +45,8 @@ struct ChallengeProgressCardView: View {
 
             // Progress bars
             VStack(alignment: .leading) {
-                ProgressRow(name: challenge.receiverName, calculatedProgress: receiverProgress, color: .green)
-                ProgressRow(name: challenge.initiatorName, calculatedProgress: initiatorProgress, color: .pink)
+//                ProgressRow(name: challenge.receiver.name, calculatedProgress: receiverProgress, color: .green)
+//                ProgressRow(name: challenge.initiator.name, calculatedProgress: initiatorProgress, color: .pink)
             }
 
         }
@@ -96,19 +96,19 @@ struct ProgressRow: View {
     }
 }
 
-#Preview {
-    ChallengeProgressCardView(
-        challenge: ChallengeDTO(
-            id: UUID(),
-            initiatorName: "Alice",
-            receiverName: "You",
-            habitName: "Daily Reading",
-            type: .competitive,
-            status: .accepted,
-            startDate: Date(),
-            endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
-        ),
-        initiatorProgress: 0.6,
-        receiverProgress: 0.8
-    )
-}
+//#Preview {
+//    ChallengeProgressCardView(
+//        challenge: ChallengeDTO(
+//            id: UUID(),
+//            initiatorName: "Alice",
+//            receiverName: "You",
+//            habitName: "Daily Reading",
+//            type: .competitive,
+//            status: .accepted,
+//            startDate: Date(),
+//            endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
+//        ),
+//        initiatorProgress: 0.6,
+//        receiverProgress: 0.8
+//    )
+//}
