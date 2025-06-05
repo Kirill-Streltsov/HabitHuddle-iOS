@@ -13,21 +13,23 @@ struct ChallengeCardView: View {
     var onReject: @MainActor () async -> Void
 
     @State private var isAppeared = false
+    
+    @StateObject private var viewModel = ViewModel()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-//                    (Text(challenge.initiator.name)
-//                        .font(.headline)
-//                        .fontWeight(.bold)
-//                        + Text(" challenged you!"))
-//                        .font(.subheadline)
-//                        .fontWeight(.semibold)
-//
-//                    Text("\(challenge.habit.name)")
-//                        .font(.subheadline)
-//                        .foregroundStyle(.secondary)
+                    (Text(viewModel.initiatorName)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        + Text(" challenged you!"))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+
+                    Text("\(challenge.habit.name)")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                 }
                 Spacer()
                 Label(challenge.type.rawValue.capitalized, systemImage: challenge.type == .competitive ? "flame.fill" : "heart.fill")
@@ -37,6 +39,9 @@ struct ChallengeCardView: View {
                     .background(challenge.type == .competitive ? Color.red.opacity(0.1) : Color.green.opacity(0.1))
                     .foregroundStyle(challenge.type == .competitive ? .red : .green)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
+            .task {
+                await viewModel.getInitator(with: challenge.initiator.id)
             }
 
             HStack {

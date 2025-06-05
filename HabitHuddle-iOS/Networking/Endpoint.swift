@@ -61,6 +61,10 @@ struct Endpoint {
         )
     }
     
+    static func getUser(with id: UUID) -> Endpoint {
+        Endpoint(path: "users/\(id)")
+    }
+    
     static func getMyFriends() -> Endpoint {
         Endpoint(path: "friends")
     }
