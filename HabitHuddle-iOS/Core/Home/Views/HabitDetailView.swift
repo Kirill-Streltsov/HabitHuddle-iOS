@@ -204,7 +204,6 @@ struct HabitDetailView: View {
                 handleResult(result) { codableHabit in
                     print("✅ Deleted the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
                 } onFailure: { error in
-
                     //SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .delete))
                     print("❌ Failed to delete the habit on the server: \(error.localizedDescription)")
                 }
