@@ -20,7 +20,7 @@ struct ChallengeCardView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-                    (Text(viewModel.initiatorName)
+                    (Text(viewModel.initiatorName.isEmpty ? "James" : "")
                         .font(.headline)
                         .fontWeight(.bold)
                         + Text(" challenged you!"))

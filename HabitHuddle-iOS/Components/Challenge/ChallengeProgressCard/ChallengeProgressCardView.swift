@@ -23,7 +23,7 @@ struct ChallengeProgressCardView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(challenge.habit.name)
                         .font(.headline)
-                    Text("\(viewModel.initiator.name) vs \(viewModel.receiver.name)")
+                    Text("\(viewModel.initiator.name.isEmpty ? "Jennifer" : "") vs \(viewModel.receiver.name.isEmpty ? "You" : "")")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -49,8 +49,8 @@ struct ChallengeProgressCardView: View {
             
             // Progress bars
             VStack(alignment: .leading) {
-                ProgressRow(name: viewModel.receiver.name, calculatedProgress: receiverProgress, color: .green)
-                ProgressRow(name: viewModel.initiator.name, calculatedProgress: initiatorProgress, color: .pink)
+                ProgressRow(name: viewModel.receiver.name.isEmpty ? "Andrew (You)" : "", calculatedProgress: receiverProgress, color: .green)
+                ProgressRow(name: viewModel.initiator.name.isEmpty ? "Jennifer" : "", calculatedProgress: initiatorProgress, color: .pink)
             }
             
         }
