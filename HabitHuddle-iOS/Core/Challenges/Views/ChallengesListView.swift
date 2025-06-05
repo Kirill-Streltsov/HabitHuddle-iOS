@@ -27,11 +27,38 @@ struct ChallengesListView: View {
                         }
                     }
                 } else {
-                    ForEach(viewModel.challenges) { challenge in
-                        ChallengeCardView(challenge: challenge) {
-                            await viewModel.acceptChallenge(with: challenge.id)
-                        } onReject: {
-                            await viewModel.rejectChallenge(with: challenge.id)
+                    if !viewModel.challenges.filter({ $0.status == .pending }).isEmpty {
+                        VStack {
+                            Text("Pending Challenges")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            ForEach(viewModel.challenges.filter { $0.status == .pending }) { challenge in
+                                ChallengeCardView(challenge: challenge) {
+                                    await viewModel.acceptChallenge(with: challenge.id)
+                                } onReject: {
+                                    await viewModel.rejectChallenge(with: challenge.id)
+                                }
+                            }
+                        }
+                    }
+                    if !viewModel.challenges.filter({ $0.status == .accepted }).isEmpty {
+                        VStack {
+                            Text("Ongoing Challenges")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            ForEach(viewModel.challenges.filter { $0.status == .accepted }) { challenge in
+                                ChallengeProgressCardView(challenge: challenge, initiatorProgress: 0.67, receiverProgress: 0.23)
+                            }
+                        }
+                    }
+                    if !viewModel.challenges.filter({ $0.status == .declined }).isEmpty {
+                        VStack {
+                            Text("Declined Challenges")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            ForEach(viewModel.challenges.filter { $0.status == .declined }) { challenge in
+                                ChallengeProgressCardView(challenge: challenge, initiatorProgress: 0.67, receiverProgress: 0.23)
+                            }
                         }
                     }
                 }

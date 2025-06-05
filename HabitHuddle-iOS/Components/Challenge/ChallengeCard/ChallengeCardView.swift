@@ -40,9 +40,6 @@ struct ChallengeCardView: View {
                     .foregroundStyle(challenge.type == .competitive ? .red : .green)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
-            .task {
-                await viewModel.getInitator(with: challenge.initiator.id)
-            }
 
             HStack {
                 Image(systemName: "calendar")
@@ -87,6 +84,9 @@ struct ChallengeCardView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .padding(.horizontal)
+        .task {
+            await viewModel.getInitator(with: challenge.initiator.id)
+        }
     }
 
     private func formattedDate(_ date: Date) -> String {
@@ -96,20 +96,30 @@ struct ChallengeCardView: View {
     }
 }
 
-//#Preview {
-//    ChallengeCardView(
-//        challenge: ChallengeDTO(
-//            id: UUID(),
-//            initiatorName: "Alice",
-//            receiverName: "You",
-//            habitName: "Morning Run",
-//            type: .competitive,
-//            status: .pending,
-//            startDate: Date(),
-//            endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!
-//        ),
-//        onAccept: { print("Accepted") },
-//        onReject: { print("Rejected") }
-//    )
-//    .padding()
-//}
+#Preview {
+    ChallengeCardView(
+        challenge: ChallengeDTO(
+            id: UUID(),
+            initiator: .init(id: UUID()),
+            receiver: .init(id: UUID()),
+            habit: HabitDTO(
+                id: UUID(),
+                user: .init(id: UUID()),
+                name: "Drink water",
+                description: "Gotta stay hydrated",
+                duration: .oneWeek,
+                reminderTime: .now,
+                createdAt: .now,
+                updatedAt: .now,
+                checkIns: []
+            ),
+            type: .competitive,
+            status: .pending,
+            startDate: .now,
+            endDate: .now,
+            createdAt: .now
+        ),
+        onAccept: {},
+        onReject: {}
+    )
+}

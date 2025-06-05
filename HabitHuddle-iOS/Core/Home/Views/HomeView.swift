@@ -12,8 +12,8 @@ struct HomeView: View {
     @Query(sort: [SortDescriptor(\Habit.createdAt, order: .reverse)])
     var habits: [Habit]
         
-    @EnvironmentObject var userManager: LocalUserManager
-    @EnvironmentObject var appState: AppState
+    @EnvironmentObject private var userManager: LocalUserManager
+    @EnvironmentObject private var appState: AppState
     @Environment(\.modelContext) private var context
     
     @State private var showAllHabits = false

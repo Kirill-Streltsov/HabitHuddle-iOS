@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserDTO: Identifiable, Codable {
+struct UserDTO: Identifiable, Codable, Equatable {
     let id: UUID
     let username: String
     let name: String
