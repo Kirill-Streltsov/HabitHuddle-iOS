@@ -5,7 +5,6 @@
 //  Created by Kirill on 19.05.25.
 //
 
-import Observation
 import SwiftData
 import SwiftUI
 
