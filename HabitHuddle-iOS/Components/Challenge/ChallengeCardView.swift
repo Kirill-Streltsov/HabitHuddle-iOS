@@ -29,7 +29,6 @@ struct ChallengeCardView: View {
 //                        .font(.subheadline)
 //                        .foregroundStyle(.secondary)
                 }
-
                 Spacer()
                 Label(challenge.type.rawValue.capitalized, systemImage: challenge.type == .competitive ? "flame.fill" : "heart.fill")
                     .font(.footnote)
