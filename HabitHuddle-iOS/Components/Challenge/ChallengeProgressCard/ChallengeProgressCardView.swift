@@ -10,47 +10,43 @@ import SwiftUI
 struct ChallengeProgressCardView: View {
     
     @EnvironmentObject private var userManager: LocalUserManager
-    let challenge: ChallengeDTO
-    let initiatorProgress: Double  // value from 0 to 1
-    let receiverProgress: Double   // value from 0 to 1
-    
-    @StateObject private var viewModel = ViewModel()
-    
+    let detailedChallenge: ChallengeCardResponseDTO
+        
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             // Header
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(challenge.habit.name)
+                    Text(detailedChallenge.habitName)
                         .font(.headline)
-                    Text("\(viewModel.initiator.name.isEmpty ? "Jennifer" : "") vs \(viewModel.receiver.name.isEmpty ? "You" : "")")
+                    Text("\(detailedChallenge.initiator.user.name) vs \(detailedChallenge.receiver.user.name)")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
                 
                 Spacer()
                 
-                Label(challenge.type.rawValue.capitalized, systemImage: challenge.type == .competitive ? "flame.fill" : "heart.fill")
+                Label(detailedChallenge.type.rawValue.capitalized, systemImage: detailedChallenge.type == .competitive ? "flame.fill" : "heart.fill")
                     .font(.footnote)
                     .fontWeight(.semibold)
                     .padding(8)
-                    .background(challenge.type == .competitive ? Color.red.opacity(0.1) : Color.green.opacity(0.1))
-                    .foregroundStyle(challenge.type == .competitive ? .red : .green)
+                    .background(detailedChallenge.type == .competitive ? Color.red.opacity(0.1) : Color.green.opacity(0.1))
+                    .foregroundStyle(detailedChallenge.type == .competitive ? .red : .green)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             
             // Dates
             HStack(spacing: 8) {
                 Image(systemName: "calendar")
-                Text("From \(formattedDate(challenge.startDate)) to \(formattedDate(challenge.endDate))")
+                Text("From \(formattedDate(detailedChallenge.startDate)) to \(formattedDate(detailedChallenge.endDate))")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
             
             // Progress bars
             VStack(alignment: .leading) {
-                ProgressRow(name: viewModel.receiver.name.isEmpty ? "Andrew (You)" : "", calculatedProgress: receiverProgress, color: .green)
-                ProgressRow(name: viewModel.initiator.name.isEmpty ? "Jennifer" : "", calculatedProgress: initiatorProgress, color: .pink)
+                ProgressRow(name: detailedChallenge.receiver.user.name, calculatedProgress: detailedChallenge.receiver.progress, color: .green)
+                ProgressRow(name: detailedChallenge.initiator.user.name, calculatedProgress: detailedChallenge.initiator.progress, color: .pink)
             }
             
         }
@@ -59,10 +55,6 @@ struct ChallengeProgressCardView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .padding(.horizontal)
-        .task {
-            await viewModel.getInitator(with: challenge.initiator.id)
-            await viewModel.getReceiver(with: challenge.receiver.id)
-        }
     }
     
     private func formattedDate(_ date: Date) -> String {
@@ -106,18 +98,32 @@ struct ProgressRow: View {
 
 #Preview {
     ChallengeProgressCardView(
-        challenge: ChallengeDTO(
+        detailedChallenge: ChallengeCardResponseDTO(
             id: UUID(),
-            initiator: LightweightUser(id: UUID()),
-            receiver: LightweightUser(id: UUID()),
-            habit: HabitDTO(id: UUID(), user: .init(id: UUID()), name: "Drink water", description: "Gotta hydrate", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: []),
+            habitName: "",
             type: .competitive,
+            startDate: .now,
+            endDate: .now,
             status: .accepted,
-            startDate: Date(),
-            endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!,
-            createdAt: .now
-        ),
-        initiatorProgress: 0.6,
-        receiverProgress: 0.8
+            initiator: .init(
+                user: .init(
+                    id: UUID(),
+                    username: "",
+                    name: "",
+                    createdAt: .now,
+                    updatedAt: .now),
+                progress: 0,
+                checkInCount: 0,
+                plannedDays: 0),
+            receiver: .init(
+                user: .init(
+                    id: UUID(),
+                    username: "",
+                    name: "",
+                    createdAt: .now,
+                    updatedAt: .now),
+                progress: 0,
+                checkInCount: 0,
+                plannedDays: 0))
     )
 }

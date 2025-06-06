@@ -11,7 +11,8 @@ extension ChallengesListView {
     @MainActor
     final class ViewModel: ObservableObject {
         
-        @Published var challenges: [ChallengeDTO] = []
+        @Published var pendingChallenges: [ChallengeDTO] = []
+        @Published var ongoingChallenges: [ChallengeCardResponseDTO] = []
         
         func getMyChallenges() async {
             do {
@@ -19,7 +20,7 @@ extension ChallengesListView {
                     endpoint: .getMyChallenges(),
                     method: .get,
                     responseType: [ChallengeDTO].self)
-                challenges = fetchedChallenges
+                pendingChallenges = fetchedChallenges.filter { $0.status != .accepted }
             } catch {
                 print("COULDN'T FETCH CHALLENGES")
             }
@@ -63,6 +64,18 @@ extension ChallengesListView {
                 print("RESPONSE FOR REJECT CHALLENGE: \(response)")
             } catch {
                 print("COULDN'T ACCEPT CHALLENGE")
+            }
+        }
+                
+        func getMyChallengesDetailed() async {
+            do {
+                let fetchedDetailedChallenges = try await NetworkManager.shared.request(
+                    endpoint: .getMyChallenges(),
+                    method: .get,
+                    responseType: [ChallengeCardResponseDTO].self)
+                ongoingChallenges = fetchedDetailedChallenges
+            } catch {
+                print("COULDN'T FETCH CHALLENGES: \(error.localizedDescription)")
             }
         }
     }

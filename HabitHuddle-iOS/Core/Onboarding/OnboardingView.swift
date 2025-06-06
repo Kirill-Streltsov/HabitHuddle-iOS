@@ -41,19 +41,33 @@ struct OnboardingView: View {
                 customView: AnyView(
                     VStack {
                         ChallengeProgressCardView(
-                            challenge: ChallengeDTO(
+                            detailedChallenge: ChallengeCardResponseDTO(
                                 id: UUID(),
-                                initiator: LightweightUser(id: UUID()),
-                                receiver: LightweightUser(id: UUID()),
-                                habit: HabitDTO(id: UUID(), user: .init(id: UUID()), name: "Morning runs together", description: "", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: []),
+                                habitName: "Morning runs together",
                                 type: .supportive,
-                                status: .accepted,
-                                startDate: Date(),
+                                startDate: .now,
                                 endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!,
-                                createdAt: .now
-                            ),
-                            initiatorProgress: 0.84,
-                            receiverProgress: 0.84
+                                status: .accepted,
+                                initiator: .init(
+                                    user: .init(
+                                        id: UUID(),
+                                        username: "andrew",
+                                        name: "Andrew",
+                                        createdAt: .now,
+                                        updatedAt: .now),
+                                    progress: 0.81,
+                                    checkInCount: 0,
+                                    plannedDays: 0),
+                                receiver: .init(
+                                    user: .init(
+                                        id: UUID(),
+                                        username: "george",
+                                        name: "George (you)",
+                                        createdAt: .now,
+                                        updatedAt: .now),
+                                    progress: 0.81,
+                                    checkInCount: 0,
+                                    plannedDays: 0))
                         )
                         ChallengeCardView(
                             challenge: ChallengeDTO(

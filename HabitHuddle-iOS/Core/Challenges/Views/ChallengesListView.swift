@@ -15,7 +15,7 @@ struct ChallengesListView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                if viewModel.challenges.isEmpty {
+                if viewModel.pendingChallenges.isEmpty {
                     EmptyChallengesView()
                     VStack {
                         HStack {
@@ -27,12 +27,12 @@ struct ChallengesListView: View {
                         }
                     }
                 } else {
-                    if !viewModel.challenges.filter({ $0.status == .pending }).isEmpty {
+                    if !viewModel.pendingChallenges.filter({ $0.status == .pending }).isEmpty {
                         VStack {
                             Text("Pending Challenges")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            ForEach(viewModel.challenges.filter { $0.status == .pending }) { challenge in
+                            ForEach(viewModel.pendingChallenges.filter { $0.status == .pending }) { challenge in
                                 ChallengeCardView(challenge: challenge) {
                                     await viewModel.acceptChallenge(with: challenge.id)
                                 } onReject: {
@@ -41,23 +41,23 @@ struct ChallengesListView: View {
                             }
                         }
                     }
-                    if !viewModel.challenges.filter({ $0.status == .accepted }).isEmpty {
+                    if !viewModel.ongoingChallenges.filter({ $0.status == .accepted }).isEmpty {
                         VStack {
                             Text("Ongoing Challenges")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            ForEach(viewModel.challenges.filter { $0.status == .accepted }) { challenge in
-                                ChallengeProgressCardView(challenge: challenge, initiatorProgress: 0.67, receiverProgress: 0.23)
+                            ForEach(viewModel.ongoingChallenges.filter { $0.status == .accepted }) { challenge in
+                                ChallengeProgressCardView(detailedChallenge: challenge)
                             }
                         }
                     }
-                    if !viewModel.challenges.filter({ $0.status == .declined }).isEmpty {
+                    if !viewModel.ongoingChallenges.filter({ $0.status == .declined }).isEmpty {
                         VStack {
                             Text("Declined Challenges")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            ForEach(viewModel.challenges.filter { $0.status == .declined }) { challenge in
-                                ChallengeProgressCardView(challenge: challenge, initiatorProgress: 0.67, receiverProgress: 0.23)
+                            ForEach(viewModel.ongoingChallenges.filter { $0.status == .declined }) { challenge in
+                                ChallengeProgressCardView(detailedChallenge: challenge)
                             }
                         }
                     }
@@ -65,6 +65,7 @@ struct ChallengesListView: View {
             }
             .task {
                 await viewModel.getMyChallenges()
+                await viewModel.getMyChallengesDetailed()
             }
             .navigationTitle("Challenges")
         }

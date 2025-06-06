@@ -99,15 +99,15 @@ struct Endpoint {
         Endpoint(path: "challenges/send")
     }
     
-    static func getMyChallenges() -> Endpoint {
-        Endpoint(path: "challenges/me")
-    }
-    
     static func acceptChallenge(id: UUID) -> Endpoint {
         Endpoint(path: "challenges/\(id)/accept")
     }
     
     static func rejectChallenge(id: UUID) -> Endpoint {
         Endpoint(path: "challenges/\(id)/reject")
+    }
+    
+    static func getMyChallenges() -> Endpoint {
+        Endpoint(path: "challenges/me/detailed")
     }
 }
