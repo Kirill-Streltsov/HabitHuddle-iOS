@@ -37,7 +37,7 @@ struct FriendDetailView: View {
                             .font(.title2)
                             .fontWeight(.semibold)
                         ForEach(viewModel.challenges) { challenge in
-                            ChallengeProgressCardView(detailedChallenge: challenge)
+                            ChallengeProgressCardView(challenge: challenge)
                         }
                     }
                 } else {

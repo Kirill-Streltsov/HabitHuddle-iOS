@@ -21,7 +21,7 @@ struct ChallengesListView: View {
                 } else {
                     if !viewModel.challenges.filter({ $0.status == .pending }).isEmpty {
                         VStack {
-                            Text("Pending Challenges")
+                            Text("Pending")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             ForEach(viewModel.challenges.filter { $0.status == .pending }) { challenge in
@@ -35,17 +35,17 @@ struct ChallengesListView: View {
                     }
                     if !viewModel.challenges.filter({ $0.status == .accepted }).isEmpty {
                         VStack {
-                            Text("Ongoing Challenges")
+                            Text("Ongoing")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             ForEach(viewModel.challenges.filter { $0.status == .accepted }) { challenge in
-                                ChallengeProgressCardView(detailedChallenge: challenge)
+                                ChallengeProgressCardView(challenge: challenge)
                             }
                         }
                     }
                     if !viewModel.challenges.filter({ $0.status == .declined }).isEmpty {
                         VStack {
-                            Text("Declined Challenges")
+                            Text("Declined")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             ForEach(viewModel.challenges.filter { $0.status == .declined }) { challenge in

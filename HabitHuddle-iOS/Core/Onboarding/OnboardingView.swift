@@ -41,7 +41,7 @@ struct OnboardingView: View {
                 customView: AnyView(
                     VStack {
                         ChallengeProgressCardView(
-                            detailedChallenge: ChallengeDTO(
+                            challenge: ChallengeDTO(
                                 id: UUID(),
                                 habitName: "Morning runs together",
                                 type: .supportive,
@@ -51,7 +51,7 @@ struct OnboardingView: View {
                                 initiator: .init(
                                     user: .init(
                                         id: UUID(),
-                                        username: "andrew",
+                                        username: "jen_the_motivated",
                                         name: "Jennifer",
                                         createdAt: .now,
                                         updatedAt: .now),
@@ -61,8 +61,8 @@ struct OnboardingView: View {
                                 receiver: .init(
                                     user: .init(
                                         id: UUID(),
-                                        username: "george",
-                                        name: "You",
+                                        username: "StreakSeekerMike",
+                                        name: "Michael",
                                         createdAt: .now,
                                         updatedAt: .now),
                                     progress: 0.81,
