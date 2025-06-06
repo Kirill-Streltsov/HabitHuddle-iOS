@@ -73,7 +73,7 @@ extension FriendsListView {
                     endpoint: .requestFriend(with: id),
                     method: .post,
                     body: payload)
-                return .success(.ok)
+                return .success(requestFriendResponse)
             } catch {
                 return .failure(.decodingError(error))
             }
@@ -81,10 +81,10 @@ extension FriendsListView {
         
         func acceptFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
             do {
-                let requestFriendResponse = try await NetworkManager.shared.requestStatusCode(
+                let acceptFriendResponse = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .acceptFriend(with: id),
                     method: .post)
-                return .success(.ok)
+                return .success(acceptFriendResponse)
             } catch {
                 return .failure(.decodingError(error))
             }
@@ -92,10 +92,10 @@ extension FriendsListView {
         
         func rejectFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
             do {
-                let requestFriendResponse = try await NetworkManager.shared.requestStatusCode(
+                let rejectFriendResponse = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .rejectFriend(with: id),
                     method: .post)
-                return .success(requestFriendResponse)
+                return .success(rejectFriendResponse)
             } catch {
                 return .failure(.decodingError(error))
             }

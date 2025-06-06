@@ -139,6 +139,7 @@ struct HeatmapView: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity)
         .padding()
         .onAppear {
             if habits.count == 1 {

@@ -162,33 +162,42 @@ struct StatisticsDetailView: View {
         ScrollView {
             VStack(spacing: 30) {
                 habitProgressBar
-                VStack {
-                    Text("Frequency of your check ins")
-                        .font(.headline)
-                    HeatmapView(habits: [habit])
-                }
-                HStack(alignment: .top) {
+                CardView {
                     VStack {
-                        completionRateSection
-                        Text("\(habit.duration.numberOfDays - habit.checkIns.count) days left")
-                            .foregroundStyle(.secondary)
-                            .frame(height: 40)
-                    }
-                    VStack {
-                        missedDaysSection
-                        Text(missedDaysText)
-                            .foregroundStyle(.secondary)
-                            .frame(height: 40)
+                        Text("Frequency of your check ins")
+                            .font(.headline)
+                        HeatmapView(habits: [habit])
                     }
                 }
-                .font(.subheadline)
-                .multilineTextAlignment(.center)
-                streaksSection
-                if habit.checkIns.count > 1 {
-                    checkInTimeDistributionSection
+                
+                CardView {
+                    HStack(alignment: .top) {
+                        VStack {
+                            completionRateSection
+                            Text("\(habit.duration.numberOfDays - habit.checkIns.count) days left")
+                                .foregroundStyle(.secondary)
+                                .frame(height: 40)
+                        }
+                        VStack {
+                            missedDaysSection
+                            Text(missedDaysText)
+                                .foregroundStyle(.secondary)
+                                .frame(height: 40)
+                        }
+                    }
+                    .font(.subheadline)
+                    .multilineTextAlignment(.center)
+                }
+                
+                CardView {
+                    Group {
+                        streaksSection
+                        if habit.checkIns.count > 1 {
+                            checkInTimeDistributionSection
+                        }
+                    }
                 }
             }
-            .padding(.horizontal)
             .padding(.bottom)
         }
         .navigationTitle(habit.name)

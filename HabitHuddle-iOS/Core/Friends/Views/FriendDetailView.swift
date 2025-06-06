@@ -17,10 +17,15 @@ struct FriendDetailView: View {
             VStack {
                 if !Hardcode.allHabits.isEmpty {
                     VStack(alignment: .center) {
-                        Text("\(friend.name)'s activity")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                        HeatmapView(habits: Hardcode.allHabits)
+                        CardView {
+                            VStack {
+                                Text("\(friend.name)'s activity")
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+                                HeatmapView(habits: Hardcode.allHabits)
+                            }
+                            
+                        }
                     }
                     Divider()
                     VStack(alignment: .center) {
