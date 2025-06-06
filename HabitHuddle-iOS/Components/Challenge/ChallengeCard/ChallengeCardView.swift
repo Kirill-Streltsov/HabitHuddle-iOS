@@ -13,21 +13,19 @@ struct ChallengeCardView: View {
     var onReject: @MainActor () async -> Void
 
     @State private var isAppeared = false
-    
-    @StateObject private var viewModel = ViewModel()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-                    (Text(viewModel.initiatorName.isEmpty ? "James" : "")
+                    (Text(challenge.initiator.user.name)
                         .font(.headline)
                         .fontWeight(.bold)
                         + Text(" challenged you!"))
                         .font(.subheadline)
                         .fontWeight(.semibold)
 
-                    Text("\(challenge.habit.name)")
+                    Text("\(challenge.habitName)")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -84,9 +82,6 @@ struct ChallengeCardView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .padding(.horizontal)
-        .task {
-            await viewModel.getInitator(with: challenge.initiator.id)
-        }
     }
 
     private func formattedDate(_ date: Date) -> String {
@@ -100,25 +95,31 @@ struct ChallengeCardView: View {
     ChallengeCardView(
         challenge: ChallengeDTO(
             id: UUID(),
-            initiator: .init(id: UUID()),
-            receiver: .init(id: UUID()),
-            habit: HabitDTO(
-                id: UUID(),
-                user: .init(id: UUID()),
-                name: "Drink water",
-                description: "Gotta stay hydrated",
-                duration: .oneWeek,
-                reminderTime: .now,
-                createdAt: .now,
-                updatedAt: .now,
-                checkIns: []
-            ),
+            habitName: "",
             type: .competitive,
-            status: .pending,
             startDate: .now,
             endDate: .now,
-            createdAt: .now
-        ),
+            status: .accepted,
+            initiator: .init(
+                user: .init(
+                    id: UUID(),
+                    username: "",
+                    name: "",
+                    createdAt: .now,
+                    updatedAt: .now),
+                progress: 0,
+                checkInCount: 0,
+                plannedDays: 0),
+            receiver: .init(
+                user: .init(
+                    id: UUID(),
+                    username: "",
+                    name: "",
+                    createdAt: .now,
+                    updatedAt: .now),
+                progress: 0,
+                checkInCount: 0,
+                plannedDays: 0)),
         onAccept: {},
         onReject: {}
     )

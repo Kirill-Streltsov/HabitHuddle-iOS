@@ -41,7 +41,7 @@ struct OnboardingView: View {
                 customView: AnyView(
                     VStack {
                         ChallengeProgressCardView(
-                            detailedChallenge: ChallengeCardResponseDTO(
+                            detailedChallenge: ChallengeDTO(
                                 id: UUID(),
                                 habitName: "Morning runs together",
                                 type: .supportive,
@@ -52,7 +52,7 @@ struct OnboardingView: View {
                                     user: .init(
                                         id: UUID(),
                                         username: "andrew",
-                                        name: "Andrew",
+                                        name: "Jennifer",
                                         createdAt: .now,
                                         updatedAt: .now),
                                     progress: 0.81,
@@ -62,7 +62,7 @@ struct OnboardingView: View {
                                     user: .init(
                                         id: UUID(),
                                         username: "george",
-                                        name: "George (you)",
+                                        name: "You",
                                         createdAt: .now,
                                         updatedAt: .now),
                                     progress: 0.81,
@@ -72,25 +72,31 @@ struct OnboardingView: View {
                         ChallengeCardView(
                             challenge: ChallengeDTO(
                                 id: UUID(),
-                                initiator: .init(id: UUID()),
-                                receiver: .init(id: UUID()),
-                                habit: HabitDTO(
-                                    id: UUID(),
-                                    user: .init(id: UUID()),
-                                    name: "No caffeine after noon",
-                                    description: "",
-                                    duration: .oneWeek,
-                                    reminderTime: .now,
-                                    createdAt: .now,
-                                    updatedAt: .now,
-                                    checkIns: []
-                                ),
+                                habitName: "No caffeine after noon",
                                 type: .competitive,
-                                status: .pending,
                                 startDate: .now,
                                 endDate: Calendar.current.date(byAdding: .day, value: 14, to: Date())!,
-                                createdAt: .now
-                            ),
+                                status: .accepted,
+                                initiator: .init(
+                                    user: .init(
+                                        id: UUID(),
+                                        username: "andrew",
+                                        name: "Andrew",
+                                        createdAt: .now,
+                                        updatedAt: .now),
+                                    progress: 0.34,
+                                    checkInCount: 0,
+                                    plannedDays: 0),
+                                receiver: .init(
+                                    user: .init(
+                                        id: UUID(),
+                                        username: "george",
+                                        name: "You",
+                                        createdAt: .now,
+                                        updatedAt: .now),
+                                    progress: 0.57,
+                                    checkInCount: 0,
+                                    plannedDays: 0)),
                             onAccept: {},
                             onReject: {}
                         )

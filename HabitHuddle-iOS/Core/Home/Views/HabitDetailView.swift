@@ -108,10 +108,10 @@ struct HabitDetailView: View {
                     }
                     
                     VStack(spacing: 8) {
-                        SubmitButton(title: "Challenge a friend!", color: .orange) {
+                        SubmitButton(title: "Challenge a friend!", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .orange) {
                             challengeButtonPressed = true
                         }
-                        SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : Color.accentColor) {
+                        SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
                             saveButtonPressed = true
                             saveHabit()
                             dismiss()

@@ -10,7 +10,7 @@ import SwiftUI
 struct ChallengeProgressCardView: View {
     
     @EnvironmentObject private var userManager: LocalUserManager
-    let detailedChallenge: ChallengeCardResponseDTO
+    let detailedChallenge: ChallengeDTO
         
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -98,7 +98,7 @@ struct ProgressRow: View {
 
 #Preview {
     ChallengeProgressCardView(
-        detailedChallenge: ChallengeCardResponseDTO(
+        detailedChallenge: ChallengeDTO(
             id: UUID(),
             habitName: "",
             type: .competitive,

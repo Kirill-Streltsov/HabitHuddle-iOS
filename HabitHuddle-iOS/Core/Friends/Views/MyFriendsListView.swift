@@ -23,6 +23,9 @@ struct MyFriendsListView: View {
                             FriendCardView(friend: friend, showChallengeButton: false) {
                                 await viewModel.sendChallenge(to: friend.id, for: habit.id, of: .competitive, with: .now, and: .now)
                             }
+                            .onAppear {
+                                print("THIS APPEARED HOME TAB")
+                            }
                         }
                     } else {
                         NavigationLink {
@@ -31,6 +34,9 @@ struct MyFriendsListView: View {
                             FriendCardView(friend: friend, showChallengeButton: true) {}
                         }
                         .buttonStyle(.plain)
+                        .onAppear {
+                            print("THIS APPEARED FRIENDS TAB")
+                        }
                     }
                 }
                 

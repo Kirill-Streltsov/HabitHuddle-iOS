@@ -11,28 +11,20 @@ struct ChallengesListView: View {
     
     @StateObject private var viewModel = ViewModel()
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var userManager: LocalUserManager
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                if viewModel.pendingChallenges.isEmpty {
+                if viewModel.challenges.isEmpty {
                     EmptyChallengesView()
-                    VStack {
-                        HStack {
-                            Text("Choose a habit to challenge a friend!")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                                .padding(.horizontal)
-                            Spacer()
-                        }
-                    }
                 } else {
-                    if !viewModel.pendingChallenges.filter({ $0.status == .pending }).isEmpty {
+                    if !viewModel.challenges.filter({ $0.status == .pending }).isEmpty {
                         VStack {
                             Text("Pending Challenges")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            ForEach(viewModel.pendingChallenges.filter { $0.status == .pending }) { challenge in
+                            ForEach(viewModel.challenges.filter { $0.status == .pending }) { challenge in
                                 ChallengeCardView(challenge: challenge) {
                                     await viewModel.acceptChallenge(with: challenge.id)
                                 } onReject: {
@@ -41,31 +33,35 @@ struct ChallengesListView: View {
                             }
                         }
                     }
-                    if !viewModel.ongoingChallenges.filter({ $0.status == .accepted }).isEmpty {
+                    if !viewModel.challenges.filter({ $0.status == .accepted }).isEmpty {
                         VStack {
                             Text("Ongoing Challenges")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            ForEach(viewModel.ongoingChallenges.filter { $0.status == .accepted }) { challenge in
+                            ForEach(viewModel.challenges.filter { $0.status == .accepted }) { challenge in
                                 ChallengeProgressCardView(detailedChallenge: challenge)
                             }
                         }
                     }
-                    if !viewModel.ongoingChallenges.filter({ $0.status == .declined }).isEmpty {
+                    if !viewModel.challenges.filter({ $0.status == .declined }).isEmpty {
                         VStack {
                             Text("Declined Challenges")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            ForEach(viewModel.ongoingChallenges.filter { $0.status == .declined }) { challenge in
-                                ChallengeProgressCardView(detailedChallenge: challenge)
+                            ForEach(viewModel.challenges.filter { $0.status == .declined }) { challenge in
+                                ChallengeCardView(challenge: challenge) {
+                                    await viewModel.acceptChallenge(with: challenge.id)
+                                } onReject: {
+                                    await viewModel.rejectChallenge(with: challenge.id)
+                                }
                             }
                         }
                     }
                 }
             }
+
             .task {
-                await viewModel.getMyChallenges()
-                await viewModel.getMyChallengesDetailed()
+                await viewModel.getChallenges(for: userManager.profile.id)
             }
             .navigationTitle("Challenges")
         }

@@ -2,19 +2,25 @@
 //  ChallengeDTO.swift
 //  HabitHuddle-iOS
 //
-//  Created by Kirill on 04.06.25.
+//  Created by Kirill on 06.06.25.
 //
 
 import Foundation
 
 struct ChallengeDTO: Identifiable, Codable {
-    var id: UUID
-    var initiator: LightweightUser
-    var receiver: LightweightUser
-    var habit: HabitDTO
-    var type: ChallengeType
-    var status: ChallengeStatus
-    var startDate: Date
-    var endDate: Date
-    var createdAt: Date
+    let id: UUID
+    let habitName: String
+    let type: ChallengeType
+    let startDate: Date
+    let endDate: Date
+    let status: ChallengeStatus
+    let initiator: UserProgressDTO
+    let receiver: UserProgressDTO
+
+    struct UserProgressDTO: Codable {
+        let user: UserDTO
+        let progress: Double       // 0.0 to 1.0
+        let checkInCount: Int
+        let plannedDays: Int
+    }
 }
