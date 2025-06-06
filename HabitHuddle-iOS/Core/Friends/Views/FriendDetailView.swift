@@ -33,30 +33,20 @@ struct FriendDetailView: View {
                     }
                     Divider()
                     VStack(alignment: .center) {
-                        Text("\(friend.name)'s past challenges")
+                        Text("\(friend.name)'s challenges")
                             .font(.title2)
                             .fontWeight(.semibold)
-//                        ChallengeProgressCardView(
-//                            challenge: ChallengeDTO(
-//                                id: UUID(),
-//                                initiatorName: "James",
-//                                receiverName: "\(friend.name) (winner)",
-//                                habitName: "Read 20 pages a day",
-//                                type: .competitive,
-//                                status: .accepted,
-//                                startDate: Date(),
-//                                endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!
-//                            ),
-//                            initiatorProgress: 0.62,
-//                            receiverProgress: 1
-//                        )
+                        ForEach(viewModel.challenges) { challenge in
+                            ChallengeProgressCardView(detailedChallenge: challenge)
+                        }
                     }
                 } else {
                     EmptyActivityView(friendName: friend.name, onChallenge: {})
                 }
             }
             .task {
-                await viewModel.loadUserHabits(for: friend.id)
+                await viewModel.getUserHabits(for: friend.id)
+                await viewModel.getUserChallenges(for: friend.id)
             }
         }
         .navigationTitle(friend.username)

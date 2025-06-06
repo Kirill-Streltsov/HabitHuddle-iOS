@@ -21,7 +21,7 @@ extension ChallengesListView {
                     responseType: [ChallengeDTO].self)
                 challenges = fetchedChallenges
             } catch {
-                print("COULDN'T FETCH CHALLENGES: \(error.localizedDescription)")
+                print("COULDN'T FETCH CHALLENGES for \(userID): \(error.localizedDescription)")
             }
         }
         
