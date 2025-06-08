@@ -22,14 +22,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                HStack {
-                    Text("Hello, \(userManager.profile.name) 👋")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.horizontal)
-                    Spacer()
-                }
-                
+
                 if habits.isEmpty {
                     EmptyHabitsView(onAddHabit: { showNewHabitView = true })
                 } else {
@@ -61,7 +54,7 @@ struct HomeView: View {
             .navigationDestination(for: Habit.self) { habit in
                 HabitDetailView(habit: habit)
             }
-            .navigationTitle("Habits of the day")
+            .navigationTitle("Habits")
         }
         
     }

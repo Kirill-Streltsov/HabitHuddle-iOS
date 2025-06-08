@@ -19,7 +19,7 @@ struct OnboardingHabitList: View {
     
     var body: some View {
         
-        VStack {
+        VStack(spacing: 0) {
             ForEach(0..<3) { index in
                 OnboardingDefaultHabitCard(habit: defaultHabits[index], isSelected: $isHabitSelected[index], duration: $habitDuration[index])
             }

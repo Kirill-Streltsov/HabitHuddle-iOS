@@ -22,7 +22,8 @@ struct OnboardingDefaultHabitCard: View {
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
                     Text(habit.habitDescription)
-                        .font(.headline)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
                         .foregroundStyle(.gray)
                         .multilineTextAlignment(.center)
                     Picker("Duration", selection: $duration) {

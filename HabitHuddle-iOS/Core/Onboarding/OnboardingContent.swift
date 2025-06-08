@@ -10,23 +10,24 @@ struct OnboardingContent: View {
     var page: OnboardingPageData
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 12) {
             Image(systemName: page.symbol)
-                .font(.system(size: 60))
+                .font(.system(size: 48))
                 .foregroundStyle(.primary)
 
-            Text(page.title)
-                .font(.largeTitle.bold())
-                .multilineTextAlignment(.center)
-                        
-            Text(page.text)
-                .font(.headline)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.secondary)
-                .padding(.horizontal)
-
-            page.customView
+            VStack(spacing: 12) {
+                Text(page.title)
+                    .font(.largeTitle.bold())
+                    .multilineTextAlignment(.center)
+                            
+                Text(page.text)
+                    .font(.headline)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal)
+            }
             
+            page.customView
         }
         .padding(.top, 32)
     }
