@@ -55,7 +55,7 @@ struct LoginView: View {
                         if let cu = await viewModel.loginUser(username: username, password: password) {
                             print("TOKEN: \(String(describing: TokenManager.token))")
                             let codableHabitsResult = await viewModel.getUserHabits()
-                            handleResult(codableHabitsResult) { codableHabits in
+                            Helpers.handleResult(codableHabitsResult) { codableHabits in
                                 saveHabitsLocally(codableHabits)
                                 viewModel.saveUser(cu, using: context)
                                 print("TOKEN: \(TokenManager.token)")

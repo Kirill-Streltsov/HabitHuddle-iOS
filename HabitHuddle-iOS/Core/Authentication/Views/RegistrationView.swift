@@ -79,7 +79,7 @@ struct RegistrationView: View {
                 if inputFieldsAreValid {
                     Task {
                         let result = try await viewModel.registerUser(username: username, name: name, password: password, context: context)
-                        handleResult(result) { codableUser in
+                        Helpers.handleResult(result) { codableUser in
                             userManager.profile = LocalUser(id: codableUser.id, username: codableUser.username, name: codableUser.name, isSignedInToServer: true)
                             print("TOKEN: \(TokenManager.token)")
                             dismiss()

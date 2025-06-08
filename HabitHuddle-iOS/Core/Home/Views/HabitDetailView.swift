@@ -184,7 +184,7 @@ struct HabitDetailView: View {
         Task {
             if userManager.profile.isSignedInToServer {
                 let result = await viewModel.checkIntoHabit(with: habit.id)
-                handleResult(result) { checkedIn in
+                Helpers.handleResult(result) { checkedIn in
                     print("THE USER HAS CHECKED IN: \(checkedIn)")
                 } onFailure: { error in
                     print("ERROR WHILE POSTING THE CHECK IN: \(error)")
@@ -201,7 +201,7 @@ struct HabitDetailView: View {
         Task {
             if userManager.profile.isSignedInToServer {
                 let result = await viewModel.deleteHabit(with: habit.id)
-                handleResult(result) { codableHabit in
+                Helpers.handleResult(result) { codableHabit in
                     print("✅ Deleted the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
                 } onFailure: { error in
                     //SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .delete))
@@ -235,7 +235,7 @@ struct HabitDetailView: View {
         }
         print("SAVING CHANGES FOR HABIT WITH NAME: \(habit.name)")
         if userManager.profile.isSignedInToServer {
-            handleResult(result) { codableHabit in
+            Helpers.handleResult(result) { codableHabit in
                 print("✅ Updated the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
             } onFailure: { error in
                 //SyncManager.shared.add(SyncOperation(habitID: habit.id, action: .update))
@@ -261,7 +261,7 @@ struct HabitDetailView: View {
         }
         if userManager.profile.isSignedInToServer {
             let result = await viewModel.createHabit(with: habitID)
-            handleResult(result) { codableHabit in
+            Helpers.handleResult(result) { codableHabit in
                 print("✅ Saved the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
             } onFailure: { error in
                 //SyncManager.shared.add(SyncOperation(habitID: habitID, action: .create))
