@@ -12,6 +12,9 @@ struct OnboardingView: View {
     @EnvironmentObject private var userManager: LocalUserManager
     @State private var pageIndex = 0
     @State private var enteredName: String = ""
+    var isLastButtonDisabled: Bool {
+        return pageIndex == pages.count - 1 && enteredName.isEmpty
+    }
     @Namespace private var animation
     
     var pages: [OnboardingPageData] {
@@ -193,10 +196,10 @@ struct OnboardingView: View {
                             .foregroundStyle(Color(.systemBackground))
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color(.systemBlue))
-                            .cornerRadius(12)
                     }
-                    .disabled(pageIndex == pages.count - 1 && enteredName.isEmpty)
+                    .disabled(isLastButtonDisabled)
+                    .background(isLastButtonDisabled ? Color(.systemGray5) : Color(.systemBlue))
+                    .cornerRadius(12)
                 }
                 .padding()
             }
