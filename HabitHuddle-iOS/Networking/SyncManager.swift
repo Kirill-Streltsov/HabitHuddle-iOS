@@ -78,17 +78,19 @@ final class SyncManager: ObservableObject {
     
     func updateHabitsOnTheServer(with habits: [Habit]) async -> Result<[HabitDTO], APIError> {
         do {
-            let fethchedHabits = try await withThrowingTaskGroup(of: HabitDTO.self) { group in
+            guard !habits.isEmpty else { return .success([]) }
+            let fetchedHabits = try await withThrowingTaskGroup(of: HabitDTO.self) { group in
                 for habit in habits {
-                    let payload = HabitPayload(
-                        id: habit.id,
-                        name: habit.name,
-                        description: habit.habitDescription,
-                        duration: habit.duration.rawValue,
-                        reminderTime: habit.reminderTime,
-                        checkIns: habit.checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) }
-                    )
                     group.addTask {
+                        let payload = HabitPayload(
+                            id: habit.id,
+                            name: habit.name,
+                            description: habit.habitDescription,
+                            duration: habit.duration.rawValue,
+                            reminderTime: habit.reminderTime,
+                            checkIns: habit.checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) }
+                        )
+                        
                         return try await NetworkManager.shared.request(
                             endpoint: .updateHabit(with: habit.id),
                             method: .put,
@@ -102,7 +104,7 @@ final class SyncManager: ObservableObject {
                 }
                 return habits
             }
-            return .success(fethchedHabits)
+            return .success(fetchedHabits)
         } catch {
             print("🔁 Couldn't update habits on the server. Failed to sync: \(error.localizedDescription)")
             return .failure(.networkError(error))
