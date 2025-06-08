@@ -24,8 +24,6 @@ struct OnboardingContent: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
                 .padding(.horizontal)
-                .background(.red)
-            
 
             page.customView
             

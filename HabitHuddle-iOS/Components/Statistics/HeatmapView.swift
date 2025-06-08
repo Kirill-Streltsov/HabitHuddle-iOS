@@ -17,21 +17,26 @@ struct HeatmapView: View {
         return cal
     }()
 
-    private var weekDays: [String] {
+    // Cache weekdays computation
+    private let weekDays: [String] = {
         let formatter = DateFormatter()
         formatter.locale = Locale.current
         let symbols = formatter.shortWeekdaySymbols
-        let firstWeekdayIndex = calendar.firstWeekday - 1
+        let cal = Calendar(identifier: .iso8601)
+        let firstWeekdayIndex = cal.firstWeekday - 1
         if let symbols = symbols {
             return Array(symbols[firstWeekdayIndex ..< symbols.count]) + symbols[0 ..< firstWeekdayIndex]
         } else {
             return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
         }
-    }
+    }()
 
     @State private var checkInData: [Date: Int] = [:]
+    @State private var computedWeeks: [[Date]] = []
+    @State private var monthLabels: [Int: String] = [:]
 
-    private var allDates: [Date] {
+    // Pre-compute all dates once
+    private func computeAllDates() -> [Date] {
         let calendar = Calendar.current
 
         // Get today's date
@@ -59,7 +64,8 @@ struct HeatmapView: View {
         return dates
     }
 
-    private var weeks: [[Date]] {
+    // Pre-compute weeks structure
+    private func computeWeeks(from allDates: [Date]) -> [[Date]] {
         let grouped = Dictionary(grouping: allDates) { date in
             calendar.component(.weekOfYear, from: date) + calendar.component(.yearForWeekOfYear, from: date) * 100
         }
@@ -68,6 +74,23 @@ struct HeatmapView: View {
             .keys
             .sorted()
             .compactMap { grouped[$0]?.sorted() }
+    }
+
+    // Pre-compute month labels
+    private func computeMonthLabels(for weeks: [[Date]]) -> [Int: String] {
+        var labels: [Int: String] = [:]
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM"
+        
+        for (index, week) in weeks.enumerated() {
+            if let date = week.first {
+                let day = calendar.component(.day, from: date)
+                if day >= 13 && day < 20 {
+                    labels[index] = formatter.string(from: date)
+                }
+            }
+        }
+        return labels
     }
 
     private func color(for value: Int) -> Color {
@@ -87,17 +110,6 @@ struct HeatmapView: View {
         }
     }
 
-    private func monthLabel(for date: Date?) -> String? {
-        guard let date = date else { return nil }
-        let day = calendar.component(.day, from: date)
-        if day >= 13 && day < 20 {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MMM"
-            return formatter.string(from: date)
-        }
-        return nil
-    }
-
     init(habits: [Habit]) {
         self.habits = habits
     }
@@ -110,17 +122,18 @@ struct HeatmapView: View {
                     Text(day)
                         .foregroundStyle(.secondary)
                         .font(.caption2)
-                        .frame(height: 20)
+                        .frame(width: 30, height: 20)
                 }
             }
 
             // Heatmap grid
             HStack(spacing: 4) {
-                ForEach(weeks.indices, id: \.self) { index in
-                    let week = weeks[index]
+                ForEach(computedWeeks.indices, id: \.self) { index in
+                    let week = computedWeeks[index]
                     VStack(spacing: 4) {
                         ForEach(week, id: \.self) { date in
-                            let value = checkInData[calendar.startOfDay(for: date)] ?? 0
+                            let dayKey = calendar.startOfDay(for: date)
+                            let value = checkInData[dayKey] ?? 0
                             Rectangle()
                                 .fill(color(for: value))
                                 .frame(width: 20, height: 20)
@@ -128,7 +141,7 @@ struct HeatmapView: View {
                         }
                     }
                     .overlay(alignment: .top) {
-                        if let label = monthLabel(for: week.first) {
+                        if let label = monthLabels[index] {
                             Text(label)
                                 .foregroundStyle(.secondary)
                                 .font(.caption)
@@ -142,23 +155,42 @@ struct HeatmapView: View {
         .frame(maxWidth: .infinity)
         .padding()
         .onAppear {
+            // Perform all heavy computations once
+            let allDates = computeAllDates()
+            computedWeeks = computeWeeks(from: allDates)
+            monthLabels = computeMonthLabels(for: computedWeeks)
+            
+            // Process check-in data efficiently
             Task(priority: .background) {
+                var tempCheckInData: [Date: Int] = [:]
+                
                 if habits.count == 1 {
-                    for checkIn in habits[0].checkIns {
-                        let day = calendar.startOfDay(for: checkIn.date)
-                        checkInData[day] = 1
+                    // Use Set for O(1) lookup instead of iterating through array
+                    let checkInDates = Set(habits[0].checkIns.map { calendar.startOfDay(for: $0.date) })
+                    for date in allDates {
+                        let day = calendar.startOfDay(for: date)
+                        tempCheckInData[day] = checkInDates.contains(day) ? 1 : 0
                     }
                 } else {
+                    // Build lookup dictionary for all habits at once
+                    var checkInCounts: [Date: Int] = [:]
                     for habit in habits {
                         for checkIn in habit.checkIns {
                             let day = calendar.startOfDay(for: checkIn.date)
-                            if let checkInDataOnDay = checkInData[day] {
-                                checkInData[day] = checkInDataOnDay + 1
-                            } else {
-                                checkInData[day] = 1
-                            }
+                            checkInCounts[day, default: 0] += 1
                         }
                     }
+                    
+                    // Apply to all dates
+                    for date in allDates {
+                        let day = calendar.startOfDay(for: date)
+                        tempCheckInData[day] = checkInCounts[day] ?? 0
+                    }
+                }
+                
+                // Update on main thread
+                await MainActor.run {
+                    checkInData = tempCheckInData
                 }
             }
         }
