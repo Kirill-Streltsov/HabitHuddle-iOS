@@ -20,7 +20,9 @@ enum HHError: Error, LocalizedError {
     case serverError
     case unknown
     case invalidResponse
+    case partialFailure(updated: [HabitDTO], failedIDs: [UUID])
 
+    
     var errorDescription: String? {
         switch self {
         case .invalidURL:
@@ -47,6 +49,9 @@ enum HHError: Error, LocalizedError {
             return "Invalid HTTP response."
         case .unknown:
             return "An unknown error occurred."
+        case .partialFailure(updated: let habits, failedIDs: let failedIDs):
+            return "Couldn't update all habits. Habit updated: \(habits). Failed IDs: \(failedIDs)"
         }
+        
     }
 }

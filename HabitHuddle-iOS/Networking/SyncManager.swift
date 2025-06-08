@@ -6,62 +6,9 @@
 //
 
 import Foundation
-import SwiftData
 
 final class SyncManager: ObservableObject {
     static let shared = SyncManager()
-
-    private let filename = "sync_queue.json"
-    private var fileURL: URL? {
-        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?
-            .appendingPathComponent(filename)
-    }
-
-    private(set) var operations: [SyncOperation] = []
-
-    private init() {
-        load()
-    }
-
-    // MARK: - Persistence
-
-    private func load() {
-        guard let url = fileURL, FileManager.default.fileExists(atPath: url.path) else { return }
-        do {
-            let data = try Data(contentsOf: url)
-            operations = try JSONDecoder().decode([SyncOperation].self, from: data)
-        } catch {
-            print("❌ Failed to load sync queue: \(error.localizedDescription)")
-        }
-    }
-
-    private func save() {
-        guard let url = fileURL else { return }
-        do {
-            let data = try JSONEncoder().encode(operations)
-            try data.write(to: url)
-        } catch {
-            print("❌ Failed to save sync queue: \(error.localizedDescription)")
-        }
-    }
-
-    // MARK: - Public API
-
-    func add(_ op: SyncOperation) {
-        print("🔁 SyncManager: adding operation: \(op.action)")
-        operations.append(op)
-        save()
-    }
-
-    func remove(_ op: SyncOperation) {
-        operations.removeAll { $0.id == op.id }
-        save()
-    }
-
-    func clear() {
-        operations.removeAll()
-        save()
-    }
     
     func getHabitsFromServer() async -> Result<[HabitDTO], HHError> {
         do {
@@ -76,125 +23,151 @@ final class SyncManager: ObservableObject {
         }
     }
     
-    func updateHabitsOnTheServer(with habits: [Habit]) async -> Result<[HabitDTO], HHError> {
-        do {
-            guard !habits.isEmpty else { return .success([]) }
-            let fetchedHabits = try await withThrowingTaskGroup(of: HabitDTO.self) { group in
-                for habit in habits {
-                    group.addTask {
-                        let payload = HabitPayload(
-                            id: habit.id,
-                            name: habit.name,
-                            description: habit.habitDescription,
-                            duration: habit.duration.rawValue,
-                            reminderTime: habit.reminderTime,
-                            checkIns: habit.checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) }
+    func createHabitsOnTheServer(with habits: [Habit]) async -> Result<[HabitDTO], HHError> {
+        guard !habits.isEmpty else { return .success([]) }
+        
+        var createdHabits = [HabitDTO]()
+        var failedHabitIDs = [UUID]()
+        
+        await withTaskGroup(of: (UUID, Result<HabitDTO, HHError>).self) { group in
+            for habit in habits {
+                group.addTask {
+                    
+                    let payload = habit.toPayload
+                    
+                    do {
+                        let created = try await NetworkManager.shared.request(
+                            endpoint: .createHabit(),
+                            method: .post,
+                            body: payload,
+                            responseType: HabitDTO.self
                         )
-                        
-                        return try await NetworkManager.shared.request(
+                        return (habit.id, .success(created))
+                    } catch {
+                        return (habit.id, .failure(.networkError(error)))
+                    }
+                }
+            }
+            
+            for await (id, result) in group {
+                switch result {
+                case .success(let dto):
+                    createdHabits.append(dto)
+                case .failure(let error):
+                    failedHabitIDs.append(id)
+                    print("❌ Failed to create habit with ID \(id): \(error.localizedDescription)")
+                }
+            }
+        }
+        if failedHabitIDs.isEmpty {
+            return .success(createdHabits)
+        } else {
+            print("⚠️ Some habits failed to be created: \(failedHabitIDs)")
+            return .failure(.partialFailure(updated: createdHabits, failedIDs: failedHabitIDs))
+        }
+    }
+    
+    func updateHabitsOnTheServer(with habits: [Habit]) async -> Result<[HabitDTO], HHError> {
+        guard !habits.isEmpty else { return .success([]) }
+
+        var updatedHabits = [HabitDTO]()
+        var failedHabitIDs = [UUID]()
+
+        await withTaskGroup(of: (UUID, Result<HabitDTO, HHError>).self) { group in
+            for habit in habits {
+                group.addTask {
+                    let payload = habit.toPayload
+
+                    do {
+                        let updated = try await NetworkManager.shared.request(
                             endpoint: .updateHabit(with: habit.id),
                             method: .put,
                             body: payload,
-                            responseType: HabitDTO.self)
+                            responseType: HabitDTO.self
+                        )
+                        return (habit.id, .success(updated))
+                    } catch {
+                        return (habit.id, .failure(.networkError(error)))
                     }
                 }
-                var habits = [HabitDTO]()
-                for try await habit in group {
-                    habits.append(habit)
-                }
-                return habits
             }
-            return .success(fetchedHabits)
-        } catch {
-            print("🔁 Couldn't update habits on the server. Failed to sync: \(error.localizedDescription)")
-            return .failure(.networkError(error))
+
+            for await (id, result) in group {
+                switch result {
+                case .success(let dto):
+                    updatedHabits.append(dto)
+                case .failure(let error):
+                    failedHabitIDs.append(id)
+                    print("❌ Failed to update habit with ID \(id): \(error.localizedDescription)")
+                }
+            }
+        }
+
+        if failedHabitIDs.isEmpty {
+            return .success(updatedHabits)
+        } else {
+            print("⚠️ Some habits failed to update: \(failedHabitIDs)")
+            return .failure(.partialFailure(updated: updatedHabits, failedIDs: failedHabitIDs))
         }
     }
     
     func deleteHabitsOnTheServer(with ids: [UUID]) async -> Result<[HabitDTO], HHError> {
-        do {
-            guard !ids.isEmpty else { return .success([]) }
-            let deletedHabits = try await withThrowingTaskGroup(of: HabitDTO.self) { group in
-                for id in ids {
-                    group.addTask {
-                        return try await NetworkManager.shared.request(
+        guard !ids.isEmpty else { return .success([]) }
+
+        var deletedHabits = [HabitDTO]()
+        var failedIDs = [UUID]()
+
+        await withTaskGroup(of: (UUID, Result<HabitDTO, HHError>).self) { group in
+            for id in ids {
+                group.addTask {
+                    do {
+                        let deleted = try await NetworkManager.shared.request(
                             endpoint: .deleteHabit(with: id),
                             method: .delete,
-                            responseType: HabitDTO.self)
+                            responseType: HabitDTO.self
+                        )
+                        return (id, .success(deleted))
+                    } catch {
+                        return (id, .failure(.networkError(error)))
                     }
                 }
-                var habits = [HabitDTO]()
-                for try await habit in group {
-                    habits.append(habit)
+            }
+
+            for await (id, result) in group {
+                switch result {
+                case .success(let dto):
+                    deletedHabits.append(dto)
+                case .failure(let error):
+                    failedIDs.append(id)
+                    print("❌ Failed to delete habit with ID \(id): \(error.localizedDescription)")
                 }
-                return habits
             }
+        }
+
+        if failedIDs.isEmpty {
             return .success(deletedHabits)
-        } catch {
-            print("🔁 Couldn't delete habits on the server. Failed to sync: \(error.localizedDescription)")
-            return .failure(.networkError(error))
+        } else {
+            print("⚠️ Some habits failed to delete: \(failedIDs)")
+            return .failure(.partialFailure(updated: deletedHabits, failedIDs: failedIDs))
         }
     }
+    
+    func performFullSync(localHabits: [Habit]) async {
+        let serverResult = await getHabitsFromServer()
+        guard case let .success(serverHabits) = serverResult else { return }
 
-    func retry(from context: ModelContext) async {
+        let serverIDs = Set(serverHabits.map { $0.id })
+        let localIDs = Set(localHabits.map { $0.id })
+
+        let toUpdate = localHabits.filter { serverIDs.contains($0.id) }
+        let toCreate = localHabits.filter { !serverIDs.contains($0.id) }
+        let toDelete = serverHabits.filter { !localIDs.contains($0.id) }.map { $0.id }
+
+        async let createResult = createHabitsOnTheServer(with: toCreate)
+        async let updateResult = updateHabitsOnTheServer(with: toUpdate)
+        async let deleteResult = deleteHabitsOnTheServer(with: toDelete)
         
-        let deleteHabitOperations = operations.filter { $0.action == .delete }
-        for op in deleteHabitOperations {
-            operations.removeAll { $0.habitID == op.habitID && $0.action != .delete }
-        }
-        
-        for op in operations {
-            do {
-                let habitStore = HabitStore(modelContainer: context.container)
-                let payload = try await habitStore.getPayload(for: op.habitID)
-                try await perform(op, with: payload)
-                remove(op)
-            } catch {
-                print("🔁 Retry failed for operation \(op.id): \(error)")
-            }
-        }
+        // Await all results at once
+        _ = await (createResult, updateResult, deleteResult)
     }
-
-    /// Step 2: Perform network sync separately
-    private func perform(_ op: SyncOperation, with payload: HabitPayload?) async throws {
-        switch op.action {
-        case .checkIn:
-            _ = try await NetworkManager.shared.requestStatusCode(
-                endpoint: .checkIntoHabit(with: op.habitID),
-                method: .post
-            )
-            print("✅ Synced: Check in for \(op.habitID)")
-
-        case .delete:
-            _ = try await NetworkManager.shared.requestStatusCode(
-                endpoint: .deleteHabit(with: op.habitID),
-                method: .delete
-            )
-            print("✅ Synced: Delete \(op.habitID)")
-
-        case .create:
-            guard let payload else { throw SyncError.payloadMissing }
-            _ = try await NetworkManager.shared.request(
-                endpoint: .createHabit(),
-                method: .post,
-                body: payload,
-                responseType: HabitDTO.self
-            )
-            print("✅ Synced: Create \(op.habitID)")
-
-        case .update:
-            guard let payload else { throw SyncError.payloadMissing }
-            _ = try await NetworkManager.shared.request(
-                endpoint: .updateHabit(with: op.habitID),
-                method: .put,
-                body: payload,
-                responseType: HabitDTO.self
-            )
-            print("✅ Synced: Update \(op.habitID)")
-        }
-    }
-}
-
-enum SyncError: Error {
-    case payloadMissing
 }
