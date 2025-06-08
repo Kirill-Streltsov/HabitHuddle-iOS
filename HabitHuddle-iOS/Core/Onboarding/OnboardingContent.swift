@@ -24,12 +24,11 @@ struct OnboardingContent: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
                 .padding(.horizontal)
+                .background(.red)
             
-            Spacer()
 
             page.customView
             
-            Spacer()
         }
         .padding(.top, 32)
     }

@@ -17,6 +17,70 @@ struct OnboardingView: View {
     }
     @Namespace private var animation
     
+    let userID = UUID()
+    let heatmapView = HeatmapView(habits: [Habit.demoHabitWithFullCheckIns()])
+    let statCard = HabitStatsCard(habit: Habit.demoHabitWithRecentCheckIns())
+    let challengeProgressCard = ChallengeProgressCardView(
+        challenge: ChallengeDTO(
+            id: UUID(),
+            habitName: "Morning runs together",
+            type: .supportive,
+            startDate: .now,
+            endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!,
+            status: .accepted,
+            initiator: .init(
+                user: .init(
+                    id: UUID(),
+                    username: "jen_the_motivated",
+                    name: "Jennifer",
+                    createdAt: .now,
+                    updatedAt: .now),
+                progress: 0.81,
+                checkInCount: 0,
+                plannedDays: 0),
+            receiver: .init(
+                user: .init(
+                    id: UUID(),
+                    username: "StreakSeekerMike",
+                    name: "Person",
+                    createdAt: .now,
+                    updatedAt: .now),
+                progress: 0.81,
+                checkInCount: 0,
+                plannedDays: 0))
+    )
+    let challengeCard = ChallengeCardView(
+        challenge: ChallengeDTO(
+            id: UUID(),
+            habitName: "No caffeine after noon",
+            type: .competitive,
+            startDate: .now,
+            endDate: Calendar.current.date(byAdding: .day, value: 14, to: Date())!,
+            status: .accepted,
+            initiator: .init(
+                user: .init(
+                    id: UUID(),
+                    username: "andrew",
+                    name: "Andrew",
+                    createdAt: .now,
+                    updatedAt: .now),
+                progress: 0.34,
+                checkInCount: 0,
+                plannedDays: 0),
+            receiver: .init(
+                user: .init(
+                    id: UUID(),
+                    username: "george",
+                    name: "You",
+                    createdAt: .now,
+                    updatedAt: .now),
+                progress: 0.57,
+                checkInCount: 0,
+                plannedDays: 0)),
+        onAccept: {},
+        onReject: {}
+    )
+    
     var pages: [OnboardingPageData] {
         [
             OnboardingPageData(
@@ -30,11 +94,20 @@ struct OnboardingView: View {
             ),
             OnboardingPageData(
                 symbol: "flame.fill",
-                title: "Track streaks & progress",
+                title: "Track your pogress",
                 text: "Keep an eye on your daily check-ins, current streak, and completion rate.",
                 customView: AnyView(
-                    HabitStatsCard(habit: Habit.demoHabitWithRecentCheckIns())
-                        .offset(y: 24)
+                    VStack {
+                        CardView {
+                            VStack(alignment: .center) {
+                                Text("Your activity in the last 2 months")
+                                    .font(.headline)
+                                heatmapView
+                            }
+                        }
+                        statCard
+                    }
+                        .scaleEffect(0.9)
                 )
             ),
             OnboardingPageData(
@@ -43,82 +116,17 @@ struct OnboardingView: View {
                 text: "Stay accountable by sending and accepting habit challenges.\nProgress together.",
                 customView: AnyView(
                     VStack {
-                        ChallengeProgressCardView(
-                            challenge: ChallengeDTO(
-                                id: UUID(),
-                                habitName: "Morning runs together",
-                                type: .supportive,
-                                startDate: .now,
-                                endDate: Calendar.current.date(byAdding: .day, value: 30, to: Date())!,
-                                status: .accepted,
-                                initiator: .init(
-                                    user: .init(
-                                        id: UUID(),
-                                        username: "jen_the_motivated",
-                                        name: "Jennifer",
-                                        createdAt: .now,
-                                        updatedAt: .now),
-                                    progress: 0.81,
-                                    checkInCount: 0,
-                                    plannedDays: 0),
-                                receiver: .init(
-                                    user: .init(
-                                        id: UUID(),
-                                        username: "StreakSeekerMike",
-                                        name: "Michael",
-                                        createdAt: .now,
-                                        updatedAt: .now),
-                                    progress: 0.81,
-                                    checkInCount: 0,
-                                    plannedDays: 0))
-                        )
-                        ChallengeCardView(
-                            challenge: ChallengeDTO(
-                                id: UUID(),
-                                habitName: "No caffeine after noon",
-                                type: .competitive,
-                                startDate: .now,
-                                endDate: Calendar.current.date(byAdding: .day, value: 14, to: Date())!,
-                                status: .accepted,
-                                initiator: .init(
-                                    user: .init(
-                                        id: UUID(),
-                                        username: "andrew",
-                                        name: "Andrew",
-                                        createdAt: .now,
-                                        updatedAt: .now),
-                                    progress: 0.34,
-                                    checkInCount: 0,
-                                    plannedDays: 0),
-                                receiver: .init(
-                                    user: .init(
-                                        id: UUID(),
-                                        username: "george",
-                                        name: "You",
-                                        createdAt: .now,
-                                        updatedAt: .now),
-                                    progress: 0.57,
-                                    checkInCount: 0,
-                                    plannedDays: 0)),
-                            onAccept: {},
-                            onReject: {}
-                        )
+                        challengeProgressCard
+                        challengeCard
                     }
                 )
             ),
             OnboardingPageData(
-                symbol: "figure.run",
-                title: "Ready to grow?",
-                text: "Let’s build habits that stick — and have fun doing it.",
+                symbol: "sparkles",
+                title: "Let’s Start Small",
+                text: "Pick Your First Habits",
                 customView: AnyView(
-                    CardView {
-                        VStack(alignment: .center) {
-                            Text("Your activity in the last 2 months")
-                                .font(.headline)
-                            HeatmapView(habits: [Habit.demoHabitWithFullCheckIns()])
-                        }
-                    }
-                        .offset(y: 30)
+                    OnboardingHabitList(userID: userID)
                 )
             ),
             OnboardingPageData(
@@ -154,7 +162,8 @@ struct OnboardingView: View {
                     }
                 }
                 .tabViewStyle(.page)
-                .indexViewStyle(.page(backgroundDisplayMode: .interactive))
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
                 
                 Spacer()
                 
@@ -182,7 +191,7 @@ struct OnboardingView: View {
                                 pageIndex += 1
                             } else if !enteredName.isEmpty {
                                 userManager.profile = LocalUser(
-                                    id: UUID(),
+                                    id: userID,
                                     username: enteredName.lowercased(),
                                     name: enteredName,
                                     isSignedInToServer: false

@@ -142,19 +142,21 @@ struct HeatmapView: View {
         .frame(maxWidth: .infinity)
         .padding()
         .onAppear {
-            if habits.count == 1 {
-                for checkIn in habits[0].checkIns {
-                    let day = calendar.startOfDay(for: checkIn.date)
-                    checkInData[day] = 1
-                }
-            } else {
-                for habit in habits {
-                    for checkIn in habit.checkIns {
+            Task(priority: .background) {
+                if habits.count == 1 {
+                    for checkIn in habits[0].checkIns {
                         let day = calendar.startOfDay(for: checkIn.date)
-                        if let checkInDataOnDay = checkInData[day] {
-                            checkInData[day] = checkInDataOnDay + 1
-                        } else {
-                            checkInData[day] = 1
+                        checkInData[day] = 1
+                    }
+                } else {
+                    for habit in habits {
+                        for checkIn in habit.checkIns {
+                            let day = calendar.startOfDay(for: checkIn.date)
+                            if let checkInDataOnDay = checkInData[day] {
+                                checkInData[day] = checkInDataOnDay + 1
+                            } else {
+                                checkInData[day] = 1
+                            }
                         }
                     }
                 }
