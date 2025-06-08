@@ -12,9 +12,9 @@ import Foundation
 
 struct Helpers {
     static func handleResult<T>(
-        _ result: Result<T, APIError>,
+        _ result: Result<T, HHError>,
         onSuccess: (T) -> Void,
-        onFailure: ((APIError) -> Void)? = nil
+        onFailure: ((HHError) -> Void)? = nil
     ) {
         switch result {
         case let .success(value):

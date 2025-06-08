@@ -21,7 +21,7 @@ extension RegistrationView {
             self.userManager = userManager
         }
 
-        func registerUser(username: String, name: String, password: String, context: ModelContext) async throws -> Result<UserDTO, APIError> {
+        func registerUser(username: String, name: String, password: String, context: ModelContext) async throws -> Result<UserDTO, HHError> {
             let payload = RegisterPayload(id: userManager.profile.id, username: username, name: name, password: password)
 
             do {
@@ -51,7 +51,7 @@ extension RegistrationView {
                 appState.isAuthenticated = true
                 return .success(user)
             } catch {
-                if let apiError = error as? APIError {
+                if let apiError = error as? HHError {
                     errorMessage = apiError.localizedDescription
                 } else {
                     errorMessage = "Something went wrong. Please try again."
@@ -59,7 +59,7 @@ extension RegistrationView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     self.errorMessage = ""
                 }
-                return .failure(APIError.networkError(error))
+                return .failure(HHError.networkError(error))
             }
         }
     }

@@ -31,17 +31,17 @@ actor NetworkManager {
     ) async throws -> T {
         
         guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
-            throw APIError.invalidURL
+            throw HHError.invalidURL
         }
         
         components.queryItems = endpoint.queryItems
         guard let finalURL = components.url else {
-            throw APIError.invalidURL
+            throw HHError.invalidURL
         }
         var urlRequest = URLRequest(url: finalURL)
         
         if !isLoggingIn {
-            guard let token = TokenManager.token else { throw APIError.unauthorized }
+            guard let token = TokenManager.token else { throw HHError.unauthorized }
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
@@ -56,7 +56,7 @@ actor NetworkManager {
 
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         guard let response = response as? HTTPURLResponse else {
-            throw APIError.unknown
+            throw HHError.unknown
         }
         return try handleResponse(data: data, response: response, responseType: T.self)
     }
@@ -70,17 +70,17 @@ actor NetworkManager {
     ) async throws -> T {
         
         guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
-            throw APIError.invalidURL
+            throw HHError.invalidURL
         }
         components.queryItems = endpoint.queryItems
         guard let finalURL = components.url else {
-            throw APIError.invalidURL
+            throw HHError.invalidURL
         }
         
         var urlRequest = URLRequest(url: finalURL)
         
         if !isLoggingIn {
-            guard let token = TokenManager.token else { throw APIError.unauthorized }
+            guard let token = TokenManager.token else { throw HHError.unauthorized }
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
@@ -91,7 +91,7 @@ actor NetworkManager {
 
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         guard let response = response as? HTTPURLResponse else {
-            throw APIError.unknown
+            throw HHError.unknown
         }
         return try handleResponse(data: data, response: response, responseType: T.self)
     }
@@ -106,7 +106,7 @@ actor NetworkManager {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
         
         if !isLoggingIn {
-            guard let token = TokenManager.token else { throw APIError.unauthorized }
+            guard let token = TokenManager.token else { throw HHError.unauthorized }
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
@@ -119,7 +119,7 @@ actor NetworkManager {
         let (_, response) = try await URLSession.shared.data(for: urlRequest)
 
         guard let httpResponse = response as? HTTPURLResponse else {
-            throw APIError.unknown
+            throw HHError.unknown
         }
 
         return HTTPStatus(statusCode: httpResponse.statusCode)
@@ -136,7 +136,7 @@ actor NetworkManager {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
         
         if !isLoggingIn {
-            guard let token = TokenManager.token else { throw APIError.unauthorized }
+            guard let token = TokenManager.token else { throw HHError.unauthorized }
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
@@ -151,7 +151,7 @@ actor NetworkManager {
         let (_, response) = try await URLSession.shared.data(for: urlRequest)
 
         guard let httpResponse = response as? HTTPURLResponse else {
-            throw APIError.unknown
+            throw HHError.unknown
         }
 
         return HTTPStatus(statusCode: httpResponse.statusCode)
@@ -165,18 +165,18 @@ actor NetworkManager {
                 let decodedData = try jsonDecoder.decode(T.self, from: data)
                 return decodedData
             } catch {
-                throw APIError.decodingError(error)
+                throw HHError.decodingError(error)
             }
         case 401:
-            throw APIError.unauthorized
+            throw HHError.unauthorized
         case 404:
-            throw APIError.notFound
+            throw HHError.notFound
         case 409:
-            throw APIError.conflict
+            throw HHError.conflict
         case 500 ..< 600:
-            throw APIError.serverError
+            throw HHError.serverError
         default:
-            throw APIError.requestFailed(statusCode: response.statusCode, data: data)
+            throw HHError.requestFailed(statusCode: response.statusCode, data: data)
         }
     }
 }

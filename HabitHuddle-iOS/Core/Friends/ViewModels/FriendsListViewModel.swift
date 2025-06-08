@@ -66,7 +66,7 @@ extension FriendsListView {
             }
         }
         
-        func requestFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
+        func requestFriend(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
                 let payload = MakeFriendsRequest(friendID: id)
                 let requestFriendResponse = try await NetworkManager.shared.requestStatusCode(
@@ -79,7 +79,7 @@ extension FriendsListView {
             }
         }
         
-        func acceptFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
+        func acceptFriend(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
                 let acceptFriendResponse = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .acceptFriend(with: id),
@@ -90,7 +90,7 @@ extension FriendsListView {
             }
         }
         
-        func rejectFriend(with id: UUID) async -> Result<HTTPStatus, APIError> {
+        func rejectFriend(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
                 let rejectFriendResponse = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .rejectFriend(with: id),

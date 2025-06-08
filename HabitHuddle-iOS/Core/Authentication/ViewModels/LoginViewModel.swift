@@ -44,7 +44,7 @@ extension LoginView {
                 return loginResponse.user
 
             } catch {
-                if let apiError = error as? APIError {
+                if let apiError = error as? HHError {
                     errorMessage = apiError.localizedDescription
                 } else {
                     errorMessage = "Something went wrong. Please try again."
@@ -90,7 +90,7 @@ extension LoginView {
             }
         }
 
-        func getUserHabits() async -> Result<[HabitDTO], APIError> {
+        func getUserHabits() async -> Result<[HabitDTO], HHError> {
             do {
                 let habits = try await NetworkManager.shared.request(
                     endpoint: .getMyHabits(),
@@ -98,7 +98,7 @@ extension LoginView {
                     responseType: [HabitDTO].self
                 )
                 return .success(habits)
-            } catch let error as APIError {
+            } catch let error as HHError {
                 return .failure(error)
             } catch {
                 return .failure(.unknown)

@@ -63,7 +63,7 @@ final class SyncManager: ObservableObject {
         save()
     }
     
-    func getHabitsFromServer() async -> Result<[HabitDTO], APIError> {
+    func getHabitsFromServer() async -> Result<[HabitDTO], HHError> {
         do {
             let fetchedHabits = try await NetworkManager.shared.request(
                 endpoint: .getMyHabits(),
@@ -76,7 +76,7 @@ final class SyncManager: ObservableObject {
         }
     }
     
-    func updateHabitsOnTheServer(with habits: [Habit]) async -> Result<[HabitDTO], APIError> {
+    func updateHabitsOnTheServer(with habits: [Habit]) async -> Result<[HabitDTO], HHError> {
         do {
             guard !habits.isEmpty else { return .success([]) }
             let fetchedHabits = try await withThrowingTaskGroup(of: HabitDTO.self) { group in
@@ -109,6 +109,10 @@ final class SyncManager: ObservableObject {
             print("🔁 Couldn't update habits on the server. Failed to sync: \(error.localizedDescription)")
             return .failure(.networkError(error))
         }
+    }
+    
+    func deleteHabitsOnTheServer(with ids: [UUID]) async -> Result<[HabitDTO], HHError> {
+        return .success([])
     }
 
     func retry(from context: ModelContext) async {

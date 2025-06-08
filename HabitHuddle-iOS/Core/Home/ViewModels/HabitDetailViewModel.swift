@@ -19,7 +19,7 @@ extension HabitDetailView {
         @Published var reminderTime: Date = .init()
         var habit: Habit?
 
-        func createHabit(with id: UUID) async -> Result<HabitDTO, APIError> {
+        func createHabit(with id: UUID) async -> Result<HabitDTO, HHError> {
             do {
                 let reminder: Date? = hasReminder ? reminderTime : nil
 
@@ -39,14 +39,14 @@ extension HabitDetailView {
                     responseType: HabitDTO.self
                 )
                 return .success(habitResponse)
-            } catch let error as APIError {
+            } catch let error as HHError {
                 return .failure(error)
             } catch {
                 return .failure(.unknown)
             }
         }
 
-        func updateHabit(with id: UUID) async -> Result<HabitDTO, APIError> {
+        func updateHabit(with id: UUID) async -> Result<HabitDTO, HHError> {
             do {
                 guard let habit = habit else { return .failure(.notFound) }
                 let reminder: Date? = hasReminder ? reminderTime : nil
@@ -67,28 +67,28 @@ extension HabitDetailView {
                     responseType: HabitDTO.self
                 )
                 return .success(habitResponse)
-            } catch let error as APIError {
+            } catch let error as HHError {
                 return .failure(error)
             } catch {
                 return .failure(.unknown)
             }
         }
 
-        func checkIntoHabit(with id: UUID) async -> Result<HTTPStatus, APIError> {
+        func checkIntoHabit(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
                 let checkInResponse = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .checkIntoHabit(with: id),
                     method: .post
                 )
                 return .success(checkInResponse)
-            } catch let error as APIError {
+            } catch let error as HHError {
                 return .failure(error)
             } catch {
                 return .failure(.unknown)
             }
         }
 
-        func deleteHabit(with id: UUID) async -> Result<HabitDTO, APIError> {
+        func deleteHabit(with id: UUID) async -> Result<HabitDTO, HHError> {
             do {
                 let deletedHabitResponse = try await NetworkManager.shared.request(
                     endpoint: .deleteHabit(with: id),
@@ -96,7 +96,7 @@ extension HabitDetailView {
                     responseType: HabitDTO.self
                 )
                 return .success(deletedHabitResponse)
-            } catch let error as APIError {
+            } catch let error as HHError {
                 return .failure(error)
             } catch {
                 return .failure(.unknown)
