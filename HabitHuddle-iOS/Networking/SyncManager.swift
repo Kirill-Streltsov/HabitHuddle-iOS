@@ -112,7 +112,28 @@ final class SyncManager: ObservableObject {
     }
     
     func deleteHabitsOnTheServer(with ids: [UUID]) async -> Result<[HabitDTO], HHError> {
-        return .success([])
+        do {
+            guard !ids.isEmpty else { return .success([]) }
+            let deletedHabits = try await withThrowingTaskGroup(of: HabitDTO.self) { group in
+                for id in ids {
+                    group.addTask {
+                        return try await NetworkManager.shared.request(
+                            endpoint: .deleteHabit(with: id),
+                            method: .delete,
+                            responseType: HabitDTO.self)
+                    }
+                }
+                var habits = [HabitDTO]()
+                for try await habit in group {
+                    habits.append(habit)
+                }
+                return habits
+            }
+            return .success(deletedHabits)
+        } catch {
+            print("🔁 Couldn't delete habits on the server. Failed to sync: \(error.localizedDescription)")
+            return .failure(.networkError(error))
+        }
     }
 
     func retry(from context: ModelContext) async {
