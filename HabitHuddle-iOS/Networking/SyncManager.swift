@@ -62,6 +62,52 @@ final class SyncManager: ObservableObject {
         operations.removeAll()
         save()
     }
+    
+    func getHabitsFromServer() async -> Result<[HabitDTO], APIError> {
+        do {
+            let fetchedHabits = try await NetworkManager.shared.request(
+                endpoint: .getMyHabits(),
+                method: .get,
+                responseType: [HabitDTO].self)
+            return .success(fetchedHabits)
+        } catch {
+            print("🔁 Couldn't fetch habits from the server. Failed to sync: \(error.localizedDescription)")
+            return .failure(.networkError(error))
+        }
+    }
+    
+    func updateHabitsOnTheServer(with habits: [Habit]) async -> Result<[HabitDTO], APIError> {
+        do {
+            let fethchedHabits = try await withThrowingTaskGroup(of: HabitDTO.self) { group in
+                for habit in habits {
+                    let payload = HabitPayload(
+                        id: habit.id,
+                        name: habit.name,
+                        description: habit.habitDescription,
+                        duration: habit.duration.rawValue,
+                        reminderTime: habit.reminderTime,
+                        checkIns: habit.checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) }
+                    )
+                    group.addTask {
+                        return try await NetworkManager.shared.request(
+                            endpoint: .updateHabit(with: habit.id),
+                            method: .put,
+                            body: payload,
+                            responseType: HabitDTO.self)
+                    }
+                }
+                var habits = [HabitDTO]()
+                for try await habit in group {
+                    habits.append(habit)
+                }
+                return habits
+            }
+            return .success(fethchedHabits)
+        } catch {
+            print("🔁 Couldn't update habits on the server. Failed to sync: \(error.localizedDescription)")
+            return .failure(.networkError(error))
+        }
+    }
 
     func retry(from context: ModelContext) async {
         
