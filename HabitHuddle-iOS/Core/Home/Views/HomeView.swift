@@ -34,7 +34,9 @@ struct HomeView: View {
                     Button {
                         showNewHabitView = true
                     } label: {
-                        Text("Add a habit")
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundStyle(.blue)
+                        
                     }
                 }
             }
