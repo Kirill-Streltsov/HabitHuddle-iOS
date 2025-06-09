@@ -12,6 +12,9 @@ struct ChallengesListView: View {
     
     @StateObject private var viewModel = ViewModel()
     
+    @Query
+    var challenges: [Challenge]
+    
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var userManager: LocalUserManager
@@ -28,17 +31,7 @@ struct ChallengesListView: View {
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             ForEach(viewModel.challenges.filter { $0.status == .pending }) { challenge in
-                                ChallengeCardView(challenge: challenge) {
-                                    
-                                    let acceptedResult = await viewModel.acceptChallenge(with: challenge.id)
-                                    Helpers.handleResult(acceptedResult) { result in
-                                        
-                                    } onFailure: { _ in
-                                        
-                                    }
-                                } onReject: {
-                                    await viewModel.rejectChallenge(with: challenge.id)
-                                }
+                                challengeCard(with: challenge)
                             }
                         }
                     }
@@ -58,28 +51,44 @@ struct ChallengesListView: View {
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             ForEach(viewModel.challenges.filter { $0.status == .declined }) { challenge in
-                                ChallengeCardView(challenge: challenge) {
-                                    let acceptedResult = await viewModel.acceptChallenge(with: challenge.id)
-                                    Helpers.handleResult(acceptedResult) { status in
-                                        if status == .ok {
-                                            saveChallengeLocally(from: challenge)
-                                        }
-                                    } onFailure: { _ in
-                                        
-                                    }
-                                } onReject: {
-                                    let rejectedResult = await viewModel.rejectChallenge(with: challenge.id)
-                                }
+                                challengeCard(with: challenge)
                             }
                         }
                     }
                 }
             }
-
             .task {
                 await viewModel.getChallenges(for: userManager.profile.id)
             }
             .navigationTitle("Challenges")
+            .onAppear {
+                for challenge in challenges {
+                    print("CHALLENGE FOR HABIT: \(challenge.habit.name)")
+                    print("CHALLENGE: \(challenge)")
+                }
+            }
+        }
+    }
+    
+    private func challengeCard(with challenge: ChallengeDTO) -> some View {
+        ChallengeCardView(challenge: challenge) {
+            let acceptedResult = await viewModel.acceptChallenge(with: challenge.id)
+            Helpers.handleResult(acceptedResult) { status in
+                if status == .ok {
+                    saveChallengeLocally(from: challenge)
+                } else {
+                    print("STATUS IS NOT OK")
+                }
+            } onFailure: { error in
+                print("Failed to accept the challenge: \(error.localizedDescription)")
+            }
+        } onReject: {
+            let rejectedResult = await viewModel.rejectChallenge(with: challenge.id)
+            Helpers.handleResult(rejectedResult) { status in
+                print("Successfully rejected the challenge with id: \(challenge.id)")
+            } onFailure: { error in
+                print("Failed to reject the challenge: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -117,7 +126,11 @@ struct ChallengesListView: View {
                 endDate: challenge.endDate,
                 createdAt: .now)
             context.insert(challengeToSave)
-            try? context.save()
+            do {
+                try context.save()
+            } catch {
+                print("ERROR: Couldn't save the Challenge to SwiftData: \(challenge.id)")
+            }
         } catch {
             print("ERROR: Couldn't save the habit to SwiftData with habitID: \(challenge.habitID)")
         }
