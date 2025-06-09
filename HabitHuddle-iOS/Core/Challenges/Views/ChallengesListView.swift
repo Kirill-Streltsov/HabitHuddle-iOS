@@ -92,49 +92,28 @@ struct ChallengesListView: View {
         }
     }
     
-    //TODO: Also fetch the habit with the challenge
     private func saveChallengeLocally(from challenge: ChallengeDTO) {
-//        do {
-//            let descriptorHabit = FetchDescriptor<Habit>(predicate: #Predicate { $0.id == challenge.habitID })
-//            let habits = try context.fetch(descriptorHabit)
-//            guard let habit = habits.first else {
-//                print("ERROR: Couldn't load the habit from SwiftData with habitID: \(challenge.habitID)")
-//                return
-//            }
-//            
-//            let descriptorInitiator = FetchDescriptor<User>(predicate: #Predicate { $0.id == challenge.initiator.user.id })
-//            let initiators = try context.fetch(descriptorInitiator)
-//            guard let initiator = initiators.first else {
-//                print("ERROR: Couldn't load the habit from SwiftData with habitID: \(challenge.habitID)")
-//                return
-//            }
-//            
-//            let descriptorReceiver = FetchDescriptor<User>(predicate: #Predicate { $0.id == challenge.receiver.user.id })
-//            let receivers = try context.fetch(descriptorReceiver)
-//            guard let receiver = receivers.first else {
-//                print("ERROR: Couldn't load the habit from SwiftData with habitID: \(challenge.habitID)")
-//                return
-//            }
-//            
-//            let challengeToSave = Challenge(
-//                id: challenge.id,
-//                initiator: initiator,
-//                receiver: receiver,
-//                habit: habit,
-//                type: challenge.type,
-//                status: challenge.status,
-//                startDate: challenge.startDate,
-//                endDate: challenge.endDate,
-//                createdAt: .now)
-//            context.insert(challengeToSave)
-//            do {
-//                try context.save()
-//            } catch {
-//                print("ERROR: Couldn't save the Challenge to SwiftData: \(challenge.id)")
-//            }
-//        } catch {
-//            print("ERROR: Couldn't save the habit to SwiftData with habitID: \(challenge.habitID)")
-//        }
+        Task {
+            let habitID = challenge.initiatorHabitID
+
+            let result = await viewModel.getHabitFromChallenge(with: habitID)
+
+            Helpers.handleResult(result) { habitDTO in
+                var habit = habitDTO.toSwiftData()
+
+                habit.id = UUID()
+                context.insert(habit)
+
+                do {
+                    try context.save()
+                    print("✅ Habit created from challenge successfully.")
+                } catch {
+                    print("❌ Failed to save habit: \(error)")
+                }
+            } onFailure: { error in
+                print("Something went wrong fetching habit: \(error)")
+            }
+        }
     }
 }
 

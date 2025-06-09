@@ -69,5 +69,18 @@ extension ChallengesListView {
                 return .failure(.networkError(error))
             }
         }
+        
+        func getHabitFromChallenge(with habitID: UUID) async -> Result<HabitDTO, HHError> {
+            do {
+                let habit = try await NetworkManager.shared.request(
+                    endpoint: .getHabit(with: habitID),
+                    method: .get,
+                    responseType: HabitDTO.self)
+                return .success(habit)
+            } catch {
+                print("COULDN'T GET HABIT WITH ID: \(habitID)")
+                return .failure(.networkError(error))
+            }
+        }
     }
 }
