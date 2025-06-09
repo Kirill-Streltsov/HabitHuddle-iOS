@@ -39,10 +39,8 @@ extension HabitDetailView {
                     responseType: HabitDTO.self
                 )
                 return .success(habitResponse)
-            } catch let error as HHError {
-                return .failure(error)
             } catch {
-                return .failure(.unknown)
+                return .failure(.networkError(error))
             }
         }
 
@@ -67,10 +65,8 @@ extension HabitDetailView {
                     responseType: HabitDTO.self
                 )
                 return .success(habitResponse)
-            } catch let error as HHError {
-                return .failure(error)
             } catch {
-                return .failure(.unknown)
+                return .failure(.networkError(error))
             }
         }
 
@@ -81,10 +77,8 @@ extension HabitDetailView {
                     method: .post
                 )
                 return .success(checkInResponse)
-            } catch let error as HHError {
-                return .failure(error)
             } catch {
-                return .failure(.unknown)
+                return .failure(.networkError(error))
             }
         }
 
@@ -96,10 +90,8 @@ extension HabitDetailView {
                     responseType: HabitDTO.self
                 )
                 return .success(deletedHabitResponse)
-            } catch let error as HHError {
-                return .failure(error)
             } catch {
-                return .failure(.unknown)
+                return .failure(.networkError(error))
             }
         }        
     }

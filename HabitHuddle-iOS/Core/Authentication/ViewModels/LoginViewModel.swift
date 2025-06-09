@@ -98,10 +98,8 @@ extension LoginView {
                     responseType: [HabitDTO].self
                 )
                 return .success(habits)
-            } catch let error as HHError {
-                return .failure(error)
             } catch {
-                return .failure(.unknown)
+                return .failure(.networkError(error))
             }
         }
     }
