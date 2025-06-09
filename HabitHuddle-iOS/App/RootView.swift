@@ -9,8 +9,12 @@ import SwiftUI
 import SwiftData
 
 struct RootView: View {
+    
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding = false
     @AppStorage("selectedTab") var selectedTab = 0
+    
+    @Environment(\.scenePhase) private var scenePhase
+    
     @Query
     var habits: [Habit]
     
@@ -43,6 +47,13 @@ struct RootView: View {
             } else {
                 OnboardingView()
                     .transition(.opacity)
+            }
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                Task {
+                    await SyncManager.shared.performFullSync(localHabits: habits)
+                }
             }
         }
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)

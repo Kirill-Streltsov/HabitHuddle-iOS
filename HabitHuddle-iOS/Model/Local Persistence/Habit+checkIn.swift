@@ -45,7 +45,6 @@ extension Habit {
                 )
                 print("✅ Checked into habit from the HomeView: \(self.name)")
             } catch {
-                //SyncManager.shared.add(SyncOperation(habitID: id, action: .update))
                 print("❌ Could not check into habit from the HomeView: \(self.name)")
             }
         }
