@@ -14,6 +14,7 @@ struct RootView: View {
     @AppStorage("selectedTab") var selectedTab = 0
     
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.modelContext) private var context
     
     @Query
     var habits: [Habit]
@@ -39,11 +40,6 @@ struct RootView: View {
                     }
                 }
                 .transition(.opacity)
-                .onAppear {
-                    Task {
-                        await SyncManager.shared.performFullSync(localHabits: habits)
-                    }
-                }
             } else {
                 OnboardingView()
                     .transition(.opacity)
@@ -52,7 +48,7 @@ struct RootView: View {
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {
                 Task {
-                    await SyncManager.shared.performFullSync(localHabits: habits)
+                    await SyncManager.shared.performFullSync(localHabits: habits, in: context)
                 }
             }
         }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 final class SyncManager: ObservableObject {
     static let shared = SyncManager()
@@ -152,9 +153,15 @@ final class SyncManager: ObservableObject {
         }
     }
     
-    func performFullSync(localHabits: [Habit]) async {
+    func performFullSync(localHabits: [Habit], in modelContext: ModelContext) async {
         let serverResult = await getHabitsFromServer()
         guard case let .success(serverHabits) = serverResult else { return }
+        
+        if localHabits.isEmpty && !serverHabits.isEmpty {
+            Task {
+                await saveHabits(serverHabits, in: modelContext)
+            }
+        }
 
         let serverIDs = Set(serverHabits.map { $0.id })
         let localIDs = Set(localHabits.map { $0.id })
@@ -169,5 +176,14 @@ final class SyncManager: ObservableObject {
         
         // Await all results at once
         _ = await (createResult, updateResult, deleteResult)
+    }
+    
+    @MainActor
+    func saveHabits(_ habits: [HabitDTO], in context: ModelContext) {
+        for habit in habits {
+            let habitToSave = habit.toSwiftData()
+            context.insert(habitToSave)
+        }
+        try? context.save()
     }
 }
