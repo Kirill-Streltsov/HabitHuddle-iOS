@@ -26,7 +26,13 @@ struct ChallengesListView: View {
                                 .fontWeight(.semibold)
                             ForEach(viewModel.challenges.filter { $0.status == .pending }) { challenge in
                                 ChallengeCardView(challenge: challenge) {
-                                    await viewModel.acceptChallenge(with: challenge.id)
+                                    
+                                    let acceptedResult = await viewModel.acceptChallenge(with: challenge.id)
+                                    Helpers.handleResult(acceptedResult) { result in
+                                        if result == .ok {
+                                            
+                                        }
+                                    }
                                 } onReject: {
                                     await viewModel.rejectChallenge(with: challenge.id)
                                 }
@@ -50,9 +56,9 @@ struct ChallengesListView: View {
                                 .fontWeight(.semibold)
                             ForEach(viewModel.challenges.filter { $0.status == .declined }) { challenge in
                                 ChallengeCardView(challenge: challenge) {
-                                    await viewModel.acceptChallenge(with: challenge.id)
+                                    let acceptedResult = await viewModel.acceptChallenge(with: challenge.id)
                                 } onReject: {
-                                    await viewModel.rejectChallenge(with: challenge.id)
+                                    let rejectedResult = await viewModel.rejectChallenge(with: challenge.id)
                                 }
                             }
                         }

@@ -79,12 +79,15 @@ extension FriendsListView {
             }
         }
         
-        func acceptFriend(with id: UUID) async -> Result<HTTPStatus, HHError> {
+        func acceptFriend(with id: UUID) async -> Result<UserDTO, HHError> {
+            
+            //TODO: Add the same logic for the other side
             do {
-                let acceptFriendResponse = try await NetworkManager.shared.requestStatusCode(
+                let acceptedFriend = try await NetworkManager.shared.request(
                     endpoint: .acceptFriend(with: id),
-                    method: .post)
-                return .success(acceptFriendResponse)
+                    method: .post,
+                    responseType: UserDTO.self)
+                return .success(acceptedFriend)
             } catch {
                 return .failure(.decodingError(error))
             }

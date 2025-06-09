@@ -70,7 +70,14 @@ struct FriendsListView: View {
                 ) {
                     ForEach(viewModel.friendRequests) { request in
                         FriendRequestCardView(user: request) {
-                            Task { await viewModel.acceptFriend(with: request.id) }
+                            Task {
+                                let result = await viewModel.acceptFriend(with: request.id)
+                                Helpers.handleResult(result) { friend in
+                                    let user = User(id: friend.id, username: friend.username, name: friend.name, createdAt: friend.createdAt, updatedAt: friend.updatedAt, habits: [])
+                                } onFailure: {
+                                    print("Couldn't accept friend")
+                                }
+                            }
                         } onIgnore: {
                             Task { await viewModel.rejectFriend(with: request.id) }
                         }

@@ -44,25 +44,29 @@ extension ChallengesListView {
             }
         }
         
-        func acceptChallenge(with id: UUID) async {
+        func acceptChallenge(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
                 let response = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .acceptChallenge(id: id),
                     method: .post)
-                print("RESPONSE FOR ACCEPT CHALLENGE: \(response)")
+                print("Accepted the challenge with id: \(id)")
+                return .success(response)
             } catch {
-                print("COULDN'T ACCEPT CHALLENGE")
+                print("Couldn't accept the challenge with id: \(id)")
+                return .failure(.networkError(error))
             }
         }
         
-        func rejectChallenge(with id: UUID) async {
+        func rejectChallenge(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
                 let response = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .rejectChallenge(id: id),
                     method: .post)
-                print("RESPONSE FOR REJECT CHALLENGE: \(response)")
+                print("Rejected the challenge with id: \(id)")
+                return .success(response)
             } catch {
-                print("COULDN'T ACCEPT CHALLENGE")
+                print("Couldn't reject the challenge with id: \(id)")
+                return .failure(.networkError(error))
             }
         }
     }
