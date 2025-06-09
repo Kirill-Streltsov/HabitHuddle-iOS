@@ -20,6 +20,8 @@ final class Habit: Identifiable, Hashable {
     var updatedAt: Date
     @Relationship(deleteRule: .cascade, inverse: \HabitCheckIn.habit)
     var checkIns: [HabitCheckIn] = []
+    @Relationship(deleteRule: .cascade, inverse: \Challenge.habit)
+    var challenges: [Challenge] = []
 
     init(
         id: UUID,

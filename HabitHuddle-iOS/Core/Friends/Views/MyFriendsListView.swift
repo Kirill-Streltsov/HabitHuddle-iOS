@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MyFriendsListView: View {
     
     @EnvironmentObject private var viewModel: ViewModel
+    @Environment(\.modelContext) private var context
     let isInFriendsTab: Bool
     var habit: Habit?
     
@@ -39,13 +41,31 @@ struct MyFriendsListView: View {
                         }
                     }
                 }
-                
+                .onAppear {
+                    for friend in viewModel.friends {
+                        let user = friend.toSwiftData()
+                        do {
+                            try saveUserIfNeeded(user)
+                        } catch {
+                            print("Failed to save user \(user.id): \(error)")
+                        }
+                    }
+                }
             } else {
                 EmptyFriendsView()
             }
         }
         .task {
             await viewModel.getMyFriends()
+        }
+    }
+    
+    private func saveUserIfNeeded(_ user: User) throws {
+        let userID = user.id
+        let descriptor = FetchDescriptor<User>(predicate: #Predicate { $0.id == userID })
+        let existing = try context.fetch(descriptor)
+        if existing.isEmpty {
+            context.insert(user)
         }
     }
 }

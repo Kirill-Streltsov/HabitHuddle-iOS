@@ -9,6 +9,7 @@ import Foundation
 
 struct ChallengeDTO: Identifiable, Codable {
     let id: UUID
+    let habitID: UUID
     let habitName: String
     let type: ChallengeType
     let startDate: Date

@@ -95,6 +95,7 @@ struct ChallengeCardView: View {
     ChallengeCardView(
         challenge: ChallengeDTO(
             id: UUID(),
+            habitID: UUID(),
             habitName: "",
             type: .competitive,
             startDate: .now,

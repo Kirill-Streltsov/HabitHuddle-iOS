@@ -21,7 +21,6 @@ extension MyFriendsListView {
                     method: .get,
                     responseType: [UserDTO].self)
                 friends = fetchedFriends
-                print("FOUND FRIENDS: \(friends)")
             } catch {
                 print("COULDN'T FETCH FRIENDS")
             }

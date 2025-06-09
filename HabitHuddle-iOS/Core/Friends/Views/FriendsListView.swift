@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FriendsListView: View {
     
+    @Environment(\.modelContext) private var context
     @StateObject private var viewModel = ViewModel()
     @State private var searchText = ""
     @State private var requestIsSent = false
@@ -74,7 +75,9 @@ struct FriendsListView: View {
                                 let result = await viewModel.acceptFriend(with: request.id)
                                 Helpers.handleResult(result) { friend in
                                     let user = User(id: friend.id, username: friend.username, name: friend.name, createdAt: friend.createdAt, updatedAt: friend.updatedAt, habits: [])
-                                } onFailure: {
+                                    context.insert(user)
+                                    try? context.save()
+                                } onFailure: { _ in
                                     print("Couldn't accept friend")
                                 }
                             }

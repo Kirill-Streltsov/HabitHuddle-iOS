@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 struct UserDTO: Identifiable, Codable, Equatable {
     let id: UUID
     let username: String

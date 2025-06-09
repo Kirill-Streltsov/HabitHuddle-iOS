@@ -19,6 +19,9 @@ struct RootView: View {
     @Query
     var habits: [Habit]
     
+    @Query
+    var users: [User]
+    
     var body: some View {
         ZStack {
             if hasSeenOnboarding {
@@ -45,13 +48,18 @@ struct RootView: View {
                     .transition(.opacity)
             }
         }
-        .onChange(of: scenePhase) { _, newPhase in
-            if newPhase == .active {
-                Task {
-                    await SyncManager.shared.performFullSync(localHabits: habits, in: context)
-                }
+        .onAppear {
+            for user in users {
+                print("USER NAME: \(user.name)")
             }
         }
+//        .onChange(of: scenePhase) { _, newPhase in
+//            if newPhase == .active {
+//                Task {
+//                    await SyncManager.shared.performFullSync(localHabits: habits, in: context)
+//                }
+//            }
+//        }
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {
             print("TOKEN: \(TokenManager.token)")
