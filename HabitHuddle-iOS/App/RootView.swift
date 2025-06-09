@@ -11,7 +11,8 @@ import SwiftData
 struct RootView: View {
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding = false
     @AppStorage("selectedTab") var selectedTab = 0
-    @Environment(\.modelContext) private var context
+    @Query
+    var habits: [Habit]
     
     var body: some View {
         ZStack {
@@ -34,6 +35,11 @@ struct RootView: View {
                     }
                 }
                 .transition(.opacity)
+                .onAppear {
+                    Task {
+                        await SyncManager.shared.performFullSync(localHabits: habits)
+                    }
+                }
             } else {
                 OnboardingView()
                     .transition(.opacity)
@@ -42,9 +48,6 @@ struct RootView: View {
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {
             print("TOKEN: \(TokenManager.token)")
-//            Task {
-//                await SyncManager.shared.retry(from: context)
-//            }
         }
     }
 }

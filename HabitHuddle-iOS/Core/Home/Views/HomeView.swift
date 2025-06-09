@@ -26,7 +26,6 @@ struct HomeView: View {
                 if habits.isEmpty {
                     EmptyHabitsView(onAddHabit: { showNewHabitView = true })
                 } else {
-                    // Today's habits section
                     HabitsGridView(habits: habits)
                 }
             }
@@ -38,15 +37,6 @@ struct HomeView: View {
                         Text("Add a habit")
                     }
                 }
-            }
-            .onAppear {
-                Task {
-                    //await SyncManager.shared.retry(from: context)
-                }
-                //                    let newHabits = Habit.createTestHabitsWithCheckIns()
-                //                    for newHabit in newHabits {
-                //                        context.insert(newHabit)
-                //                    }
             }
             .navigationDestination(isPresented: $showNewHabitView) {
                 HabitDetailView()
