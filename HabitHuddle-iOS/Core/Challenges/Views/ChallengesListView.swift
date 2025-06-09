@@ -95,12 +95,10 @@ struct ChallengesListView: View {
     private func saveChallengeLocally(from challenge: ChallengeDTO) {
         Task {
             let habitID = challenge.initiatorHabitID
-
             let result = await viewModel.getHabitFromChallenge(with: habitID)
 
             Helpers.handleResult(result) { habitDTO in
-                var habit = habitDTO.toSwiftData()
-
+                let habit = habitDTO.toSwiftData()
                 habit.id = UUID()
                 context.insert(habit)
 
