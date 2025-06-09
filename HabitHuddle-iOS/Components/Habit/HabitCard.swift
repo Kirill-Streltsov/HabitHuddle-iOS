@@ -18,6 +18,7 @@ struct HabitCard: View {
             HStack(alignment: .top) {
                 Text(habit.name)
                     .font(.system(size: 20, weight: .semibold))
+               
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .lineLimit(2)
