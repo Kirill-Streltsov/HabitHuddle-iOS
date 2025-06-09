@@ -36,7 +36,7 @@ struct HomeView: View {
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .foregroundStyle(.blue)
-                        
+                            .font(.title2)
                     }
                 }
             }
