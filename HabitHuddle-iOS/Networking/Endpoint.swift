@@ -33,7 +33,7 @@ struct Endpoint {
     // MARK: Habits
     
     static func createHabit() -> Endpoint {
-        Endpoint(path: "habits/create")
+        Endpoint(path: "habits")
     }
 
     static func updateHabit(with id: UUID) -> Endpoint {
@@ -45,11 +45,11 @@ struct Endpoint {
     }
 
     static func deleteHabit(with id: UUID) -> Endpoint {
-        Endpoint(path: "habits/delete/\(id)")
+        Endpoint(path: "habits/\(id)")
     }
 
     static func getMyHabits() -> Endpoint {
-        Endpoint(path: "habits/")
+        Endpoint(path: "habits")
     }
     
     static func getHabit(with id: UUID) -> Endpoint {
@@ -94,7 +94,7 @@ struct Endpoint {
     }
     
     static func getUserHabits(for id: UUID) -> Endpoint {
-        Endpoint(path: "habits/\(id)")
+        Endpoint(path: "users/\(id)/habits")
     }
     
     // MARK: Challenges
