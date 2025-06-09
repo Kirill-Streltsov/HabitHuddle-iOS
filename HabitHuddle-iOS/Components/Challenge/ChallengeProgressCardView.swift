@@ -117,7 +117,8 @@ struct ProgressRow: View {
     ChallengeProgressCardView(
         challenge: ChallengeDTO(
             id: UUID(),
-            habitID: UUID(),
+            initiatorHabitID: UUID(),
+            receiverHabitID: UUID(),
             habitName: "",
             type: .competitive,
             startDate: .now,

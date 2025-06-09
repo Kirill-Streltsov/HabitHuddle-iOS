@@ -53,7 +53,8 @@ struct OnboardingView: View {
                         ChallengeProgressCardView(
                             challenge: ChallengeDTO(
                                 id: UUID(),
-                                habitID: UUID(),
+                                initiatorHabitID: UUID(),
+                                receiverHabitID: UUID(),
                                 habitName: "Morning runs together",
                                 type: .supportive,
                                 startDate: .now,
@@ -83,7 +84,8 @@ struct OnboardingView: View {
                         ChallengeCardView(
                             challenge: ChallengeDTO(
                                 id: UUID(),
-                                habitID: UUID(),
+                                initiatorHabitID: UUID(),
+                                receiverHabitID: UUID(),
                                 habitName: "No caffeine after noon",
                                 type: .competitive,
                                 startDate: .now,
