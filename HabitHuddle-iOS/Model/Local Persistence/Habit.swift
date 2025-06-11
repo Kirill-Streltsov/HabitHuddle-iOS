@@ -166,7 +166,6 @@ extension Habit {
 
         habit.createdAt = calendar.date(byAdding: .day, value: -90, to: now)!
 
-        // Hardcoded "random-like" offsets (days ago) – spread out but realistic
         let offsets: [Int] = [
             0, 1, 2, 3, 5, 6, 7, 9, 10, 12, 14, 16, 18, 20, 21, 22,
             24, 26, 27, 28, 30, 32, 34, 36, 38, 39, 40, 41, 42, 44, 46, 48, 49, 50,
