@@ -135,7 +135,6 @@ extension Habit {
 
         habit.createdAt = calendar.date(byAdding: .day, value: -20, to: now)!
 
-        // Check-in days (relative to today), including a recent 6-day streak
         let offsets: [Int] = [
             20, 18, 15, 12, 10, 8,
             5, 4, 3, 2, 1, 0,
