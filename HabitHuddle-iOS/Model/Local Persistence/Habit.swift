@@ -138,7 +138,7 @@ extension Habit {
         // Check-in days (relative to today), including a recent 6-day streak
         let offsets: [Int] = [
             20, 18, 15, 12, 10, 8, // earlier scattered
-            5, 4, 3, 2, 1, 0, // recent streak!
+            5, 4, 3, 2, 1, 0,
         ]
 
         habit.checkIns = offsets.map { offset in
