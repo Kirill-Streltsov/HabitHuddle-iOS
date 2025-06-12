@@ -22,7 +22,7 @@ final class Habit: Identifiable, Hashable {
     var checkIns: [HabitCheckIn] = []
     @Relationship(deleteRule: .cascade, inverse: \Challenge.habit)
     var challenges: [Challenge] = []
-    
+
     init(
         id: UUID,
         user: LightweightUser,
