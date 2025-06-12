@@ -43,7 +43,7 @@ final class Habit: Identifiable, Hashable {
         self.updatedAt = updatedAt
     }
 }
-    
+
 // MARK: Creating a custom habit
 
 extension Habit {
