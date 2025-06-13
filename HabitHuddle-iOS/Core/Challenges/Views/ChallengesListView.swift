@@ -91,7 +91,7 @@ struct ChallengesListView: View {
             }
         }
     }
-    
+
     private func saveChallengeLocally(from challenge: ChallengeDTO) {
         Task {
             let habitID = challenge.initiatorHabitID
