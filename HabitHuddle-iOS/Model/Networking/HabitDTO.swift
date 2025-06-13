@@ -6,7 +6,7 @@
 //
 
 import Foundation
-    
+
 struct HabitDTO: Codable, Identifiable {
     let id: UUID
     let user: LightweightUser
