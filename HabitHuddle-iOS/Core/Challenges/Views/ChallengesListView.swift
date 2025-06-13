@@ -69,7 +69,7 @@ struct ChallengesListView: View {
             }
         }
     }
-    
+
     private func challengeCard(with challenge: ChallengeDTO) -> some View {
         ChallengeCardView(challenge: challenge) {
             let acceptedResult = await viewModel.acceptChallenge(with: challenge.id)
