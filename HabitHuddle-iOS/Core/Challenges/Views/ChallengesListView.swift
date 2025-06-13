@@ -18,7 +18,7 @@ struct ChallengesListView: View {
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var userManager: LocalUserManager
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
