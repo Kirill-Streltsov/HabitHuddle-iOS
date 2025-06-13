@@ -11,7 +11,7 @@ import SwiftData
 struct ChallengesListView: View {
     
     @StateObject private var viewModel = ViewModel()
-    
+
     @Query
     var challenges: [Challenge]
 
