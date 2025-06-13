@@ -14,7 +14,7 @@ struct ChallengesListView: View {
     
     @Query
     var challenges: [Challenge]
-    
+
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var userManager: LocalUserManager
