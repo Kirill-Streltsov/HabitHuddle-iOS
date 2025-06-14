@@ -26,13 +26,11 @@ extension MyFriendsListView {
             }
         }
         
-        func sendChallenge(to userID: UUID, for habitID: UUID, of type: ChallengeType, with startDate: Date, and endDate: Date) async {
+        func sendChallenge(to userID: UUID, for habitID: UUID, ofType type: ChallengeType) async {
             let payload = ChallengeRequest(
                 receiverID: userID,
                 initiatorHabitID: habitID,
                 receiverHabitID: nil,
-                startDate: startDate,
-                endDate: endDate,
                 type: type)
             do {
                 let sentChallenge = try await NetworkManager.shared.request(
