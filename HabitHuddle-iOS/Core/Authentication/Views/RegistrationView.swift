@@ -9,8 +9,17 @@ import SwiftData
 import SwiftUI
 
 struct RegistrationView: View {
+    enum Field {
+        case username
+        case name
+        case password
+        case confirmPassword
+    }
+    
     @StateObject private var viewModel: ViewModel
+    
     @EnvironmentObject var userManager: LocalUserManager
+    
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     
@@ -18,7 +27,9 @@ struct RegistrationView: View {
     @State private var name = ""
     @State private var password = ""
     @State private var confirmPassword = ""
-    @State private var signUpTapped = false
+    @State private var registerButtonPressed = false
+    
+    @FocusState private var focusedField: Field?
 
     private var inputFieldsAreEmpty: Bool {
         username.isEmpty || name.isEmpty || password.isEmpty || confirmPassword.isEmpty
@@ -60,34 +71,46 @@ struct RegistrationView: View {
 
             VStack(alignment: .leading, spacing: 24) {
                 ErrorText(text: errorText)
-                    .opacity(signUpTapped ? 1 : 0)
+                    .opacity(registerButtonPressed ? 1 : 0)
                     .frame(height: 20)
 
                 InputView(text: $username, title: "Username", placeholder: "Enter your username...")
                     .textInputAutocapitalization(.never)
+                    .focused($focusedField, equals: .username)
+                    .submitLabel(.next)
 
                 InputView(text: $name, title: "Name", placeholder: "Enter your name...")
+                    .focused($focusedField, equals: .name)
+                    .submitLabel(.next)
 
                 InputView(text: $password, title: "Password", placeholder: "Enter your password...", isSecureField: false)
+                    .focused($focusedField, equals: .password)
+                    .submitLabel(.next)
+                
                 InputView(text: $confirmPassword, title: "Confirm password", placeholder: "Confirm your password...", isSecureField: false)
+                    .focused($focusedField, equals: .confirmPassword)
+                    .submitLabel(.done)
+            }
+            .onSubmit {
+                switch focusedField {
+                case .username:
+                    focusedField = .name
+                case .name:
+                    focusedField = .password
+                case .password:
+                    focusedField = .confirmPassword
+                case .confirmPassword:
+                    registerUser()
+                default:
+                    print("❌ Error: Some unknown focus state in registration")
+                }
             }
             .padding(.horizontal)
             .padding(12)
+            
 
             Button {
-                signUpTapped = true
-                if inputFieldsAreValid {
-                    Task {
-                        let result = try await viewModel.registerUser(username: username, name: name, password: password, context: context)
-                        Helpers.handleResult(result) { codableUser in
-                            userManager.profile = LocalUser(id: codableUser.id, username: codableUser.username, name: codableUser.name, isSignedInToServer: true)
-                            print("TOKEN: \(TokenManager.token)")
-                            dismiss()
-                        } onFailure: { error in
-                            print("❌ Error: Couldn't load the user after registration - no response")
-                        }
-                    }
-                }
+                registerUser()
             } label: {
                 HStack {
                     Text("SIGN UP")
@@ -100,8 +123,23 @@ struct RegistrationView: View {
             .background(inputFieldsAreEmpty ? Color.accentColor.opacity(0.5) : Color.accentColor)
             .clipShape(.rect(cornerRadius: 10))
             .padding(.top, 24)
-
             Spacer()
+        }
+    }
+    
+    private func registerUser() {
+        registerButtonPressed = true
+        if inputFieldsAreValid {
+            Task {
+                let result = try await viewModel.registerUser(username: username, name: name, password: password, context: context)
+                Helpers.handleResult(result) { codableUser in
+                    userManager.profile = LocalUser(id: codableUser.id, username: codableUser.username, name: codableUser.name, isSignedInToServer: true)
+                    print("TOKEN: \(TokenManager.token)")
+                    dismiss()
+                } onFailure: { error in
+                    print("❌ Error: Couldn't load the user after registration - no response")
+                }
+            }
         }
     }
 }

@@ -9,12 +9,21 @@ import SwiftData
 import SwiftUI
 
 struct LoginView: View {
+    
+    enum Field {
+        case username
+        case password
+    }
+    
     @StateObject private var viewModel: ViewModel
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
     @State private var username = ""
     @State private var password = ""
+    
+    @FocusState private var focusedField: Field?
+    
     private var inputFieldIsEmpty: Bool {
         username.isEmpty || password.isEmpty
     }
@@ -39,32 +48,34 @@ struct LoginView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     ErrorText(text: viewModel.errorMessage)
                         .frame(height: 20)
+                    
 
                     InputView(text: $username,
                               title: "Username",
                               placeholder: "Enter your username...")
                         .textInputAutocapitalization(.never)
+                        .focused($focusedField, equals: .username)
+                        .submitLabel(.next)
 
                     InputView(text: $password, title: "Password", placeholder: "Enter your password...", isSecureField: true)
+                        .focused($focusedField, equals: .password)
+                        .submitLabel(.done)
+                }
+                .onSubmit {
+                    switch focusedField {
+                    case .username:
+                        focusedField = .password
+                    case .password:
+                        loginUser()
+                    default:
+                        print("❌ Error: Some unknown focus state in registration")
+                    }
                 }
                 .padding(.horizontal)
                 .padding(12)
 
                 Button {
-                    Task {
-                        if let cu = await viewModel.loginUser(username: username, password: password) {
-                            print("TOKEN: \(String(describing: TokenManager.token))")
-                            let codableHabitsResult = await viewModel.getUserHabits()
-                            Helpers.handleResult(codableHabitsResult) { codableHabits in
-                                saveHabitsLocally(codableHabits)
-                                viewModel.saveUser(cu, using: context)
-                                print("TOKEN: \(TokenManager.token)")
-                                dismiss()
-                            } onFailure: { apiError in
-                                print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")
-                            }
-                        }
-                    }
+                    loginUser()
                 } label: {
                     HStack {
                         Text("SIGN IN")
@@ -79,6 +90,23 @@ struct LoginView: View {
                 .padding(.top, 24)
 
                 Spacer()
+            }
+        }
+    }
+    
+    private func loginUser() {
+        Task {
+            if let cu = await viewModel.loginUser(username: username, password: password) {
+                print("TOKEN: \(String(describing: TokenManager.token))")
+                let codableHabitsResult = await viewModel.getUserHabits()
+                Helpers.handleResult(codableHabitsResult) { codableHabits in
+                    saveHabitsLocally(codableHabits)
+                    viewModel.saveUser(cu, using: context)
+                    print("TOKEN: \(TokenManager.token)")
+                    dismiss()
+                } onFailure: { apiError in
+                    print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")
+                }
             }
         }
     }
