@@ -11,14 +11,19 @@ struct FriendsListView: View {
     
     @Environment(\.modelContext) private var context
     @StateObject private var viewModel = ViewModel()
+    
+    @FocusState private var saerchIsFocused: Bool
+    
     @State private var searchText = ""
     @State private var requestIsSent = false
+    @State private var friendsListID = UUID()
     
     var body: some View {
         NavigationStack {
             VStack {
                 // Search bar
                 TextField("Search usernames...", text: $searchText)
+                    .focused($saerchIsFocused)
                     .padding(12)
                     .background(Color(.secondarySystemBackground))
                     .cornerRadius(10)
@@ -43,6 +48,7 @@ struct FriendsListView: View {
                             LazyVStack(spacing: 16) {
                                 friendRequests
                                 MyFriendsListView(isInFriendsTab: true)
+                                    .id(friendsListID)
                             }
                             .padding(.top)
                         }
@@ -71,11 +77,15 @@ struct FriendsListView: View {
                             Task {
                                 let result = await viewModel.acceptFriend(with: request.id)
                                 Helpers.handleResult(result) { friend in
+                                    Task {
+                                        await viewModel.getMyFriendRequests()
+                                    }
+                                    friendsListID = UUID()
                                     let user = User(id: friend.id, username: friend.username, name: friend.name, createdAt: friend.createdAt, updatedAt: friend.updatedAt, habits: [])
                                     context.insert(user)
                                     try? context.save()
                                 } onFailure: { _ in
-                                    print("❌ Couldn't accept friend")
+                                    print("❌ Error: Couldn't accept friend")
                                 }
                             }
                         } onIgnore: {
@@ -117,6 +127,8 @@ struct FriendsListView: View {
                             ) {
                                 Task {
                                     await viewModel.requestFriend(with: user.id)
+                                    searchText = ""
+                                    saerchIsFocused = false
                                 }
                             }
                             .padding(.vertical, 6)

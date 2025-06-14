@@ -84,7 +84,7 @@ struct RegistrationView: View {
                             print("TOKEN: \(TokenManager.token)")
                             dismiss()
                         } onFailure: { error in
-                            print("❌ Couldn't load the user after registration - no response")
+                            print("❌ Error: Couldn't load the user after registration - no response")
                         }
                     }
                 }

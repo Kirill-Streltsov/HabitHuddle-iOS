@@ -56,7 +56,7 @@ final class SyncManager: ObservableObject {
                     createdHabits.append(dto)
                 case .failure(let error):
                     failedHabitIDs.append(id)
-                    print("❌ Failed to create habit with ID \(id): \(error.localizedDescription)")
+                    print("❌ Error: Failed to create habit with ID \(id): \(error.localizedDescription)")
                 }
             }
         }
@@ -99,7 +99,7 @@ final class SyncManager: ObservableObject {
                     updatedHabits.append(dto)
                 case .failure(let error):
                     failedHabitIDs.append(id)
-                    print("❌ Failed to update habit with ID \(id): \(error.localizedDescription)")
+                    print("❌ Error: Failed to update habit with ID \(id): \(error.localizedDescription)")
                 }
             }
         }
@@ -140,7 +140,7 @@ final class SyncManager: ObservableObject {
                     deletedHabits.append(dto)
                 case .failure(let error):
                     failedIDs.append(id)
-                    print("❌ Failed to delete habit with ID \(id): \(error.localizedDescription)")
+                    print("❌ Error: Failed to delete habit with ID \(id): \(error.localizedDescription)")
                 }
             }
         }

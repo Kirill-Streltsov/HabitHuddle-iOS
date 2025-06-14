@@ -191,7 +191,7 @@ struct HabitDetailView: View {
                 Helpers.handleResult(result) { checkedIn in
                     print("✅ The user has checked in: \(checkedIn)")
                 } onFailure: { error in
-                    print("❌ Error while posting the check in: \(error)")
+                    print("❌ Error: Posting the check in: \(error)")
                 }
             }
         }
@@ -207,7 +207,7 @@ struct HabitDetailView: View {
                 Helpers.handleResult(result) { codableHabit in
                     print("✅ Deleted the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
                 } onFailure: { error in
-                    print("❌ Failed to delete the habit on the server: \(error.localizedDescription)")
+                    print("❌ Error: Failed to delete the habit on the server: \(error.localizedDescription)")
                 }
             }
         }
@@ -240,7 +240,7 @@ struct HabitDetailView: View {
             Helpers.handleResult(result) { codableHabit in
                 print("✅ Updated the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
             } onFailure: { error in
-                print("❌ Failed to update the habit on the server: \(error.localizedDescription)")
+                print("❌ Error: Failed to update the habit on the server: \(error.localizedDescription)")
             }
         }
     }
@@ -265,7 +265,7 @@ struct HabitDetailView: View {
             Helpers.handleResult(result) { codableHabit in
                 print("✅ Saved the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
             } onFailure: { error in
-                print("❌ Failed to save new habit on the server: \(error.localizedDescription)")
+                print("❌ Error: Failed to save new habit on the server: \(error.localizedDescription)")
             }
         }
     }

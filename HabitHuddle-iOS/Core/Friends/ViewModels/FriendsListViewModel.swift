@@ -61,7 +61,7 @@ extension FriendsListView {
                     responseType: [UserDTO].self)
                 friendRequests = friends
             } catch {
-                print("❌ Couldn't get friendship requests: \(error)")
+                print("❌ Error: Couldn't get friendship requests: \(error)")
             }
         }
         

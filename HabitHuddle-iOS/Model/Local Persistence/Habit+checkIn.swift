@@ -44,7 +44,7 @@ extension Habit {
                 )
                 print("✅ Checked into habit from the HomeView: \(self.name)")
             } catch {
-                print("❌ Could not check into habit from the HomeView: \(self.name)")
+                print("❌ Error: Could not check into habit from the HomeView: \(self.name)")
             }
         }
     }

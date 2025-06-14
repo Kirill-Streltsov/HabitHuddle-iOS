@@ -22,7 +22,7 @@ extension FriendDetailView {
                     responseType: [HabitDTO].self)
                 habits = fetchedHabits
             } catch {
-                print("❌ Something went wrong while fetching habits of a friend: \(error.localizedDescription)")
+                print("❌ Error: Something went wrong while fetching habits of a friend: \(error.localizedDescription)")
             }
         }
         
@@ -34,7 +34,20 @@ extension FriendDetailView {
                     responseType: [ChallengeDTO].self)
                 challenges = fetchedChallenges
             } catch {
-                print("❌ Could not decode user challenges: \(error.localizedDescription)")
+                print("❌ Error: Could not decode user challenges: \(error.localizedDescription)")
+            }
+        }
+        
+        func deleteFriend(with id: UUID) async -> Result<HTTPStatus, HHError> {
+            do {
+                let statusCode = try await NetworkManager.shared.requestStatusCode(
+                    endpoint: .deleteFriend(with: id),
+                    method: .delete)
+                print("✅ Deleted friend with id: \(id)")
+                return .success(statusCode)
+            } catch {
+                print("❌ Could not delete friend with id: \(id)")
+                return .failure(.networkError(error))
             }
         }
     }

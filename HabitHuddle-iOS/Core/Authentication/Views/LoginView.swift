@@ -61,7 +61,7 @@ struct LoginView: View {
                                 print("TOKEN: \(TokenManager.token)")
                                 dismiss()
                             } onFailure: { apiError in
-                                print("❌ Could not load user habits: \(apiError.localizedDescription)")
+                                print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")
                             }
                         }
                     }

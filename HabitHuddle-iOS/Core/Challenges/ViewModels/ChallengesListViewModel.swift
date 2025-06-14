@@ -21,7 +21,7 @@ extension ChallengesListView {
                     responseType: [ChallengeDTO].self)
                 challenges = fetchedChallenges
             } catch {
-                print("❌ Couldn't fetch challenges for \(userID): \(error.localizedDescription)")
+                print("❌ Error: Couldn't fetch challenges for \(userID): \(error.localizedDescription)")
             }
         }
         
@@ -33,7 +33,7 @@ extension ChallengesListView {
                 print("✅ Accepted the challenge with id: \(id)")
                 return .success(response)
             } catch {
-                print("❌ Couldn't accept the challenge with id: \(id)")
+                print("❌ Error: Couldn't accept the challenge with id: \(id)")
                 return .failure(.networkError(error))
             }
         }
@@ -46,7 +46,7 @@ extension ChallengesListView {
                 print("✅ Rejected the challenge with id: \(id)")
                 return .success(response)
             } catch {
-                print("❌ Couldn't reject the challenge with id: \(id)")
+                print("❌ Error: Couldn't reject the challenge with id: \(id)")
                 return .failure(.networkError(error))
             }
         }
@@ -59,7 +59,7 @@ extension ChallengesListView {
                     responseType: ChallengeDTO.self)
                 return .success(challenge)
             } catch {
-                print("❌ Couldn't cancel challenge with id: \(id)")
+                print("❌ Error: Couldn't cancel challenge with id: \(id)")
                 return .failure(.networkError(error))
             }
         }
@@ -72,7 +72,7 @@ extension ChallengesListView {
                     responseType: HabitDTO.self)
                 return .success(habit)
             } catch {
-                print("❌ Couln't get habit with id: \(habitID)")
+                print("❌ Error: Couln't get habit with id: \(habitID)")
                 return .failure(.networkError(error))
             }
         }

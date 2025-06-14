@@ -21,7 +21,7 @@ extension MyFriendsListView {
                     responseType: [UserDTO].self)
                 friends = fetchedFriends
             } catch {
-                print("❌ Couldn't fetch friends: \(error.localizedDescription)")
+                print("❌ Error: Couldn't fetch friends: \(error.localizedDescription)")
             }
         }
         
@@ -39,7 +39,7 @@ extension MyFriendsListView {
                     responseType: ChallengeDTO.self)
                 print("✅ Just sent a challenge: \(sentChallenge)")
             } catch {
-                print("❌ Couldn't send challenge: \(error)")
+                print("❌ Error: Couldn't send challenge: \(error)")
             }
         }
     }

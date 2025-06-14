@@ -165,19 +165,19 @@ actor NetworkManager {
                 let decoded = try jsonDecoder.decode(T.self, from: data)
                 return decoded
             } catch let DecodingError.keyNotFound(key, context) {
-                print("❌ Missing key: \(key.stringValue) in \(context.codingPath.map(\.stringValue))")
+                print("❌ Error: Missing key: \(key.stringValue) in \(context.codingPath.map(\.stringValue))")
                 throw HHError.decodingError(DecodingError.keyNotFound(key, context))
             } catch let DecodingError.typeMismatch(type, context) {
-                print("❌ Type mismatch for type \(type) in \(context.codingPath.map(\.stringValue)): \(context.debugDescription)")
+                print("❌ Error: Type mismatch for type \(type) in \(context.codingPath.map(\.stringValue)): \(context.debugDescription)")
                 throw HHError.decodingError(DecodingError.typeMismatch(type, context))
             } catch let DecodingError.valueNotFound(value, context) {
-                print("❌ Value not found: \(value) in \(context.codingPath.map(\.stringValue)): \(context.debugDescription)")
+                print("❌ Error: Value not found: \(value) in \(context.codingPath.map(\.stringValue)): \(context.debugDescription)")
                 throw HHError.decodingError(DecodingError.valueNotFound(value, context))
             } catch let DecodingError.dataCorrupted(context) {
-                print("❌ Data corrupted: \(context.debugDescription)")
+                print("❌ Error: Data corrupted: \(context.debugDescription)")
                 throw HHError.decodingError(DecodingError.dataCorrupted(context))
             } catch {
-                print("❌ Unknown decoding error: \(error.localizedDescription)")
+                print("❌ Error: Unknown decoding error: \(error.localizedDescription)")
                 throw HHError.decodingError(error)
             }
         case 401:

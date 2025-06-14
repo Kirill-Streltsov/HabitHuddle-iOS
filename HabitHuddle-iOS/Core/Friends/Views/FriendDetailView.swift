@@ -9,6 +9,8 @@ import SwiftUI
 
 struct FriendDetailView: View {
     
+    @Environment(\.dismiss) private var dismiss
+    
     @StateObject private var viewModel = ViewModel()
     let friend: UserDTO
     
@@ -52,6 +54,17 @@ struct FriendDetailView: View {
             .task {
                 await viewModel.getUserHabits(for: friend.id)
                 await viewModel.getUserChallenges(for: friend.id)
+            }
+        }
+        .toolbar {
+            Button {
+                Task {
+                    await viewModel.deleteFriend(with: friend.id)
+                }
+                dismiss()
+            } label: {
+                Image(systemName: "trash")
+                    .foregroundStyle(.red)
             }
         }
         .navigationTitle(friend.username)
