@@ -29,7 +29,6 @@ struct OnboardingHabitList: View {
         }
         .onDisappear {
             Task {
-                print("DISAPPEARED")
                 for index in isHabitSelected.indices {
                     if isHabitSelected[index] {
                         let habit = Habit(

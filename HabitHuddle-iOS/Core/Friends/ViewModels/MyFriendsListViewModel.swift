@@ -14,7 +14,6 @@ extension MyFriendsListView {
         @Published var friends: [UserDTO] = []
         
         func getMyFriends() async {
-            print("STARTED LOOKING FOR FRIENDS")
             do {
                 let fetchedFriends = try await NetworkManager.shared.request(
                     endpoint: .getMyFriends(),
@@ -22,7 +21,7 @@ extension MyFriendsListView {
                     responseType: [UserDTO].self)
                 friends = fetchedFriends
             } catch {
-                print("COULDN'T FETCH FRIENDS")
+                print("❌ Couldn't fetch friends: \(error.localizedDescription)")
             }
         }
         
@@ -38,9 +37,9 @@ extension MyFriendsListView {
                     method: .post,
                     body: payload,
                     responseType: ChallengeDTO.self)
-                print("JUST SENT A CHALLENGE: \(sentChallenge)")
+                print("✅ Just sent a challenge: \(sentChallenge)")
             } catch {
-                print("COULDN'T SEND CHALLENGE: \(error)")
+                print("❌ Couldn't send challenge: \(error)")
             }
         }
     }

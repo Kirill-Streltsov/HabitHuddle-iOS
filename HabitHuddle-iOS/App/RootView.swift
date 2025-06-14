@@ -48,11 +48,6 @@ struct RootView: View {
                     .transition(.opacity)
             }
         }
-        .onAppear {
-            for user in users {
-                print("USER NAME: \(user.name)")
-            }
-        }
 //        .onChange(of: scenePhase) { _, newPhase in
 //            if newPhase == .active {
 //                Task {

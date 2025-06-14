@@ -22,7 +22,7 @@ extension FriendDetailView {
                     responseType: [HabitDTO].self)
                 habits = fetchedHabits
             } catch {
-                print("COULD NOT DECODE USER HABITS")
+                print("❌ Something went wrong while fetching habits of a friend: \(error.localizedDescription)")
             }
         }
         
@@ -34,7 +34,7 @@ extension FriendDetailView {
                     responseType: [ChallengeDTO].self)
                 challenges = fetchedChallenges
             } catch {
-                print("COULD NOT DECODE USER CHALLENGES")
+                print("❌ Could not decode user challenges: \(error.localizedDescription)")
             }
         }
     }

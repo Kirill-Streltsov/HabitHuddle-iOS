@@ -43,9 +43,6 @@ struct FriendsListView: View {
                             LazyVStack(spacing: 16) {
                                 friendRequests
                                 MyFriendsListView(isInFriendsTab: true)
-                                    .onAppear {
-                                        print("MY FRIENDS APPEARED")
-                                    }
                             }
                             .padding(.top)
                         }
@@ -78,7 +75,7 @@ struct FriendsListView: View {
                                     context.insert(user)
                                     try? context.save()
                                 } onFailure: { _ in
-                                    print("Couldn't accept friend")
+                                    print("❌ Couldn't accept friend")
                                 }
                             }
                         } onIgnore: {

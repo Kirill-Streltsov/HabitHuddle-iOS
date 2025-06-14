@@ -185,9 +185,9 @@ struct HabitDetailView: View {
             if userManager.profile.isSignedInToServer {
                 let result = await viewModel.checkIntoHabit(with: habit.id)
                 Helpers.handleResult(result) { checkedIn in
-                    print("THE USER HAS CHECKED IN: \(checkedIn)")
+                    print("✅ The user has checked in: \(checkedIn)")
                 } onFailure: { error in
-                    print("ERROR WHILE POSTING THE CHECK IN: \(error)")
+                    print("❌ Error while posting the check in: \(error)")
                 }
             }
         }

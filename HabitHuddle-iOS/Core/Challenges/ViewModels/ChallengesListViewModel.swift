@@ -21,7 +21,7 @@ extension ChallengesListView {
                     responseType: [ChallengeDTO].self)
                 challenges = fetchedChallenges
             } catch {
-                print("COULDN'T FETCH CHALLENGES for \(userID): \(error.localizedDescription)")
+                print("❌ Couldn't fetch challenges for \(userID): \(error.localizedDescription)")
             }
         }
         
@@ -30,10 +30,10 @@ extension ChallengesListView {
                 let response = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .acceptChallenge(id: id),
                     method: .post)
-                print("Accepted the challenge with id: \(id)")
+                print("✅ Accepted the challenge with id: \(id)")
                 return .success(response)
             } catch {
-                print("Couldn't accept the challenge with id: \(id)")
+                print("❌ Couldn't accept the challenge with id: \(id)")
                 return .failure(.networkError(error))
             }
         }
@@ -43,10 +43,10 @@ extension ChallengesListView {
                 let response = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .rejectChallenge(id: id),
                     method: .post)
-                print("Rejected the challenge with id: \(id)")
+                print("✅ Rejected the challenge with id: \(id)")
                 return .success(response)
             } catch {
-                print("Couldn't reject the challenge with id: \(id)")
+                print("❌ Couldn't reject the challenge with id: \(id)")
                 return .failure(.networkError(error))
             }
         }
@@ -59,7 +59,7 @@ extension ChallengesListView {
                     responseType: HabitDTO.self)
                 return .success(habit)
             } catch {
-                print("COULDN'T GET HABIT WITH ID: \(habitID)")
+                print("❌ Couln't get habit with id: \(habitID)")
                 return .failure(.networkError(error))
             }
         }

@@ -60,9 +60,6 @@ struct ChallengesListView: View {
                     }
                 }
             }
-            .onAppear {
-                print("CHALLENGES: \(challenges)")
-            }
             .task {
                 await viewModel.getChallenges(for: userManager.profile.id)
             }
@@ -85,18 +82,16 @@ struct ChallengesListView: View {
             Helpers.handleResult(acceptedResult) { status in
                 if status == .ok {
                     getHabit(from: challenge)
-                } else {
-                    print("STATUS IS NOT OK: \(status)")
                 }
             } onFailure: { error in
-                print("Failed to accept the challenge: \(error.localizedDescription)")
+                print("❌ Failed to accept the challenge: \(error.localizedDescription)")
             }
         } onReject: {
             let rejectedResult = await viewModel.rejectChallenge(with: challenge.id)
             Helpers.handleResult(rejectedResult) { status in
                 print("Successfully rejected the challenge with id: \(challenge.id)")
             } onFailure: { error in
-                print("Failed to reject the challenge: \(error.localizedDescription)")
+                print("❌ Failed to reject the challenge: \(error.localizedDescription)")
             }
         }
     }
@@ -116,7 +111,7 @@ struct ChallengesListView: View {
                 habitToSend.id = UUID()
                 createHabitAfterAcceptingChallenge(habitDTO: habitToSend, challengeDTO: challenge)
             } onFailure: { error in
-                print("Something went wrong fetching habit: \(error)")
+                print("❌ Something went wrong fetching habit: \(error)")
             }
         }
     }
@@ -133,11 +128,11 @@ struct ChallengesListView: View {
                         saveChallengeLocally(from: challengeDTO, for: habit)
                         print("✅ Habit created from challenge successfully.")
                     } catch {
-                        print("Couldn't save habit locally: \(error)")
+                        print("❌ Couldn't save habit locally: \(error)")
                     }
                 }
             } onFailure: { error in
-                print("Something went wrong creating habit: \(error)")
+                print("❌ Something went wrong creating habit: \(error)")
             }
         }
     }
@@ -157,7 +152,7 @@ struct ChallengesListView: View {
             context.insert(challenge)
             try context.save()
         } catch {
-            print("Couldn't save challenge locally: \(error)")
+            print("❌ Couldn't save challenge locally: \(error)")
         }
     }
 }

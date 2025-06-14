@@ -47,7 +47,7 @@ struct MyFriendsListView: View {
                         do {
                             try saveUserIfNeeded(user)
                         } catch {
-                            print("Failed to save user \(user.id): \(error)")
+                            print("❌ Failed to save user \(user.id): \(error)")
                         }
                     }
                 }

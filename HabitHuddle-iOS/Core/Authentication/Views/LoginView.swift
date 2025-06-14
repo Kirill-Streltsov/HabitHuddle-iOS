@@ -61,7 +61,7 @@ struct LoginView: View {
                                 print("TOKEN: \(TokenManager.token)")
                                 dismiss()
                             } onFailure: { apiError in
-                                print("Could not load user habits: \(apiError.localizedDescription)")
+                                print("❌ Could not load user habits: \(apiError.localizedDescription)")
                             }
                         }
                     }
@@ -87,7 +87,6 @@ struct LoginView: View {
         for codableHabit in codableHabits {
             // Skip if habit with same ID already exists
             if habitExists(withId: codableHabit.id) {
-                print("HABIT WITH NAME \(codableHabit.name) ALREADY EXISTS")
                 continue
             }
 

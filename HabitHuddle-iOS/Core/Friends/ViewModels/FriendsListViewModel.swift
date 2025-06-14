@@ -59,10 +59,9 @@ extension FriendsListView {
                     endpoint: .getFriendshipRequests(),
                     method: .get,
                     responseType: [UserDTO].self)
-                print("These are the friendship requests: \(friends)")
                 friendRequests = friends
             } catch {
-                print("Couldn't get friendship requests: \(error)")
+                print("❌ Couldn't get friendship requests: \(error)")
             }
         }
         

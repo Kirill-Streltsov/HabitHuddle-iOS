@@ -20,7 +20,6 @@ class LocalUserManager: ObservableObject {
             return decoded
         }
         set {
-            print("HAS SET PROFILE TO ID: \(profile.id)")
             if let data = try? JSONEncoder().encode(newValue),
                let jsonString = String(data: data, encoding: .utf8) {
                 userProfileData = jsonString
