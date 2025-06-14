@@ -59,7 +59,8 @@ struct FriendHabitCard: View {
             // Header: Name + Reminder
             HStack {
                 Text(habit.name)
-                    .font(.title2.bold())
+                    .font(.title2)
+                    .fontWeight(.semibold)
                     .multilineTextAlignment(.leading)
                     .lineLimit(2)
                 Spacer()
