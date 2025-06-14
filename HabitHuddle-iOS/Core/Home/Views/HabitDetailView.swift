@@ -108,9 +108,13 @@ struct HabitDetailView: View {
                     }
                     
                     VStack(spacing: 8) {
-                        SubmitButton(title: "Challenge a friend!", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .orange) {
-                            challengeButtonPressed = true
+                        if mode == .editing {
+                            SubmitButton(title: "Challenge a friend!", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .orange) {
+                                saveHabit()
+                                challengeButtonPressed = true
+                            }
                         }
+                        
                         SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
                             saveButtonPressed = true
                             saveHabit()
@@ -195,9 +199,8 @@ struct HabitDetailView: View {
 
     private func deleteHabit() async {
         guard let habit = habit else { return }
-        await MainActor.run {
-            context.delete(habit)
-        }
+        context.delete(habit)
+        
         Task {
             if userManager.profile.isSignedInToServer {
                 let result = await viewModel.deleteHabit(with: habit.id)

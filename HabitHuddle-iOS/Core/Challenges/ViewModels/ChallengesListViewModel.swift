@@ -51,6 +51,19 @@ extension ChallengesListView {
             }
         }
         
+        func cancelChallenge(with id: UUID) async -> Result<ChallengeDTO, HHError> {
+            do {
+                let challenge = try await NetworkManager.shared.request(
+                    endpoint: .cancelChallenge(id: id),
+                    method: .delete,
+                    responseType: ChallengeDTO.self)
+                return .success(challenge)
+            } catch {
+                print("❌ Couldn't cancel challenge with id: \(id)")
+                return .failure(.networkError(error))
+            }
+        }
+        
         func getHabitFromChallenge(with habitID: UUID) async -> Result<HabitDTO, HHError> {
             do {
                 let habit = try await NetworkManager.shared.request(

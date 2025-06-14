@@ -106,6 +106,7 @@ struct FriendHabitCard: View {
                         .foregroundStyle(.secondary)
                     Text(createdAt)
                         .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
                 Spacer()
                 SlimButton(title: "Challenge") {
@@ -123,6 +124,7 @@ struct FriendHabitCard: View {
                         .foregroundStyle(.secondary)
                     Text(updatedAt)
                         .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
             }
             .padding(.top)

@@ -32,11 +32,7 @@ struct MyFriendsListView: View {
                         NavigationLink {
                             FriendDetailView(friend: friend)
                         } label: {
-                            FriendCardView(friend: friend, showChallengeButton: true) {
-                                print("")
-                            } onSupport: {
-                                print("")
-                            }
+                            FriendCardView(friend: friend, showChallengeButton: false)
                         }
                         .buttonStyle(.plain)
                     }

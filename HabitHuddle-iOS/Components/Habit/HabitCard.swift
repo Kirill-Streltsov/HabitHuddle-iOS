@@ -23,9 +23,9 @@ struct HabitCard: View {
                     .lineLimit(2)
                 
                 VStack(spacing: 4) {
-                    if !habit.challenges.isEmpty {
+                    if let challenges = habit.challenges, !challenges.isEmpty {
                         Image(systemName: "flag.pattern.checkered.2.crossed")
-                            .foregroundStyle(habit.challenges[0].type == .competitive ? .pink : .green)
+                            .foregroundStyle(challenges[0].type == .competitive ? .pink : .green)
                     }
                     Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
                         .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)

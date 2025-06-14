@@ -18,6 +18,22 @@ struct ChallengesListView: View {
     @Query
     var habits: [Habit]
     
+    var pendingChallengesSent: [ChallengeDTO] {
+        viewModel.challenges.filter({ $0.status == .pending && $0.receiver.user.id != userManager.profile.id })
+    }
+    
+    var pendingChallengesReceived: [ChallengeDTO] {
+        viewModel.challenges.filter({ $0.status == .pending && $0.receiver.user.id == userManager.profile.id })
+    }
+    
+    var acceptedChallenges: [ChallengeDTO] {
+        viewModel.challenges.filter({ $0.status == .accepted })
+    }
+    
+    var declinedChallenges: [ChallengeDTO] {
+        viewModel.challenges.filter({ $0.status == .declined })
+    }
+    
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var userManager: LocalUserManager
@@ -28,32 +44,37 @@ struct ChallengesListView: View {
                 if viewModel.challenges.isEmpty {
                     EmptyChallengesView()
                 } else {
-                    if !viewModel.challenges.filter({ $0.status == .pending }).isEmpty {
+                    if !(pendingChallengesSent + pendingChallengesReceived).isEmpty {
                         VStack {
                             Text("Pending")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            ForEach(viewModel.challenges.filter { $0.status == .pending }) { challenge in
+                            ForEach(pendingChallengesReceived) { challenge in
                                 challengeCard(with: challenge)
+                            }
+                            ForEach(pendingChallengesSent) { challenge in
+                                SentChallengeCardView(challenge: challenge) {
+                                    let _ = await viewModel.cancelChallenge(with: challenge.id)
+                                }
                             }
                         }
                     }
-                    if !viewModel.challenges.filter({ $0.status == .accepted }).isEmpty {
+                    if !acceptedChallenges.isEmpty {
                         VStack {
                             Text("Ongoing")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            ForEach(viewModel.challenges.filter { $0.status == .accepted }) { challenge in
+                            ForEach(acceptedChallenges) { challenge in
                                 ChallengeProgressCardView(challenge: challenge)
                             }
                         }
                     }
-                    if !viewModel.challenges.filter({ $0.status == .declined }).isEmpty {
+                    if !declinedChallenges.isEmpty {
                         VStack {
                             Text("Declined")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            ForEach(viewModel.challenges.filter { $0.status == .declined }) { challenge in
+                            ForEach(declinedChallenges) { challenge in
                                 challengeCard(with: challenge)
                             }
                         }
@@ -63,15 +84,15 @@ struct ChallengesListView: View {
             .task {
                 await viewModel.getChallenges(for: userManager.profile.id)
             }
-            .onChange(of: viewModel.challenges) { oldChallenges, newChallenges in
-                if !newChallenges.isEmpty {
-                    for newChallenge in newChallenges {
-                        if !challenges.contains(where: { $0.id == newChallenge.id }) {
-                            getHabit(from: newChallenge)
-                        }
-                    }
-                }
-            }
+//            .onChange(of: viewModel.challenges) { oldChallenges, newChallenges in
+//                if !newChallenges.isEmpty {
+//                    for newChallenge in newChallenges {
+//                        if !challenges.contains(where: { $0.id == newChallenge.id }) {
+//                            getHabit(from: newChallenge)
+//                        }
+//                    }
+//                }
+//            }
             .navigationTitle("Challenges")
         }
     }

@@ -8,10 +8,20 @@
 import SwiftUI
 
 struct FriendCardView: View {
+    
+    @Environment(\.dismiss) private var dismiss
+    
     let friend: UserDTO
     let showChallengeButton: Bool
     var onCompete: @MainActor () async -> Void
     var onSupport: @MainActor () async -> Void
+    
+    init(friend: UserDTO, showChallengeButton: Bool, onCompete: @escaping () async -> Void = {}, onSupport: @escaping () async -> Void = {}) {
+        self.friend = friend
+        self.showChallengeButton = showChallengeButton
+        self.onCompete = onCompete
+        self.onSupport = onSupport
+    }
 
     var body: some View {
         HStack(spacing: 16) {
@@ -45,11 +55,13 @@ struct FriendCardView: View {
                     SlimButton(title: "Compete", color: .pink) {
                         Task {
                             await onCompete()
+                            dismiss()
                         }
                     }
                     SlimButton(title: "Support", color: .green) {
                         Task {
                             await onSupport()
+                            dismiss()
                         }
                     }
                 }
