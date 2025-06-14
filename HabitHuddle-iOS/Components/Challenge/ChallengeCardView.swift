@@ -18,15 +18,17 @@ struct ChallengeCardView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
-                    (Text(challenge.initiator.user.name)
+                    
+                    Text("\(challenge.habitName)")
                         .font(.headline)
-                        .fontWeight(.bold)
-                        + Text(" challenged you!"))
+                    
+                    (Text(challenge.initiator.user.name)
                         .font(.subheadline)
                         .fontWeight(.semibold)
-
-                    Text("\(challenge.habitName)")
+                        .foregroundStyle(.secondary)
+                        + Text(" challenged you!"))
                         .font(.subheadline)
+                        .fontWeight(.regular)
                         .foregroundStyle(.secondary)
                 }
                 Spacer()

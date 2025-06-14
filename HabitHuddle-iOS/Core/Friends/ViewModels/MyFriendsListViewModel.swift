@@ -29,7 +29,8 @@ extension MyFriendsListView {
         func sendChallenge(to userID: UUID, for habitID: UUID, of type: ChallengeType, with startDate: Date, and endDate: Date) async {
             let payload = ChallengeRequest(
                 receiverID: userID,
-                habitID: habitID,
+                initiatorHabitID: habitID,
+                receiverHabitID: nil,
                 startDate: startDate,
                 endDate: endDate,
                 type: type)
@@ -41,7 +42,7 @@ extension MyFriendsListView {
                     responseType: ChallengeDTO.self)
                 print("JUST SENT A CHALLENGE: \(sentChallenge)")
             } catch {
-                print("COULDN'T SEND CHALLENGE")
+                print("COULDN'T SEND CHALLENGE: \(error)")
             }
         }
     }

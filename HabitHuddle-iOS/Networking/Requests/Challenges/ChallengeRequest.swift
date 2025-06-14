@@ -8,7 +8,8 @@
 import Foundation
 struct ChallengeRequest: Codable {
     let receiverID: UUID
-    let habitID: UUID
+    let initiatorHabitID: UUID?
+    let receiverHabitID: UUID?
     let startDate: Date
     let endDate: Date
     let type: ChallengeType

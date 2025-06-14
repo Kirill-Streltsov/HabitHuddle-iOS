@@ -77,7 +77,7 @@ struct ChallengesListView: View {
                 if status == .ok {
                     saveChallengeLocally(from: challenge)
                 } else {
-                    print("STATUS IS NOT OK")
+                    print("STATUS IS NOT OK: \(status)")
                 }
             } onFailure: { error in
                 print("Failed to accept the challenge: \(error.localizedDescription)")
@@ -94,8 +94,13 @@ struct ChallengesListView: View {
 
     private func saveChallengeLocally(from challenge: ChallengeDTO) {
         Task {
-            let habitID = challenge.initiatorHabitID
-            let result = await viewModel.getHabitFromChallenge(with: habitID)
+            var existingHabitID = UUID()
+            if let habitID = challenge.initiatorHabitID {
+                existingHabitID = habitID
+            } else if let habitID = challenge.receiverHabitID {
+                existingHabitID = habitID
+            }
+            let result = await viewModel.getHabitFromChallenge(with: existingHabitID)
 
             Helpers.handleResult(result) { habitDTO in
                 let habit = habitDTO.toSwiftData()

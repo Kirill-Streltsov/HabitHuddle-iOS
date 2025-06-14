@@ -25,25 +25,6 @@ extension ChallengesListView {
             }
         }
         
-        func sendChallenge(to userID: UUID, for habitID: UUID, of type: ChallengeType, with startDate: Date, and endDate: Date) async {
-            let payload = ChallengeRequest(
-                receiverID: userID,
-                habitID: habitID,
-                startDate: startDate,
-                endDate: endDate,
-                type: type)
-            do {
-                let sentChallenge = try await NetworkManager.shared.request(
-                    endpoint: .sendChallenge(),
-                    method: .post,
-                    body: payload,
-                    responseType: ChallengeDTO.self)
-                print("JUST SENT A CHALLENGE: \(sentChallenge)")
-            } catch {
-                print("COULDN'T SEND CHALLENGE")
-            }
-        }
-        
         func acceptChallenge(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
                 let response = try await NetworkManager.shared.requestStatusCode(
