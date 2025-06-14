@@ -136,7 +136,7 @@ struct StatisticsDetailView: View {
                 return "\(missedDays) days missed out of \(totalDays)"
             }
         } else {
-            return "You haven't missed a day!\nWell done 🎉"
+            return "You haven't missed a day!\n🎉"
         }
     }
 

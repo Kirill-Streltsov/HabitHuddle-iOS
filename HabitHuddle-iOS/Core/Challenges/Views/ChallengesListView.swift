@@ -15,6 +15,9 @@ struct ChallengesListView: View {
     @Query
     var challenges: [Challenge]
     
+    @Query
+    var habits: [Habit]
+    
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var userManager: LocalUserManager
@@ -57,16 +60,22 @@ struct ChallengesListView: View {
                     }
                 }
             }
+            .onAppear {
+                print("CHALLENGES: \(challenges)")
+            }
             .task {
                 await viewModel.getChallenges(for: userManager.profile.id)
             }
-            .navigationTitle("Challenges")
-            .onAppear {
-                for challenge in challenges {
-                    print("CHALLENGE FOR HABIT: \(challenge.habit.name)")
-                    print("CHALLENGE: \(challenge)")
+            .onChange(of: viewModel.challenges) { oldChallenges, newChallenges in
+                if !newChallenges.isEmpty {
+                    for newChallenge in newChallenges {
+                        if !challenges.contains(where: { $0.id == newChallenge.id }) {
+                            getHabit(from: newChallenge)
+                        }
+                    }
                 }
             }
+            .navigationTitle("Challenges")
         }
     }
     
@@ -105,28 +114,50 @@ struct ChallengesListView: View {
             Helpers.handleResult(receivedHabitResult) { habitDTO in
                 var habitToSend = habitDTO
                 habitToSend.id = UUID()
-                createHabitAfterAcceptingChallenge(habitDTO: habitToSend, challengeID: challenge.id)
+                createHabitAfterAcceptingChallenge(habitDTO: habitToSend, challengeDTO: challenge)
             } onFailure: { error in
                 print("Something went wrong fetching habit: \(error)")
             }
         }
     }
     
-    private func createHabitAfterAcceptingChallenge(habitDTO: HabitDTO, challengeID: UUID) {
+    private func createHabitAfterAcceptingChallenge(habitDTO: HabitDTO, challengeDTO: ChallengeDTO) {
         Task {
-            let sentHabitResult = await viewModel.createHabitAfterAcceptingChallenge(habitDTO: habitDTO, for: challengeID)
+            let sentHabitResult = await viewModel.createHabitAfterAcceptingChallenge(habitDTO: habitDTO, for: challengeDTO.id)
             Helpers.handleResult(sentHabitResult) { createdHabit in
-                let habit = createdHabit.toSwiftData()
-                context.insert(habit)
-                do {
-                    try context.save()
-                    print("✅ Habit created from challenge successfully.")
-                } catch {
-                    print("Couldn't save habit locally: \(error)")
+                if !habits.contains(where: { $0.id == createdHabit.id }) {
+                    let habit = createdHabit.toSwiftData()
+                    context.insert(habit)
+                    do {
+                        try context.save()
+                        saveChallengeLocally(from: challengeDTO, for: habit)
+                        print("✅ Habit created from challenge successfully.")
+                    } catch {
+                        print("Couldn't save habit locally: \(error)")
+                    }
                 }
             } onFailure: { error in
                 print("Something went wrong creating habit: \(error)")
             }
+        }
+    }
+    
+    private func saveChallengeLocally(from challengeDTO: ChallengeDTO, for habit: Habit) {
+        let challenge = Challenge(
+            id: challengeDTO.id,
+            initiator: challengeDTO.initiator.user.toSwiftData(),
+            receiver: challengeDTO.receiver.user.toSwiftData(),
+            habit: habit,
+            type: challengeDTO.type,
+            status: challengeDTO.status,
+            startDate: challengeDTO.startDate,
+            endDate: challengeDTO.endDate,
+            createdAt: .now)
+        do {
+            context.insert(challenge)
+            try context.save()
+        } catch {
+            print("Couldn't save challenge locally: \(error)")
         }
     }
 }

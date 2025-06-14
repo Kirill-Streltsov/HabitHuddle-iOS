@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChallengeDTO: Identifiable, Codable {
+struct ChallengeDTO: Identifiable, Codable, Equatable {
     let id: UUID
     let initiatorHabitID: UUID?
     let receiverHabitID: UUID?
@@ -24,5 +24,9 @@ struct ChallengeDTO: Identifiable, Codable {
         let progress: Double       // 0.0 to 1.0
         let checkInCount: Int
         let plannedDays: Int
+    }
+    
+    static func == (lhs: ChallengeDTO, rhs: ChallengeDTO) -> Bool {
+        lhs.id == rhs.id
     }
 }
