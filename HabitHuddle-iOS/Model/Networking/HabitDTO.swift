@@ -8,7 +8,7 @@
 import Foundation
 
 struct HabitDTO: Codable, Identifiable {
-    let id: UUID
+    var id: UUID
     let user: LightweightUser
     let name: String
     let description: String

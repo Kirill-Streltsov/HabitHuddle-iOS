@@ -15,7 +15,8 @@ extension Habit {
             description: habitDescription,
             duration: duration.rawValue,
             reminderTime: reminderTime,
-            checkIns: checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) }
+            checkIns: checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) },
+            challenges: []
         )
     }
 }

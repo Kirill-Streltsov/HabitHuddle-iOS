@@ -9,16 +9,16 @@ import SwiftUI
 import SwiftData
 
 struct ChallengesListView: View {
-
+    
     @StateObject private var viewModel = ViewModel()
-
+    
     @Query
     var challenges: [Challenge]
-
+    
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var userManager: LocalUserManager
-
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -69,13 +69,13 @@ struct ChallengesListView: View {
             }
         }
     }
-
+    
     private func challengeCard(with challenge: ChallengeDTO) -> some View {
         ChallengeCardView(challenge: challenge) {
             let acceptedResult = await viewModel.acceptChallenge(with: challenge.id)
             Helpers.handleResult(acceptedResult) { status in
                 if status == .ok {
-                    saveChallengeLocally(from: challenge)
+                    getHabit(from: challenge)
                 } else {
                     print("STATUS IS NOT OK: \(status)")
                 }
@@ -91,8 +91,8 @@ struct ChallengesListView: View {
             }
         }
     }
-
-    private func saveChallengeLocally(from challenge: ChallengeDTO) {
+    
+    private func getHabit(from challenge: ChallengeDTO) {
         Task {
             var existingHabitID = UUID()
             if let habitID = challenge.initiatorHabitID {
@@ -100,21 +100,32 @@ struct ChallengesListView: View {
             } else if let habitID = challenge.receiverHabitID {
                 existingHabitID = habitID
             }
-            let result = await viewModel.getHabitFromChallenge(with: existingHabitID)
-
-            Helpers.handleResult(result) { habitDTO in
-                let habit = habitDTO.toSwiftData()
-                habit.id = UUID()
+            let receivedHabitResult = await viewModel.getHabitFromChallenge(with: existingHabitID)
+            
+            Helpers.handleResult(receivedHabitResult) { habitDTO in
+                var habitToSend = habitDTO
+                habitToSend.id = UUID()
+                createHabitAfterAcceptingChallenge(habitDTO: habitToSend, challengeID: challenge.id)
+            } onFailure: { error in
+                print("Something went wrong fetching habit: \(error)")
+            }
+        }
+    }
+    
+    private func createHabitAfterAcceptingChallenge(habitDTO: HabitDTO, challengeID: UUID) {
+        Task {
+            let sentHabitResult = await viewModel.createHabitAfterAcceptingChallenge(habitDTO: habitDTO, for: challengeID)
+            Helpers.handleResult(sentHabitResult) { createdHabit in
+                let habit = createdHabit.toSwiftData()
                 context.insert(habit)
-
                 do {
                     try context.save()
                     print("✅ Habit created from challenge successfully.")
                 } catch {
-                    print("❌ Failed to save habit: \(error)")
+                    print("Couldn't save habit locally: \(error)")
                 }
             } onFailure: { error in
-                print("Something went wrong fetching habit: \(error)")
+                print("Something went wrong creating habit: \(error)")
             }
         }
     }

@@ -29,7 +29,8 @@ extension HabitDetailView {
                     description: description,
                     duration: duration.rawValue,
                     reminderTime: reminder,
-                    checkIns: []
+                    checkIns: [],
+                    challenges: []
                 )
 
                 let habitResponse = try await NetworkManager.shared.request(
@@ -55,7 +56,8 @@ extension HabitDetailView {
                     description: description,
                     duration: duration.rawValue,
                     reminderTime: reminder,
-                    checkIns: habit.checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) }
+                    checkIns: habit.checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) },
+                    challenges: []
                 )
 
                 let habitResponse = try await NetworkManager.shared.request(

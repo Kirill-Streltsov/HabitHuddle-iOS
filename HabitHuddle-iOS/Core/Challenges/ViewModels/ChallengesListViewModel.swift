@@ -63,5 +63,29 @@ extension ChallengesListView {
                 return .failure(.networkError(error))
             }
         }
+        
+        func createHabitAfterAcceptingChallenge(habitDTO: HabitDTO, for challengeID: UUID) async -> Result<HabitDTO, HHError> {
+            do {
+                let payload = HabitPayload(
+                    id: habitDTO.id,
+                    name: habitDTO.name,
+                    description: habitDTO.description,
+                    duration: habitDTO.duration.rawValue,
+                    reminderTime: habitDTO.reminderTime,
+                    checkIns: [],
+                    challenges: [LightweightChallenge(id: challengeID)]
+                )
+
+                let habitResponse = try await NetworkManager.shared.request(
+                    endpoint: .createHabit(),
+                    method: .post,
+                    body: payload,
+                    responseType: HabitDTO.self
+                )
+                return .success(habitResponse)
+            } catch {
+                return .failure(.networkError(error))
+            }
+        }
     }
 }

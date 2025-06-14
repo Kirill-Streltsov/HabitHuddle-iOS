@@ -23,7 +23,10 @@ struct MyFriendsListView: View {
                     if !isInFriendsTab {
                         if let habit = habit {
                             FriendCardView(friend: friend, showChallengeButton: false) {
-                                await viewModel.sendChallenge(to: friend.id, for: habit.id, of: .competitive, with: .now, and: .now)
+                                guard let endDate = Calendar.current.date(byAdding: .day, value: habit.duration.numberOfDays, to: Date.now) else {
+                                    return
+                                }
+                                await viewModel.sendChallenge(to: friend.id, for: habit.id, of: .competitive, with: .now, and: endDate)
                             }
                             .onAppear {
                                 print("THIS APPEARED HOME TAB")
