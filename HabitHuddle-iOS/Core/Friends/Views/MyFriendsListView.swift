@@ -22,23 +22,23 @@ struct MyFriendsListView: View {
                 ForEach(viewModel.friends) { friend in
                     if !isInFriendsTab {
                         if let habit = habit {
-                            FriendCardView(friend: friend, showChallengeButton: false) {
+                            FriendCardView(friend: friend, showChallengeButton: true) {
                                 await viewModel.sendChallenge(to: friend.id, for: habit.id, ofType: .competitive)
-                            }
-                            .onAppear {
-                                print("THIS APPEARED HOME TAB")
+                            } onSupport: {
+                                await viewModel.sendChallenge(to: friend.id, for: habit.id, ofType: .supportive)
                             }
                         }
                     } else {
                         NavigationLink {
                             FriendDetailView(friend: friend)
                         } label: {
-                            FriendCardView(friend: friend, showChallengeButton: true) {}
+                            FriendCardView(friend: friend, showChallengeButton: true) {
+                                print("")
+                            } onSupport: {
+                                print("")
+                            }
                         }
                         .buttonStyle(.plain)
-                        .onAppear {
-                            print("THIS APPEARED FRIENDS TAB")
-                        }
                     }
                 }
                 .onAppear {

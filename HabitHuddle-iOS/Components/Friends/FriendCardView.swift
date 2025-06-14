@@ -10,7 +10,8 @@ import SwiftUI
 struct FriendCardView: View {
     let friend: UserDTO
     let showChallengeButton: Bool
-    var onChallenge: @MainActor () async -> Void
+    var onCompete: @MainActor () async -> Void
+    var onSupport: @MainActor () async -> Void
 
     var body: some View {
         HStack(spacing: 16) {
@@ -39,12 +40,20 @@ struct FriendCardView: View {
             Spacer()
 
             // Challenge button
-            if !showChallengeButton {
-                SlimButton(title: "Challenge") {
-                    Task {
-                        await onChallenge()
+            if showChallengeButton {
+                VStack {
+                    SlimButton(title: "Compete", color: .pink) {
+                        Task {
+                            await onCompete()
+                        }
+                    }
+                    SlimButton(title: "Support", color: .green) {
+                        Task {
+                            await onSupport()
+                        }
                     }
                 }
+                
             } else {
                 Image(systemName: "chevron.right")
                     .foregroundStyle(.secondary)
@@ -61,5 +70,5 @@ struct FriendCardView: View {
 }
 
 #Preview {
-    FriendCardView(friend: UserDTO(id: UUID(), username: "username", name: "Username", createdAt: .now, updatedAt: .now), showChallengeButton: false, onChallenge: {})
+    FriendCardView(friend: UserDTO(id: UUID(), username: "username", name: "Username", createdAt: .now, updatedAt: .now), showChallengeButton: false, onCompete: {}, onSupport: {})
 }

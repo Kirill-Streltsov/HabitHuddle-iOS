@@ -9,8 +9,14 @@ import SwiftUI
 
 struct SlimButton: View {
     let title: String
-    let color = Color.blue.opacity(0.9)
+    let color: Color
     let action: () -> ()
+    
+    init(title: String, color: Color = .blue.opacity(0.9), action: @escaping () -> Void) {
+        self.title = title
+        self.color = color
+        self.action = action
+    }
     
     var body: some View {
         Button(action: action) {
@@ -27,5 +33,5 @@ struct SlimButton: View {
 }
 
 #Preview {
-    SlimButton(title: "Challenge") {}
+    SlimButton(title: "Challenge", color: .pink) {}
 }
