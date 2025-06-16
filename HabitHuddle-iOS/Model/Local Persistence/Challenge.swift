@@ -13,8 +13,7 @@ final class Challenge: Identifiable, Hashable {
     var id: UUID
     var initiator: User
     var receiver: User
-    @Relationship(deleteRule: .cascade)
-    var habit: Habit
+    var habit: Habit?
     var type: ChallengeType
     var status: ChallengeStatus
     var startDate: Date

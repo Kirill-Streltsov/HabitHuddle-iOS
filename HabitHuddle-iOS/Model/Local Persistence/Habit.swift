@@ -21,7 +21,7 @@ final class Habit: Identifiable, Hashable {
     @Relationship(deleteRule: .cascade, inverse: \HabitCheckIn.habit)
     var checkIns: [HabitCheckIn] = []
     @Relationship(deleteRule: .cascade, inverse: \Challenge.habit)
-    var challenges: [Challenge]? = []
+    var challenges: [Challenge] = []
 
     init(
         id: UUID,
