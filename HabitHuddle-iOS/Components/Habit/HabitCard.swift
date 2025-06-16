@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HabitCard: View {
     
     @Environment(\.modelContext) private var context
     @State private var scale = 1.0
     @State private var challengeButtonPressed = false
+        
     let habit: Habit
     let cardWidth: CGFloat = UIScreen.main.bounds.width - 60
     
@@ -62,13 +64,23 @@ struct HabitCard: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                 Spacer()
-                Button {
-                    challengeButtonPressed = true
-                } label: {
+                
+                if habit.challenges.isEmpty {
+                    Button {
+                        challengeButtonPressed = true
+                    } label: {
+                        Image(systemName: "flag.pattern.checkered.2.crossed")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.blue)
+                } else if habit.challenges[0].type == .competitive {
                     Image(systemName: "flag.pattern.checkered.2.crossed")
+                        .foregroundStyle(.pink)
+                } else if habit.challenges[0].type == .supportive {
+                    Image(systemName: "flag.pattern.checkered.2.crossed")
+                        .foregroundStyle(.green)
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.blue)
+                
             }
             .padding(.bottom, 4)
             .frame(width: cardWidth)

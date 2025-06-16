@@ -22,6 +22,9 @@ struct RootView: View {
     @Query
     var users: [User]
     
+    @Query
+    var challenges: [Challenge]
+    
     var body: some View {
         ZStack {
             if hasSeenOnboarding {
@@ -58,6 +61,20 @@ struct RootView: View {
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {
             print("TOKEN: \(TokenManager.token)")
+        }
+        .onAppear {
+            print("Habits:")
+            for habit in habits {
+                print(habit.name)
+            }
+            print("Users:")
+            for user in users {
+                print(user.name)
+            }
+            print("Challenges:")
+            for challenge in challenges {
+                print(challenge.habit?.name)
+            }
         }
     }
 }

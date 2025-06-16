@@ -15,6 +15,13 @@ struct HabitDetailView: View {
     }
 
     var habit: Habit?
+    var isPartOfChallenge: Bool {
+        if let habit = habit, !habit.challenges.isEmpty {
+            return true
+        } else {
+            return false
+        }
+    }
     let mode: Mode
 
     @State private var isCheckedIn = false
@@ -83,9 +90,15 @@ struct HabitDetailView: View {
                                 }
 
                                 VStack(alignment: .leading, spacing: 12) {
-                                    Text("Desired duration")
-                                        .fontWeight(.semibold)
-
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Desired duration")
+                                            .fontWeight(.semibold)
+                                        if isPartOfChallenge {
+                                            Text("This habit is currently part of a challenge, so you can’t change its duration right now.")
+                                                    .font(.footnote)
+                                                    .foregroundColor(.gray)
+                                        }
+                                    }
                                     Picker("Duration", selection: $viewModel.duration) {
                                         ForEach(HabitDuration.allCases) { option in
                                             Text(option.displayName)
@@ -93,6 +106,7 @@ struct HabitDetailView: View {
                                         }
                                     }
                                     .pickerStyle(.segmented)
+                                    .disabled(isPartOfChallenge)
                                 }
                             }
                             VStack(alignment: .leading, spacing: 12) {
