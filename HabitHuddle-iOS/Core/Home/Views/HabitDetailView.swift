@@ -18,7 +18,6 @@ struct HabitDetailView: View {
     let mode: Mode
 
     @State private var isCheckedIn = false
-    @State private var challengeButtonPressed = false
     @State private var saveButtonPressed = false
     @State private var deleteButtonPressed = false
     
@@ -106,28 +105,14 @@ struct HabitDetailView: View {
                             }
                         }
                     }
-                    
-                    VStack(spacing: 8) {
-                        if mode == .editing {
-                            SubmitButton(title: "Challenge a friend!", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .orange) {
-                                saveHabit()
-                                challengeButtonPressed = true
-                            }
-                        }
-                        
-                        SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
-                            saveButtonPressed = true
-                            saveHabit()
-                            dismiss()
-                        }
+                    SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
+                        saveButtonPressed = true
+                        saveHabit()
+                        dismiss()
                     }
                     .padding(.horizontal)
                 }
                 .padding(.top)
-            }
-            .sheet(isPresented: $challengeButtonPressed) {
-                MyFriendsListView(isInFriendsTab: false, habit: habit)
-                    .presentationDetents([.medium])
             }
             .toolbar {
                 if mode == .editing {

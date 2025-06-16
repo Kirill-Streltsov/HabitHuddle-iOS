@@ -22,6 +22,7 @@ struct CheckedInStateView: View {
                     .foregroundStyle(.gray)
                     .fontWeight(.light)
                     .font(.system(size: fontSize))
+                    .flickering()
             }
         }
     }

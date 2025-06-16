@@ -8,55 +8,71 @@
 import SwiftUI
 
 struct HabitCard: View {
+    
     @Environment(\.modelContext) private var context
     @State private var scale = 1.0
+    @State private var challengeButtonPressed = false
     let habit: Habit
-    let cardWidth: CGFloat = UIScreen.main.bounds.width / 2 - 48
-
+    let cardWidth: CGFloat = UIScreen.main.bounds.width - 60
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top) {
-                Text(habit.name)
-                    .font(.system(size: 20, weight: .semibold))
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .lineLimit(2)
-                
-                VStack(spacing: 4) {
-//                    if let challenges = habit.challenges, !challenges.isEmpty {
-//                        Image(systemName: "flag.pattern.checkered.2.crossed")
-//                            .foregroundStyle(challenges[0].type == .competitive ? .pink : .green)
-//                    }
-                    Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
-                        .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)
+                VStack(alignment: .leading) {
+                    Text(habit.name)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .lineLimit(2)
+                    if !habit.habitDescription.isEmpty {
+                        Text(habit.habitDescription)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(2)
+                    }
                 }
+                Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
+                    .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)
+                
             }
             .frame(width: cardWidth)
             
-
-            HStack {
-                Text(habit.isCheckedInToday ? "Checked in!" : "Tap to check in")
-                    .frame(height: 60)
-                    .multilineTextAlignment(.leading)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                Spacer()
-                CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 47)
+            ZStack {
+                CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 100)
                     .onTapGesture {
                         HapticManager.trigger(.success)
                         habit.toggleCheckIn(in: context)
-                        scale += 0.075
+                        scale += 0.1
                         DispatchQueue.main.asyncAfter(deadline: .now()) {
-                            scale -= 0.075
+                            scale -= 0.1
                         }
                     }
+                HStack {
+                    StatItem(title: "Longest Streak", value: "\(habit.longestStreak) days")
+                    Spacer()
+                    StatItem(title: "Completion", value: "\(habit.completionPercentage)%")
+                }
             }
+            .offset(y: 15)
             .frame(width: cardWidth)
-
-            Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays) days")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-
+            
+            HStack(alignment: .bottom) {
+                Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays) days")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Button {
+                    challengeButtonPressed = true
+                } label: {
+                    Image(systemName: "flag.pattern.checkered.2.crossed")
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.blue)
+            }
+            .padding(.bottom, 4)
+            .frame(width: cardWidth)
+            
             HabitProgressView(
                 habit: habit,
                 width: cardWidth,
@@ -71,6 +87,10 @@ struct HabitCard: View {
         .frame(maxHeight: 225)
         .scaleEffect(scale)
         .animation(.easeInOut(duration: 0.2), value: scale)
+        .sheet(isPresented: $challengeButtonPressed) {
+            MyFriendsListView(isInFriendsTab: false, habit: habit)
+                .presentationDetents([.medium])
+        }
     }
 }
 

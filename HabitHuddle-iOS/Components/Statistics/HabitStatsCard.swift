@@ -116,7 +116,7 @@ struct HabitStatsCard: View {
     }
 }
 
-private struct StatItem: View {
+struct StatItem: View {
     let title: String
     let value: String
 

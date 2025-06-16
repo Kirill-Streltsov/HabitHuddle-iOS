@@ -22,7 +22,6 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-
                 if habits.isEmpty {
                     EmptyHabitsView(onAddHabit: { showNewHabitView = true })
                 } else {
