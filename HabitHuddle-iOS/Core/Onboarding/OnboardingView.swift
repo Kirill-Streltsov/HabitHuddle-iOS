@@ -120,7 +120,7 @@ struct OnboardingView: View {
             OnboardingPageData(
                 symbol: "sparkles",
                 title: "Let’s Start Small",
-                text: "Pick Your First Habits",
+                text: "Create space for growth.\nBegin with a few popular habits.",
                 customView: AnyView(
                     OnboardingHabitList(userID: userID)
                 )

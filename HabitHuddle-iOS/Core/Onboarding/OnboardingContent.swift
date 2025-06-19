@@ -15,7 +15,7 @@ struct OnboardingContent: View {
                 .font(.system(size: 48))
                 .foregroundStyle(.primary)
 
-            VStack(spacing: 12) {
+            VStack(spacing: 0) {
                 Text(page.title)
                     .font(.largeTitle.bold())
                     .multilineTextAlignment(.center)
@@ -25,9 +25,11 @@ struct OnboardingContent: View {
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.secondary)
                     .padding(.horizontal)
+                    .frame(height: 60)
             }
-            
+            Spacer()
             page.customView
+            Spacer()
         }
         .padding(.top, 32)
     }
