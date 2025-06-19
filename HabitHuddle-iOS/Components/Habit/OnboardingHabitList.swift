@@ -18,7 +18,7 @@ struct OnboardingHabitList: View {
     @State private var habitDuration: [HabitDuration] = [.twoWeeks, .twoWeeks, .twoWeeks]
     
     var body: some View {
-        
+    
         VStack(spacing: 0) {
             ForEach(0..<3) { index in
                 OnboardingDefaultHabitCard(habit: defaultHabits[index], isSelected: $isHabitSelected[index], duration: $habitDuration[index])
