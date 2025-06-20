@@ -45,9 +45,9 @@ struct HabitCard: View {
                     .onTapGesture {
                         HapticManager.trigger(.success)
                         habit.toggleCheckIn(in: context)
-                        scale += 0.1
+                        scale += 0.15
                         DispatchQueue.main.asyncAfter(deadline: .now()) {
-                            scale -= 0.1
+                            scale -= 0.15
                         }
                     }
                 HStack {
@@ -96,9 +96,9 @@ struct HabitCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .frame(maxWidth: cardWidth)
-        .frame(maxHeight: 225)
+        .frame(maxHeight: 200)
         .scaleEffect(scale)
-        .animation(.easeInOut(duration: 0.2), value: scale)
+        .animation(.easeInOut(duration: 0.3), value: scale)
         .sheet(isPresented: $challengeButtonPressed) {
             MyFriendsListView(isInFriendsTab: false, habit: habit)
                 .presentationDetents([.medium])

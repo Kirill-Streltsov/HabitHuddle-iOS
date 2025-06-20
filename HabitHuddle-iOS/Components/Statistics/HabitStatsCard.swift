@@ -123,6 +123,7 @@ struct StatItem: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(value)
+                .contentTransition(.numericText())
                 .font(.headline)
                 .foregroundStyle(.primary)
             Text(title)
