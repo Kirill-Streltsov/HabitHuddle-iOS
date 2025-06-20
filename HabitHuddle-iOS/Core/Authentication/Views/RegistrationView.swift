@@ -59,17 +59,11 @@ struct RegistrationView: View {
 
     var body: some View {
         VStack {
-            VStack(spacing: 24) {
-                Text("Create an account")
-                    .font(.system(size: 24))
-                    .fontWeight(.bold)
-                Image(systemName: "person.badge.plus")
-                    .font(.system(size: 75))
-            }
-            .foregroundStyle(Color.accentColor)
-            .frame(height: 160)
+            Image(systemName: "person.badge.plus")
+                .font(.system(size: 75))
+                .foregroundStyle(Color.accentColor)
 
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 12) {
                 ErrorText(text: errorText)
                     .opacity(registerButtonPressed ? 1 : 0)
                     .frame(height: 20)
@@ -122,9 +116,10 @@ struct RegistrationView: View {
             .disabled(inputFieldsAreEmpty)
             .background(inputFieldsAreEmpty ? Color.accentColor.opacity(0.5) : Color.accentColor)
             .clipShape(.rect(cornerRadius: 10))
-            .padding(.top, 24)
             Spacer()
         }
+        .navigationTitle("Register")
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     private func registerUser() {

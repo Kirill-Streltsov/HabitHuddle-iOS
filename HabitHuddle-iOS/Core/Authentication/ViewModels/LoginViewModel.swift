@@ -55,6 +55,59 @@ extension LoginView {
                 return nil
             }
         }
+        
+        func handleGoogleSignIn() async -> UserDTO? {
+            // Wrap the callback-based Google sign-in into async/await
+            let idToken = await withCheckedContinuation { [weak self] continuation in
+                GoogleAuthManager.shared.signIn { result in
+                    switch result {
+                    case .success(let idToken):
+                        continuation.resume(returning: idToken)
+                    case .failure(let error):
+                        guard let strongSelf = self else { return }
+                        if let apiError = error as? HHError {
+                            strongSelf.errorMessage = apiError.localizedDescription
+                        } else {
+                            strongSelf.errorMessage = "Something went wrong. Please try again."
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            strongSelf.errorMessage = ""
+                        }
+                    }
+                }
+            }
+            
+            do {
+                let loginResponse = try await NetworkManager.shared.request(
+                    endpoint: .googleSignIn(),
+                    method: .post,
+                    body: GoogleTokenRequest(idToken: idToken),
+                    responseType: LoginResponse.self,
+                    isLoggingIn: true
+                )
+                
+                TokenManager.token = loginResponse.token
+                let user = loginResponse.user
+                userManager.profile = LocalUser(
+                    id: user.id,
+                    username: user.username,
+                    name: user.name,
+                    isSignedInToServer: true
+                )
+                                
+                return loginResponse.user
+            } catch {
+                if let apiError = error as? HHError {
+                    errorMessage = apiError.localizedDescription
+                } else {
+                    errorMessage = "Something went wrong. Please try again."
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.errorMessage = ""
+                }
+                return nil
+            }
+        }
 
         private func makeBase64Login(username: String, password: String) -> String {
             let loginString = "\(username):\(password)"

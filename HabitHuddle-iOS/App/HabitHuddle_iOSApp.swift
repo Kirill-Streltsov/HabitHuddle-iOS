@@ -7,6 +7,7 @@
 
 import SwiftData
 import SwiftUI
+import GoogleSignIn
 
 @main
 struct HabitHuddle_iOSApp: App {
@@ -37,6 +38,15 @@ struct HabitHuddle_iOSApp: App {
                 .environmentObject(appState)
                 .environmentObject(user)
                 .environmentObject(MyFriendsListView.ViewModel())
+                .onOpenURL { url in
+                    GIDSignIn.sharedInstance.handle(url)
+                }
+                .onAppear {
+                    GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+                        print("USER: \(user)")
+                    }
+                }
+            
         }
         .modelContainer(sharedModelContainer)
     }

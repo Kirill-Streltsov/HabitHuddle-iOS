@@ -7,6 +7,8 @@
 
 import SwiftData
 import SwiftUI
+import GoogleSignInSwift
+import GoogleSignIn
 
 struct LoginView: View {
     
@@ -35,17 +37,11 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                VStack(spacing: 24) {
-                    Text("Log into your account")
-                        .font(.system(size: 24))
-                        .fontWeight(.bold)
-                    Image(systemName: "person.fill")
-                        .font(.system(size: 75))
-                }
-                .foregroundStyle(Color.accentColor)
-                .frame(height: 160)
+                Image(systemName: "person.fill")
+                    .font(.system(size: 75))
+                    .foregroundStyle(Color.accentColor)
 
-                VStack(alignment: .leading, spacing: 24) {
+                VStack(alignment: .leading, spacing: 12) {
                     ErrorText(text: viewModel.errorMessage)
                         .frame(height: 20)
                     
@@ -73,7 +69,7 @@ struct LoginView: View {
                 }
                 .padding(.horizontal)
                 .padding(12)
-
+                
                 Button {
                     loginUser()
                 } label: {
@@ -87,26 +83,44 @@ struct LoginView: View {
                 .disabled(inputFieldIsEmpty)
                 .background(inputFieldIsEmpty ? Color.accentColor.opacity(0.5) : Color.accentColor)
                 .clipShape(.rect(cornerRadius: 10))
-                .padding(.top, 24)
+
+                GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide)) {
+                    Task {
+                        if let user = await viewModel.handleGoogleSignIn() {
+                            handleUserResponse(user: user)
+                        }
+                    }
+                }
+                    .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                
 
                 Spacer()
+            }
+            .navigationTitle("Login")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+    
+    
+    private func loginUser() {
+        Task {
+            if let user = await viewModel.loginUser(username: username, password: password) {
+                handleUserResponse(user: user)
             }
         }
     }
     
-    private func loginUser() {
+    private func handleUserResponse(user: UserDTO) {
         Task {
-            if let cu = await viewModel.loginUser(username: username, password: password) {
-                print("TOKEN: \(String(describing: TokenManager.token))")
-                let codableHabitsResult = await viewModel.getUserHabits()
-                Helpers.handleResult(codableHabitsResult) { codableHabits in
-                    saveHabitsLocally(codableHabits)
-                    viewModel.saveUser(cu, using: context)
-                    print("TOKEN: \(TokenManager.token)")
-                    dismiss()
-                } onFailure: { apiError in
-                    print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")
-                }
+            print("TOKEN: \(String(describing: TokenManager.token))")
+            let codableHabitsResult = await viewModel.getUserHabits()
+            Helpers.handleResult(codableHabitsResult) { codableHabits in
+                saveHabitsLocally(codableHabits)
+                viewModel.saveUser(user, using: context)
+                print("TOKEN: \(TokenManager.token)")
+                dismiss()
+            } onFailure: { apiError in
+                print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")
             }
         }
     }

@@ -17,6 +17,10 @@ struct Endpoint {
     }
     
     // MARK: Authentication
+    
+    static func googleSignIn() -> Endpoint {
+        Endpoint(path: "auth/google")
+    }
 
     static func login() -> Endpoint {
         Endpoint(path: "auth/login")
