@@ -16,7 +16,7 @@ struct HabitsGridView: View {
     ]
 
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 16) {
+        LazyVGrid(columns: columns, spacing: 20) {
             ForEach(habits, id: \.self) { habit in
                 NavigationLink(value: habit) {
                     HabitCard(habit: habit)
