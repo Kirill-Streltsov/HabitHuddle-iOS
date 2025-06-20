@@ -23,7 +23,7 @@ struct OnboardingView: View {
                 text: "Build habits, stay on track, and grow step by step.",
                 customView: AnyView(
                     HabitCard(habit: Habit.demoHabitWithRecentCheckIns())
-                        .disabled(true)
+                        .allowsHitTesting(false)
                 )
             ),
             OnboardingPageData(

@@ -7,8 +7,6 @@
 
 import SwiftData
 import SwiftUI
-import GoogleSignInSwift
-import GoogleSignIn
 
 struct LoginView: View {
     
@@ -83,16 +81,6 @@ struct LoginView: View {
                 .disabled(inputFieldIsEmpty)
                 .background(inputFieldIsEmpty ? Color.accentColor.opacity(0.5) : Color.accentColor)
                 .clipShape(.rect(cornerRadius: 10))
-
-                GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide)) {
-                    Task {
-                        if let user = await viewModel.handleGoogleSignIn() {
-                            handleUserResponse(user: user)
-                        }
-                    }
-                }
-                    .frame(width: UIScreen.main.bounds.width - 32, height: 48)
-                
 
                 Spacer()
             }

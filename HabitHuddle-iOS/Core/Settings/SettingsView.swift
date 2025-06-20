@@ -6,14 +6,19 @@
 //
 
 import SwiftUI
-
+import SwiftData
 
 struct SettingsView: View {
     
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
+    
+    @Environment(\.modelContext) private var context
+    
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var userManager: LocalUserManager
-
+    
+    @StateObject private var viewModel = ViewModel()
+    
     var body: some View {
         NavigationStack {
             List {
@@ -48,6 +53,22 @@ struct SettingsView: View {
                         NavigationLink(destination: RegistrationView(appState: appState, userManager: userManager)) {
                             Label("Register", systemImage: "person.badge.plus")
                         }
+                        
+                        Button {
+                            Task {
+                                if let user = await viewModel.handleGoogleSignIn() {
+                                    handleUserResponse(user: user)
+                                }
+                            }
+                        } label: {
+                            Label {
+                                Text("Sign in with Google")
+                            } icon: {
+                                Image("google")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                            }
+                        }
                     }
                 }
 
@@ -77,6 +98,50 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
         }
+    }
+    
+    private func handleUserResponse(user: UserDTO) {
+        appState.isAuthenticated = true
+        userManager.profile = LocalUser(id: user.id, username: user.username, name: user.name, isSignedInToServer: true)
+        Task {
+            print("TOKEN: \(String(describing: TokenManager.token))")
+            let codableHabitsResult = await viewModel.getUserHabits()
+            Helpers.handleResult(codableHabitsResult) { codableHabits in
+                saveHabitsLocally(codableHabits)
+            } onFailure: { apiError in
+                print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")
+            }
+        }
+    }
+    
+    private func saveHabitsLocally(_ codableHabits: [HabitDTO]) {
+        for codableHabit in codableHabits {
+            // Skip if habit with same ID already exists
+            if habitExists(withId: codableHabit.id) {
+                continue
+            }
+
+            let habit = Habit(
+                id: codableHabit.id,
+                user: codableHabit.user,
+                name: codableHabit.name,
+                description: codableHabit.description,
+                duration: codableHabit.duration,
+                reminderTime: codableHabit.reminderTime
+            )
+
+            codableHabit.checkIns?.forEach { _ in
+                let checkIn = HabitCheckIn(habit: habit)
+                context.insert(checkIn)
+            }
+
+            context.insert(habit)
+        }
+    }
+    
+    private func habitExists(withId id: UUID) -> Bool {
+        let descriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.id == id })
+        return (try? context.fetchCount(descriptor)) ?? 0 > 0
     }
 }
 
