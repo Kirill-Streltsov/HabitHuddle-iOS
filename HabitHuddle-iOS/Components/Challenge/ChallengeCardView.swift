@@ -40,7 +40,7 @@ struct ChallengeCardView: View {
                     .foregroundStyle(challenge.type == .competitive ? .red : .green)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
-            
+
             HStack {
                 Image(systemName: "calendar")
                 Text("From \(formattedDate(challenge.startDate)) to \(formattedDate(challenge.endDate))")
