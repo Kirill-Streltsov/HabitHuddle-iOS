@@ -48,6 +48,7 @@ struct ChallengeCardView: View {
             }
             .foregroundStyle(.secondary)
 
+            
             HStack {
                 Button {
                     Task {
