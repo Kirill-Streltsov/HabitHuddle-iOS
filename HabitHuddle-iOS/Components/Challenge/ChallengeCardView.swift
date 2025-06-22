@@ -47,6 +47,7 @@ struct ChallengeCardView: View {
                     .font(.caption)
             }
             .foregroundStyle(.secondary)
+            
             HStack {
                 Button {
                     Task {
