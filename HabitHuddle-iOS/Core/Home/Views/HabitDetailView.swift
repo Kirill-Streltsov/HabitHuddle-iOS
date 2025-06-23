@@ -134,9 +134,6 @@ struct HabitDetailView: View {
         VStack(spacing: 16) {
             CardView {
                 VStack(spacing: 20) {
-
-                    // MARK: - Icon Picker
-                    // MARK: - Text Fields
                     VStack(spacing: 16) {
                         CustomStyledTextField(
                             placeholder: "Habit name",
@@ -168,7 +165,6 @@ struct HabitDetailView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                     }
                     
-                    // MARK: - Date & Duration
                     VStack(alignment: .leading, spacing: 20) {
                         
                         VStack(alignment: .leading, spacing: 12) {
@@ -194,19 +190,17 @@ struct HabitDetailView: View {
                         }
                     }
                     
-                    // MARK: - Reminder
                     VStack(alignment: .leading, spacing: 12) {
-                        Toggle("Enable Reminder", isOn: $viewModel.hasReminder.animation())
+                        Toggle("Enable Reminder", isOn: $viewModel.hasReminder)
                         
-                        if viewModel.hasReminder {
-                            DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
-                                .transition(.opacity.combined(with: .slide))
-                        }
+                        DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
+                            .opacity(viewModel.hasReminder ? 1 : 0.3)
+                            .disabled(!viewModel.hasReminder)
+                            .animation(.easeInOut(duration: 0.3), value: viewModel.hasReminder)
                     }
                 }
             }
             
-            // MARK: - Save Button
             SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
                 saveButtonPressed = true
                 saveHabit()

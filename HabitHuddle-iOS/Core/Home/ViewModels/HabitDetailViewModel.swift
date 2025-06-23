@@ -16,7 +16,7 @@ extension HabitDetailView {
         @Published var description: String = ""
         @Published var hasCheckedIn: Bool = false
         @Published var duration: HabitDuration = .twoWeeks
-        @Published var hasReminder: Bool = false
+        @Published var hasReminder: Bool = true
         @Published var reminderTime: Date = .init()
         var habit: Habit?
 

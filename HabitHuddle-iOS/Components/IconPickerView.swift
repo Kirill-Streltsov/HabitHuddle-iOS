@@ -68,7 +68,6 @@ struct IconPickerView: View {
                         Text(category.name)
                             .font(.title3)
                             .fontWeight(.semibold)
-                        
                             .padding(.horizontal)
                         LazyVGrid(columns: gridItemLayout, alignment: .leading, spacing: 16) {
                             ForEach(category.icons, id: \.self) { icon in
