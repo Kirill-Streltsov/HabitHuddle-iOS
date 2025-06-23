@@ -60,9 +60,16 @@ struct HabitCard: View {
             .frame(width: cardWidth)
             
             HStack(alignment: .bottom) {
-                Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays) days")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                if habit.isCompleted {
+                    Text("🎉 Finished! Keep the streak alive!")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.green)
+                } else {
+                    Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays) days")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
                 Spacer()
                 
                 if habit.challenges.isEmpty {

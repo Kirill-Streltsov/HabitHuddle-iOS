@@ -69,22 +69,24 @@ struct HabitStatsCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text(habit.name)
-                    .font(.title3)
-                    .fontWeight(.semibold)
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(habit.name)
+                        .font(.title3)
+                        .fontWeight(.semibold)
 
-                Spacer()
+                    Spacer()
 
-                Image(systemName: "chart.bar.fill")
-                    .foregroundStyle(habit.checkIns.isEmpty ? Color(.secondaryLabel) : Color.green)
-                    .imageScale(.large)
+                    Image(systemName: "chart.bar.fill")
+                        .foregroundStyle(habit.checkIns.isEmpty ? Color(.secondaryLabel) : Color.green)
+                        .imageScale(.large)
+                }
+
+                Text(habit.habitDescription)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
             }
-
-            Text(habit.habitDescription)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .lineLimit(2)
 
             Divider()
 
