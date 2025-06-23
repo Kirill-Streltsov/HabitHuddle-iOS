@@ -22,17 +22,15 @@ extension Habit {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
         
-        if checkIns.count < duration.numberOfDays {
-            if let existingCheckIn = checkIns.first(where: { Calendar.current.isDate($0.date, inSameDayAs: today) }) {
-                context.delete(existingCheckIn)
-            } else {
-                let newCheckIn = HabitCheckIn(date: today, habit: self)
-                checkIns.append(newCheckIn)
-            }
-            updatedAt = .now
-            try? context.save()
-            toggleCheckInRemotely()
+        if let existingCheckIn = checkIns.first(where: { Calendar.current.isDate($0.date, inSameDayAs: today) }) {
+            context.delete(existingCheckIn)
+        } else {
+            let newCheckIn = HabitCheckIn(date: today, habit: self)
+            checkIns.append(newCheckIn)
         }
+        updatedAt = .now
+        try? context.save()
+        toggleCheckInRemotely()
     }
 
     func toggleCheckInRemotely() {

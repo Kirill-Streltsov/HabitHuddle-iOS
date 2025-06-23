@@ -63,6 +63,7 @@ struct RootView: View {
             print("TOKEN: \(TokenManager.token)")
         }
         .onAppear {
+            //context.insert(Habit.demoHabitWith13Of14CheckIns())
             print("Habits:")
             for habit in habits {
                 print(habit.name)

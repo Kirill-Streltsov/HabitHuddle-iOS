@@ -180,4 +180,35 @@ extension Habit {
 
         return habit
     }
+    
+    static func demoHabitWith13Of14CheckIns() -> Habit {
+        let calendar = Calendar.current
+        let now = Date()
+        let user = LightweightUser(id: UUID())
+
+        // Create a habit with a 14-day duration
+        let habit = Habit(
+            id: UUID(),
+            user: user,
+            name: "Read a Book",
+            description: "Read at least 10 pages every day.",
+            duration: .twoWeeks,
+            reminderTime: calendar.date(bySettingHour: 20, minute: 0, second: 0, of: now)!
+        )
+
+        // Set creation date to 13 days ago (14-day habit: today included)
+        habit.createdAt = calendar.date(byAdding: .day, value: -13, to: now)!
+
+        // Create check-ins from 13 days ago up to **yesterday**
+        var checkIns: [HabitCheckIn] = []
+        for offset in (1...13).reversed() { // Skip offset 0 (today)
+            if let checkInDate = calendar.date(byAdding: .day, value: -offset, to: now),
+               let checkInTime = calendar.date(bySettingHour: Int.random(in: 7...10), minute: Int.random(in: 0..<60), second: 0, of: checkInDate) {
+                checkIns.append(HabitCheckIn(date: checkInTime, habit: habit))
+            }
+        }
+
+        habit.checkIns = checkIns
+        return habit
+    }
 }
