@@ -16,6 +16,9 @@ struct RootView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.modelContext) private var context
     
+    @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var userManager: LocalUserManager
+                
     @Query
     var habits: [Habit]
     
@@ -40,6 +43,7 @@ struct RootView: View {
                     }
                     Tab("Settings", systemImage: "gear", value: 3) {
                         SettingsView()
+                            .environmentObject(LoginViewModel(appState: appState, userManager: userManager))
                     }
                 }
                 .transition(.opacity)

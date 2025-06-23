@@ -15,7 +15,6 @@ struct LoginView: View {
         case password
     }
     
-    @StateObject private var viewModel: ViewModel
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
@@ -24,12 +23,10 @@ struct LoginView: View {
     
     @FocusState private var focusedField: Field?
     
+    @EnvironmentObject private var viewModel: LoginViewModel
+    
     private var inputFieldIsEmpty: Bool {
         username.isEmpty || password.isEmpty
-    }
-
-    init(appState: AppState, userManager: LocalUserManager) {
-        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState, userManager: userManager))
     }
 
     var body: some View {
@@ -92,52 +89,12 @@ struct LoginView: View {
     
     private func loginUser() {
         Task {
-            if let user = await viewModel.loginUser(username: username, password: password) {
-                handleUserResponse(user: user)
-            }
+            await viewModel.loginUser(username: username, password: password, using: context)
+            dismiss()
         }
-    }
-    
-    private func handleUserResponse(user: UserDTO) {
-        Task {
-            print("TOKEN: \(String(describing: TokenManager.token))")
-            let codableHabitsResult = await viewModel.getUserHabits()
-            Helpers.handleResult(codableHabitsResult) { codableHabits in
-                saveHabitsLocally(codableHabits)
-                viewModel.saveUser(user, using: context)
-                print("TOKEN: \(TokenManager.token)")
-                dismiss()
-            } onFailure: { apiError in
-                print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")
-            }
-        }
-    }
-
-    private func saveHabitsLocally(_ codableHabits: [HabitDTO]) {
-        for codableHabit in codableHabits {
-            // Skip if habit with same ID already exists
-            if habitExists(withId: codableHabit.id) {
-                continue
-            }
-
-            let habit = codableHabit.toSwiftData()
-
-            codableHabit.checkIns?.forEach { _ in
-                let checkIn = HabitCheckIn(habit: habit)
-                context.insert(checkIn)
-            }
-
-            context.insert(habit)
-        }
-        try? context.save()
-    }
-    
-    private func habitExists(withId id: UUID) -> Bool {
-        let descriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.id == id })
-        return (try? context.fetchCount(descriptor)) ?? 0 > 0
-    }
+    }    
 }
 
 #Preview {
-    LoginView(appState: AppState(), userManager: LocalUserManager())
+    LoginView()
 }

@@ -11,22 +11,10 @@ import GoogleSignIn
 
 @main
 struct HabitHuddle_iOSApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            User.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
 
     @StateObject private var appState = AppState()
-    @StateObject private var user = LocalUserManager()
-
+    @StateObject private var userManager = LocalUserManager()
+    
     init() {
         AppLaunchChecker.clearKeychainIfFreshInstall()
         print("TOKEN MANAGER: \(String(describing: TokenManager.token))")
@@ -36,7 +24,7 @@ struct HabitHuddle_iOSApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(appState)
-                .environmentObject(user)
+                .environmentObject(userManager)
                 .environmentObject(MyFriendsListView.ViewModel())
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
@@ -50,4 +38,17 @@ struct HabitHuddle_iOSApp: App {
         }
         .modelContainer(sharedModelContainer)
     }
+    
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([
+            User.self,
+        ])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+
+        do {
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
 }
