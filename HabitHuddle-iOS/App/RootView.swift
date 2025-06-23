@@ -35,7 +35,7 @@ struct RootView: View {
                     Tab("Friends", systemImage: "person.2", value: 1) {
                         FriendsListView()
                     }
-                    Tab("Challenges", systemImage: "trophy", value: 2) {
+                    Tab("Challenges", systemImage: "flag.pattern.checkered.2.crossed", value: 2) {
                         ChallengesListView()
                     }
                     Tab("Settings", systemImage: "gear", value: 3) {
