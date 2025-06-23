@@ -120,13 +120,7 @@ struct LoginView: View {
                 continue
             }
 
-            let habit = Habit(
-                id: codableHabit.id,
-                user: codableHabit.user,
-                name: codableHabit.name,
-                description: codableHabit.description,
-                duration: codableHabit.duration
-            )
+            let habit = codableHabit.toSwiftData()
 
             codableHabit.checkIns?.forEach { _ in
                 let checkIn = HabitCheckIn(habit: habit)
@@ -135,6 +129,7 @@ struct LoginView: View {
 
             context.insert(habit)
         }
+        try? context.save()
     }
     
     private func habitExists(withId id: UUID) -> Bool {

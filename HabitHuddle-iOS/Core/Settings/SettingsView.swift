@@ -102,8 +102,12 @@ struct SettingsView: View {
     
     private func handleUserResponse(user: UserDTO) {
         print("USER DTO: \(user)")
+        userManager.profile = LocalUser(
+            id: user.id,
+            username: user.username,
+            name: user.name,
+            isSignedInToServer: true)
         appState.isAuthenticated = true
-        userManager.profile = LocalUser(id: user.id, username: user.username, name: user.name, isSignedInToServer: true)
         Task {
             print("TOKEN: \(String(describing: TokenManager.token))")
             let codableHabitsResult = await viewModel.getUserHabits()

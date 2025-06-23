@@ -84,6 +84,7 @@ extension LoginView {
                     updatedAt: user.updatedAt
                 )
                 context.insert(newUser)
+                try? context.save()
                 appState.isAuthenticated = true
             } catch {
                 fatalError("Couldn't save user's information")

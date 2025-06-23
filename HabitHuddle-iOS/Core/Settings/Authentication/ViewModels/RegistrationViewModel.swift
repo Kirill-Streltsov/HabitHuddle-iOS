@@ -47,6 +47,7 @@ extension RegistrationView {
                     name: userToSave.name,
                     isSignedInToServer: true)
                 context.insert(userToSave)
+                try? context.save()
                 TokenManager.token = registrationResponse.token
                 appState.isAuthenticated = true
                 return .success(user)
