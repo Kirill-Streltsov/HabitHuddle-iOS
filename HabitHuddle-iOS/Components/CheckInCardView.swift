@@ -18,9 +18,9 @@ struct CheckInCardView: View {
             HapticManager.trigger(.success)
             habit.toggleCheckIn(in: context)
             action()
-            scale += 0.1
+            scale += 0.3
             DispatchQueue.main.asyncAfter(deadline: .now()) {
-                scale -= 0.1
+                scale -= 0.3
             }
         } label: {
             VStack(spacing: 16) {
@@ -28,7 +28,7 @@ struct CheckInCardView: View {
                     AnimatableRing(habit: habit)
                         .frame(width: 175, height: 175)
                         .scaleEffect(scale)
-                        .animation(.easeInOut(duration: 0.2), value: scale)
+                        .animation(.easeInOut(duration: 0.3), value: scale)
                 }
                 Text(habit.isCheckedInToday ? "You're all set for today!" : "Tap to Check In")
                     .font(.headline)

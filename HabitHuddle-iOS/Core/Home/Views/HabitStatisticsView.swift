@@ -160,10 +160,8 @@ struct HabitStatisticsView: View {
             }
             .padding(.bottom)
         }
-        .onChange(of: habit.checkIns) { _, _ in
-            withAnimation {
-                statisticsID = UUID()
-            }
+        .onChange(of: habit.checkIns.count) { _, _ in
+            statisticsID = UUID()
         }
         .navigationTitle(habit.name)
     }
