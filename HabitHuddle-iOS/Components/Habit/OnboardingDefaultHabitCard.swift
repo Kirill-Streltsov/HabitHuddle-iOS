@@ -13,6 +13,8 @@ struct OnboardingDefaultHabitCard: View {
     @Binding var isSelected: Bool
     @Binding var duration: HabitDuration
     
+    @State private var showSelect = false
+    
     var body: some View {
         CardView {
             ZStack(alignment: .topTrailing) {
@@ -48,7 +50,9 @@ struct OnboardingDefaultHabitCard: View {
                                 .fontWeight(.bold)
                         }
                     }
+                    .sensoryFeedback(.selection, trigger: showSelect)
                     .onTapGesture {
+                        showSelect.toggle()
                         withAnimation {
                             isSelected.toggle()
                         }

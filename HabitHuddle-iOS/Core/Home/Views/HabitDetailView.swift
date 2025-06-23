@@ -42,10 +42,8 @@ struct HabitDetailView: View {
     }
 
     var body: some View {
-        ZStack {
             ScrollView {
                 VStack(spacing: 16) {
-                    
                     if mode == .adding {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Create a new habit")
@@ -54,23 +52,24 @@ struct HabitDetailView: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }
-                        .padding(.horizontal)
                     }
-                    
                     if mode == .editing {
                         if let habit = habit {
-                            VStack(alignment: .leading) {
-                                Text(habit.habitDescription)
-                                    .font(.title2)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(Color.secondary)
-                                    .padding(.leading)
-                                    
-                                CheckInCardView(habit: habit) {
-                                    checkIntoHabit(habit)
+                            VStack {
+                                VStack(alignment: .leading) {
+                                    Text(habit.habitDescription)
+                                        .font(.title2)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(Color.secondary)
+                                        .padding(.leading, 32)
+                                        
+                                    CheckInCardView(habit: habit) {
+                                        checkIntoHabit(habit)
+                                    }
                                 }
+                                HabitStatisticsView(habit: habit)
                             }
-                            HabitStatisticsView(habit: habit)
+                            .padding(.horizontal)
                         }
                     } else {
                         editHabitView
@@ -127,7 +126,6 @@ struct HabitDetailView: View {
             .onDisappear {
                 syncWithServerBeforeQuitting()
             }
-        }
     }
     
     private var editHabitView: some View {
