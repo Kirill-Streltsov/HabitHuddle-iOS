@@ -83,6 +83,7 @@ extension ChallengesListView {
                     id: habitDTO.id,
                     name: habitDTO.name,
                     description: habitDTO.description,
+                    icon: habitDTO.icon,
                     duration: habitDTO.duration.rawValue,
                     reminderTime: habitDTO.reminderTime,
                     checkIns: [],

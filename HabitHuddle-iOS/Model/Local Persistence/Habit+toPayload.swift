@@ -13,6 +13,7 @@ extension Habit {
             id: id,
             name: name,
             description: habitDescription,
+            icon: icon,
             duration: duration.rawValue,
             reminderTime: reminderTime,
             checkIns: checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) },

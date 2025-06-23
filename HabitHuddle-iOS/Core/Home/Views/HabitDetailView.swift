@@ -65,6 +65,7 @@ struct HabitDetailView: View {
                                     .fontWeight(.semibold)
                                     .foregroundStyle(Color.secondary)
                                     .padding(.leading)
+                                    
                                 CheckInCardView(habit: habit) {
                                     checkIntoHabit(habit)
                                 }
@@ -79,7 +80,13 @@ struct HabitDetailView: View {
             }
             .sheet(isPresented: $showEditSheet) {
                 editHabitView
-                    .presentationDetents([.fraction(0.65)])
+            }
+            .toolbar {
+                if let icon = viewModel.icon {
+                    ToolbarItem(placement: .principal) {
+                        Image(systemName: icon)
+                    }
+                }
             }
             .toolbar {
                 if mode == .editing {
@@ -126,41 +133,56 @@ struct HabitDetailView: View {
     private var editHabitView: some View {
         VStack(spacing: 16) {
             CardView {
-                VStack(spacing: 12) {
+                VStack(spacing: 20) {
+
+                    // MARK: - Icon Picker
+                    // MARK: - Text Fields
                     VStack(spacing: 16) {
                         CustomStyledTextField(
                             placeholder: "Habit name",
                             text: $viewModel.name
                         )
-
+                        
                         CustomStyledTextField(
                             placeholder: "Description (optional)",
                             text: $viewModel.description
                         )
                     }
-                    VStack(alignment: .leading, spacing: 20) {
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Start date:")
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text("Choose an Icon")
                                 .fontWeight(.semibold)
-
-                            HStack {
-                                Image(systemName: "calendar.badge.clock")
-                                    .foregroundStyle(.secondary)
-                                Text(mode == .adding ? Date.now.longFormatted : habit!.createdAt.fullFormatted)
-                                    .foregroundStyle(.secondary)
+                            if let icon = viewModel.icon {
+                                Image(systemName: icon)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 24, height: 24)
+                                    .padding(8)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
                             }
                         }
-
+                        .frame(height: 24)
+                        IconPickerView(selectedIcon: $viewModel.icon)
+                            .frame(maxHeight: 300)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
+                    
+                    // MARK: - Date & Duration
+                    VStack(alignment: .leading, spacing: 20) {
+                        
                         VStack(alignment: .leading, spacing: 12) {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("Desired duration")
                                     .fontWeight(.semibold)
+                                
                                 if isPartOfChallenge {
                                     Text("This habit is currently part of a challenge, so you can’t change its duration right now.")
-                                            .font(.footnote)
-                                            .foregroundColor(.gray)
+                                        .font(.footnote)
+                                        .foregroundColor(.gray)
                                 }
                             }
+                            
                             Picker("Duration", selection: $viewModel.duration) {
                                 ForEach(HabitDuration.allCases) { option in
                                     Text(option.displayName)
@@ -171,9 +193,11 @@ struct HabitDetailView: View {
                             .disabled(isPartOfChallenge)
                         }
                     }
+                    
+                    // MARK: - Reminder
                     VStack(alignment: .leading, spacing: 12) {
                         Toggle("Enable Reminder", isOn: $viewModel.hasReminder.animation())
-
+                        
                         if viewModel.hasReminder {
                             DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
                                 .transition(.opacity.combined(with: .slide))
@@ -181,6 +205,8 @@ struct HabitDetailView: View {
                     }
                 }
             }
+            
+            // MARK: - Save Button
             SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
                 saveButtonPressed = true
                 saveHabit()
@@ -195,6 +221,7 @@ struct HabitDetailView: View {
         .padding(.vertical)
     }
 
+
     private func syncWithServerBeforeQuitting() {
         if !deleteButtonPressed && !saveButtonPressed && !viewModel.name.isEmpty {
             saveHabit()
@@ -204,6 +231,7 @@ struct HabitDetailView: View {
     private func populateFields(with habit: Habit) {
         viewModel.name = habit.name
         viewModel.description = habit.habitDescription
+        viewModel.icon = habit.icon
         viewModel.duration = habit.duration
         if let reminderTime = habit.reminderTime {
             viewModel.reminderTime = reminderTime
@@ -259,6 +287,7 @@ struct HabitDetailView: View {
         await MainActor.run {
             habit.name = viewModel.name
             habit.habitDescription = viewModel.description
+            habit.icon = viewModel.icon
             habit.duration = viewModel.duration
             habit.reminderTime = viewModel.hasReminder ? viewModel.reminderTime : nil
             habit.updatedAt = .now
@@ -282,6 +311,7 @@ struct HabitDetailView: View {
                 user: LightweightUser(id: userManager.profile.id),
                 name: viewModel.name,
                 description: viewModel.description,
+                icon: viewModel.icon,
                 duration: viewModel.duration,
                 reminderTime: viewModel.hasReminder ? viewModel.reminderTime : nil,
                 createdAt: .now,

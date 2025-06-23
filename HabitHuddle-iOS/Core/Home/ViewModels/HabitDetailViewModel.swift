@@ -12,6 +12,7 @@ extension HabitDetailView {
     @MainActor
     final class ViewModel: ObservableObject {
         @Published var name: String = ""
+        @Published var icon: String? = nil
         @Published var description: String = ""
         @Published var hasCheckedIn: Bool = false
         @Published var duration: HabitDuration = .twoWeeks
@@ -27,6 +28,7 @@ extension HabitDetailView {
                     id: id,
                     name: name,
                     description: description,
+                    icon: icon,
                     duration: duration.rawValue,
                     reminderTime: reminder,
                     checkIns: [],
@@ -54,6 +56,7 @@ extension HabitDetailView {
                     id: id,
                     name: name,
                     description: description,
+                    icon: icon,
                     duration: duration.rawValue,
                     reminderTime: reminder,
                     checkIns: habit.checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) },

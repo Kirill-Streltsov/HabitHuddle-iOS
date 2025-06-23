@@ -20,13 +20,23 @@ struct HabitCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top) {
+                if let icon = habit.icon {
+                    Image(systemName: icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                        .padding(4)
+                        .background(Color(.secondarySystemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                }
                 VStack(alignment: .leading) {
-                    Text(habit.name)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .lineLimit(2)
+                    HStack(spacing: 8) {
+                        Text(habit.name)
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .lineLimit(2)
+                        
+                    }
                     if !habit.habitDescription.isEmpty {
                         Text(habit.habitDescription)
                             .font(.subheadline)
@@ -34,6 +44,7 @@ struct HabitCard: View {
                             .lineLimit(2)
                     }
                 }
+                Spacer()
                 Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
                     .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)
                 

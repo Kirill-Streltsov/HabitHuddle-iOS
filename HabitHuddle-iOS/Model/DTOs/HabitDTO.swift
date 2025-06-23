@@ -18,4 +18,5 @@ struct HabitDTO: Codable, Identifiable {
     let updatedAt: Date?
     let checkIns: [HabitCheckInDTO]?
     let challenges: [ChallengeDTO]?
+    let icon: String?
 }

@@ -14,6 +14,7 @@ extension HabitDTO {
             user: LightweightUser(id: user.id),
             name: name,
             description: description,
+            icon: icon,
             duration: duration)
         
         if let checkIns = checkIns, !checkIns.isEmpty {
