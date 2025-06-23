@@ -124,44 +124,11 @@ struct StatisticsDetailView: View {
         }
     }
 
-    private var missedDaysText: String {
-        if missedDays > 0 {
-            if missedDays == 1 {
-                if totalDays == 1 {
-                    return "Check into your habit ⚡️"
-                } else {
-                    return "You have missed 1 day\nStill no reason to give up!"
-                }
-            } else {
-                return "\(missedDays) days missed out of \(totalDays)"
-            }
-        } else {
-            return "You haven't missed a day!\n🎉"
-        }
-    }
-
-    private var motivationalText: String {
-        if habit.checkIns.isEmpty {
-            return "Check into your habit!"
-        } else if completionRate > 0 && completionRate < 10 {
-            return "One check-in at a time. You're starting strong!"
-        } else if completionRate >= 10 && completionRate < 40 {
-            return "You're building momentum — keep it up!"
-        } else if completionRate >= 40 && completionRate < 70 {
-            return "Halfway there — stay focused!"
-        } else if completionRate >= 70 && completionRate < 90 {
-            return "Almost done — push through!"
-        } else {
-            return "Done! Habit complete! 🏆"
-        }
-    }
-
     // MARK: Body
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 30) {
-                habitProgressBar
+            VStack(spacing: 12) {
                 CardView {
                     VStack {
                         Text("Frequency of your check ins")
@@ -172,18 +139,8 @@ struct StatisticsDetailView: View {
                 
                 CardView {
                     HStack(alignment: .top) {
-                        VStack {
-                            completionRateSection
-                            Text("\(habit.duration.numberOfDays - habit.checkIns.count) days left")
-                                .foregroundStyle(.secondary)
-                                .frame(height: 40)
-                        }
-                        VStack {
-                            missedDaysSection
-                            Text(missedDaysText)
-                                .foregroundStyle(.secondary)
-                                .frame(height: 40)
-                        }
+                        completionRateSection
+                        missedDaysSection
                     }
                     .font(.subheadline)
                     .multilineTextAlignment(.center)
@@ -201,22 +158,6 @@ struct StatisticsDetailView: View {
             .padding(.bottom)
         }
         .navigationTitle(habit.name)
-    }
-
-    private var habitProgressBar: some View {
-        VStack(alignment: .leading) {
-            Text(motivationalText)
-                .font(.title3)
-                .fontWeight(.semibold)
-            HabitProgressView(
-                habit: habit,
-                width: 350,
-                height: 25,
-                cornerRadius: 8,
-                color: Color.gray.opacity(0.1)
-            )
-        }
-        .padding(.top)
     }
 
     // MARK: Sections
@@ -301,7 +242,7 @@ struct StatisticsDetailView: View {
                 }
                 .frame(height: 140)
                 Text("\(missedDays)")
-                    .font(.title)
+                    .font(.title2)
                     .fontWeight(.semibold)
             }
         }

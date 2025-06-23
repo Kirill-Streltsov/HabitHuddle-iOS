@@ -27,6 +27,7 @@ struct HabitDetailView: View {
     @State private var isCheckedIn = false
     @State private var saveButtonPressed = false
     @State private var deleteButtonPressed = false
+    @State private var showEditSheet = false
     
     @StateObject private var viewModel: ViewModel
     
@@ -44,92 +45,49 @@ struct HabitDetailView: View {
         ZStack {
             ScrollView {
                 VStack(spacing: 16) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(mode == .adding ? "Create a new habit" : "Update your habit")
-                            .font(.largeTitle.weight(.semibold))
-                        if mode == .adding {
+                    
+                    if mode == .adding {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Create a new habit")
+                                .font(.largeTitle.weight(.semibold))
                             Text("Stay consistent by tracking what matters.")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }
+                        .padding(.horizontal)
                     }
                     
-                    .padding(.horizontal)
                     if mode == .editing {
                         if let habit = habit {
-                            CheckInCardView(habit: habit) {
-                                checkIntoHabit(habit)
+                            VStack(alignment: .leading) {
+                                Text(habit.habitDescription)
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Color.secondary)
+                                    .padding(.leading)
+                                CheckInCardView(habit: habit) {
+                                    checkIntoHabit(habit)
+                                }
                             }
+                            StatisticsDetailView(habit: habit)
                         }
+                    } else {
+                        editHabitView
                     }
-
-                    CardView {
-                        VStack(spacing: 24) {
-                            VStack(spacing: 16) {
-                                CustomStyledTextField(
-                                    placeholder: "Habit name",
-                                    text: $viewModel.name
-                                )
-
-                                CustomStyledTextField(
-                                    placeholder: "Description (optional)",
-                                    text: $viewModel.description
-                                )
-                            }
-                            VStack(alignment: .leading, spacing: 20) {
-                                VStack(alignment: .leading, spacing: 12) {
-                                    Text("Start date:")
-                                        .fontWeight(.semibold)
-
-                                    HStack {
-                                        Image(systemName: "calendar.badge.clock")
-                                            .foregroundStyle(.secondary)
-                                        Text(mode == .adding ? Date.now.longFormatted : habit!.createdAt.fullFormatted)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                }
-
-                                VStack(alignment: .leading, spacing: 12) {
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text("Desired duration")
-                                            .fontWeight(.semibold)
-                                        if isPartOfChallenge {
-                                            Text("This habit is currently part of a challenge, so you can’t change its duration right now.")
-                                                    .font(.footnote)
-                                                    .foregroundColor(.gray)
-                                        }
-                                    }
-                                    Picker("Duration", selection: $viewModel.duration) {
-                                        ForEach(HabitDuration.allCases) { option in
-                                            Text(option.displayName)
-                                                .tag(option)
-                                        }
-                                    }
-                                    .pickerStyle(.segmented)
-                                    .disabled(isPartOfChallenge)
-                                }
-                            }
-                            VStack(alignment: .leading, spacing: 12) {
-                                Toggle("Enable Reminder", isOn: $viewModel.hasReminder.animation())
-
-                                if viewModel.hasReminder {
-                                    DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
-                                        .transition(.opacity.combined(with: .slide))
-                                }
-                            }
-                        }
-                    }
-                    SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
-                        saveButtonPressed = true
-                        saveHabit()
-                        dismiss()
-                    }
-                    .padding(.horizontal)
                 }
                 .padding(.top)
             }
+            .sheet(isPresented: $showEditSheet) {
+                editHabitView
+                    .presentationDetents([.fraction(0.65)])
+            }
             .toolbar {
                 if mode == .editing {
+                    Button {
+                        showEditSheet = true
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                    }
                     Button {
                         deleteButtonPressed = true
                         Task {
@@ -163,6 +121,78 @@ struct HabitDetailView: View {
                 syncWithServerBeforeQuitting()
             }
         }
+    }
+    
+    private var editHabitView: some View {
+        VStack(spacing: 16) {
+            CardView {
+                VStack(spacing: 12) {
+                    VStack(spacing: 16) {
+                        CustomStyledTextField(
+                            placeholder: "Habit name",
+                            text: $viewModel.name
+                        )
+
+                        CustomStyledTextField(
+                            placeholder: "Description (optional)",
+                            text: $viewModel.description
+                        )
+                    }
+                    VStack(alignment: .leading, spacing: 20) {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Start date:")
+                                .fontWeight(.semibold)
+
+                            HStack {
+                                Image(systemName: "calendar.badge.clock")
+                                    .foregroundStyle(.secondary)
+                                Text(mode == .adding ? Date.now.longFormatted : habit!.createdAt.fullFormatted)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+
+                        VStack(alignment: .leading, spacing: 12) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Desired duration")
+                                    .fontWeight(.semibold)
+                                if isPartOfChallenge {
+                                    Text("This habit is currently part of a challenge, so you can’t change its duration right now.")
+                                            .font(.footnote)
+                                            .foregroundColor(.gray)
+                                }
+                            }
+                            Picker("Duration", selection: $viewModel.duration) {
+                                ForEach(HabitDuration.allCases) { option in
+                                    Text(option.displayName)
+                                        .tag(option)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                            .disabled(isPartOfChallenge)
+                        }
+                    }
+                    VStack(alignment: .leading, spacing: 12) {
+                        Toggle("Enable Reminder", isOn: $viewModel.hasReminder.animation())
+
+                        if viewModel.hasReminder {
+                            DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
+                                .transition(.opacity.combined(with: .slide))
+                        }
+                    }
+                }
+            }
+            SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
+                saveButtonPressed = true
+                saveHabit()
+                if mode == .adding {
+                    dismiss()
+                } else {
+                    showEditSheet = false
+                }
+            }
+            .padding(.horizontal)
+        }
+        .padding(.vertical)
     }
 
     private func syncWithServerBeforeQuitting() {
