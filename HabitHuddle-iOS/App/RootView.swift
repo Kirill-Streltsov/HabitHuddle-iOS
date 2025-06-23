@@ -64,6 +64,9 @@ struct RootView: View {
             print("TOKEN: \(TokenManager.token)")
         }
         .onAppear {
+//            for habit in Habit.createTestHabitsWithCheckIns() {
+//                context.insert(habit)
+//            }
             //context.insert(Habit.demoHabitWith13Of14CheckIns())
             print("Habits:")
             for habit in habits {
