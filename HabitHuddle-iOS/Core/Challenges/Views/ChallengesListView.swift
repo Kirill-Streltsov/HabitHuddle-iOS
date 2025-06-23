@@ -18,6 +18,9 @@ struct ChallengesListView: View {
     @Query
     var habits: [Habit]
     
+    @Query
+    var users: [User]
+    
     var pendingChallengesSent: [ChallengeDTO] {
         viewModel.challenges.filter({ $0.status == .pending && $0.receiver.user.id != userManager.profile.id })
     }
@@ -82,6 +85,7 @@ struct ChallengesListView: View {
                 }
             }
             .task {
+                print("THIS IS LOADING CHALLENGES")
                 await viewModel.getChallenges(for: userManager.profile.id)
             }
             .onChange(of: viewModel.challenges) { oldChallenges, newChallenges in
@@ -167,10 +171,12 @@ struct ChallengesListView: View {
     }
     
     private func saveChallengeLocally(from challengeDTO: ChallengeDTO, for habit: Habit) {
+        guard let initiator = users.filter({ $0.id == challengeDTO.initiator.user.id }).first else { return }
+        guard let receiver = users.filter({ $0.id == challengeDTO.receiver.user.id }).first else { return }
         let challenge = Challenge(
             id: challengeDTO.id,
-            initiator: challengeDTO.initiator.user.toSwiftData(),
-            receiver: challengeDTO.receiver.user.toSwiftData(),
+            initiator: initiator,
+            receiver: receiver,
             habit: habit,
             type: challengeDTO.type,
             status: challengeDTO.status,

@@ -61,6 +61,7 @@ struct MyFriendsListView: View {
         let descriptor = FetchDescriptor<User>(predicate: #Predicate { $0.id == userID })
         let existing = try context.fetch(descriptor)
         if existing.isEmpty {
+            print("💾 Saving user with id: \(userID) to Swift Data")
             context.insert(user)
         }
     }

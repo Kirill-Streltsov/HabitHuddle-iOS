@@ -101,6 +101,7 @@ struct SettingsView: View {
     }
     
     private func handleUserResponse(user: UserDTO) {
+        print("USER DTO: \(user)")
         appState.isAuthenticated = true
         userManager.profile = LocalUser(id: user.id, username: user.username, name: user.name, isSignedInToServer: true)
         Task {
@@ -108,6 +109,8 @@ struct SettingsView: View {
             let codableHabitsResult = await viewModel.getUserHabits()
             Helpers.handleResult(codableHabitsResult) { codableHabits in
                 saveHabitsLocally(codableHabits)
+                context.insert(user.toSwiftData())
+                try? context.save()
             } onFailure: { apiError in
                 print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")
             }

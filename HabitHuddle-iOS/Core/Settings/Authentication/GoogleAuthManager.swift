@@ -19,18 +19,18 @@ final class GoogleAuthManager {
             completion(.failure(NSError(domain: "NoRootVC", code: -1, userInfo: [NSLocalizedDescriptionKey: "No root view controller found."])))
             return
         }
-        
+
         GIDSignIn.sharedInstance.signIn(withPresenting: presentingVC) { result, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            
+
             guard let idToken = result?.user.idToken?.tokenString else {
                 completion(.failure(NSError(domain: "NoIDToken", code: -1, userInfo: [NSLocalizedDescriptionKey: "No ID Token found."])))
                 return
             }
-            
+
             completion(.success(idToken))
         }
     }

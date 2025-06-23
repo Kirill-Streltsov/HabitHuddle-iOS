@@ -13,30 +13,35 @@ extension SettingsView {
         
         func handleGoogleSignIn() async -> UserDTO? {
             // Wrap the callback-based Google sign-in into async/await
-            let idToken = await withCheckedContinuation { continuation in
-                GoogleAuthManager.shared.signIn { result in
-                    switch result {
-                    case .success(let idToken):
-                        continuation.resume(returning: idToken)
-                    case .failure(let error):
-                        print("❌ Error: Failed to sign in with google")
+            do {
+                let idToken = try await withCheckedThrowingContinuation { continuation in
+                    GoogleAuthManager.shared.signIn { result in
+                        switch result {
+                        case .success(let idToken):
+                            continuation.resume(returning: idToken)
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
+                            print("❌ Error: Failed to sign in with google")
+                        }
                     }
                 }
-            }
-            
-            do {
-                let loginResponse = try await NetworkManager.shared.request(
-                    endpoint: .googleSignIn(),
-                    method: .post,
-                    body: GoogleTokenRequest(idToken: idToken),
-                    responseType: LoginResponse.self,
-                    isLoggingIn: true
-                )
-                
-                TokenManager.token = loginResponse.token
-                return loginResponse.user
+                do {
+                    let loginResponse = try await NetworkManager.shared.request(
+                        endpoint: .googleSignIn(),
+                        method: .post,
+                        body: GoogleTokenRequest(idToken: idToken),
+                        responseType: LoginResponse.self,
+                        isLoggingIn: true
+                    )
+                    
+                    TokenManager.token = loginResponse.token
+                    return loginResponse.user
+                } catch {
+                    print("❌ Error: Failed to sign in with google. Couldn't authorize the google token.")
+                    return nil
+                }
             } catch {
-                print("❌ Error: Failed to sign in with google")
+                print("❌ Error: Failed to sign in with google. Didn't receive the token.")
                 return nil
             }
         }

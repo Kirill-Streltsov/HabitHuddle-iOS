@@ -100,7 +100,6 @@ struct FriendsListView: View {
     
     private var searchingStateView: some View {
         Group {
-            // --- SEARCHING MODE ---
             if viewModel.isLoading {
                 ProgressView("Searching...")
                     .padding()
