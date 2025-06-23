@@ -42,6 +42,7 @@ struct HabitCard: View {
             
             ZStack {
                 CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 85)
+                    .offset(y: -5)
                     .onTapGesture {
                         HapticManager.trigger(.success)
                         habit.toggleCheckIn(in: context)
