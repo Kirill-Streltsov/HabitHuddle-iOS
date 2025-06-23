@@ -81,8 +81,6 @@ struct LoginView: View {
 
                 Spacer()
             }
-            .navigationTitle("Login")
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
     

@@ -118,8 +118,6 @@ struct RegistrationView: View {
             .clipShape(.rect(cornerRadius: 10))
             Spacer()
         }
-        .navigationTitle("Register")
-        .navigationBarTitleDisplayMode(.inline)
     }
     
     private func registerUser() {
