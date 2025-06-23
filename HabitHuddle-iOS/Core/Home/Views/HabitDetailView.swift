@@ -145,19 +145,8 @@ struct HabitDetailView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("Choose an Icon")
-                                .fontWeight(.semibold)
-                            if let icon = viewModel.icon {
-                                Image(systemName: icon)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 24, height: 24)
-                                    .padding(8)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                            }
-                        }
-                        .frame(height: 24)
+                        Text("Choose an Icon")
+                            .fontWeight(.semibold)
                         IconPickerView(selectedIcon: $viewModel.icon)
                             .frame(maxHeight: 300)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
