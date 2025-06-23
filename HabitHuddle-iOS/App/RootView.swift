@@ -32,16 +32,13 @@ struct RootView: View {
                     Tab("Habits", systemImage: "checklist", value: 0) {
                         HomeView()
                     }
-                    Tab("Statistics", systemImage: "chart.bar", value: 1) {
-                        StatisticsListView()
-                    }
-                    Tab("Friends", systemImage: "person.2", value: 2) {
+                    Tab("Friends", systemImage: "person.2", value: 1) {
                         FriendsListView()
                     }
-                    Tab("Challenges", systemImage: "trophy", value: 3) {
+                    Tab("Challenges", systemImage: "trophy", value: 2) {
                         ChallengesListView()
                     }
-                    Tab("Settings", systemImage: "gear", value: 4) {
+                    Tab("Settings", systemImage: "gear", value: 3) {
                         SettingsView()
                     }
                 }

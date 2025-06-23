@@ -16,9 +16,11 @@ struct Streak {
 
 // MARK: - Main Statistics View
 
-struct StatisticsDetailView: View {
+struct HabitStatisticsView: View {
+    
+    @State private var statisticsID = UUID()
     let habit: Habit
-
+    
     // MARK: Computed properties
 
     private var totalDays: Int {
@@ -134,6 +136,7 @@ struct StatisticsDetailView: View {
                         Text("Frequency of your check ins")
                             .font(.headline)
                         HeatmapView(habits: [habit])
+                            .id(statisticsID)
                     }
                 }
                 
@@ -156,6 +159,11 @@ struct StatisticsDetailView: View {
                 }
             }
             .padding(.bottom)
+        }
+        .onChange(of: habit.checkIns) { _, _ in
+            withAnimation {
+                statisticsID = UUID()
+            }
         }
         .navigationTitle(habit.name)
     }

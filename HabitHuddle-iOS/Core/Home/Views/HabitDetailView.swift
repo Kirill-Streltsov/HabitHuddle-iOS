@@ -69,7 +69,7 @@ struct HabitDetailView: View {
                                     checkIntoHabit(habit)
                                 }
                             }
-                            StatisticsDetailView(habit: habit)
+                            HabitStatisticsView(habit: habit)
                         }
                     } else {
                         editHabitView
