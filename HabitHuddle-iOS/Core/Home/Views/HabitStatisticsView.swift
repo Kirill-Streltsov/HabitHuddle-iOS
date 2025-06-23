@@ -95,7 +95,7 @@ struct HabitStatisticsView: View {
     }
 
     // Calculate current streak ending today (or yesterday if missed today)
-    private var currentStreak: Int {
+    private var currentStreak: Streak {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
         let sortedDates = habit.checkIns.map { calendar.startOfDay(for: $0.date) }.sorted(by: >)
@@ -111,7 +111,10 @@ struct HabitStatisticsView: View {
                 break
             }
         }
-        return streak
+
+        let startDate = calendar.date(byAdding: .day, value: -(streak - 1), to: today) ?? today
+
+        return Streak(length: streak, startDate: startDate, endDate: today)
     }
 
     private var checkInTimeDistribution: [(date: Date, hour: Int)] {
@@ -264,11 +267,14 @@ struct HabitStatisticsView: View {
                     Text("Current Streak")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                    Text("\(currentStreak) days")
+                    Text("\(currentStreak.length) days")
                         .font(.title2.bold())
                         .foregroundStyle(.green)
-                    ProgressRing(progress: Double(currentStreak) / Double(longestStreak.length), color: .green)
-                        .frame(width: 60, height: 60)
+                    Text("From \(currentStreak.startDate.formatted(date: .numeric, time: .omitted)) to \(currentStreak.endDate.formatted(date: .numeric, time: .omitted))")
+                        .font(.caption)
+                        .foregroundStyle(.gray)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: 120)
                 }
 
                 VStack {
