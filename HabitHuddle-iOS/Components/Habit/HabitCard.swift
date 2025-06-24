@@ -41,7 +41,8 @@ struct HabitCard: View {
                         Text(habit.habitDescription)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
-                            .lineLimit(2)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 Spacer()
@@ -115,7 +116,6 @@ struct HabitCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .frame(maxWidth: cardWidth)
-        .frame(maxHeight: 200)
         .scaleEffect(scale)
         .animation(.easeInOut(duration: 0.3), value: scale)
         .sheet(isPresented: $challengeButtonPressed) {
