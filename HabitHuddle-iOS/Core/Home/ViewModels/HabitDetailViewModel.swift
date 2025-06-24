@@ -16,7 +16,7 @@ extension HabitDetailView {
         @Published var description: String = ""
         @Published var hasCheckedIn: Bool = false
         @Published var duration: HabitDuration = .twoWeeks
-        @Published var hasReminder: Bool = true
+        @Published var hasReminder: Bool = false
         @Published var reminderTime: Date = .init()
         var habit: Habit?
 
@@ -34,7 +34,6 @@ extension HabitDetailView {
                     checkIns: [],
                     challenges: []
                 )
-
                 let habitResponse = try await NetworkManager.shared.request(
                     endpoint: .createHabit(),
                     method: .post,
@@ -51,7 +50,7 @@ extension HabitDetailView {
             do {
                 guard let habit = habit else { return .failure(.notFound) }
                 let reminder: Date? = hasReminder ? reminderTime : nil
-
+                
                 let payload = HabitPayload(
                     id: id,
                     name: name,
@@ -62,7 +61,6 @@ extension HabitDetailView {
                     checkIns: habit.checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) },
                     challenges: []
                 )
-
                 let habitResponse = try await NetworkManager.shared.request(
                     endpoint: .updateHabit(with: id),
                     method: .put,

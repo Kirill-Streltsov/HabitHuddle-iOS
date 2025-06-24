@@ -7,6 +7,7 @@
 
 import SwiftData
 import SwiftUI
+import UserNotifications
 
 struct HabitDetailView: View {
     enum Mode {
@@ -107,6 +108,12 @@ struct HabitDetailView: View {
                 }
             }
             .onAppear {
+                UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+                    print("⏰ Pending notifications:")
+                    for request in requests {
+                        print("• \(request.identifier) — \(request.content.body)")
+                    }
+                }
                 if let habit = habit {
                     populateFields(with: habit)
                     isCheckedIn = habit.isCheckedInToday
@@ -179,6 +186,11 @@ struct HabitDetailView: View {
                     
                     VStack(alignment: .leading, spacing: 12) {
                         Toggle("Enable Reminder", isOn: $viewModel.hasReminder)
+                            .onChange(of: viewModel.hasReminder) { _, newValue in
+                                if newValue {
+                                    requestNotificationPermission()
+                                }
+                            }
                         
                         DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
                             .opacity(viewModel.hasReminder ? 1 : 0.3)
@@ -200,6 +212,17 @@ struct HabitDetailView: View {
             .padding(.horizontal)
         }
         .padding(.vertical)
+    }
+    
+    
+    private func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error {
+                print("Permission error: \(error)")
+            } else {
+                print("Permission granted: \(granted)")
+            }
+        }
     }
 
 
@@ -306,6 +329,30 @@ struct HabitDetailView: View {
                 print("✅ Saved the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
             } onFailure: { error in
                 print("❌ Error: Failed to save new habit on the server: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func scheduleHabitNotification(habitName: String, hour: Int, minute: Int) {
+        let content = UNMutableNotificationContent()
+        content.title = "Habit Reminder"
+        content.body = "Time for your habit: \(habitName)"
+        content.sound = .default
+
+        var dateComponents = DateComponents()
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+
+        let identifier = "habit_\(habitName)_\(hour)_\(minute)"
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Failed to schedule: \(error)")
+            } else {
+                print("Notification scheduled for \(habitName) at \(hour):\(minute)")
             }
         }
     }
