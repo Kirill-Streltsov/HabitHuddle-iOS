@@ -16,6 +16,7 @@ struct OnboardingHabitList: View {
     let userID: UUID
     @State private var isHabitSelected = [false, false, false]
     @State private var habitDuration: [HabitDuration] = [.twoWeeks, .twoWeeks, .twoWeeks]
+    let icons: [String] = ["figure.run", "brain.head.profile", "drop.fill"]
     
     var body: some View {
 
@@ -36,7 +37,9 @@ struct OnboardingHabitList: View {
                             user: LightweightUser(id: userID),
                             name: defaultHabits[index].name,
                             description: defaultHabits[index].habitDescription,
-                            duration: habitDuration[index])
+                            icon: icons[index],
+                            duration: habitDuration[index]
+                        )
                         context.insert(habit)
                     }
                 }
