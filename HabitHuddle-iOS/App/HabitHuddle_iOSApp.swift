@@ -42,6 +42,8 @@ struct HabitHuddle_iOSApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             User.self,
+            Habit.self,
+            Challenge.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
