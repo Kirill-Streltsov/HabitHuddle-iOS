@@ -82,6 +82,7 @@ struct LoginView: View {
                 Spacer()
             }
             .navigationTitle("Login")
+            .navigationBarTitleDisplayMode(.inline)
             .background(Color(.systemGroupedBackground))
         }
     }
