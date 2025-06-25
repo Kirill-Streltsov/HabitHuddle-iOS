@@ -119,6 +119,7 @@ struct RegistrationView: View {
             Spacer()
         }
         .navigationTitle("Registration")
+        .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemGroupedBackground))
     }
     
