@@ -166,7 +166,7 @@ struct HabitStatisticsView: View {
         .onChange(of: habit.checkIns.count) { _, _ in
             statisticsID = UUID()
         }
-        .navigationTitle(habit.name)
+        .navigationTitle("Statistics")
     }
 
     // MARK: Sections
@@ -330,25 +330,6 @@ struct HabitStatisticsView: View {
                 }
             }
             .frame(height: 200)
-        }
-    }
-}
-
-// MARK: - ProgressRing View for Streak visualization
-
-struct ProgressRing: View {
-    var progress: Double // 0...1
-    var color: Color = .blue
-
-    var body: some View {
-        ZStack {
-            Circle()
-                .stroke(color.opacity(0.25), lineWidth: 8)
-            Circle()
-                .trim(from: 0, to: CGFloat(min(max(progress, 0), 1)))
-                .stroke(color, style: StrokeStyle(lineWidth: 8, lineCap: .round))
-                .rotationEffect(.degrees(-90))
-                .animation(.easeInOut, value: progress)
         }
     }
 }

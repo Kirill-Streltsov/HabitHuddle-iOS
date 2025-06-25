@@ -56,17 +56,10 @@ struct HabitDetailView: View {
                     }
                     if mode == .editing {
                         if let habit = habit {
-                            VStack {
-                                VStack(alignment: .leading) {
-                                    Text(habit.habitDescription)
-                                        .font(.title2)
-                                        .fontWeight(.semibold)
-                                        .foregroundStyle(Color.secondary)
-                                        .padding(.leading, 32)
-                                        
-                                    CheckInCardView(habit: habit) {
-                                        checkIntoHabit(habit)
-                                    }
+                            VStack(spacing: 12) {
+                                habitHeader(habit: habit)
+                                CheckInCardView(habit: habit) {
+                                    checkIntoHabit(habit)
                                 }
                                 HabitStatisticsView(habit: habit)
                             }
@@ -133,6 +126,20 @@ struct HabitDetailView: View {
             .onDisappear {
                 syncWithServerBeforeQuitting()
             }
+    }
+    
+    private func habitHeader(habit: Habit) -> some View {
+        VStack(spacing: 8) {
+            Text(habit.name)
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+            
+            Text(habit.habitDescription)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+        }
     }
     
     private var editHabitView: some View {
