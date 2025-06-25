@@ -21,8 +21,8 @@ struct HabitCard: View {
     var users: [User]
     
     var detent: PresentationDetent {
-        if users.count > 0 && users.count <= 2 {
-            return .fraction(0.2)
+        if users.count >= 0 && users.count <= 2 {
+            return .fraction(0.4)
         } else if users.count > 2 && users.count < 5 {
             return .medium
         } else {
@@ -132,8 +132,11 @@ struct HabitCard: View {
         .frame(maxWidth: cardWidth)
         .animation(.easeInOut(duration: 0.3), value: scale)
         .sheet(isPresented: $challengeButtonPressed) {
-            MyFriendsList(isInFriendsTab: false, habit: habit)
-                .presentationDetents([detent])
+            ZStack {
+                Color(.systemGroupedBackground).ignoresSafeArea()
+                MyFriendsList(isInFriendsTab: false, habit: habit)
+                    .presentationDetents([detent])
+            }
         }
     }
 }
