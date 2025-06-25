@@ -9,140 +9,125 @@
 import SwiftUI
 
 struct FriendHabitCard: View {
-    let habit: HabitDTO
-    let cardWidth: CGFloat = UIScreen.main.bounds.width - 32
+    let habitDTO: HabitDTO
+    let cardWidth: CGFloat = UIScreen.main.bounds.width - 60
+    private var habit: Habit
+    var onSupportiveCalled: @MainActor () async -> Void
+    var onCompetitiveCalled: @MainActor () async -> Void
     
-    var checkIns: [HabitCheckInDTO] {
-        if let checkIns = habit.checkIns {
-            return checkIns
-        } else {
-            return []
-        }
-    }
     
-    var createdAt: String {
-        if let createdAt = habit.createdAt {
-            return dateFormatter.string(from: createdAt)
-        } else {
-            return "No info"
-        }
-    }
-    
-    var updatedAt: String {
-        if let updatedAt = habit.updatedAt {
-            return dateFormatter.string(from: updatedAt)
-        } else {
-            return "No info"
-        }
+    init(habitDTO: HabitDTO, onSupportiveCalled: @escaping @MainActor () async -> Void, onCompetitiveCalled: @escaping @MainActor () async -> Void) {
+        self.habitDTO = habitDTO
+        self.habit = habitDTO.toSwiftData()
+        self.onSupportiveCalled = onSupportiveCalled
+        self.onCompetitiveCalled = onCompetitiveCalled
     }
     
     @State private var showActionSheet = false
     @State private var selectedOption = ""
-
-    // Date formatter for display
-    private var dateFormatter: DateFormatter {
-        let df = DateFormatter()
-        df.dateStyle = .medium
-        df.timeStyle = .none
-        return df
-    }
-
-    private var checkInsLast30DaysCount: Int {
-        let thirtyDaysAgo = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
-        return checkIns.filter { $0.date >= thirtyDaysAgo }.count
-    }
-
-    @State private var progressRatio: CGFloat = 0
-
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            // Header: Name + Reminder
-            HStack {
-                Text(habit.name)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(2)
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .top) {
+                if let icon = habit.icon {
+                    Image(systemName: icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                        .padding(4)
+                        .background(Color(.secondarySystemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                }
+                VStack(alignment: .leading) {
+                    HStack(spacing: 8) {
+                        Text(habit.name)
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .lineLimit(2)
+                        
+                    }
+                    if !habit.habitDescription.isEmpty {
+                        Text(habit.habitDescription)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
                 Spacer()
                 Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
                     .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)
+                
             }
-
-            // Description
-            if !habit.description.isEmpty {
-                Text(habit.description)
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(3)
+            .frame(width: cardWidth)
+            
+            ZStack {
+                CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 85, shouldFlicker: false)
+                    .offset(y: -5)
+                HStack {
+                    StatItem(title: "Longest Streak", value: "\(habit.longestStreak) days")
+                    Spacer()
+                    StatItem(title: "Completion", value: "\(habit.completionPercentage)%")
+                }
             }
-
-            // Duration & Progress
-            HStack {
-                Label(habit.duration.displayName, systemImage: "timer")
-                    .font(.footnote)
+            .offset(y: 15)
+            .frame(width: cardWidth)
+            
+            HStack(alignment: .bottom) {
+                
+                Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays) days")
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
                 
                 Spacer()
-
-                Label("\(checkIns.count) / \(habit.duration.numberOfDays) check-ins", systemImage: "checkmark.circle")
-                    .font(.footnote)
-                    .foregroundStyle(.green)
-            }
-
-            // Progress bar + percent text
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 6)
-                    .fill(Color.gray.opacity(0.2))
-                    .frame(height: 14)
-                RoundedRectangle(cornerRadius: 6)
-                    .fill(Color.green)
-                    .frame(width: cardWidth * progressRatio, height: 14)
-            }
-            // Created / Updated info
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Created:")
-                        .font(.caption.bold())
-                        .foregroundStyle(.secondary)
-                    Text(createdAt)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                Spacer()
-                SlimButton(title: "Challenge") {
-                    showActionSheet = true
-                }
+                
+                if habit.challenges.isEmpty {
+                    Button {
+                        showActionSheet = true
+                    } label: {
+                        Image(systemName: "flag.pattern.checkered.2.crossed")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.blue)
                     .confirmationDialog("Choose the challenge type", isPresented: $showActionSheet, titleVisibility: .visible) {
-                        Button("Supportive") { selectedOption = "Supportive" }
-                        Button("Competitive", role: .destructive) { selectedOption = "Competitive" }
+                        Button("Supportive") {
+                            Task {
+                                await onSupportiveCalled()
+                            }
+                        }
+                        Button("Competitive", role: .destructive) {
+                            Task {
+                                await onCompetitiveCalled()
+                            }
+                        }
                         Button("Cancel", role: .cancel) { }
                     }
-                Spacer()
-                VStack(alignment: .leading) {
-                    Text("Updated:")
-                        .font(.caption.bold())
-                        .foregroundStyle(.secondary)
-                    Text(updatedAt)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                } else if habit.challenges[0].type == .competitive {
+                    Image(systemName: "flag.pattern.checkered.2.crossed")
+                        .foregroundStyle(.pink)
+                } else if habit.challenges[0].type == .supportive {
+                    Image(systemName: "flag.pattern.checkered.2.crossed")
+                        .foregroundStyle(.green)
                 }
+                
             }
-            .padding(.top)
+            .padding(.bottom, 4)
+            .frame(width: cardWidth)
+            
+            HabitProgressView(
+                habit: habit,
+                width: cardWidth,
+                height: 8
+            )
         }
         .padding()
         .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .frame(maxWidth: cardWidth)
-        .padding(.horizontal)
-        .onAppear {
-            withAnimation {
-                progressRatio = min(CGFloat(checkIns.count) / CGFloat(habit.duration.numberOfDays), 1.0)
-            }
-        }
     }
 }
 
 #Preview {
-    FriendHabitCard(habit: HabitDTO(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Drink 2 liters a day", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: [], challenges: [], icon: "brain"))
+    FriendHabitCard(habitDTO: HabitDTO(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Drink 2 liters a day", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: [], challenges: [], icon: "brain"), onSupportiveCalled: {}, onCompetitiveCalled: {})
 }

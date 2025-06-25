@@ -17,6 +17,19 @@ struct HabitCard: View {
     let habit: Habit
     let cardWidth: CGFloat = UIScreen.main.bounds.width - 60
     
+    @Query
+    var users: [User]
+    
+    var detent: PresentationDetent {
+        if users.count > 0 && users.count <= 2 {
+            return .fraction(0.2)
+        } else if users.count > 2 && users.count < 5 {
+            return .medium
+        } else {
+            return .large
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top) {
@@ -53,7 +66,7 @@ struct HabitCard: View {
             .frame(width: cardWidth)
             
             ZStack {
-                CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 85)
+                CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 85, shouldFlicker: true)
                     .offset(y: -5)
                     .scaleEffect(scale)
                     .onTapGesture {
@@ -119,8 +132,8 @@ struct HabitCard: View {
         .frame(maxWidth: cardWidth)
         .animation(.easeInOut(duration: 0.3), value: scale)
         .sheet(isPresented: $challengeButtonPressed) {
-            MyFriendsListView(isInFriendsTab: false, habit: habit)
-                .presentationDetents([.medium])
+            MyFriendsList(isInFriendsTab: false, habit: habit)
+                .presentationDetents([detent])
         }
     }
 }

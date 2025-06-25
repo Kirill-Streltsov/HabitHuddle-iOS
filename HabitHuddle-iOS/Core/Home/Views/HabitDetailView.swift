@@ -220,7 +220,6 @@ struct HabitDetailView: View {
                     showEditSheet = false
                 }
             }
-            .padding(.horizontal)
         }
         .padding()
         .padding(.horizontal)

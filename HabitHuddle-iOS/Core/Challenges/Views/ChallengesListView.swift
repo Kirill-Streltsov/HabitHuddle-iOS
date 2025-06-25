@@ -122,7 +122,7 @@ struct ChallengesListView: View {
                 Task {
                     await viewModel.getChallenges(for: userManager.profile.id)
                 }
-                print("Successfully rejected the challenge with id: \(challenge.id)")
+                print("✅ Successfully rejected the challenge with id: \(challenge.id)")
             } onFailure: { error in
                 print("❌ Error: Failed to reject the challenge: \(error.localizedDescription)")
             }

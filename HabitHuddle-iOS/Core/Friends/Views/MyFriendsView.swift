@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct FriendsListView: View {
+struct MyFriendsView: View {
     
     @Environment(\.modelContext) private var context
     @StateObject private var viewModel = ViewModel()
     
-    @FocusState private var saerchIsFocused: Bool
+    @FocusState private var searchIsFocused: Bool
     
     @State private var searchText = ""
     @State private var requestIsSent = false
@@ -20,41 +20,39 @@ struct FriendsListView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                // Search bar
-                TextField("Search usernames...", text: $searchText)
-                    .focused($saerchIsFocused)
-                    .padding(12)
-                    .background(Color(.secondarySystemBackground))
-                    .cornerRadius(10)
-                    .padding(.horizontal)
-                    .padding(.top)
-                    .onChange(of: searchText) { _, newValue in
-                        // Only search if 2 or more chars
-                        if newValue.count >= 2 {
-                            viewModel.searchUsers(query: newValue)
+            ScrollView {
+                VStack {
+                    // Search bar inside ScrollView now
+                    TextField("Search usernames...", text: $searchText)
+                        .focused($searchIsFocused)
+                        .padding(12)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                        .padding(.top)
+                        .onChange(of: searchText) { _, newValue in
+                            if newValue.count >= 2 {
+                                viewModel.searchUsers(query: newValue)
+                            }
                         }
-                    }
-                
-                Divider()
-                    .padding(.vertical, 4)
-                
-                // Content area
-                Group {
-                    if searchText.count >= 2 {
-                        searchingStateView
-                    } else {
-                        ScrollView {
+
+                    Divider()
+                        .padding(.vertical, 4)
+
+                    Group {
+                        if searchText.count >= 2 {
+                            searchingStateView
+                        } else {
                             LazyVStack(spacing: 16) {
                                 friendRequests
-                                MyFriendsListView(isInFriendsTab: true)
+                                MyFriendsList(isInFriendsTab: true)
                                     .id(friendsListID)
+                                    .padding(.bottom)
                             }
                             .padding(.top)
                         }
                     }
                 }
-                Spacer()
             }
             .background(Color(.systemGroupedBackground))
             .navigationTitle("Friends")
@@ -128,7 +126,7 @@ struct FriendsListView: View {
                                 Task {
                                     await viewModel.requestFriend(with: user.id)
                                     searchText = ""
-                                    saerchIsFocused = false
+                                    searchIsFocused = false
                                 }
                             }
                             .padding(.vertical, 6)
@@ -142,5 +140,5 @@ struct FriendsListView: View {
 }
 
 #Preview {
-    FriendsListView()
+    MyFriendsView()
 }

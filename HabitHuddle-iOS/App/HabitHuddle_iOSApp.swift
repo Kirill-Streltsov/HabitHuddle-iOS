@@ -25,7 +25,7 @@ struct HabitHuddle_iOSApp: App {
             RootView()
                 .environmentObject(appState)
                 .environmentObject(userManager)
-                .environmentObject(MyFriendsListView.ViewModel())
+                .environmentObject(MyFriendsList.ViewModel())
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }

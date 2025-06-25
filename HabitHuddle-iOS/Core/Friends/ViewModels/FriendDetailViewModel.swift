@@ -50,5 +50,22 @@ extension FriendDetailView {
                 return .failure(.networkError(error))
             }
         }
+        
+        func sendChallenge(to userID: UUID, for habitID: UUID, ofType type: ChallengeType) async {
+            let payload = ChallengeRequest(
+                receiverID: userID,
+                initiatorHabitID: habitID,
+                receiverHabitID: nil,
+                type: type)
+            do {
+                let status = try await NetworkManager.shared.requestStatusCode(
+                    endpoint: .sendChallenge(),
+                    method: .post,
+                    body: payload)
+                print("✅ Just sent a challenge. HTTPStatus: \(status)")
+            } catch {
+                print("❌ Error: Couldn't send challenge: \(error)")
+            }
+        }
     }
 }

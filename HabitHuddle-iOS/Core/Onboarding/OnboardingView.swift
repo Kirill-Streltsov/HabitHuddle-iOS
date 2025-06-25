@@ -187,6 +187,7 @@ struct OnboardingView: View {
                 }
                 .padding()
             }
+            .background(Color(.systemGroupedBackground))
         }
 }
 

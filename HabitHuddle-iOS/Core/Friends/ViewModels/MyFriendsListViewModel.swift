@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension MyFriendsListView {
+extension MyFriendsList {
     @MainActor
     final class ViewModel: ObservableObject {
         
@@ -32,12 +32,11 @@ extension MyFriendsListView {
                 receiverHabitID: nil,
                 type: type)
             do {
-                let sentChallenge = try await NetworkManager.shared.request(
+                let status = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .sendChallenge(),
                     method: .post,
-                    body: payload,
-                    responseType: ChallengeDTO.self)
-                print("✅ Just sent a challenge: \(sentChallenge)")
+                    body: payload)
+                print("✅ Just sent a challenge. Status: \(status)")
             } catch {
                 print("❌ Error: Couldn't send challenge: \(error)")
             }

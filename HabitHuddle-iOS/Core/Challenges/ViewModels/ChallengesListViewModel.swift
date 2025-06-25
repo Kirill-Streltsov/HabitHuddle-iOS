@@ -51,13 +51,12 @@ extension ChallengesListView {
             }
         }
         
-        func cancelChallenge(with id: UUID) async -> Result<ChallengeDTO, HHError> {
+        func cancelChallenge(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
-                let challenge = try await NetworkManager.shared.request(
+                let status = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .cancelChallenge(id: id),
-                    method: .delete,
-                    responseType: ChallengeDTO.self)
-                return .success(challenge)
+                    method: .delete)
+                return .success(status)
             } catch {
                 print("❌ Error: Couldn't cancel challenge with id: \(id)")
                 return .failure(.networkError(error))

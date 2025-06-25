@@ -34,8 +34,17 @@ struct FriendDetailView: View {
                         Text("\(friend.name)'s habits")
                             .font(.title2)
                             .fontWeight(.semibold)
-                        ForEach(viewModel.habits) { habit in
-                            FriendHabitCard(habit: habit)
+                        ForEach(viewModel.habits) { habitDTO in
+                            FriendHabitCard(habitDTO: habitDTO) {
+                                Task {
+                                    await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .supportive)
+                                }
+                                
+                            } onCompetitiveCalled: {
+                                Task {
+                                    await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .competitive)
+                                }
+                            }
                         }
                     }
                     Divider()

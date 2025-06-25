@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension FriendsListView {
+extension MyFriendsView {
     @MainActor
     final class ViewModel: ObservableObject {
         

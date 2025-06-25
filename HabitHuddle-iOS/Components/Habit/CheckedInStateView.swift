@@ -10,6 +10,7 @@ import SwiftUI
 struct CheckedInStateView: View {
     let isCheckedIn: Bool
     let fontSize: CGFloat
+    let shouldFlicker: Bool
 
     var body: some View {
         Group {
@@ -22,12 +23,12 @@ struct CheckedInStateView: View {
                     .foregroundStyle(.gray)
                     .fontWeight(.light)
                     .font(.system(size: fontSize))
-                    .flickering()
+                    .flickering(shouldFlicker: shouldFlicker)
             }
         }
     }
 }
 
 #Preview {
-    CheckedInStateView(isCheckedIn: true, fontSize: 50)
+    CheckedInStateView(isCheckedIn: true, fontSize: 50, shouldFlicker: true)
 }

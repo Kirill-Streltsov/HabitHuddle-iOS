@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct MyFriendsListView: View {
+struct MyFriendsList: View {
     
     @EnvironmentObject private var viewModel: ViewModel
     @Environment(\.modelContext) private var context
@@ -16,7 +16,7 @@ struct MyFriendsListView: View {
     var habit: Habit?
     
     var body: some View {
-        Group {
+        ScrollView {
             // Friends list below
             if !viewModel.friends.isEmpty {
                 ForEach(viewModel.friends) { friend in
@@ -33,6 +33,7 @@ struct MyFriendsListView: View {
                             FriendDetailView(friend: friend)
                         } label: {
                             FriendCardView(friend: friend, showChallengeButton: false)
+                                .padding(.bottom)
                         }
                         .buttonStyle(.plain)
                     }
@@ -51,6 +52,7 @@ struct MyFriendsListView: View {
                 EmptyFriendsView()
             }
         }
+        .padding(.top)
         .task {
             await viewModel.getMyFriends()
         }
@@ -68,5 +70,5 @@ struct MyFriendsListView: View {
 }
 
 #Preview {
-    MyFriendsListView(isInFriendsTab: true)
+    MyFriendsList(isInFriendsTab: true)
 }
