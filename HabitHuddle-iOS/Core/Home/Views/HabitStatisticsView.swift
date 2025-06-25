@@ -14,6 +14,12 @@ struct Streak {
     let endDate: Date
 }
 
+struct HourlyPatternData: Identifiable {
+    let id = UUID()
+    let hour: Int
+    let count: Int
+}
+
 // MARK: - Main Statistics View
 
 struct HabitStatisticsView: View {
@@ -23,6 +29,10 @@ struct HabitStatisticsView: View {
     
     // MARK: Computed properties
 
+    private var chartData: [HourlyPatternData] {
+        generateHourlyData()
+    }
+    
     private var totalDays: Int {
         let days = Calendar.current.dateComponents([.day], from: habit.createdAt, to: Date()).day ?? 1
         return max(days, 1)
@@ -135,31 +145,33 @@ struct HabitStatisticsView: View {
         ScrollView {
             VStack(spacing: 12) {
                 CardView {
-                    VStack {
-                        Text("Frequency of your check ins")
-                            .font(.headline)
+                    ChartContainerView(title: "Check in overview", subtitle: "Frequency of your check ins") {
                         HeatmapView(habits: [habit])
                             .id(statisticsID)
                     }
                 }
                 
                 CardView {
-                    HStack(alignment: .top) {
-                        completionRateSection
+                    ChartContainerView(title: "Missed days", subtitle: "The number of days you've missed") {
                         missedDaysSection
+                            .font(.subheadline)
+                            .multilineTextAlignment(.center)
                     }
-                    .font(.subheadline)
-                    .multilineTextAlignment(.center)
                 }
                 
                 CardView {
-                    Group {
-                        streaksSection
-                        if habit.checkIns.count > 1 {
+                    streaksSection
+                }
+                
+                if habit.checkIns.count > 1 {
+                    CardView {
+                        ChartContainerView(title: "Time of Day Pattern", subtitle: "When you usually check in") {
                             checkInTimeDistributionSection
                         }
                     }
+                    
                 }
+                
             }
             .padding(.bottom)
         }
@@ -169,91 +181,29 @@ struct HabitStatisticsView: View {
         .navigationTitle("Statistics")
     }
 
-    // MARK: Sections
-
-    private var headerSection: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                VStack {
-                    Text("+24%")
-                        .font(.title)
-                        .bold()
-                        .foregroundStyle(.green)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Text("Keep up the amazing work! 🔥")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                Image(systemName: "chart.line.uptrend.xyaxis")
-                    .foregroundStyle(.green.opacity(0.8))
-                    .font(.system(size: 75))
-            }
-            .padding(.horizontal)
-        }
-        .padding(.horizontal)
-    }
-
-    private var completionRateSection: some View {
-        VStack(spacing: 8) {
-            Text("Completion Rate")
-                .font(.headline)
-
-            ZStack {
-                Chart {
-                    SectorMark(
-                        angle: .value("Completion", completionRate),
-                        innerRadius: .ratio(0.6),
-                        angularInset: 1
-                    )
-                    .foregroundStyle(Color.green)
-
-                    SectorMark(
-                        angle: .value("Remaining", 100 - completionRate),
-                        innerRadius: .ratio(0.6),
-                        angularInset: 1
-                    )
-                    .foregroundStyle(Color.gray.opacity(0.2))
-                }
-                .frame(height: 140)
-                Text(String(format: "%.0f%%", completionRate))
-                    .font(.title)
-                    .fontWeight(.semibold)
-            }
-        }
-    }
-
     private var missedDaysSection: some View {
-        VStack(spacing: 8) {
-            Text("Missed Days")
-                .font(.headline)
-
-            ZStack {
-                Chart {
-                    SectorMark(
-                        angle: .value("Checked In", Double(habit.checkIns.count)),
-                        innerRadius: .ratio(0.6),
-                        angularInset: 1
-                    )
-                    .foregroundStyle(
-                        Color.green
-                    )
-
-                    SectorMark(
-                        angle: .value("Missed", Double(missedDays)),
-                        innerRadius: .ratio(0.6),
-                        angularInset: 1
-                    )
-                    .foregroundStyle(
-                        Color.pink
-                    )
-                }
-                .frame(height: 140)
-                Text("\(missedDays)")
-                    .font(.title2)
-                    .fontWeight(.semibold)
+        ZStack {
+            Chart {
+                SectorMark(
+                    angle: .value("Checked In", Double(habit.checkIns.count)),
+                    innerRadius: .ratio(0.6)
+                )
+                .foregroundStyle(
+                    Color.green
+                )
+                
+                SectorMark(
+                    angle: .value("Missed", Double(missedDays)),
+                    innerRadius: .ratio(0.6)
+                )
+                .foregroundStyle(
+                    Color.pink
+                )
             }
+            .frame(height: 140)
+            Text("\(missedDays)")
+                .font(.title2)
+                .fontWeight(.semibold)
         }
     }
 
@@ -296,40 +246,41 @@ struct HabitStatisticsView: View {
     }
 
     private var checkInTimeDistributionSection: some View {
-        VStack(spacing: 8) {
-            Text("Check-in Time Distribution")
-                .font(.headline)
-
-            Chart(checkInTimeDistribution, id: \.date) { data in
-                BarMark(
-                    x: .value("Date", data.date, unit: .day),
-                    y: .value("Hour", data.hour)
-                )
-                .foregroundStyle(.blue)
-            }
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .day, count: 2)) { val in
-                    AxisValueLabel {
-                        if let date = val.as(Date.self) {
-                            Text(date, format: Date.FormatStyle().day(.twoDigits))
-                                .font(.caption2)
-                        }
-                    }
-                }
-            }
-            .chartYAxis {
-                AxisMarks(values: Array(stride(from: 0, through: 23, by: 3))) { value in
-                    AxisValueLabel {
-                        if let hourDouble = value.as(Double.self) {
-                            let hourInt = Int(hourDouble)
-                            Text("\(hourInt):00")
-                        } else {
-                            Text("-")
-                        }
-                    }
-                }
-            }
-            .frame(height: 200)
+        Chart(chartData) { data in
+            BarMark(
+                x: .value("Hour", formatHour(data.hour)), // use formatted string
+                y: .value("Count", data.count)
+            )
+            .foregroundStyle(Color.purple.gradient)
+            .cornerRadius(4)
         }
+        .chartXAxis {
+            AxisMarks(values: chartData.map { $0.hour }.filter { $0 % 4 == 0 }.map(formatHour))  {
+                AxisValueLabel()
+                    .font(.caption2)
+            }
+        }
+        .frame(height: 150)
+    }
+
+    private func generateHourlyData() -> [HourlyPatternData] {
+        let calendar = Calendar.current
+        var hourCounts = Array(repeating: 0, count: 24)
+        
+        for checkIn in habit.checkIns {
+            let hour = calendar.component(.hour, from: checkIn.date)
+            hourCounts[hour] += 1
+        }
+        
+        return hourCounts.enumerated().map { index, count in
+            HourlyPatternData(hour: index, count: count)
+        }
+    }
+
+    private func formatHour(_ hour: Int) -> String {
+        if hour == 0 { return "12AM" }
+        if hour < 12 { return "\(hour)AM" }
+        if hour == 12 { return "12PM" }
+        return "\(hour - 12)PM"
     }
 }
