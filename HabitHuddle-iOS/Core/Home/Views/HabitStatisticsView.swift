@@ -161,18 +161,12 @@ struct HabitStatisticsView: View {
                             .id(statisticsID)
                     }
                 }
-                
-                CardView {
-                    ChartContainerView(title: "Missed days", subtitle: "The number of days you've missed") {
-                        missedDaysSection
-                            .font(.subheadline)
-                            .multilineTextAlignment(.center)
-                    }
-                }
-                
-                CardView {
-                    ChartContainerView(title: "Streaks Timeline", subtitle: "Your streaks over time") {
-                        streaksSection
+                                
+                if currentStreak.length > 1 {
+                    CardView {
+                        ChartContainerView(title: "Streaks Timeline", subtitle: "Your streaks over time") {
+                            streaksSection
+                        }
                     }
                 }
                 
@@ -185,6 +179,13 @@ struct HabitStatisticsView: View {
                     
                 }
                 
+                CardView {
+                    ChartContainerView(title: "Missed days", subtitle: "The number of days you've missed") {
+                        missedDaysSection
+                            .font(.subheadline)
+                            .multilineTextAlignment(.center)
+                    }
+                }
             }
             .padding(.bottom)
         }
@@ -200,33 +201,40 @@ struct HabitStatisticsView: View {
     }
 
     private var missedDaysSection: some View {
-        ZStack {
-            Chart {
-                SectorMark(
-                    angle: .value("Checked In", Double(habit.checkIns.count)),
-                    innerRadius: .ratio(0.6)
-                )
-                .foregroundStyle(
-                    Color.green
-                )
-                
-                SectorMark(
-                    angle: .value("Missed", Double(missedDays)),
-                    innerRadius: .ratio(0.6)
-                )
-                .foregroundStyle(
-                    Color.pink
-                )
+        VStack(spacing: 16) {
+            ZStack {
+                Chart {
+                    SectorMark(
+                        angle: .value("Checked In", Double(habit.checkIns.count)),
+                        innerRadius: .ratio(0.6)
+                    )
+                    .foregroundStyle(
+                        Color.green
+                    )
+                    
+                    SectorMark(
+                        angle: .value("Missed", Double(missedDays)),
+                        innerRadius: .ratio(0.6)
+                    )
+                    .foregroundStyle(
+                        Color.pink
+                    )
+                }
+                .frame(height: 140)
+                Text("\(missedDays)")
+                    .font(.title2)
+                    .fontWeight(.semibold)
             }
-            .frame(height: 140)
-            Text("\(missedDays)")
-                .font(.title2)
-                .fontWeight(.semibold)
+            if missedDays == 0 {
+                Text("100% consistency!")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+            }
         }
     }
 
     private var streaksSection: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 24) {
             Chart(streakData) { data in
                 AreaMark(
                     x: .value("Date", data.date, unit: .day),
@@ -242,7 +250,13 @@ struct HabitStatisticsView: View {
                 .lineStyle(StrokeStyle(lineWidth: 2))
             }
             .frame(height: 150)
-
+            
+            if currentStreak.length == longestStreak.length {
+                Text("You're making great progress — this is your longest streak so far.")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+            }
+            
             HStack(alignment: .top, spacing: 40) {
                 VStack {
                     Text("Current Streak")

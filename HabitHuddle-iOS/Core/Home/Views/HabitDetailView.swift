@@ -223,6 +223,7 @@ struct HabitDetailView: View {
             .padding(.horizontal)
         }
         .padding()
+        .padding(.horizontal)
     }
     
     
