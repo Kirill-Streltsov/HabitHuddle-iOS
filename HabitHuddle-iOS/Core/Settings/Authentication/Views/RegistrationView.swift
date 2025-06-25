@@ -58,7 +58,7 @@ struct RegistrationView: View {
     }
 
     var body: some View {
-        VStack {
+        ScrollView {
             Image(systemName: "person.badge.plus")
                 .font(.system(size: 75))
                 .foregroundStyle(Color.accentColor)
@@ -118,6 +118,7 @@ struct RegistrationView: View {
             .clipShape(.rect(cornerRadius: 10))
             Spacer()
         }
+        .background(Color(.systemGroupedBackground))
     }
     
     private func registerUser() {

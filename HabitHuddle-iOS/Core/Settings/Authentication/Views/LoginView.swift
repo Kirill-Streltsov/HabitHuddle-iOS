@@ -31,7 +31,7 @@ struct LoginView: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
+            ScrollView {
                 Image(systemName: "person.fill")
                     .font(.system(size: 75))
                     .foregroundStyle(Color.accentColor)
@@ -81,6 +81,7 @@ struct LoginView: View {
 
                 Spacer()
             }
+            .background(Color(.systemGroupedBackground))
         }
     }
     
