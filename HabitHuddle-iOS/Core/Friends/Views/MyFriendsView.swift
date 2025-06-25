@@ -49,7 +49,6 @@ struct MyFriendsView: View {
                                     .id(friendsListID)
                                     .padding(.bottom)
                             }
-                            .padding(.top)
                         }
                     }
                 }
