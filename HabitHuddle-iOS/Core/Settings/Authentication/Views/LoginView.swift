@@ -81,6 +81,7 @@ struct LoginView: View {
 
                 Spacer()
             }
+            .navigationTitle("Login")
             .background(Color(.systemGroupedBackground))
         }
     }
