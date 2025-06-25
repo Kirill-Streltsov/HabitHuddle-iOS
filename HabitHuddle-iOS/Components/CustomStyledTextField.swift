@@ -16,7 +16,7 @@ struct CustomStyledTextField: View {
             .padding(12)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(Color(.systemGray6))
+                    .fill(Color(.systemGray5))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 12)

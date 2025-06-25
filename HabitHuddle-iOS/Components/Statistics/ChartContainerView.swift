@@ -19,8 +19,8 @@ struct ChartContainerView<Content: View>: View {
     }
     
     var body: some View {
-        VStack(spacing: 16) {
-            VStack(spacing: 4) {
+        VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.headline)
                     .fontWeight(.semibold)

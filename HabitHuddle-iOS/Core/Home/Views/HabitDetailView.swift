@@ -71,6 +71,7 @@ struct HabitDetailView: View {
                 }
                 .padding(.top)
             }
+            .background(Color(.systemGroupedBackground))
             .sheet(isPresented: $showEditSheet) {
                 editHabitView
             }
@@ -140,11 +141,11 @@ struct HabitDetailView: View {
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
         }
+        .padding(.bottom)
     }
     
     private var editHabitView: some View {
         VStack(spacing: 16) {
-            CardView {
                 VStack(spacing: 20) {
                     VStack(spacing: 16) {
                         CustomStyledTextField(
@@ -164,6 +165,10 @@ struct HabitDetailView: View {
                         IconPickerView(selectedIcon: $viewModel.icon)
                             .frame(maxHeight: 300)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(.gray, lineWidth: 0.5)
+                            )
                     }
                     
                     VStack(alignment: .leading, spacing: 20) {
@@ -205,7 +210,6 @@ struct HabitDetailView: View {
                             .animation(.easeInOut(duration: 0.3), value: viewModel.hasReminder)
                     }
                 }
-            }
             
             SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
                 saveButtonPressed = true
@@ -218,7 +222,7 @@ struct HabitDetailView: View {
             }
             .padding(.horizontal)
         }
-        .padding(.vertical)
+        .padding()
     }
     
     

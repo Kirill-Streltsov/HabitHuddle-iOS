@@ -28,6 +28,7 @@ struct HomeView: View {
                     HabitsGridView(habits: habits)
                 }
             }
+            .background(Color(.systemGroupedBackground))
             .toolbar {
                 if !habits.isEmpty {
                     Button {

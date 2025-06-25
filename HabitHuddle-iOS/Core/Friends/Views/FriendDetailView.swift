@@ -56,6 +56,7 @@ struct FriendDetailView: View {
                 await viewModel.getUserChallenges(for: friend.id)
             }
         }
+        .background(Color(.systemGroupedBackground))
         .toolbar {
             Button {
                 Task {

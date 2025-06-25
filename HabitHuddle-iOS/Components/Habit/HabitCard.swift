@@ -55,6 +55,7 @@ struct HabitCard: View {
             ZStack {
                 CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 85)
                     .offset(y: -5)
+                    .scaleEffect(scale)
                     .onTapGesture {
                         HapticManager.trigger(.success)
                         habit.toggleCheckIn(in: context)
@@ -116,7 +117,6 @@ struct HabitCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .frame(maxWidth: cardWidth)
-        .scaleEffect(scale)
         .animation(.easeInOut(duration: 0.3), value: scale)
         .sheet(isPresented: $challengeButtonPressed) {
             MyFriendsListView(isInFriendsTab: false, habit: habit)

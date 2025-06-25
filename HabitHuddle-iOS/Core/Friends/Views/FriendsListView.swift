@@ -56,6 +56,7 @@ struct FriendsListView: View {
                 }
                 Spacer()
             }
+            .background(Color(.systemGroupedBackground))
             .navigationTitle("Friends")
             .task {
                 await viewModel.getMyFriendRequests()

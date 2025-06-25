@@ -84,13 +84,13 @@ struct ChallengesListView: View {
                     }
                 }
             }
+            .background(Color(.systemGroupedBackground))
             .task {
-                print("THIS IS LOADING CHALLENGES")
                 await viewModel.getChallenges(for: userManager.profile.id)
             }
             .onChange(of: viewModel.challenges) { oldChallenges, newChallenges in
                 if !newChallenges.isEmpty {
-                    for newChallenge in newChallenges.filter { $0.status == .accepted } {
+                    for newChallenge in newChallenges.filter({ $0.status == .accepted }) {
                         if !challenges.contains(where: { $0.id == newChallenge.id }) {
                             guard let initiatorHabitID = newChallenge.initiatorHabitID else { return }
                             guard let habit = habits.filter({ $0.id == initiatorHabitID }).first else { return }

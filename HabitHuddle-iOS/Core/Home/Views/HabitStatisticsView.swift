@@ -20,6 +20,13 @@ struct HourlyPatternData: Identifiable {
     let count: Int
 }
 
+struct StreakData: Identifiable {
+    let id = UUID()
+    let date: Date
+    let streakLength: Int
+}
+
+
 // MARK: - Main Statistics View
 
 struct HabitStatisticsView: View {
@@ -29,8 +36,12 @@ struct HabitStatisticsView: View {
     
     // MARK: Computed properties
 
-    private var chartData: [HourlyPatternData] {
+    private var hourlyData: [HourlyPatternData] {
         generateHourlyData()
+    }
+    
+    private var streakData: [StreakData] {
+        generateStreakData()
     }
     
     private var totalDays: Int {
@@ -160,7 +171,9 @@ struct HabitStatisticsView: View {
                 }
                 
                 CardView {
-                    streaksSection
+                    ChartContainerView(title: "Streaks Timeline", subtitle: "Your streaks over time") {
+                        streaksSection
+                    }
                 }
                 
                 if habit.checkIns.count > 1 {
@@ -174,6 +187,11 @@ struct HabitStatisticsView: View {
                 
             }
             .padding(.bottom)
+        }
+        .onAppear {
+            for checkIn in habit.checkIns {
+                print("DAY: \(checkIn.date.day), HOUR: \(checkIn.date.hour)")
+            }
         }
         .onChange(of: habit.checkIns.count) { _, _ in
             statisticsID = UUID()
@@ -209,8 +227,21 @@ struct HabitStatisticsView: View {
 
     private var streaksSection: some View {
         VStack(spacing: 8) {
-            Text("Streaks")
-                .font(.headline)
+            Chart(streakData) { data in
+                AreaMark(
+                    x: .value("Date", data.date, unit: .day),
+                    y: .value("Streak", data.streakLength)
+                )
+                .foregroundStyle(Color.orange.gradient.opacity(0.3))
+                
+                LineMark(
+                    x: .value("Date", data.date, unit: .day),
+                    y: .value("Streak", data.streakLength)
+                )
+                .foregroundStyle(Color.orange)
+                .lineStyle(StrokeStyle(lineWidth: 2))
+            }
+            .frame(height: 150)
 
             HStack(alignment: .top, spacing: 40) {
                 VStack {
@@ -246,18 +277,21 @@ struct HabitStatisticsView: View {
     }
 
     private var checkInTimeDistributionSection: some View {
-        Chart(chartData) { data in
+        Chart(hourlyData) { data in
             BarMark(
-                x: .value("Hour", formatHour(data.hour)), // use formatted string
+                x: .value("Hour", data.hour),
                 y: .value("Count", data.count)
             )
             .foregroundStyle(Color.purple.gradient)
             .cornerRadius(4)
         }
         .chartXAxis {
-            AxisMarks(values: chartData.map { $0.hour }.filter { $0 % 4 == 0 }.map(formatHour))  {
-                AxisValueLabel()
-                    .font(.caption2)
+            AxisMarks(values: .stride(by: 4)) { value in
+                AxisValueLabel {
+                    if let hour = value.as(Int.self) {
+                        Text(formatHour(hour))
+                    }
+                }
             }
         }
         .frame(height: 150)
@@ -282,5 +316,34 @@ struct HabitStatisticsView: View {
         if hour < 12 { return "\(hour)AM" }
         if hour == 12 { return "12PM" }
         return "\(hour - 12)PM"
+    }
+    
+    private func generateStreakData() -> [StreakData] {
+        let calendar = Calendar.current
+        let checkInDates = habit.checkIns.map { calendar.startOfDay(for: $0.date) }.sorted()
+        
+        guard !checkInDates.isEmpty else { return [] }
+        
+        var streakData: [StreakData] = []
+        var currentStreak = 1
+        var lastDate = checkInDates[0]
+        
+        streakData.append(StreakData(date: lastDate, streakLength: currentStreak))
+        
+        for i in 1..<checkInDates.count {
+            let currentDate = checkInDates[i]
+            let daysBetween = calendar.dateComponents([.day], from: lastDate, to: currentDate).day ?? 0
+            
+            if daysBetween == 1 {
+                currentStreak += 1
+            } else {
+                currentStreak = 1
+            }
+            
+            streakData.append(StreakData(date: currentDate, streakLength: currentStreak))
+            lastDate = currentDate
+        }
+        
+        return streakData
     }
 }

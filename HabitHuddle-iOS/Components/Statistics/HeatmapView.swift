@@ -152,7 +152,7 @@ struct HeatmapView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity)
+        //.frame(maxWidth: .infinity)
         .padding()
         .onAppear {
             // Perform all heavy computations once
