@@ -36,7 +36,7 @@ struct ChallengesListView: View {
     var declinedChallenges: [ChallengeDTO] {
         viewModel.challenges.filter({ $0.status == .declined })
     }
-    
+        
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var userManager: LocalUserManager
@@ -86,15 +86,17 @@ struct ChallengesListView: View {
             }
             .background(Color(.systemGroupedBackground))
             .task {
+                viewModel.challenges.removeAll()
                 await viewModel.getChallenges(for: userManager.profile.id)
             }
-            .onChange(of: viewModel.challenges) { oldChallenges, newChallenges in
+            .onChange(of: habits, { oldValue, newValue in
+                print("HABIT COUNT: \(newValue.count)")
+            })
+            .onChange(of: viewModel.challenges) { _, newChallenges in
                 if !newChallenges.isEmpty {
                     for newChallenge in newChallenges.filter({ $0.status == .accepted }) {
                         if !challenges.contains(where: { $0.id == newChallenge.id }) {
-                            guard let initiatorHabitID = newChallenge.initiatorHabitID else { return }
-                            guard let habit = habits.filter({ $0.id == initiatorHabitID }).first else { return }
-                            saveChallengeLocally(from: newChallenge, for: habit)
+                            updateLocalStorage(from: newChallenge)
                         }
                     }
                 }
@@ -103,6 +105,14 @@ struct ChallengesListView: View {
         }
     }
     
+    private func updateLocalStorage(from challenge: ChallengeDTO) {
+        guard let habit = habits.filter({ $0.id == challenge.initiatorHabitID || $0.id == challenge.receiverHabitID }).first else {
+            getHabit(from: challenge)
+            return
+        }
+        saveChallengeLocally(from: challenge, for: habit)
+    }
+        
     private func challengeCard(with challenge: ChallengeDTO) -> some View {
         ChallengeCardView(challenge: challenge) {
             let acceptedResult = await viewModel.acceptChallenge(with: challenge.id)
@@ -111,7 +121,7 @@ struct ChallengesListView: View {
                     Task {
                         await viewModel.getChallenges(for: userManager.profile.id)
                     }
-                    getHabit(from: challenge)
+                    updateLocalStorage(from: challenge)
                 }
             } onFailure: { error in
                 print("❌ Error: Failed to accept the challenge: \(error.localizedDescription)")
@@ -188,6 +198,14 @@ struct ChallengesListView: View {
             try context.save()
         } catch {
             print("❌ Error: Couldn't save challenge locally: \(error)")
+        }
+    }
+    
+    private func habitAlreadyExists(with receiverHabitID: UUID?, or initiatorHabitID: UUID?) -> Bool {
+        if habits.filter({ $0.id == receiverHabitID }).first != nil && habits.filter({ $0.id == initiatorHabitID }).first != nil {
+            return true
+        } else {
+            return false
         }
     }
 }
