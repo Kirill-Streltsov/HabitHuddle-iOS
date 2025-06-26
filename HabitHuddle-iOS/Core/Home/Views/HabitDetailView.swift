@@ -272,6 +272,7 @@ struct HabitDetailView: View {
     private func deleteHabit() async {
         guard let habit = habit else { return }
         context.delete(habit)
+        try? context.save()
         
         Task {
             if userManager.profile.isSignedInToServer {
