@@ -36,6 +36,9 @@ struct ChallengesListView: View {
     var declinedChallenges: [ChallengeDTO] {
         viewModel.challenges.filter({ $0.status == .declined })
     }
+    
+    @State private var showToast = false
+    @State private var message = ""
         
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
@@ -57,7 +60,17 @@ struct ChallengesListView: View {
                             }
                             ForEach(pendingChallengesSent) { challenge in
                                 SentChallengeCardView(challenge: challenge) {
-                                    let _ = await viewModel.cancelChallenge(with: challenge.id)
+                                    let result = await viewModel.cancelChallenge(with: challenge.id)
+                                    Helpers.handleResult(result) { status in
+                                        if status == .ok {
+                                            showToast = true
+                                            message = "Challenge withdrawn"
+                                            HapticManager.trigger(.success)
+                                            Task {
+                                                await viewModel.getChallenges(for: userManager.profile.id)
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -84,14 +97,16 @@ struct ChallengesListView: View {
                     }
                 }
             }
+            .toast(
+                isPresented: $showToast,
+                message: message,
+                icon: "flag.pattern.checkered.2.crossed"
+            )
             .background(Color(.systemGroupedBackground))
             .task {
                 viewModel.challenges.removeAll()
                 await viewModel.getChallenges(for: userManager.profile.id)
             }
-            .onChange(of: habits, { oldValue, newValue in
-                print("HABIT COUNT: \(newValue.count)")
-            })
             .onChange(of: viewModel.challenges) { _, newChallenges in
                 if !newChallenges.isEmpty {
                     for newChallenge in newChallenges.filter({ $0.status == .accepted }) {
@@ -118,6 +133,9 @@ struct ChallengesListView: View {
             let acceptedResult = await viewModel.acceptChallenge(with: challenge.id)
             Helpers.handleResult(acceptedResult) { status in
                 if status == .ok {
+                    HapticManager.trigger(.success)
+                    message = "Challenge accepted!"
+                    showToast = true
                     Task {
                         await viewModel.getChallenges(for: userManager.profile.id)
                     }
@@ -129,6 +147,11 @@ struct ChallengesListView: View {
         } onReject: {
             let rejectedResult = await viewModel.rejectChallenge(with: challenge.id)
             Helpers.handleResult(rejectedResult) { status in
+                if status == .ok {
+                    HapticManager.trigger(.success)
+                    message = "Challenge rejected!"
+                    showToast = true
+                }
                 Task {
                     await viewModel.getChallenges(for: userManager.profile.id)
                 }

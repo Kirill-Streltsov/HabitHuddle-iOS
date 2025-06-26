@@ -46,13 +46,8 @@ struct HabitDetailView: View {
             ScrollView {
                 VStack(spacing: 16) {
                     if mode == .adding {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Create a new habit")
-                                .font(.largeTitle.weight(.semibold))
-                            Text("Stay consistent by tracking what matters.")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                        }
+                        Text("Create a new habit")
+                            .font(.largeTitle.weight(.semibold))
                     }
                     if mode == .editing {
                         if let habit = habit {

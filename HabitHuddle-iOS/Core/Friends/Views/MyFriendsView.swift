@@ -18,6 +18,9 @@ struct MyFriendsView: View {
     @State private var requestIsSent = false
     @State private var friendsListID = UUID()
     
+    @State private var showToast = false
+    @State private var toastMessage = ""
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -53,6 +56,7 @@ struct MyFriendsView: View {
                     }
                 }
             }
+            .toast(isPresented: $showToast, message: toastMessage, icon: "person.2")
             .background(Color(.systemGroupedBackground))
             .navigationTitle("Friends")
             .task {
@@ -75,6 +79,8 @@ struct MyFriendsView: View {
                             Task {
                                 let result = await viewModel.acceptFriend(with: request.id)
                                 Helpers.handleResult(result) { friend in
+                                    showToast = true
+                                    toastMessage = "Friend request accepted"
                                     Task {
                                         await viewModel.getMyFriendRequests()
                                     }
@@ -87,7 +93,11 @@ struct MyFriendsView: View {
                                 }
                             }
                         } onIgnore: {
-                            Task { await viewModel.rejectFriend(with: request.id) }
+                            Task {
+                                showToast = true
+                                toastMessage = "Friend request ignored"
+                                let result = await viewModel.rejectFriend(with: request.id)
+                            }
                         }
                         .padding(.horizontal)
                     }
@@ -123,6 +133,8 @@ struct MyFriendsView: View {
                                 requestIsSent: $requestIsSent
                             ) {
                                 Task {
+                                    showToast = true
+                                    toastMessage = "Friend request sent"
                                     await viewModel.requestFriend(with: user.id)
                                     searchText = ""
                                     searchIsFocused = false

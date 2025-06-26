@@ -14,6 +14,9 @@ struct FriendDetailView: View {
     @StateObject private var viewModel = ViewModel()
     let friend: UserDTO
     
+    @State private var showToast = false
+    @State private var message = ""
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -37,12 +40,19 @@ struct FriendDetailView: View {
                         ForEach(viewModel.habits) { habitDTO in
                             FriendHabitCard(habitDTO: habitDTO) {
                                 Task {
-                                    await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .supportive)
+                                    let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .supportive)
+                                    Helpers.handleResult(result) { result in
+                                        showToast = true
+                                        message = "Supportive challenge sent!"
+                                    }
                                 }
-                                
                             } onCompetitiveCalled: {
                                 Task {
-                                    await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .competitive)
+                                    let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .competitive)
+                                    Helpers.handleResult(result) { result in
+                                        showToast = true
+                                        message = "Competitive challenge sent!"
+                                    }
                                 }
                             }
                         }
@@ -65,6 +75,7 @@ struct FriendDetailView: View {
                 await viewModel.getUserChallenges(for: friend.id)
             }
         }
+        .toast(isPresented: $showToast, message: message)
         .background(Color(.systemGroupedBackground))
         .toolbar {
             Button {
