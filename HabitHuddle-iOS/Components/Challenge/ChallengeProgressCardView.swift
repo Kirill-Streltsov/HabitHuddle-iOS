@@ -14,7 +14,6 @@ struct ChallengeProgressCardView: View {
         
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // Header
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(challenge.habitName)
