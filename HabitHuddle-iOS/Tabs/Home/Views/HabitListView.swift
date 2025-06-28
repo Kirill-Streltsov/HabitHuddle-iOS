@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct HomeView: View {
+struct HabitListView: View {
     @Query(sort: [SortDescriptor(\Habit.createdAt, order: .reverse)])
     var habits: [Habit]
         
@@ -49,7 +49,7 @@ struct HomeView: View {
                 }
             }
             .navigationDestination(isPresented: $showNewHabitView) {
-                HabitDetailView()
+                HabitEditView(viewModel: HabitDetailView.ViewModel())
             }
             .navigationDestination(for: Habit.self) { habit in
                 HabitDetailView(habit: habit)
@@ -61,5 +61,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HabitListView()
 }

@@ -33,7 +33,7 @@ struct RootView: View {
             if hasSeenOnboarding {
                 TabView(selection: $selectedTab) {
                     Tab("Habits", systemImage: "checklist", value: 0) {
-                        HomeView()
+                        HabitListView()
                     }
                     Tab("Friends", systemImage: "person.2", value: 1) {
                         MyFriendsView()
