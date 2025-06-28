@@ -197,7 +197,6 @@ struct HabitStatisticsView: View {
         .onChange(of: habit.checkIns.count) { _, _ in
             statisticsID = UUID()
         }
-        .navigationTitle("Statistics")
     }
 
     private var missedDaysSection: some View {

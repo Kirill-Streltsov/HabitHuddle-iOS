@@ -172,21 +172,45 @@ final class LoginViewModel: ObservableObject {
 
     private func saveHabitsLocally(_ codableHabits: [HabitDTO], in context: ModelContext) {
         for codableHabit in codableHabits {
-            // Skip if habit with same ID already exists
-            if habitExists(withId: codableHabit.id, in: context) {
-                continue
+            var habit: Habit
+
+            if let existingHabit = fetchHabit(withId: codableHabit.id, in: context) {
+                habit = existingHabit
+            } else {
+                habit = codableHabit.toSwiftData()
+                context.insert(habit)
             }
 
-            let habit = codableHabit.toSwiftData()
+            if let checkIns = codableHabit.checkIns {
+                for checkInDTO in checkIns {
+                    let date = checkInDTO.date
 
-            codableHabit.checkIns?.forEach { _ in
-                let checkIn = HabitCheckIn(habit: habit)
-                context.insert(checkIn)
+                    if !checkInExists(for: habit.id, date: date, in: context) {
+                        print("SAVING THE CHECK IN FOR HABIT: \(codableHabit.name)")
+                        let checkIn = HabitCheckIn(date: date, habit: habit, habitID: habit.id)
+                        context.insert(checkIn)
+                    }
+                }
             }
-
-            context.insert(habit)
         }
+
         try? context.save()
+    }
+    
+    private func fetchHabit(withId id: UUID, in context: ModelContext) -> Habit? {
+        let descriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.id == id })
+        return try? context.fetch(descriptor).first
+    }
+
+    private func checkInExists(for habitID: UUID, date: Date, in context: ModelContext) -> Bool {
+
+        let descriptor = FetchDescriptor<HabitCheckIn>(predicate: #Predicate { $0.habitID == habitID })
+        
+        guard let checkInsCount = try? context.fetchCount(descriptor) else {
+            return false
+        }
+
+        return checkInsCount > 0
     }
     
     private func habitExists(withId id: UUID, in context: ModelContext) -> Bool {

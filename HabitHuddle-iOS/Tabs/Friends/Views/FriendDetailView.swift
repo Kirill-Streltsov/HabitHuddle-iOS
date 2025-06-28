@@ -109,7 +109,7 @@ struct Hardcode {
     }
 
     static func checkIns(for habit: Habit, days: [Int]) -> [HabitCheckIn] {
-        days.map { HabitCheckIn(date: daysAgo($0), habit: habit) }
+        days.map { HabitCheckIn(date: daysAgo($0), habit: habit, habitID: habit.id) }
     }
 
     static var allHabits: [Habit] {
@@ -147,7 +147,7 @@ struct Hardcode {
         )
         habit3.checkIns = (0..<90).compactMap {
             let date = daysAgo($0)
-            return calendar.isDateInWeekend(date) ? nil : HabitCheckIn(date: date, habit: habit3)
+            return calendar.isDateInWeekend(date) ? nil : HabitCheckIn(date: date, habit: habit3, habitID: habit3.id)
         }.prefix(30).map { $0 }
         habits.append(habit3)
 
@@ -161,7 +161,7 @@ struct Hardcode {
         )
         habit4.checkIns = (0..<90).compactMap {
             let date = daysAgo($0)
-            return calendar.isDateInWeekend(date) ? HabitCheckIn(date: date, habit: habit4) : nil
+            return calendar.isDateInWeekend(date) ? HabitCheckIn(date: date, habit: habit4, habitID: habit4.id) : nil
         }.prefix(30).map { $0 }
         habits.append(habit4)
 
@@ -209,7 +209,7 @@ struct Hardcode {
         habit8.checkIns = (0..<90).compactMap {
             let date = daysAgo($0)
             let weekday = calendar.component(.weekday, from: date)
-            return [2, 4, 6].contains(weekday) ? HabitCheckIn(date: date, habit: habit8) : nil
+            return [2, 4, 6].contains(weekday) ? HabitCheckIn(date: date, habit: habit8, habitID: habit8.id) : nil
         }.prefix(30).map { $0 }
         habits.append(habit8)
 

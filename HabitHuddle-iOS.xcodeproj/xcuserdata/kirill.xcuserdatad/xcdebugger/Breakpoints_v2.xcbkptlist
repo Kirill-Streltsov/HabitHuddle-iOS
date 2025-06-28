@@ -3,4 +3,38 @@
    uuid = "18C46DCE-CB70-437D-9B93-5E930E697665"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ED3C6AE9-DB67-42F3-94A7-61D1A565B4F2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../var/folders/lv/hh0w0y955jz3byyv_gkgn0lm0000gn/T/swift-generated-sources/@__swiftmacro_15HabitHuddle_iOS0025LoginViewModelswift_jqFBgfMX209_23_33_5536382DCF6D6CFED40FA47796AF8147Ll9PredicatefMf_.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1"
+            endingLineNumber = "1"
+            landmarkName = "checkInExists(for:date:in:)"
+            landmarkType = "37">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5E54CDCC-7B24-4EEF-8B5B-BDC8877663A8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../var/folders/lv/hh0w0y955jz3byyv_gkgn0lm0000gn/T/swift-generated-sources/@__swiftmacro_15HabitHuddle_iOS0025LoginViewModelswift_jqFBgfMX210_23_33_5536382DCF6D6CFED40FA47796AF8147Ll9PredicatefMf_.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1"
+            endingLineNumber = "1"
+            landmarkName = "checkInExists(for:date:in:)"
+            landmarkType = "37">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -19,7 +19,7 @@ extension HabitDTO {
         
         if let checkIns = checkIns, !checkIns.isEmpty {
             for checkIn in checkIns {
-                let checkInToSave = HabitCheckIn(id: checkIn.id, date: checkIn.date, habit: habit)
+                let checkInToSave = HabitCheckIn(id: checkIn.id, date: checkIn.date, habit: habit, habitID: habit.id)
                 habit.checkIns.append(checkInToSave)
             }
         }

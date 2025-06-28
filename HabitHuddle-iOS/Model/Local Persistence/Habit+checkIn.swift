@@ -31,7 +31,7 @@ extension Habit {
         if let existing = checkIns.first(where: { utc.isDate($0.date, inSameDayAs: now) }) {
             context.delete(existing)
         } else {
-            let newCheckIn = HabitCheckIn(date: now, habit: self)
+            let newCheckIn = HabitCheckIn(date: now, habit: self, habitID: self.id)
             checkIns.append(newCheckIn)
         }
         

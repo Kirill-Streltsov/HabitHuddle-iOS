@@ -109,13 +109,65 @@ extension Habit {
                         second: Int.random(in: 0 ..< 60),
                         of: currentDate
                     ) {
-                        checkIns.append(HabitCheckIn(date: checkInTime, habit: habit))
+                        checkIns.append(HabitCheckIn(date: checkInTime, habit: habit, habitID: habit.id))
                     }
                 }
                 currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
             }
 
             habit.checkIns = checkIns
+            habits.append(habit)
+        }
+
+        return habits
+    }
+    
+    static func createTestHabitsWithoutCheckIns() -> [Habit] {
+        let namesAndDescriptions: [(String, String)] = [
+            ("Morning Run", "Go for a run every morning before 8 AM"),
+            ("Meditate", "Practice meditation for 10 minutes daily"),
+            ("Drink Water", "Drink at least 2 liters of water per day"),
+            ("Write Journal", "Write a daily journal entry before bed"),
+            ("Stretching", "Stretch for 5 minutes after waking up"),
+            ("Learn German", "Practice German vocabulary daily"),
+            ("Code Practice", "Solve 1 coding problem every day"),
+            ("No Sugar", "Avoid all sugary foods for a month"),
+            ("Gratitude List", "Write 3 things you're grateful for"),
+            ("Sleep by 11", "Go to bed before 11 PM"),
+        ]
+
+        func days(for duration: HabitDuration) -> Int {
+            switch duration {
+            case .oneWeek: return 7
+            case .twoWeeks: return 14
+            case .oneMonth: return 30
+            }
+        }
+
+        var habits: [Habit] = []
+        let calendar = Calendar.current
+        let now = Date()
+
+        for i in 0 ..< namesAndDescriptions.count {
+            let (name, description) = namesAndDescriptions[i]
+            let duration: HabitDuration = [.oneWeek, .twoWeeks, .oneMonth].randomElement()!
+            let numberOfDays = days(for: duration)
+
+            // Random creation date up to 14 days ago
+            guard let createdAt = calendar.date(byAdding: .day, value: -Int.random(in: 0 ..< 14), to: now) else { continue }
+
+            // Compute end date
+            guard let endDate = calendar.date(byAdding: .day, value: numberOfDays - 1, to: createdAt) else { continue }
+
+            let habit = Habit(
+                id: UUID(),
+                user: LightweightUser(id: UUID()),
+                name: name,
+                description: description,
+                duration: duration,
+                reminderTime: calendar.date(bySettingHour: Int.random(in: 6 ... 22), minute: 0, second: 0, of: now)
+            )
+            habit.createdAt = createdAt
             habits.append(habit)
         }
 
@@ -146,7 +198,7 @@ extension Habit {
         habit.checkIns = offsets.map { offset in
             let day = calendar.date(byAdding: .day, value: -offset, to: now)!
             let checkInTime = calendar.date(bySettingHour: Int.random(in: 7 ... 9), minute: 0, second: 0, of: day)!
-            return HabitCheckIn(date: checkInTime, habit: habit)
+            return HabitCheckIn(date: checkInTime, habit: habit, habitID: habit.id)
         }
 
         return habit
@@ -178,7 +230,7 @@ extension Habit {
         habit.checkIns = offsets.map { offset in
             let day = calendar.date(byAdding: .day, value: -offset, to: now)!
             let checkInTime = calendar.date(bySettingHour: Int.random(in: 7 ... 22), minute: 0, second: 0, of: day)!
-            return HabitCheckIn(date: checkInTime, habit: habit)
+            return HabitCheckIn(date: checkInTime, habit: habit, habitID: habit.id)
         }
 
         return habit
@@ -207,7 +259,7 @@ extension Habit {
         for offset in (1...13).reversed() { // Skip offset 0 (today)
             if let checkInDate = calendar.date(byAdding: .day, value: -offset, to: now),
                let checkInTime = calendar.date(bySettingHour: Int.random(in: 7...10), minute: Int.random(in: 0..<60), second: 0, of: checkInDate) {
-                checkIns.append(HabitCheckIn(date: checkInTime, habit: habit))
+                checkIns.append(HabitCheckIn(date: checkInTime, habit: habit, habitID: habit.id))
             }
         }
 

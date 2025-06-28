@@ -45,10 +45,6 @@ struct HabitDetailView: View {
     var body: some View {
             ScrollView {
                 VStack(spacing: 16) {
-                    if mode == .adding {
-                        Text("Create a new habit")
-                            .font(.largeTitle.weight(.semibold))
-                    }
                     if mode == .editing {
                         if let habit = habit {
                             VStack(spacing: 12) {
@@ -71,9 +67,13 @@ struct HabitDetailView: View {
                 editHabitView
             }
             .toolbar {
-                if let icon = viewModel.icon {
-                    ToolbarItem(placement: .principal) {
-                        Image(systemName: icon)
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        Text(mode == .adding ? "Create a new habit" : "Overview")
+                            .fontWeight(.semibold)
+                        if let icon = viewModel.icon {
+                            Image(systemName: icon)
+                        }
                     }
                 }
             }
@@ -163,6 +163,14 @@ struct HabitDetailView: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(.gray, lineWidth: 0.5)
+                            )
+                            .background(
+                                GeometryReader { geo in
+                                    Color.clear
+                                        .onAppear {
+                                            print("FRAME: \(geo.frame(in: .global))")
+                                        }
+                                }
                             )
                     }
                     

@@ -44,6 +44,7 @@ struct HabitHuddle_iOSApp: App {
             User.self,
             Habit.self,
             Challenge.self,
+            HabitCheckIn.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
