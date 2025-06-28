@@ -174,7 +174,6 @@ final class SyncManager: ObservableObject {
         async let updateResult = updateHabitsOnTheServer(with: toUpdate)
         async let deleteResult = deleteHabitsOnTheServer(with: toDelete)
         
-        // Await all results at once
         _ = await (createResult, updateResult, deleteResult)
     }
     
