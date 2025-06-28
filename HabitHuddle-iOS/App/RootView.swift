@@ -52,13 +52,13 @@ struct RootView: View {
                     .transition(.opacity)
             }
         }
-//        .onChange(of: scenePhase) { _, newPhase in
-//            if newPhase == .active {
-//                Task {
-//                    await SyncManager.shared.performFullSync(localHabits: habits, in: context)
-//                }
-//            }
-//        }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                Task {
+                    await SyncManager.shared.performFullSync(localHabits: habits, in: context)
+                }
+            }
+        }
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {
             print("TOKEN: \(TokenManager.token)")

@@ -144,12 +144,29 @@ final class LoginViewModel: ObservableObject {
             print("TOKEN: \(String(describing: TokenManager.token))")
             let codableHabitsResult = await getUserHabits()
             Helpers.handleResult(codableHabitsResult) { codableHabits in
+                let localHabits = fetchLocalHabits(from: context)
+                if codableHabits.isEmpty && !localHabits.isEmpty {
+                    Task {
+                        await SyncManager.shared.performFullSync(localHabits: localHabits, in: context)
+                    }
+                }
                 saveHabitsLocally(codableHabits, in: context)
                 saveUser(user, in: context)
                 print("TOKEN: \(TokenManager.token)")
             } onFailure: { apiError in
                 print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")
             }
+        }
+    }
+    
+    private func fetchLocalHabits(from context: ModelContext) -> [Habit] {
+        let descriptor = FetchDescriptor<Habit>()
+        do {
+            let habits = try context.fetch(descriptor)
+            return habits
+        } catch {
+            print("❌ Error: Couldn't fetch local habits: \(error.localizedDescription)")
+            return []
         }
     }
 
