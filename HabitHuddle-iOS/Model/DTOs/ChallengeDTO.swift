@@ -27,6 +27,9 @@ struct ChallengeDTO: Identifiable, Codable, Equatable {
     }
     
     static func == (lhs: ChallengeDTO, rhs: ChallengeDTO) -> Bool {
-        lhs.id == rhs.id
+        let initiatorProgressesAreEqual = lhs.initiator.progress == rhs.initiator.progress
+        let receiverProgressesAreEqual = lhs.receiver.progress == rhs.receiver.progress
+        let idsAreEqual = lhs.id == rhs.id
+        return initiatorProgressesAreEqual && receiverProgressesAreEqual && idsAreEqual
     }
 }

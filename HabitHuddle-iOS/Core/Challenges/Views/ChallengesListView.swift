@@ -10,9 +10,7 @@ import SwiftData
 
 struct ChallengesListView: View {
     
-    @StateObject private var viewModel = ViewModel()
-    
-    @State private var showChallengeDetail = false
+    @StateObject private var viewModel: ViewModel
     
     @Query
     var challenges: [Challenge]
@@ -23,28 +21,20 @@ struct ChallengesListView: View {
     @Query
     var users: [User]
     
-    var pendingChallengesSent: [ChallengeDTO] {
-        viewModel.challenges.filter({ $0.status == .pending && $0.receiver.user.id != userManager.profile.id })
-    }
-    
-    var pendingChallengesReceived: [ChallengeDTO] {
-        viewModel.challenges.filter({ $0.status == .pending && $0.receiver.user.id == userManager.profile.id })
-    }
-    
-    var acceptedChallenges: [ChallengeDTO] {
-        viewModel.challenges.filter({ $0.status == .accepted })
-    }
-    
-    var declinedChallenges: [ChallengeDTO] {
-        viewModel.challenges.filter({ $0.status == .declined })
-    }
-    
     @State private var showToast = false
     @State private var message = ""
+    @State private var showChallengeDetail = false
+    @State private var ongoingChallengeID = UUID()
         
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
-    @EnvironmentObject var userManager: LocalUserManager
+    
+    let userID: UUID
+    
+    init(userID: UUID) {
+        self.userID = userID
+        _viewModel = StateObject(wrappedValue: ViewModel(userID: userID))
+    }
     
     var body: some View {
         NavigationStack {
@@ -52,69 +42,20 @@ struct ChallengesListView: View {
                 if viewModel.challenges.isEmpty {
                     EmptyChallengesView()
                 } else {
-                    if !(pendingChallengesSent + pendingChallengesReceived).isEmpty {
-                        VStack {
-                            Text("Pending")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                            ForEach(pendingChallengesReceived) { challenge in
-                                challengeCard(with: challenge)
-                            }
-                            ForEach(pendingChallengesSent) { challenge in
-                                SentChallengeCardView(challenge: challenge) {
-                                    let result = await viewModel.cancelChallenge(with: challenge.id)
-                                    Helpers.handleResult(result) { status in
-                                        if status == .ok {
-                                            showToast = true
-                                            message = "Challenge withdrawn"
-                                            HapticManager.trigger(.success)
-                                            Task {
-                                                await viewModel.getChallenges(for: userManager.profile.id)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    if !(viewModel.pendingChallengesSent + viewModel.pendingChallengesReceived).isEmpty {
+                        pendingChallenges
                     }
-                    if !acceptedChallenges.isEmpty {
-                        VStack {
-                            Text("Ongoing")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                            ForEach(acceptedChallenges) { challenge in
-                                ChallengeProgressCardView(challenge: challenge)
-                                    .onTapGesture {
-                                        showChallengeDetail = true
-                                    }
-                                    .sheet(isPresented: $showChallengeDetail) {
-                                         if let initiatorHabitID = challenge.initiatorHabitID,
-                                            let receiverHabitID = challenge.receiverHabitID {
-                                             ChallengeDetailView(
-                                                 title: challenge.habitName,
-                                                 startDate: challenge.startDate,
-                                                 endDate: challenge.endDate,
-                                                 initiatorName: challenge.initiator.user.name,
-                                                 initiatorHabitID: initiatorHabitID,
-                                                 receiverName: challenge.receiver.user.name,
-                                                 receiverHabitID: receiverHabitID)
-                                         }
-                                        
-                                    }
-                            }
-                        }
+                    if !viewModel.acceptedChallenges.isEmpty {
+                        ongoingChallenges
                     }
-                    if !declinedChallenges.isEmpty {
-                        VStack {
-                            Text("Declined")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                            ForEach(declinedChallenges) { challenge in
-                                challengeCard(with: challenge)
-                            }
-                        }
+                    if !viewModel.declinedChallenges.isEmpty {
+                        declinedChallenges
                     }
                 }
+            }
+            .refreshable {
+                await viewModel.getChallenges(for: userID)
+                ongoingChallengeID = UUID()
             }
             .toast(
                 isPresented: $showToast,
@@ -123,12 +64,11 @@ struct ChallengesListView: View {
             )
             .background(Color(.systemGroupedBackground))
             .task {
-                viewModel.challenges.removeAll()
-                await viewModel.getChallenges(for: userManager.profile.id)
+                await viewModel.getChallenges(for: userID)
             }
             .onChange(of: viewModel.challenges) { _, newChallenges in
                 if !newChallenges.isEmpty {
-                    for newChallenge in newChallenges.filter({ $0.status == .accepted }) {
+                    for newChallenge in viewModel.acceptedChallenges {
                         if !challenges.contains(where: { $0.id == newChallenge.id }) {
                             updateLocalStorage(from: newChallenge)
                         }
@@ -136,6 +76,72 @@ struct ChallengesListView: View {
                 }
             }
             .navigationTitle("Challenges")
+        }
+    }
+    
+    private var pendingChallenges: some View {
+        VStack {
+            Text("Pending")
+                .font(.title2)
+                .fontWeight(.semibold)
+            ForEach(viewModel.pendingChallengesReceived) { challenge in
+                challengeCard(with: challenge)
+            }
+            ForEach(viewModel.pendingChallengesSent) { challenge in
+                SentChallengeCardView(challenge: challenge) {
+                    let result = await viewModel.cancelChallenge(with: challenge.id)
+                    Helpers.handleResult(result) { status in
+                        if status == .ok {
+                            showToast = true
+                            message = "Challenge withdrawn"
+                            HapticManager.trigger(.success)
+                            Task {
+                                await viewModel.getChallenges(for: userID)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private var ongoingChallenges: some View {
+        VStack {
+            Text("Ongoing")
+                .font(.title2)
+                .fontWeight(.semibold)
+            ForEach(viewModel.acceptedChallenges) { challenge in
+                ChallengeProgressCardView(challenge: challenge)
+                    .id(ongoingChallengeID)
+                    .onTapGesture {
+                        showChallengeDetail = true
+                    }
+                    .sheet(isPresented: $showChallengeDetail) {
+                         if let initiatorHabitID = challenge.initiatorHabitID,
+                            let receiverHabitID = challenge.receiverHabitID {
+                             ChallengeDetailView(
+                                 title: challenge.habitName,
+                                 startDate: challenge.startDate,
+                                 endDate: challenge.endDate,
+                                 initiatorName: challenge.initiator.user.name,
+                                 initiatorHabitID: initiatorHabitID,
+                                 receiverName: challenge.receiver.user.name,
+                                 receiverHabitID: receiverHabitID)
+                         }
+                        
+                    }
+            }
+        }
+    }
+    
+    private var declinedChallenges: some View {
+        VStack {
+            Text("Declined")
+                .font(.title2)
+                .fontWeight(.semibold)
+            ForEach(viewModel.declinedChallenges) { challenge in
+                challengeCard(with: challenge)
+            }
         }
     }
     
@@ -156,7 +162,7 @@ struct ChallengesListView: View {
                     message = "Challenge accepted!"
                     showToast = true
                     Task {
-                        await viewModel.getChallenges(for: userManager.profile.id)
+                        await viewModel.getChallenges(for: userID)
                     }
                     updateLocalStorage(from: challenge)
                 }
@@ -172,7 +178,7 @@ struct ChallengesListView: View {
                     showToast = true
                 }
                 Task {
-                    await viewModel.getChallenges(for: userManager.profile.id)
+                    await viewModel.getChallenges(for: userID)
                 }
                 print("✅ Successfully rejected the challenge with id: \(challenge.id)")
             } onFailure: { error in
@@ -253,5 +259,5 @@ struct ChallengesListView: View {
 }
 
 #Preview {
-    ChallengesListView()
+    ChallengesListView(userID: UUID())
 }

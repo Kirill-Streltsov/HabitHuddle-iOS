@@ -39,7 +39,7 @@ struct RootView: View {
                         MyFriendsView()
                     }
                     Tab("Challenges", systemImage: "flag.pattern.checkered.2.crossed", value: 2) {
-                        ChallengesListView()
+                        ChallengesListView(userID: userManager.profile.id)
                     }
                     Tab("Settings", systemImage: "gear", value: 3) {
                         SettingsView()

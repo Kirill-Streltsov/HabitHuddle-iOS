@@ -13,6 +13,17 @@ extension ChallengesListView {
         
         @Published var challenges: [ChallengeDTO] = []
         
+        @Published var pendingChallengesSent: [ChallengeDTO] = []
+        @Published var pendingChallengesReceived: [ChallengeDTO] = []
+        @Published var acceptedChallenges: [ChallengeDTO] = []
+        @Published var declinedChallenges: [ChallengeDTO] = []
+        
+        let userID: UUID
+        
+        init(userID: UUID) {
+            self.userID = userID
+        }
+        
         func getChallenges(for userID: UUID) async {
             do {
                 let fetchedChallenges = try await NetworkManager.shared.request(
@@ -20,6 +31,7 @@ extension ChallengesListView {
                     method: .get,
                     responseType: [ChallengeDTO].self)
                 challenges = fetchedChallenges
+                updateChallengeData()
             } catch {
                 print("❌ Error: Couldn't fetch challenges for \(userID): \(error.localizedDescription)")
             }
@@ -99,6 +111,13 @@ extension ChallengesListView {
             } catch {
                 return .failure(.networkError(error))
             }
+        }
+        
+        func updateChallengeData() {
+            pendingChallengesSent = challenges.filter({ $0.status == .pending && $0.receiver.user.id != userID })
+            pendingChallengesReceived = challenges.filter({ $0.status == .pending && $0.receiver.user.id == userID })
+            acceptedChallenges = challenges.filter({ $0.status == .accepted })
+            declinedChallenges = challenges.filter({ $0.status == .declined })
         }
     }
 }
