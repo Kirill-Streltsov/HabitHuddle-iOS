@@ -50,7 +50,7 @@ struct HeatmapView: View {
         let upcomingSunday = calendar.nextDate(after: today, matching: components, matchingPolicy: .nextTimePreservingSmallerComponents) ?? today
 
         // Start date is 69 days before the upcoming Sunday
-        let start = calendar.date(byAdding: .day, value: -76, to: upcomingSunday)!
+        let start = calendar.date(byAdding: .day, value: -83, to: upcomingSunday)!
 
         // Generate all dates from start to upcoming Sunday
         var date = start
@@ -152,8 +152,7 @@ struct HeatmapView: View {
                 }
             }
         }
-        //.frame(maxWidth: .infinity)
-        .padding()
+        .padding(.top)
         .onAppear {
             // Perform all heavy computations once
             let allDates = computeAllDates()

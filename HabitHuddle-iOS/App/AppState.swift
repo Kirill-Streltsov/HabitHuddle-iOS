@@ -13,8 +13,7 @@ final class AppState: ObservableObject {
     
     func logout(userManager: LocalUserManager) {
         isAuthenticated = false
-        userManager.profile = LocalUser(id: UUID(), username: "guest", name: "New Person", isSignedInToServer: false)
+        userManager.profile = LocalUser(id: UUID(), username: "", name: "", isSignedInToServer: false)
         TokenManager.token = nil
     }
-    // @Published var isAuthenticated: Bool = false
 }
