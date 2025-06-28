@@ -12,22 +12,29 @@ import SwiftData
 
 extension Habit {
     var isCheckedInToday: Bool {
-        let today = Calendar.current.startOfDay(for: .now)
+        let utcCalendar = Calendar(identifier: .gregorian)
+        var utc = utcCalendar
+        utc.timeZone = TimeZone(secondsFromGMT: 0)!
+        let todayUTC = utc.startOfDay(for: Date())
+        
         return checkIns.contains {
-            Calendar.current.isDate($0.date, inSameDayAs: today)
+            utc.isDate($0.date, inSameDayAs: todayUTC)
         }
     }
-
+    
     func toggleCheckIn(in context: ModelContext) {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: .now)
+        let utcCalendar = Calendar(identifier: .gregorian)
+        var utc = utcCalendar
+        utc.timeZone = TimeZone(secondsFromGMT: 0)!
+        let now = Date()
         
-        if let existingCheckIn = checkIns.first(where: { Calendar.current.isDate($0.date, inSameDayAs: today) }) {
-            context.delete(existingCheckIn)
+        if let existing = checkIns.first(where: { utc.isDate($0.date, inSameDayAs: now) }) {
+            context.delete(existing)
         } else {
-            let newCheckIn = HabitCheckIn(date: today, habit: self)
+            let newCheckIn = HabitCheckIn(date: now, habit: self)
             checkIns.append(newCheckIn)
         }
+        
         updatedAt = .now
         try? context.save()
         toggleCheckInRemotely()
