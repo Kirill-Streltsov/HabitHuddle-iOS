@@ -84,10 +84,10 @@ final class LoginViewModel: ObservableObject {
                 TokenManager.token = loginResponse.token
                 handleUserResponse(user: user, in: context)
             } catch {
-                print("❌ Error: Failed to sign in with google. Couldn't authorize the google token.")
+                print("❌ Error: Failed to sign in with google. Couldn't authorize the google token: \(error)")
             }
         } catch {
-            print("❌ Error: Failed to sign in with google. Didn't receive the token.")
+            print("❌ Error: Failed to sign in with google. Didn't receive the token: \(error)")
         }
     }
 
