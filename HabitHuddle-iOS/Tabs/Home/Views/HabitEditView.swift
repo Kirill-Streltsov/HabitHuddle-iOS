@@ -120,6 +120,7 @@ struct HabitEditView: View {
                 }
                 dismiss()
             }
+            .allowsHitTesting(!viewModel.name.isEmpty)
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
