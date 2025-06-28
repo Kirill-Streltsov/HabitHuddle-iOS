@@ -31,7 +31,7 @@ struct HabitHuddle_iOSApp: App {
                 }
                 .onAppear {
                     GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-                        print("USER: \(user)")
+                        print("Resorted user from google: \(String(describing: user))")
                     }
                 }
             
