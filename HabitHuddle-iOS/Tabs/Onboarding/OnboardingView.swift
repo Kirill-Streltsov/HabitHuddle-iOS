@@ -123,6 +123,7 @@ struct OnboardingView: View {
                 text: "Create space for growth.\nBegin with a few popular habits.",
                 customView: AnyView(
                     OnboardingHabitList(userID: userID)
+                        .offset(y: -20)
                 )
             )
         ]
@@ -165,6 +166,7 @@ struct OnboardingView: View {
                         withAnimation {
                             if pageIndex < pages.count - 1 {
                                 pageIndex += 1
+                                HapticManager.trigger(.impact(.light))
                             } else {
                                 userManager.profile = LocalUser(
                                     id: userID,

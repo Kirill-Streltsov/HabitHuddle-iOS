@@ -20,31 +20,31 @@ struct OnboardingHabitList: View {
     
     var body: some View {
 
-        VStack(spacing: 0) {
-            ForEach(0..<3) { index in
-                OnboardingDefaultHabitCard(habit: defaultHabits[index], isSelected: $isHabitSelected[index], duration: $habitDuration[index])
+        VStack(spacing: 16) {
+            VStack(spacing: -8) {
+                ForEach(0..<3) { index in
+                    OnboardingDefaultHabitCard(habit: defaultHabits[index], isSelected: $isHabitSelected[index], duration: $habitDuration[index])
+                }
             }
             Text("Habits selected: \(isHabitSelected.filter { $0 == true }.count) / 3")
                 .font(.headline)
                 .foregroundStyle(Color.gray)
         }
         .onDisappear {
-            Task {
-                for index in isHabitSelected.indices {
-                    if isHabitSelected[index] {
-                        let habit = Habit(
-                            id: defaultHabits[index].id,
-                            user: LightweightUser(id: userID),
-                            name: defaultHabits[index].name,
-                            description: defaultHabits[index].habitDescription,
-                            icon: icons[index],
-                            duration: habitDuration[index]
-                        )
-                        context.insert(habit)
-                    }
+            for index in isHabitSelected.indices {
+                if isHabitSelected[index] {
+                    let habit = Habit(
+                        id: defaultHabits[index].id,
+                        user: LightweightUser(id: userID),
+                        name: defaultHabits[index].name,
+                        description: defaultHabits[index].habitDescription,
+                        icon: icons[index],
+                        duration: habitDuration[index]
+                    )
+                    context.insert(habit)
                 }
-                try? context.save()
             }
+            try? context.save()
         }
     }
 }

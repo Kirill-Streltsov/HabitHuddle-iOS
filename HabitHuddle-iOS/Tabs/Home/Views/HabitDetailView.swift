@@ -32,7 +32,7 @@ struct HabitDetailView: View {
                 VStack(spacing: 16) {
                     if let habit = habit {
                         VStack(spacing: 12) {
-                            habitHeader(habit: habit)
+                            habitHeader
                             CheckInCardView(habit: habit) {
                                 checkIntoHabit(habit)
                             }
@@ -89,22 +89,24 @@ struct HabitDetailView: View {
             }
     }
     
-    private func habitHeader(habit: Habit) -> some View {
+    private var habitHeader: some View {
         VStack(spacing: 0) {
-            Text(habit.habitDescription)
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.bottom)
-                .padding(.horizontal)
-            Image(systemName: habit.icon ?? "")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 40, height: 40)
-                .padding(12)
-                .background(Color(.tertiarySystemBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+            if let habit = habit {
+                Text(habit.habitDescription)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.leading)
+                    .padding(.bottom)
+                    .padding(.horizontal)
+                Image(systemName: habit.icon ?? "")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                    .padding(12)
+                    .background(Color(.tertiarySystemBackground))
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
         }
     }
 
