@@ -112,7 +112,11 @@ struct HabitEditView: View {
             SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
                 saveButtonPressed = true
                 Task {
-                    await addHabit()
+                    if viewModel.habit == nil {
+                        await addHabit()
+                    } else {
+                        await saveChanges()
+                    }
                 }
                 dismiss()
             }
