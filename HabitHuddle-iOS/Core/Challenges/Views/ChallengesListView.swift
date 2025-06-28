@@ -87,6 +87,20 @@ struct ChallengesListView: View {
                                     .onTapGesture {
                                         showChallengeDetail = true
                                     }
+                                    .sheet(isPresented: $showChallengeDetail) {
+                                         if let initiatorHabitID = challenge.initiatorHabitID,
+                                            let receiverHabitID = challenge.receiverHabitID {
+                                             ChallengeDetailView(
+                                                 title: challenge.habitName,
+                                                 startDate: challenge.startDate,
+                                                 endDate: challenge.endDate,
+                                                 initiatorName: challenge.initiator.user.name,
+                                                 initiatorHabitID: initiatorHabitID,
+                                                 receiverName: challenge.receiver.user.name,
+                                                 receiverHabitID: receiverHabitID)
+                                         }
+                                        
+                                    }
                             }
                         }
                     }

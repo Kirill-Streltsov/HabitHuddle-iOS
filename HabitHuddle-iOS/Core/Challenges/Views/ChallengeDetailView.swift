@@ -14,9 +14,12 @@ struct ChallengeDetailView: View {
     let startDate: Date
     let endDate: Date
     let initiatorName: String
-    let initiatorDates: [Date]
+    let initiatorHabitID: UUID
+    
     let receiverName: String
-    let receiverDates: [Date]
+    let receiverHabitID: UUID
+    
+    @StateObject private var viewModel = ViewModel()
     
     private var dateRange: [Date] {
         Calendar.current.generateDates(from: startDate, to: endDate)
@@ -35,14 +38,17 @@ struct ChallengeDetailView: View {
                         DayRow(
                             date: date,
                             initiatorName: initiatorName,
-                            initiatorDates: initiatorDates,
+                            initiatorDates: viewModel.initiatorDates,
                             receiverName: receiverName,
-                            receiverDates: receiverDates)
+                            receiverDates: viewModel.receiverDates)
                             .padding(.horizontal)
                     }
                 }
                 .padding(.bottom)
             }
+        }
+        .task {
+            await viewModel.getCheckInDates(for: initiatorHabitID, and: receiverHabitID)
         }
         .navigationTitle("Challenge")
         .navigationBarTitleDisplayMode(.inline)
@@ -156,9 +162,9 @@ struct ChallengeDetailView_Previews: PreviewProvider {
                 startDate: Calendar.current.date(byAdding: .day, value: -14, to: Date())!,
                 endDate: Calendar.current.date(byAdding: .day, value: 15, to: Date())!,
                 initiatorName: "Alex",
-                initiatorDates: generateSampleDates(count: 10),
+                initiatorHabitID: UUID(),
                 receiverName: "Jordan",
-                receiverDates: generateSampleDates(count: 7))
+                receiverHabitID: UUID())
         }
     }
     
