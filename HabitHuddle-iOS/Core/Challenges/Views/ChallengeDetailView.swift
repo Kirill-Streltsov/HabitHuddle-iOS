@@ -148,26 +148,6 @@ struct DayRow: View {
     }
 }
 
-struct Person: Identifiable {
-    let id = UUID()
-    let name: String
-    let checkInDates: [Date]
-}
-
-extension Calendar {
-    func generateDates(from startDate: Date, to endDate: Date) -> [Date] {
-        var dates: [Date] = []
-        var current = startDate
-        while current <= endDate {
-            dates.append(current)
-            current = date(byAdding: .day, value: 1, to: current)!
-        }
-        return dates
-    }
-}
-
-// MARK: - Preview
-
 struct ChallengeDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
