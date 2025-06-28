@@ -172,6 +172,7 @@ struct OnboardingView: View {
                                     name: "user",
                                     isSignedInToServer: false
                                 )
+                                HapticManager.trigger(.success)
                                 hasSeenOnboarding = true
                             }
                         }

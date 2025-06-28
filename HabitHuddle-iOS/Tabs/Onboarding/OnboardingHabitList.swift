@@ -12,7 +12,7 @@ struct OnboardingHabitList: View {
     
     @Environment(\.modelContext) private var context
     
-    let defaultHabits = Habit.createTestHabitsWithoutCheckIns()
+    let defaultHabits = Habit.createTestHabitsWithCheckIns()
     let userID: UUID
     @State private var isHabitSelected = [false, false, false]
     @State private var habitDuration: [HabitDuration] = [.twoWeeks, .twoWeeks, .twoWeeks]

@@ -90,12 +90,22 @@ struct HabitDetailView: View {
     }
     
     private func habitHeader(habit: Habit) -> some View {
-        Text(habit.habitDescription)
-            .font(.title2)
-            .fontWeight(.bold)
-            .foregroundStyle(.secondary)
-            .multilineTextAlignment(.center)
-            .padding(.bottom)
+        VStack(spacing: 0) {
+            Text(habit.habitDescription)
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.bottom)
+                .padding(.horizontal)
+            Image(systemName: habit.icon ?? "")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 40, height: 40)
+                .padding(12)
+                .background(Color(.tertiarySystemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
     }
 
     private func populateFields(with habit: Habit) {
