@@ -151,13 +151,9 @@ extension Habit {
         for i in 0 ..< namesAndDescriptions.count {
             let (name, description) = namesAndDescriptions[i]
             let duration: HabitDuration = [.oneWeek, .twoWeeks, .oneMonth].randomElement()!
-            let numberOfDays = days(for: duration)
 
             // Random creation date up to 14 days ago
             guard let createdAt = calendar.date(byAdding: .day, value: -Int.random(in: 0 ..< 14), to: now) else { continue }
-
-            // Compute end date
-            guard let endDate = calendar.date(byAdding: .day, value: numberOfDays - 1, to: createdAt) else { continue }
 
             let habit = Habit(
                 id: UUID(),
