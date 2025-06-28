@@ -99,13 +99,15 @@ struct HabitDetailView: View {
                     .multilineTextAlignment(.leading)
                     .padding(.bottom)
                     .padding(.horizontal)
-                Image(systemName: habit.icon ?? "")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
-                    .padding(12)
-                    .background(Color(.tertiarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                if let icon = habit.icon {
+                    Image(systemName: icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                        .padding(12)
+                        .background(Color(.tertiarySystemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
             }
         }
     }

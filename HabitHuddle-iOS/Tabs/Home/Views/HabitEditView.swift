@@ -98,7 +98,7 @@ struct HabitEditView: View {
                         Toggle("Enable Reminder", isOn: $viewModel.hasReminder)
                             .onChange(of: viewModel.hasReminder) { _, newValue in
                                 if newValue {
-                                    requestNotificationPermission()
+                                    //requestNotificationPermission()
                                 }
                             }
                         
@@ -192,7 +192,6 @@ struct HabitEditView: View {
     private func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if let error = error {
-                viewModel.hasReminder = false
                 print("Permission error: \(error)")
             } else {
                 print("Permission granted: \(granted)")
