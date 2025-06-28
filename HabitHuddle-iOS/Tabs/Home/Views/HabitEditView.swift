@@ -35,107 +35,101 @@ struct HabitEditView: View {
     }
     
     var body: some View {
-        VStack(spacing: 16) {
-                VStack(spacing: 20) {
-                    VStack(spacing: 16) {
-                        CustomStyledTextField(
-                            placeholder: "Habit name",
-                            text: $viewModel.name
-                        )
+        ScrollView {
+            VStack(spacing: 16) {
+                    VStack(spacing: 20) {
+                        VStack(spacing: 16) {
+                            CustomStyledTextField(
+                                placeholder: "Habit name",
+                                text: $viewModel.name
+                            )
+                            
+                            CustomStyledTextField(
+                                placeholder: "Description (optional)",
+                                text: $viewModel.description
+                            )
+                        }
                         
-                        CustomStyledTextField(
-                            placeholder: "Description (optional)",
-                            text: $viewModel.description
-                        )
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Choose an Icon")
-                            .fontWeight(.semibold)
-                        IconPickerView(selectedIcon: $viewModel.icon)
-                            .frame(maxHeight: 300)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(.gray, lineWidth: 0.5)
-                            )
-                            .background(
-                                GeometryReader { geo in
-                                    Color.clear
-                                        .onAppear {
-                                            print("FRAME: \(geo.frame(in: .global))")
-                                        }
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Choose an Icon")
+                                .fontWeight(.semibold)
+                            IconPickerView(selectedIcon: $viewModel.icon)
+                                .frame(maxHeight: 300)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(.gray, lineWidth: 0.5)
+                                )
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 20) {
+                            
+                            VStack(alignment: .leading, spacing: 12) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("Desired duration")
+                                        .fontWeight(.semibold)
+                                    
+                                    if isPartOfChallenge {
+                                        Text("This habit is currently part of a challenge, so you can’t change its duration right now.")
+                                            .font(.footnote)
+                                            .foregroundColor(.gray)
+                                    }
                                 }
-                            )
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 20) {
+                                
+                                Picker("Duration", selection: $viewModel.duration) {
+                                    ForEach(HabitDuration.allCases) { option in
+                                        Text(option.displayName)
+                                            .tag(option)
+                                    }
+                                }
+                                .pickerStyle(.segmented)
+                                .disabled(isPartOfChallenge)
+                            }
+                        }
                         
                         VStack(alignment: .leading, spacing: 12) {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("Desired duration")
-                                    .fontWeight(.semibold)
-                                
-                                if isPartOfChallenge {
-                                    Text("This habit is currently part of a challenge, so you can’t change its duration right now.")
-                                        .font(.footnote)
-                                        .foregroundColor(.gray)
+                            Toggle("Enable Reminder", isOn: $viewModel.hasReminder)
+                                .onChange(of: viewModel.hasReminder) { _, newValue in
+                                    if newValue {
+                                        //requestNotificationPermission()
+                                    }
                                 }
-                            }
                             
-                            Picker("Duration", selection: $viewModel.duration) {
-                                ForEach(HabitDuration.allCases) { option in
-                                    Text(option.displayName)
-                                        .tag(option)
-                                }
-                            }
-                            .pickerStyle(.segmented)
-                            .disabled(isPartOfChallenge)
+                            DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
+                                .opacity(viewModel.hasReminder ? 1 : 0.3)
+                                .disabled(!viewModel.hasReminder)
+                                .animation(.easeInOut(duration: 0.3), value: viewModel.hasReminder)
                         }
                     }
-                    
-                    VStack(alignment: .leading, spacing: 12) {
-                        Toggle("Enable Reminder", isOn: $viewModel.hasReminder)
-                            .onChange(of: viewModel.hasReminder) { _, newValue in
-                                if newValue {
-                                    //requestNotificationPermission()
-                                }
-                            }
-                        
-                        DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
-                            .opacity(viewModel.hasReminder ? 1 : 0.3)
-                            .disabled(!viewModel.hasReminder)
-                            .animation(.easeInOut(duration: 0.3), value: viewModel.hasReminder)
+                
+                SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
+                    saveButtonPressed = true
+                    Task {
+                        if viewModel.habit == nil {
+                            await addHabit()
+                        } else {
+                            await saveChanges()
+                        }
+                    }
+                    dismiss()
+                }
+                .allowsHitTesting(!viewModel.name.isEmpty)
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    if let icon = viewModel.icon {
+                        Image(systemName: icon)
                     }
                 }
-            
-            SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
-                saveButtonPressed = true
-                Task {
-                    if viewModel.habit == nil {
-                        await addHabit()
-                    } else {
-                        await saveChanges()
-                    }
-                }
-                dismiss()
             }
-            .allowsHitTesting(!viewModel.name.isEmpty)
-        }
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                if let icon = viewModel.icon {
-                    Image(systemName: icon)
-                }
-            }
-        }
-        .padding()
-        .padding(.horizontal)
-        .onDisappear {
-            if !deleteButtonPressed && !saveButtonPressed && !viewModel.name.isEmpty {
-                Task {
-                    if let habit = viewModel.habit, habits.contains(where: { $0.id == habit.id }) {
-                        await saveChanges()
+            .padding()
+            .padding(.horizontal)
+            .onDisappear {
+                if !deleteButtonPressed && !saveButtonPressed && !viewModel.name.isEmpty {
+                    Task {
+                        if let habit = viewModel.habit, habits.contains(where: { $0.id == habit.id }) {
+                            await saveChanges()
+                        }
                     }
                 }
             }
