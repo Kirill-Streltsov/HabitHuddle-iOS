@@ -12,6 +12,8 @@ struct ChallengesListView: View {
     
     @StateObject private var viewModel = ViewModel()
     
+    @State private var showChallengeDetail = false
+    
     @Query
     var challenges: [Challenge]
     
@@ -82,6 +84,9 @@ struct ChallengesListView: View {
                                 .fontWeight(.semibold)
                             ForEach(acceptedChallenges) { challenge in
                                 ChallengeProgressCardView(challenge: challenge)
+                                    .onTapGesture {
+                                        showChallengeDetail = true
+                                    }
                             }
                         }
                     }

@@ -60,6 +60,10 @@ struct Endpoint {
         Endpoint(path: "habits/\(id)")
     }
     
+    static func getHabitCheckIns(for habitID: UUID) -> Endpoint {
+        Endpoint(path: "habits/\(habitID)/checkins")
+    }
+    
     // MARK: Users and Friendships
     
     static func searchForUser(username: String) -> Endpoint {
