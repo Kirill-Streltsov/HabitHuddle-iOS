@@ -40,10 +40,6 @@ struct HabitDetailView: View {
                         
                         habitDescription
                         
-                        CheckInCardView(habit: habit) {
-                            checkIntoHabit(habit)
-                        }
-                        
                         SubmitButton(title: "Ask AI about benefits", color: .orange, iconName: "sparkles") {
                             HapticManager.trigger(.impact(.medium))
                             Task {
@@ -54,6 +50,10 @@ struct HabitDetailView: View {
                         }
                         .padding(.horizontal)
                         
+                        CheckInCardView(habit: habit) {
+                            checkIntoHabit(habit)
+                        }
+                                                
                         HabitStatisticsView(habit: habit)
                         
                         if !viewModel.openAIAnswer.isEmpty {
@@ -152,7 +152,6 @@ struct HabitDetailView: View {
             .fontWeight(.bold)
             .foregroundStyle(.secondary)
             .multilineTextAlignment(.leading)
-            .padding(.bottom)
             .padding(.horizontal)
     }
     

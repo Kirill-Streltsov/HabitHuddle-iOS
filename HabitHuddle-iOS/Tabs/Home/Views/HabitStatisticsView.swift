@@ -155,6 +155,7 @@ struct HabitStatisticsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 12) {
+                let remaining = 2 - habit.checkIns.count
                 CardView {
                     ChartContainerView(title: "Check in overview", subtitle: "Frequency of your check ins") {
                         HeatmapView(habits: [habit])
@@ -162,21 +163,36 @@ struct HabitStatisticsView: View {
                     }
                 }
                                 
-                if currentStreak.length > 1 {
+                if currentStreak.length >= 2 {
                     CardView {
                         ChartContainerView(title: "Streaks Timeline", subtitle: "Your streaks over time") {
                             streaksSection
                         }
                     }
+                } else {
+                    CardView {
+                        Text("Check in \(remaining) more \(remaining == 1 ? "time" : "times") to see your streak data!")
+                            .font(.body)
+                            .fontWeight(.semibold)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(Color(.secondaryLabel))
+                    }
                 }
                 
-                if habit.checkIns.count > 1 {
+                if habit.checkIns.count >= 2 {
                     CardView {
                         ChartContainerView(title: "Time of Day Pattern", subtitle: "When you usually check in") {
                             checkInTimeDistributionSection
                         }
                     }
-                    
+                } else {
+                    CardView {
+                        Text("Check in \(remaining) more \(remaining == 1 ? "time" : "times") to see at what time of day you usually check in!")
+                            .font(.body)
+                            .fontWeight(.semibold)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(Color(.secondaryLabel))
+                    }
                 }
                 
                 CardView {
