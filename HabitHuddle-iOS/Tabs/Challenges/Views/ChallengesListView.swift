@@ -137,7 +137,7 @@ struct ChallengesListView: View {
                     .matchedGeometryEffect(
                         id: challenge.id,
                         in: animationNamespace,
-                        isSource: selectedChallenge?.id != challenge.id
+                        isSource: challenge.id != selectedChallenge?.id
                     )
                     .id(ongoingChallengeID)
                     .onTapGesture {
