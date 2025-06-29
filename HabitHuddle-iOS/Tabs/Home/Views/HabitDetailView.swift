@@ -10,58 +10,101 @@ import SwiftUI
 import UserNotifications
 
 struct HabitDetailView: View {
-    var habit: Habit?
-
+    
+    var habit: Habit
+    let aiTextID = 0
+    
+    @State private var typewriterTextID = UUID()
     @State private var isCheckedIn = false
     @State private var deleteButtonPressed = false
     @State private var showEditSheet = false
+    @State private var askOpenAITapped = false
+    @State private var scrollTarget: Int? = nil
     
     @StateObject private var viewModel: ViewModel
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var userManager: LocalUserManager
-
-    init(habit: Habit? = nil) {
+    
+    init(habit: Habit) {
         _viewModel = StateObject(wrappedValue: ViewModel())
         self.habit = habit
     }
-
+    
     var body: some View {
+        ScrollViewReader { proxy in
             ScrollView {
                 VStack(spacing: 16) {
-                    if let habit = habit {
-                        VStack(spacing: 12) {
-                            habitHeader
-                            CheckInCardView(habit: habit) {
-                                checkIntoHabit(habit)
+                    VStack(spacing: 12) {
+                        
+                        habitDescription
+                        
+                        CheckInCardView(habit: habit) {
+                            checkIntoHabit(habit)
+                        }
+                        
+                        SubmitButton(title: "Ask AI about benefits", color: .orange, iconName: "sparkles") {
+                            HapticManager.trigger(.impact(.medium))
+                            Task {
+                                askOpenAITapped = true
+                                typewriterTextID = UUID()
+                                await viewModel.askAI(about: habit)
                             }
-                            HabitStatisticsView(habit: habit)
+                        }
+                        .padding(.horizontal)
+                        
+                        HabitStatisticsView(habit: habit)
+                        
+                        if !viewModel.openAIAnswer.isEmpty {
+                            CardView {
+                                TypewriterText(text: viewModel.openAIAnswer, typingInterval: askOpenAITapped ? 0.02 : 0)
+                                    .id(typewriterTextID)
+                            }
+                            .id(aiTextID)
+                        }
+                        
+                        SubmitButton(title: "Delete Habit", color: .red, iconName: "trash") {
+                            HapticManager.trigger(.error)
+                            deleteButtonPressed = true
+                            Task {
+                                await deleteHabit()
+                            }
+                            dismiss()
                         }
                         .padding(.horizontal)
                     }
+                    .padding(.horizontal)
+                    .padding(.bottom)
+                    
                 }
             }
             .background(Color(.systemGroupedBackground))
             .sheet(isPresented: $showEditSheet) {
                 HabitEditView(viewModel: viewModel)
             }
-            .navigationTitle(viewModel.name)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack(spacing: 6) {
+                        Text(viewModel.name)
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                        if let icon = viewModel.icon {
+                            Image(systemName: icon)
+                                .font(.title3)
+                        }
+                    }
+                }
+            }
             .toolbar {
                 Button {
                     showEditSheet = true
                 } label: {
-                    Image(systemName: "square.and.pencil")
-                }
-                Button {
-                    deleteButtonPressed = true
-                    Task {
-                        await deleteHabit()
+                    HStack {
+                        Text("Edit")
+                        Image(systemName: "square.and.pencil")
                     }
-                    dismiss()
-                } label: {
-                    Image(systemName: "trash")
-                        .foregroundStyle(.red)
                 }
             }
             .onAppear {
@@ -71,52 +114,55 @@ struct HabitDetailView: View {
                         print("• \(request.identifier) — \(request.content.body)")
                     }
                 }
-                if let habit = habit {
-                    populateFields(with: habit)
-                    isCheckedIn = habit.isCheckedInToday
-                    viewModel.habit = habit
-                }
+                populateFields(with: habit)
+                isCheckedIn = habit.isCheckedInToday
+                viewModel.habit = habit
             }
             .onChange(of: viewModel.duration) { _, newValue in
-                if let habit = habit {
-                    Task {
-                        await MainActor.run {
-                            habit.duration = newValue
-                            try? context.save()
-                        }
+                Task {
+                    await MainActor.run {
+                        habit.duration = newValue
+                        try? context.save()
                     }
                 }
             }
-    }
-    
-    private var habitHeader: some View {
-        VStack(spacing: 0) {
-            if let habit = habit {
-                Text(habit.habitDescription)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.leading)
-                    .padding(.bottom)
-                    .padding(.horizontal)
-                if let icon = habit.icon {
-                    Image(systemName: icon)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 40)
-                        .padding(12)
-                        .background(Color(.tertiarySystemBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+            .onChange(of: viewModel.openAIAnswer) { _, answer in
+                if askOpenAITapped {
+                    scrollTarget = aiTextID
+                    if !answer.isEmpty {
+                        habit.aiText = answer
+                        try? context.save()
+                    }
+                }
+            }
+            .onChange(of: scrollTarget) { _, target in
+                if let target = target {
+                    withAnimation {
+                        proxy.scrollTo(target, anchor: .bottom)
+                    }
                 }
             }
         }
     }
-
+    
+    private var habitDescription: some View {
+        Text(habit.habitDescription)
+            .font(.title2)
+            .fontWeight(.bold)
+            .foregroundStyle(.secondary)
+            .multilineTextAlignment(.leading)
+            .padding(.bottom)
+            .padding(.horizontal)
+    }
+    
     private func populateFields(with habit: Habit) {
         viewModel.name = habit.name
         viewModel.description = habit.habitDescription
         viewModel.icon = habit.icon
         viewModel.duration = habit.duration
+        if let aiText = habit.aiText {
+            viewModel.openAIAnswer = aiText
+        }
         if let reminderTime = habit.reminderTime {
             viewModel.reminderTime = reminderTime
             viewModel.hasReminder = true
@@ -124,7 +170,7 @@ struct HabitDetailView: View {
             viewModel.hasReminder = false
         }
     }
-
+    
     private func checkIntoHabit(_ habit: Habit) {
         Task {
             if userManager.profile.isSignedInToServer {
@@ -137,9 +183,8 @@ struct HabitDetailView: View {
             }
         }
     }
-
+    
     private func deleteHabit() async {
-        guard let habit = habit else { return }
         context.delete(habit)
         try? context.save()
         
@@ -157,5 +202,5 @@ struct HabitDetailView: View {
 }
 
 #Preview {
-    HabitDetailView()
+    HabitDetailView(habit: Habit.demoHabitWith13Of14CheckIns())
 }

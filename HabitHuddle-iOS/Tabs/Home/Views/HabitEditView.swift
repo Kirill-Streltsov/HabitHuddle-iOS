@@ -102,7 +102,8 @@ struct HabitEditView: View {
                         }
                     }
                 
-                SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor) {
+                SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor, iconName: nil) {
+                    HapticManager.trigger(.success)
                     saveButtonPressed = true
                     Task {
                         if viewModel.habit == nil {
@@ -148,7 +149,6 @@ struct HabitEditView: View {
             habit.updatedAt = .now
             try? context.save()
         }
-        print("SAVING CHANGES FOR HABIT WITH NAME: \(habit.name)")
         if userManager.profile.isSignedInToServer {
             Helpers.handleResult(result) { codableHabit in
                 print("✅ Updated the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")

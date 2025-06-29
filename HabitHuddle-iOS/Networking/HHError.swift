@@ -21,6 +21,7 @@ enum HHError: Error, LocalizedError {
     case unknown
     case invalidResponse
     case partialFailure(updated: [HabitDTO], failedIDs: [UUID])
+    case customError(errorText: String)
 
     
     var errorDescription: String? {
@@ -51,7 +52,8 @@ enum HHError: Error, LocalizedError {
             return "An unknown error occurred."
         case .partialFailure(updated: let habits, failedIDs: let failedIDs):
             return "Couldn't update all habits. Habit updated: \(habits). Failed IDs: \(failedIDs)"
+        case .customError(errorText: let errorText):
+            return errorText
         }
-        
     }
 }

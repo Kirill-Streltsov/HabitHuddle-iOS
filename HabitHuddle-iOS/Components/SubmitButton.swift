@@ -10,22 +10,29 @@ import SwiftUI
 struct SubmitButton: View {
     let title: String
     let color: Color
+    let iconName: String?
     let action: () -> ()
     var body: some View {
         Button {
             action()
         } label: {
-            Text(title)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(color)
-                .foregroundStyle(.white)
-                .cornerRadius(12)
-                .font(.headline)
+            HStack {
+                if let iconName = iconName {
+                    Image(systemName: iconName)
+                        .foregroundStyle(.white)
+                }
+                Text(title)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(color)
+            .foregroundStyle(.white)
+            .cornerRadius(12)
+            .font(.headline)
         }
     }
 }
 
 #Preview {
-    SubmitButton(title: "Submit", color: .orange, action: {})
+    SubmitButton(title: "Submit", color: .orange, iconName: nil, action: {})
 }

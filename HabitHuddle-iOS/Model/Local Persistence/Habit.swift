@@ -14,6 +14,7 @@ final class Habit: Identifiable, Hashable {
     var user: LightweightUser
     var name: String
     var habitDescription: String
+    var aiText: String?
     var icon: String?
     var duration: HabitDuration
     var reminderTime: Date?
@@ -30,6 +31,7 @@ final class Habit: Identifiable, Hashable {
         name: String,
         description: String,
         icon: String? = nil,
+        aiText: String? = nil,
         duration: HabitDuration,
         reminderTime: Date? = nil,
         createdAt: Date = .now,

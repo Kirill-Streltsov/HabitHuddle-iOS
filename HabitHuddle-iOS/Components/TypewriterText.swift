@@ -9,34 +9,45 @@ import SwiftUI
 
 struct TypewriterText: View {
     let text: String
-    let typingInterval = 0.025
+    let typingInterval: Double
 
     @State private var displayedText: String = ""
     @State private var charIndex = 0
-    @State private var timer: Timer?
+    @State private var isTyping = true
+
+    init(text: String, typingInterval: Double = 0.01) {
+        self.text = text
+        self.typingInterval = typingInterval
+    }
 
     var body: some View {
         Text(displayedText)
-            .onAppear {
-                startTyping()
-            }
-            .onDisappear {
-                timer?.invalidate()
+            .font(.body)
+            .fontWeight(.semibold)
+            .multilineTextAlignment(.leading)
+            .lineSpacing(4)
+            .padding(.horizontal)
+            .task {
+                if typingInterval != 0 {
+                    await startTyping()
+                } else {
+                    displayedText = text
+                }
             }
     }
 
-    private func startTyping() {
+    private func startTyping() async {
         displayedText = ""
         charIndex = 0
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: typingInterval, repeats: true) { _ in
-            if charIndex < text.count {
-                let index = text.index(text.startIndex, offsetBy: charIndex)
-                displayedText.append(text[index])
+        isTyping = true
+
+        for character in text {
+            if !isTyping { break }
+            await MainActor.run {
+                displayedText.append(character)
                 charIndex += 1
-            } else {
-                timer?.invalidate()
             }
+            try? await Task.sleep(nanoseconds: UInt64(typingInterval * 1_000_000_000))
         }
     }
 }
