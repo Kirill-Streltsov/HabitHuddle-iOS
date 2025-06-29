@@ -124,7 +124,6 @@ struct HabitEditView: View {
                 }
             }
             .padding()
-            .padding(.horizontal)
             .onDisappear {
                 if !deleteButtonPressed && !saveButtonPressed && !viewModel.name.isEmpty {
                     Task {
