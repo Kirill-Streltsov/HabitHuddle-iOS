@@ -191,7 +191,7 @@ actor NetworkManager {
     private func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
         switch response.statusCode {
         case 200 ..< 300:
-            //print("RECEIVED DATA: \(data.prettyPrintedJSONString)")
+            print("RECEIVED DATA: \(data.prettyPrintedJSONString)")
             do {
                 let decoded = try jsonDecoder.decode(T.self, from: data)
                 return decoded
