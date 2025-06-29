@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ChallengeDetailView: View {
     let title: String
     let startDate: Date
@@ -19,6 +17,7 @@ struct ChallengeDetailView: View {
     let receiverName: String
     let receiverHabitID: UUID
     
+    @State private var isLoading = true
     @StateObject private var viewModel = ViewModel()
     
     private var dateRange: [Date] {
@@ -27,28 +26,36 @@ struct ChallengeDetailView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 12) {
-                Text(title)
-                    .font(.largeTitle.weight(.bold))
-                    .padding(.top)
-                    .padding(.horizontal)
-                
-                VStack(spacing: 8) {
-                    ForEach(dateRange, id: \.self) { date in
-                        DayRow(
-                            date: date,
-                            initiatorName: initiatorName,
-                            initiatorDates: viewModel.initiatorDates,
-                            receiverName: receiverName,
-                            receiverDates: viewModel.receiverDates)
-                            .padding(.horizontal)
+            if isLoading {
+                ProgressView("Loading check-ins...")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+            } else {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text(title)
+                        .font(.largeTitle.weight(.bold))
+                        .padding(.top)
+                        .padding(.horizontal)
+                    
+                    VStack(spacing: 8) {
+                        ForEach(dateRange, id: \.self) { date in
+                            DayRow(
+                                date: date,
+                                initiatorName: initiatorName,
+                                initiatorDates: viewModel.initiatorDates,
+                                receiverName: receiverName,
+                                receiverDates: viewModel.receiverDates)
+                                .padding(.horizontal)
+                        }
                     }
+                    .padding(.bottom)
                 }
-                .padding(.bottom)
             }
         }
         .task {
+            isLoading = true
             await viewModel.getCheckInDates(for: initiatorHabitID, and: receiverHabitID)
+            isLoading = false
         }
         .navigationTitle("Challenge")
         .navigationBarTitleDisplayMode(.inline)

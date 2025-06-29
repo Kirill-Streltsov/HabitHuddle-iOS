@@ -25,6 +25,7 @@ struct ChallengesListView: View {
     @State private var message = ""
     @State private var showChallengeDetail = false
     @State private var ongoingChallengeID = UUID()
+    @State private var selectedChallenge: ChallengeDTO?
         
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
@@ -114,22 +115,22 @@ struct ChallengesListView: View {
                 ChallengeProgressCardView(challenge: challenge)
                     .id(ongoingChallengeID)
                     .onTapGesture {
-                        showChallengeDetail = true
+                        selectedChallenge = challenge
                     }
-                    .sheet(isPresented: $showChallengeDetail) {
-                         if let initiatorHabitID = challenge.initiatorHabitID,
-                            let receiverHabitID = challenge.receiverHabitID {
-                             ChallengeDetailView(
-                                 title: challenge.habitName,
-                                 startDate: challenge.startDate,
-                                 endDate: challenge.endDate,
-                                 initiatorName: challenge.initiator.user.name,
-                                 initiatorHabitID: initiatorHabitID,
-                                 receiverName: challenge.receiver.user.name,
-                                 receiverHabitID: receiverHabitID)
-                         }
-                        
-                    }
+            }
+            .sheet(item: $selectedChallenge) { challenge in
+                 if let initiatorHabitID = challenge.initiatorHabitID,
+                    let receiverHabitID = challenge.receiverHabitID {
+                     ChallengeDetailView(
+                         title: challenge.habitName,
+                         startDate: challenge.startDate,
+                         endDate: challenge.endDate,
+                         initiatorName: challenge.initiator.user.name,
+                         initiatorHabitID: initiatorHabitID,
+                         receiverName: challenge.receiver.user.name,
+                         receiverHabitID: receiverHabitID)
+                 }
+                
             }
         }
     }
@@ -231,16 +232,7 @@ struct ChallengesListView: View {
     private func saveChallengeLocally(from challengeDTO: ChallengeDTO, for habit: Habit) {
         guard let initiator = users.filter({ $0.id == challengeDTO.initiator.user.id }).first else { return }
         guard let receiver = users.filter({ $0.id == challengeDTO.receiver.user.id }).first else { return }
-        let challenge = Challenge(
-            id: challengeDTO.id,
-            initiator: initiator,
-            receiver: receiver,
-            habit: habit,
-            type: challengeDTO.type,
-            status: challengeDTO.status,
-            startDate: challengeDTO.startDate,
-            endDate: challengeDTO.endDate,
-            createdAt: .now)
+        let challenge = challengeDTO.toSwiftData(initiator: initiator, receiver: receiver, habit: habit)
         do {
             context.insert(challenge)
             try context.save()
