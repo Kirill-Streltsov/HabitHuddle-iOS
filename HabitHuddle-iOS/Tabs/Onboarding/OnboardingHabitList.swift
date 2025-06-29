@@ -12,16 +12,16 @@ struct OnboardingHabitList: View {
     
     @Environment(\.modelContext) private var context
     
-    let defaultHabits = Habit.createTestHabitsWithCheckIns()
+    let defaultHabits = Habit.createTestHabitsWithoutCheckIns()
     let userID: UUID
     @State private var isHabitSelected = [false, false, false]
     @State private var habitDuration: [HabitDuration] = [.twoWeeks, .twoWeeks, .twoWeeks]
-    let icons: [String] = ["figure.run", "brain.head.profile", "drop.fill"]
+    let icons: [String] = ["book.fill", "wifi.slash", "figure.walk"]
     
     var body: some View {
 
         VStack(spacing: 16) {
-            VStack(spacing: -8) {
+            VStack(spacing: 4) {
                 ForEach(0..<3) { index in
                     OnboardingDefaultHabitCard(habit: defaultHabits[index], isSelected: $isHabitSelected[index], duration: $habitDuration[index])
                 }

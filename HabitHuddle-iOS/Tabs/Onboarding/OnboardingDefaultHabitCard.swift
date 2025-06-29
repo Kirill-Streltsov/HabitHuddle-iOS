@@ -19,15 +19,17 @@ struct OnboardingDefaultHabitCard: View {
         CardView {
             ZStack(alignment: .topTrailing) {
                 VStack(alignment: .center, spacing: 16) {
-                    Text(habit.name)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .multilineTextAlignment(.center)
-                    Text(habit.habitDescription)
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.gray)
-                        .multilineTextAlignment(.center)
+                    VStack(spacing: 8) {
+                        Text(habit.name)
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .multilineTextAlignment(.center)
+                        Text(habit.habitDescription)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.gray)
+                            .multilineTextAlignment(.center)
+                    }
                     Picker("Duration", selection: $duration) {
                         ForEach(HabitDuration.allCases) { option in
                             Text("\(option.numberOfDays) days")
@@ -50,6 +52,7 @@ struct OnboardingDefaultHabitCard: View {
                                 .fontWeight(.bold)
                         }
                     }
+                    .offset(x: 10, y: -10)
                     .sensoryFeedback(.selection, trigger: showSelect)
                     .onTapGesture {
                         showSelect.toggle()
@@ -60,7 +63,7 @@ struct OnboardingDefaultHabitCard: View {
                 }
             }
         }
-        .scaleEffect(isSelected ? 0.9 : 0.8)
+        .scaleEffect(isSelected ? 1 : 0.9)
     }
 }
 

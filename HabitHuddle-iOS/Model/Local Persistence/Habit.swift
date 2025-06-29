@@ -54,6 +54,16 @@ final class Habit: Identifiable, Hashable {
 extension Habit {
     static func createTestHabitsWithCheckIns() -> [Habit] {
         let namesAndDescriptions: [(String, String)] = [
+            ("Read Books", "Read at least 10 pages of a book each day"),
+            ("Digital Detox", "No social media after 8 PM"),
+            ("Walk 10k Steps", "Walk at least 10,000 steps per day"),
+            ("Budget Tracking", "Log your spending at the end of each day"),
+            ("Cold Showers", "Take a cold shower each morning"),
+            ("Compliment Someone", "Give a genuine compliment to someone each day"),
+            ("Learn Guitar", "Practice guitar for 15 minutes daily"),
+            ("Meal Prep", "Prepare your meals for the next day"),
+            ("Declutter", "Organize or clean one small area daily"),
+            ("Pomodoro Focus", "Complete at least 1 Pomodoro (25 min focus) session"),
             ("Morning Run", "Go for a run every morning before 8 AM"),
             ("Meditate", "Practice meditation for 10 minutes daily"),
             ("Drink Water", "Drink at least 2 liters of water per day"),
@@ -126,16 +136,9 @@ extension Habit {
     
     static func createTestHabitsWithoutCheckIns() -> [Habit] {
         let namesAndDescriptions: [(String, String)] = [
-            ("Morning Run", "Go for a run every morning before 8 AM"),
-            ("Meditate", "Practice meditation for 10 minutes daily"),
-            ("Drink Water", "Drink at least 2 liters of water per day"),
-            ("Write Journal", "Write a daily journal entry before bed"),
-            ("Stretching", "Stretch for 5 minutes after waking up"),
-            ("Learn German", "Practice German vocabulary daily"),
-            ("Code Practice", "Solve 1 coding problem every day"),
-            ("No Sugar", "Avoid all sugary foods for a month"),
-            ("Gratitude List", "Write 3 things you're grateful for"),
-            ("Sleep by 11", "Go to bed before 11 PM"),
+            ("Read Books", "Read at least 10 pages of a book each day"),
+            ("Digital Detox", "No social media after 8 PM"),
+            ("Walk 10k Steps", "Walk at least 10,000 steps per day"),
         ]
 
         func days(for duration: HabitDuration) -> Int {

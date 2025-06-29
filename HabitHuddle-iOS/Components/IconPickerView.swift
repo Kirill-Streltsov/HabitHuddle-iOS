@@ -21,7 +21,7 @@ struct IconPickerView: View {
             "figure.walk", "figure.run", "bicycle", "dumbbell", "heart.fill", "flame", "bandage", "lungs.fill", "drop.fill"
         ]),
         IconCategory(name: "Mindfulness & Sleep", icons: [
-            "brain.head.profile", "waveform.path.ecg", "sparkles", "moon.zzz", "medal.fill", "wind", "eye", "face.smiling"
+            "brain.head.profile", "waveform.path.ecg", "sparkles", "moon.zzz", "medal.fill", "wind", "eye", "face.smiling", "wifi.slash"
         ]),
         IconCategory(name: "Productivity", icons: [
             "calendar", "clock", "pencil", "lightbulb", "bookmark.fill", "doc.text", "tray.full", "folder.fill", "gear"
