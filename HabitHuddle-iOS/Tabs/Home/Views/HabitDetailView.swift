@@ -62,6 +62,7 @@ struct HabitDetailView: View {
                                     .id(typewriterTextID)
                             }
                             .id(aiTextID)
+                            .padding(.top, -16)
                         }
                         
                         SubmitButton(title: "Delete Habit", color: .red, iconName: "trash") {
