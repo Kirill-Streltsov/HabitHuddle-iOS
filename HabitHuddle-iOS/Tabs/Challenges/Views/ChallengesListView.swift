@@ -141,6 +141,7 @@ struct ChallengesListView: View {
                     )
                     .id(ongoingChallengeID)
                     .onTapGesture {
+                        HapticManager.trigger(.selection)
                         withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                             selectedChallenge = challenge
                             showChallengeDetail = true
