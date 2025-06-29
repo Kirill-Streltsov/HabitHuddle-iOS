@@ -185,6 +185,7 @@ struct HabitDetailView: View {
     }
     
     private func deleteHabit() async {
+        cancelHabitNotification(for: habit)
         context.delete(habit)
         try? context.save()
         
@@ -198,6 +199,12 @@ struct HabitDetailView: View {
                 }
             }
         }
+    }
+    
+    func cancelHabitNotification(for habit: Habit) {
+        let identifier = "habit_\(habit.id)"
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+        print("Notification cancelled for \(habit.name)")
     }
 }
 
