@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 struct HabitEditView: View {
 
@@ -17,6 +18,8 @@ struct HabitEditView: View {
     @State private var saveButtonPressed = false
     @State private var isCheckedIn = false
     @State private var deleteButtonPressed = false
+    @State private var notificationsAllowed = false
+    @State private var notificationsDisabled = false
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -88,15 +91,41 @@ struct HabitEditView: View {
                         }
                         
                         VStack(alignment: .leading, spacing: 12) {
-                            Toggle("Enable Reminder", isOn: $viewModel.hasReminder)
+                            if notificationsDisabled {
+                                VStack(alignment: .leading, spacing: 8) {
+                                            (
+                                                Text("To receive reminders, enable notifications in ")
+                                                +
+                                                Text("Settings")
+                                                    .foregroundColor(.blue)
+                                                    .underline()
+                                                    
+                                            )
+                                            .font(.footnote)
+                                            .foregroundColor(.secondary)
+                                            .onTapGesture {
+                                                openAppSettings()
+                                            }
+                                        }
+                            }
+                            
+                            Toggle(isOn: $viewModel.hasReminder) {
+                                Text("Enable Reminders")
+                                    .fontWeight(.medium)
+                            }
+                                .disabled(notificationsDisabled)
+                                .opacity(notificationsDisabled ? 0.5 : 1)
                                 .onChange(of: viewModel.hasReminder) { _, newValue in
                                     if newValue {
-                                        //requestNotificationPermission()
+                                        requestNotificationPermission()
                                     }
                                 }
                             
-                            DatePicker("Reminder Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
-                                .opacity(viewModel.hasReminder ? 1 : 0.3)
+                            DatePicker(selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute) {
+                                Text("Reminder Time")
+                                    .fontWeight(.medium)
+                            }
+                                .opacity(viewModel.hasReminder ? 1 : 0.5)
                                 .disabled(!viewModel.hasReminder)
                                 .animation(.easeInOut(duration: 0.3), value: viewModel.hasReminder)
                         }
@@ -124,6 +153,11 @@ struct HabitEditView: View {
                 }
             }
             .padding()
+            .onAppear {
+                Task {
+                    await checkNotifications()
+                }
+            }
             .onDisappear {
                 if !deleteButtonPressed && !saveButtonPressed && !viewModel.name.isEmpty {
                     Task {
@@ -133,6 +167,35 @@ struct HabitEditView: View {
                     }
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                Task {
+                    await checkNotifications()
+                }
+            }
+        }
+    }
+    
+    private func areNotificationsAllowed() async -> Bool {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        return settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional
+    }
+    
+    private func areNotificationsDisabled() async -> Bool {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        return settings.authorizationStatus == .denied
+    }
+    
+    private func checkNotifications() async {
+        Task {
+            notificationsAllowed = await areNotificationsAllowed()
+            notificationsDisabled = await areNotificationsDisabled()
+        }
+    }
+    
+    private func openAppSettings() {
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+        if UIApplication.shared.canOpenURL(settingsURL) {
+            UIApplication.shared.open(settingsURL)
         }
     }
     

@@ -23,17 +23,11 @@ struct HabitListView: View {
         NavigationStack {
             ScrollView {
                 if habits.isEmpty {
-                    EmptyHabitsView(onAddHabit: { showNewHabitView = true })
+                    CardView {
+                        EmptyHabitsView(onAddHabit: { showNewHabitView = true })
+                    }
                 } else {
                     HabitsGridView(habits: habits)
-                        .onAppear {
-                            print("CHECK INS: ")
-                            for habit in habits {
-                                for checkIn in habit.checkIns {
-                                    print("CHECK IN DATE: \(checkIn.date) FOR HABIT: \(habit.name)")
-                                }
-                            }
-                        }
                 }
             }
             .background(Color(.systemGroupedBackground))

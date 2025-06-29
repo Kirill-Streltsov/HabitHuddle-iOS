@@ -42,7 +42,6 @@ struct EmptyHabitsView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(.systemGroupedBackground))
     }
 }
 
