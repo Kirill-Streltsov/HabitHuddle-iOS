@@ -30,6 +30,8 @@ struct ChallengesListView: View {
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
     
+    @Namespace private var animationNamespace
+    
     let userID: UUID
     
     init(userID: UUID) {
@@ -39,41 +41,60 @@ struct ChallengesListView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                if viewModel.challenges.isEmpty {
-                    EmptyChallengesView()
-                } else {
-                    if !(viewModel.pendingChallengesSent + viewModel.pendingChallengesReceived).isEmpty {
-                        pendingChallenges
-                    }
-                    if !viewModel.acceptedChallenges.isEmpty {
-                        ongoingChallenges
-                    }
-                    if !viewModel.declinedChallenges.isEmpty {
-                        declinedChallenges
-                    }
-                }
-            }
-            .refreshable {
-                await viewModel.getChallenges(for: userID)
-                ongoingChallengeID = UUID()
-            }
-            .toast(
-                isPresented: $showToast,
-                message: message,
-                icon: "flag.pattern.checkered.2.crossed"
-            )
-            .background(Color(.systemGroupedBackground))
-            .task {
-                await viewModel.getChallenges(for: userID)
-            }
-            .onChange(of: viewModel.challenges) { _, newChallenges in
-                if !newChallenges.isEmpty {
-                    for newChallenge in viewModel.acceptedChallenges {
-                        if !challenges.contains(where: { $0.id == newChallenge.id }) {
-                            updateLocalStorage(from: newChallenge)
+            ZStack {
+                ScrollView {
+                    if viewModel.challenges.isEmpty {
+                        EmptyChallengesView()
+                    } else {
+                        if !(viewModel.pendingChallengesSent + viewModel.pendingChallengesReceived).isEmpty {
+                            pendingChallenges
+                        }
+                        if !viewModel.acceptedChallenges.isEmpty {
+                            ongoingChallenges
+                        }
+                        if !viewModel.declinedChallenges.isEmpty {
+                            declinedChallenges
                         }
                     }
+                }
+                .refreshable {
+                    await viewModel.getChallenges(for: userID)
+                    ongoingChallengeID = UUID()
+                }
+                .toast(
+                    isPresented: $showToast,
+                    message: message,
+                    icon: "flag.pattern.checkered.2.crossed"
+                )
+                .background(Color(.systemGroupedBackground))
+                .task {
+                    await viewModel.getChallenges(for: userID)
+                }
+                .onChange(of: viewModel.challenges) { _, newChallenges in
+                    if !newChallenges.isEmpty {
+                        for newChallenge in viewModel.acceptedChallenges {
+                            if !challenges.contains(where: { $0.id == newChallenge.id }) {
+                                updateLocalStorage(from: newChallenge)
+                            }
+                        }
+                    }
+                }
+
+                // Overlay Detail View
+                if let selectedChallenge = selectedChallenge, showChallengeDetail {
+                    ChallengeDetailOverlayView(
+                        challenge: selectedChallenge,
+                        namespace: animationNamespace,
+                        onClose: {
+                            withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                                showChallengeDetail = false
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                self.selectedChallenge = nil
+                            }
+                        }
+                    )
+                    .transition(.opacity)
                 }
             }
             .navigationTitle("Challenges")
@@ -113,24 +134,18 @@ struct ChallengesListView: View {
                 .fontWeight(.semibold)
             ForEach(viewModel.acceptedChallenges) { challenge in
                 ChallengeProgressCardView(challenge: challenge)
+                    .matchedGeometryEffect(
+                        id: challenge.id,
+                        in: animationNamespace,
+                        isSource: selectedChallenge?.id != challenge.id
+                    )
                     .id(ongoingChallengeID)
                     .onTapGesture {
-                        selectedChallenge = challenge
+                        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                            selectedChallenge = challenge
+                            showChallengeDetail = true
+                        }
                     }
-            }
-            .sheet(item: $selectedChallenge) { challenge in
-                 if let initiatorHabitID = challenge.initiatorHabitID,
-                    let receiverHabitID = challenge.receiverHabitID {
-                     ChallengeDetailView(
-                         title: challenge.habitName,
-                         startDate: challenge.startDate,
-                         endDate: challenge.endDate,
-                         initiatorName: challenge.initiator.user.name,
-                         initiatorHabitID: initiatorHabitID,
-                         receiverName: challenge.receiver.user.name,
-                         receiverHabitID: receiverHabitID)
-                 }
-                
             }
         }
     }

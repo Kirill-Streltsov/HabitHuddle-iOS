@@ -7,21 +7,14 @@
 
 import SwiftUI
 
-struct ChallengeDetailView: View {
-    let title: String
-    let startDate: Date
-    let endDate: Date
-    let initiatorName: String
-    let initiatorHabitID: UUID
-    
-    let receiverName: String
-    let receiverHabitID: UUID
-    
+struct ChallengeCheckInsListView: View {
+
+    let challenge: ChallengeDTO
     @State private var isLoading = true
     @StateObject private var viewModel = ViewModel()
     
     private var dateRange: [Date] {
-        Calendar.current.generateDates(from: startDate, to: endDate)
+        Calendar.current.generateDates(from: challenge.startDate, to: challenge.endDate)
     }
     
     var body: some View {
@@ -31,33 +24,29 @@ struct ChallengeDetailView: View {
                         .frame(maxWidth: .infinity)
                         .padding()
             } else {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text(title)
-                        .font(.largeTitle.weight(.bold))
-                        .padding(.top)
+                VStack(spacing: 8) {
+                    ForEach(dateRange, id: \.self) { date in
+                        DayRow(
+                            date: date,
+                            initiatorName: challenge.initiator.user.name,
+                            initiatorDates: viewModel.initiatorDates,
+                            receiverName: challenge.receiver.user.name,
+                            receiverDates: viewModel.receiverDates)
                         .padding(.horizontal)
-                    
-                    VStack(spacing: 8) {
-                        ForEach(dateRange, id: \.self) { date in
-                            DayRow(
-                                date: date,
-                                initiatorName: initiatorName,
-                                initiatorDates: viewModel.initiatorDates,
-                                receiverName: receiverName,
-                                receiverDates: viewModel.receiverDates)
-                                .padding(.horizontal)
-                        }
                     }
-                    .padding(.bottom)
                 }
+                .padding(.bottom)
             }
         }
         .task {
             isLoading = true
-            await viewModel.getCheckInDates(for: initiatorHabitID, and: receiverHabitID)
+            if let initiatorHabitID = challenge.initiatorHabitID,
+               let receiverHabitID = challenge.receiverHabitID {
+                await viewModel.getCheckInDates(for: initiatorHabitID, and: receiverHabitID)
+            }
             isLoading = false
         }
-        .navigationTitle("Challenge")
+        .navigationTitle("Challenge Timeline")
         .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemGroupedBackground).ignoresSafeArea())
     }
@@ -164,14 +153,36 @@ struct DayRow: View {
 struct ChallengeDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ChallengeDetailView(
-                title: "30-Day Fitness Challenge",
-                startDate: Calendar.current.date(byAdding: .day, value: -14, to: Date())!,
-                endDate: Calendar.current.date(byAdding: .day, value: 15, to: Date())!,
-                initiatorName: "Alex",
-                initiatorHabitID: UUID(),
-                receiverName: "Jordan",
-                receiverHabitID: UUID())
+            ChallengeCheckInsListView(
+                challenge: ChallengeDTO(
+                    id: UUID(),
+                    initiatorHabitID: UUID(),
+                    receiverHabitID: UUID(),
+                    habitName: "",
+                    type: .competitive,
+                    startDate: .now,
+                    endDate: .now,
+                    status: .accepted,
+                    initiator: .init(
+                        user: .init(
+                            id: UUID(),
+                            username: "",
+                            name: "",
+                            createdAt: .now,
+                            updatedAt: .now),
+                        progress: 0,
+                        checkInCount: 0,
+                        plannedDays: 0),
+                    receiver: .init(
+                        user: .init(
+                            id: UUID(),
+                            username: "",
+                            name: "",
+                            createdAt: .now,
+                            updatedAt: .now),
+                        progress: 0,
+                        checkInCount: 0,
+                        plannedDays: 0)))
         }
     }
     

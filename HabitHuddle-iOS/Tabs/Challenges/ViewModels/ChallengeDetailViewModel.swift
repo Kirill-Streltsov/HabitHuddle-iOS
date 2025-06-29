@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension ChallengeDetailView {
+extension ChallengeCheckInsListView {
     @MainActor
     final class ViewModel: ObservableObject {
         @Published var initiatorDates = [Date]()
