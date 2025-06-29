@@ -27,6 +27,7 @@ struct AnimatableRing: View {
 
             // Center label
             Text("\(habit.checkIns.count)/\(habit.duration.numberOfDays) days")
+                .contentTransition(.numericText())
                 .font(.title2)
                 .fontWeight(.semibold)
         }
