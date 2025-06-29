@@ -37,7 +37,7 @@ enum HHError: Error, LocalizedError {
         case .conflict:
             return "There’s a conflict with the current state of the resource."
         case .serverError:
-            return "This username is already taken."
+            return "Server error occured."
         case .noData:
             return "No data was received from the server."
         case let .requestFailed(statusCode, _):

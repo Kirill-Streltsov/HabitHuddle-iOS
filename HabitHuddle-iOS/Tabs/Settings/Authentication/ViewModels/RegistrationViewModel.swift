@@ -60,6 +60,7 @@ extension RegistrationView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     self.errorMessage = ""
                 }
+                print("REGISTRATION ERROR: \(error)")
                 return .failure(HHError.networkError(error))
             }
         }
