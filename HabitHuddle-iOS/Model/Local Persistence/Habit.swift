@@ -136,7 +136,7 @@ extension Habit {
     
     static func createTestHabitsWithoutCheckIns() -> [Habit] {
         let namesAndDescriptions: [(String, String)] = [
-            ("Read Books", "Read at least 10 pages of a book each day"),
+            ("Meditate", "Practice meditation for 10 minutes daily"),
             ("Digital Detox", "No social media after 8 PM"),
             ("Walk 10k Steps", "Walk at least 10,000 steps per day"),
         ]

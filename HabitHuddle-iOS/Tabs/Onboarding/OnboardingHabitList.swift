@@ -16,7 +16,7 @@ struct OnboardingHabitList: View {
     let userID: UUID
     @State private var isHabitSelected = [false, false, false]
     @State private var habitDuration: [HabitDuration] = [.twoWeeks, .twoWeeks, .twoWeeks]
-    let icons: [String] = ["book.fill", "wifi.slash", "figure.walk"]
+    let icons: [String] = ["brain.head.profile", "wifi.slash", "figure.walk"]
     
     var body: some View {
 
