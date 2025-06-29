@@ -210,6 +210,7 @@ struct HabitEditView: View {
             habit.reminderTime = viewModel.hasReminder ? viewModel.reminderTime : nil
             habit.updatedAt = .now
             try? context.save()
+            setNotificationBehaviour(for: habit)
         }
         if userManager.profile.isSignedInToServer {
             Helpers.handleResult(result) { codableHabit in
@@ -235,6 +236,7 @@ struct HabitEditView: View {
                 updatedAt: .now
             )
             context.insert(habit)
+            setNotificationBehaviour(for: habit)
         }
         if userManager.profile.isSignedInToServer {
             let result = await viewModel.createHabit(with: habitID)
@@ -256,28 +258,42 @@ struct HabitEditView: View {
         }
     }
     
-    private func scheduleHabitNotification(habitName: String, hour: Int, minute: Int) {
+    private func setNotificationBehaviour(for habit: Habit) {
+        if habit.reminderTime != nil {
+            scheduleHabitNotification(for: habit)
+        } else {
+            cancelHabitNotification(for: habit)
+        }
+    }
+    
+    private func scheduleHabitNotification(for habit: Habit) {
         let content = UNMutableNotificationContent()
         content.title = "Habit Reminder"
-        content.body = "Time for your habit: \(habitName)"
+        content.body = "Time for your habit: \(habit.name)"
         content.sound = .default
 
         var dateComponents = DateComponents()
-        dateComponents.hour = hour
-        dateComponents.minute = minute
+        dateComponents.hour = habit.reminderTime?.hour
+        dateComponents.minute = habit.reminderTime?.minute
 
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
 
-        let identifier = "habit_\(habitName)_\(hour)_\(minute)"
+        let identifier = "habit_\(habit.id)"
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print("Failed to schedule: \(error)")
             } else {
-                print("Notification scheduled for \(habitName) at \(hour):\(minute)")
+                print("Notification scheduled for \(habit.name) at \(String(describing: habit.reminderTime?.hour)):\(String(describing: habit.reminderTime?.minute))")
             }
         }
+    }
+    
+    func cancelHabitNotification(for habit: Habit) {
+        let identifier = "habit_\(habit.id)"
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+        print("Notification cancelled for \(habit.name)")
     }
 }
 
