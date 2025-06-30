@@ -14,6 +14,7 @@ final class Habit: Identifiable, Hashable {
     var user: LightweightUser
     var name: String
     var habitDescription: String
+    var goal: String
     var aiText: String?
     var icon: String?
     var duration: HabitDuration
@@ -30,6 +31,7 @@ final class Habit: Identifiable, Hashable {
         user: LightweightUser,
         name: String,
         description: String,
+        goal: String = "",
         icon: String? = nil,
         aiText: String? = nil,
         duration: HabitDuration,
@@ -41,6 +43,7 @@ final class Habit: Identifiable, Hashable {
         self.user = user
         self.name = name
         self.habitDescription = description
+        self.goal = goal
         self.icon = icon
         self.duration = duration
         self.reminderTime = reminderTime
@@ -135,10 +138,10 @@ extension Habit {
     }
     
     static func createTestHabitsWithoutCheckIns() -> [Habit] {
-        let namesAndDescriptions: [(String, String)] = [
-            ("Meditate", "Practice meditation for 10 minutes daily"),
-            ("Digital Detox", "No social media after 8 PM"),
-            ("Walk 10k Steps", "Walk at least 10,000 steps per day"),
+        let namesDescriptionsGoals: [(String, String, String)] = [
+            ("Meditate", "Practice meditation for 10 minutes daily", "Mindfulness"),
+            ("Digital Detox", "No social media after 8 PM", "Healthy Digital Habits"),
+            ("Walk 10k Steps", "Walk at least 10,000 steps per day", "Physical Activity"),
         ]
 
         func days(for duration: HabitDuration) -> Int {
@@ -153,8 +156,8 @@ extension Habit {
         let calendar = Calendar.current
         let now = Date()
 
-        for i in 0 ..< namesAndDescriptions.count {
-            let (name, description) = namesAndDescriptions[i]
+        for i in 0 ..< namesDescriptionsGoals.count {
+            let (name, description, goal) = namesDescriptionsGoals[i]
             let duration: HabitDuration = [.oneWeek, .twoWeeks, .oneMonth].randomElement()!
 
             // Random creation date up to 14 days ago
@@ -165,6 +168,7 @@ extension Habit {
                 user: LightweightUser(id: UUID()),
                 name: name,
                 description: description,
+                goal: goal,
                 duration: duration,
                 reminderTime: calendar.date(bySettingHour: Int.random(in: 6 ... 22), minute: 0, second: 0, of: now)
             )

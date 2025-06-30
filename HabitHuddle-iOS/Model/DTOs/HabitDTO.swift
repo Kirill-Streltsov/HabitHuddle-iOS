@@ -12,6 +12,7 @@ struct HabitDTO: Codable, Identifiable {
     let user: LightweightUser
     let name: String
     let description: String
+    let goal: String
     let duration: HabitDuration
     let reminderTime: Date?
     let createdAt: Date?

@@ -14,10 +14,15 @@ extension HabitDetailView {
         @Published var name: String = ""
         @Published var icon: String? = nil
         @Published var description: String = ""
+        
         @Published var hasCheckedIn: Bool = false
         @Published var duration: HabitDuration = .twoWeeks
+        
+        @Published var goal: String = ""
+        
         @Published var hasReminder: Bool = false
         @Published var reminderTime: Date = .init()
+        
         @Published var openAIAnswer = ""
         var habit: Habit?
 
@@ -29,6 +34,7 @@ extension HabitDetailView {
                     id: id,
                     name: name,
                     description: description,
+                    goal: goal,
                     icon: icon,
                     duration: duration.rawValue,
                     reminderTime: reminder,
@@ -56,6 +62,7 @@ extension HabitDetailView {
                     id: id,
                     name: name,
                     description: description,
+                    goal: goal,
                     icon: icon,
                     duration: duration.rawValue,
                     reminderTime: reminder,

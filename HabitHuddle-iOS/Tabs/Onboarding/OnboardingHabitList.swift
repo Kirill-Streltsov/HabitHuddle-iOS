@@ -38,6 +38,7 @@ struct OnboardingHabitList: View {
                         user: LightweightUser(id: userID),
                         name: defaultHabits[index].name,
                         description: defaultHabits[index].habitDescription,
+                        goal: defaultHabits[index].goal,
                         icon: icons[index],
                         duration: habitDuration[index]
                     )
