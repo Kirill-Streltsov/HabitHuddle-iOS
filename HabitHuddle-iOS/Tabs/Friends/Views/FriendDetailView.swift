@@ -32,9 +32,7 @@ struct FriendDetailView: View {
                         }
                     }
                     Divider()
-                    VStack(alignment: .center) {
-                        
-                    }
+                    friendHabits
                     Divider()
                     VStack(alignment: .center) {
                         Text("\(friend.name)'s challenges")
@@ -76,21 +74,23 @@ struct FriendDetailView: View {
                 Text("\(friend.name)'s habits")
                     .font(.title2)
                     .fontWeight(.semibold)
-                ForEach(viewModel.habits) { habitDTO in
-                    FriendHabitCard(habitDTO: habitDTO) {
-                        Task {
-                            let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .supportive)
-                            Helpers.handleResult(result) { result in
-                                showToast = true
-                                message = "Supportive challenge sent!"
+                VStack(alignment: .center) {
+                    ForEach(viewModel.habits) { habitDTO in
+                        FriendHabitCard(habitDTO: habitDTO) {
+                            Task {
+                                let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .supportive)
+                                Helpers.handleResult(result) { result in
+                                    showToast = true
+                                    message = "Supportive challenge sent!"
+                                }
                             }
-                        }
-                    } onCompetitiveCalled: {
-                        Task {
-                            let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .competitive)
-                            Helpers.handleResult(result) { result in
-                                showToast = true
-                                message = "Competitive challenge sent!"
+                        } onCompetitiveCalled: {
+                            Task {
+                                let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .competitive)
+                                Helpers.handleResult(result) { result in
+                                    showToast = true
+                                    message = "Competitive challenge sent!"
+                                }
                             }
                         }
                     }
