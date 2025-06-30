@@ -61,14 +61,9 @@ struct SettingsView: View {
                                 await loginViewModel.handleGoogleSignIn(using: context)
                             }
                         } label: {
-                            Label {
-                                Text("Sign in with Google")
-                            } icon: {
-                                Image("google")
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                            }
+                            googleButtonLabel
                         }
+                        .buttonStyle(.plain)
                         
                         SignInWithAppleButton(.signIn) { request in
                             request.requestedScopes = [.fullName, .email]
@@ -76,7 +71,7 @@ struct SettingsView: View {
                             handleAppleSignIn(with: result)
                         }
                         .signInWithAppleButtonStyle(.black)
-                        .frame(height: 42)
+                        .frame(height: 45)
                     }
                 }
 
@@ -106,6 +101,26 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
         }
+    }
+    
+    private var googleButtonLabel: some View {
+        HStack {
+            Image("google") // Add a Google logo asset named "google-icon" to Assets.xcassets
+                .resizable()
+                .frame(width: 30, height: 30)
+            
+            Text("Sign in with Google")
+                .font(.system(size: 16, weight: .semibold))
+        }
+        .foregroundColor(.black)
+        .frame(maxWidth: .infinity)
+        .frame(minHeight: 45)
+        .background(Color.white)
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+        )
+        .cornerRadius(8)
     }
     
     func handleAppleSignIn(with result: Result<ASAuthorization, any Error>) {
