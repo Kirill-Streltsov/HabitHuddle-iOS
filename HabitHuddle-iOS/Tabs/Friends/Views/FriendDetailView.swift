@@ -27,35 +27,13 @@ struct FriendDetailView: View {
                                 Text("\(friend.name)'s activity")
                                     .font(.title2)
                                     .fontWeight(.semibold)
-                                HeatmapView(habits: Hardcode.allHabits)
+                                HeatmapView(habits: viewModel.habits.map{ $0.toSwiftData() })
                             }
-                            
                         }
                     }
                     Divider()
                     VStack(alignment: .center) {
-                        Text("\(friend.name)'s habits")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                        ForEach(viewModel.habits) { habitDTO in
-                            FriendHabitCard(habitDTO: habitDTO) {
-                                Task {
-                                    let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .supportive)
-                                    Helpers.handleResult(result) { result in
-                                        showToast = true
-                                        message = "Supportive challenge sent!"
-                                    }
-                                }
-                            } onCompetitiveCalled: {
-                                Task {
-                                    let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .competitive)
-                                    Helpers.handleResult(result) { result in
-                                        showToast = true
-                                        message = "Competitive challenge sent!"
-                                    }
-                                }
-                            }
-                        }
+                        
                     }
                     Divider()
                     VStack(alignment: .center) {
@@ -90,6 +68,37 @@ struct FriendDetailView: View {
         }
         .navigationTitle(friend.username)
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private var friendHabits: some View {
+        Group {
+            if !viewModel.habits.isEmpty {
+                Text("\(friend.name)'s habits")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                ForEach(viewModel.habits) { habitDTO in
+                    FriendHabitCard(habitDTO: habitDTO) {
+                        Task {
+                            let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .supportive)
+                            Helpers.handleResult(result) { result in
+                                showToast = true
+                                message = "Supportive challenge sent!"
+                            }
+                        }
+                    } onCompetitiveCalled: {
+                        Task {
+                            let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .competitive)
+                            Helpers.handleResult(result) { result in
+                                showToast = true
+                                message = "Competitive challenge sent!"
+                            }
+                        }
+                    }
+                }
+            } else {
+                EmptyFriendHabitsView(name: friend.name)
+            }
+        }
     }
 }
 
