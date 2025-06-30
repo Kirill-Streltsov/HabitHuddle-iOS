@@ -13,13 +13,13 @@ struct EmptyFriendHabitsView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Image(systemName: "checklist")
+            Image(systemName: "questionmark.folder")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 70, height: 70)
                 .foregroundStyle(.gray.opacity(0.4))
 
-            Text("\(name) hasn't added any habits yet")
+            Text("\(name) has no habits")
                 .font(.title2.weight(.semibold))
                 .foregroundStyle(.primary.opacity(0.7))
 
