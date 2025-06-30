@@ -57,13 +57,13 @@ struct FriendCardView: View {
             // Challenge button
             if showChallengeButton {
                 VStack {
-                    SlimButton(title: "Competitive", color: .pink) {
+                    SlimButton(title: "Compete", color: .pink) {
                         Task {
                             await onCompete()
                             dismiss()
                         }
                     }
-                    SlimButton(title: "Supportive", color: .green) {
+                    SlimButton(title: "Support", color: .green) {
                         Task {
                             await onSupport()
                             dismiss()
