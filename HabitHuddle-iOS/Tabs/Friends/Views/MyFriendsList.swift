@@ -33,7 +33,6 @@ struct MyFriendsList: View {
                             FriendDetailView(friend: friend)
                         } label: {
                             FriendCardView(friend: friend, showChallengeButton: false)
-                                .padding(.bottom)
                         }
                         .buttonStyle(.plain)
                     }
