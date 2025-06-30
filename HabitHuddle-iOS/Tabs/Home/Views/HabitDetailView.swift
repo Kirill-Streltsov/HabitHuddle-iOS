@@ -30,17 +30,12 @@ struct HabitDetailView: View {
     
     
     // MARK: Date work
-    private var dateFormatter: DateFormatter {
-        let f = DateFormatter()
-        f.dateStyle = .medium
-        f.timeStyle = .short
-        return f
-    }
-    private var shortDateFormatter: DateFormatter = {
+    private var dateFormatter: DateFormatter = {
         let df = DateFormatter()
-        df.dateFormat = "d. MMMM yyyy" // e.g. "29. June 2025"
+        df.dateFormat = "EEEE, d. MMMM yyyy" // e.g. "Monday, 29. June 2025"
         return df
     }()
+    
     private var timeFormatter: DateFormatter = {
         let tf = DateFormatter()
         tf.dateFormat = "H:mm" // e.g. "3:43"
@@ -188,8 +183,8 @@ struct HabitDetailView: View {
                             VStack(alignment: .leading, spacing: 8) {
                                 ForEach(habit.checkIns.map({$0.date}), id: \.self) { date in
                                     VStack(alignment: .leading, spacing: 2) {
-                                        HStack {
-                                            Text(shortDateFormatter.string(from: date))
+                                        HStack(alignment: .bottom) {
+                                            Text(dateFormatter.string(from: date))
                                                 .font(.callout)
                                                 .fontWeight(.regular)
                                                 .foregroundColor(.secondary)

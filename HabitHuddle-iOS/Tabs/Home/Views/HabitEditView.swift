@@ -75,7 +75,9 @@ struct HabitEditView: View {
             .onAppear {
                 for habit in habits {
                     if !habit.goal.isEmpty {
-                        goals.append(habit.goal)
+                        if !goals.contains(habit.goal) {
+                            goals.append(habit.goal)
+                        }
                     }
                 }
                 Task {
