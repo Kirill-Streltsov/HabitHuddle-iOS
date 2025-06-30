@@ -26,10 +26,15 @@ struct FriendCardView: View {
     var body: some View {
         HStack(spacing: 16) {
             // Profile icon
-            Image(systemName: "person.circle.fill")
-                .resizable()
-                .frame(width: 50, height: 50)
-                .foregroundStyle(.blue.opacity(0.85))
+            ZStack {
+                Circle()
+                    .fill(Color.accentColor)
+                    .frame(width: 50, height: 50)
+                Text(String(friend.name.prefix(1)).uppercased())
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+            }
 
             // User info
             VStack(alignment: .leading, spacing: 4) {
@@ -78,6 +83,7 @@ struct FriendCardView: View {
                 .shadow(color: Color(.label).opacity(0.1), radius: 8, x: 0, y: 4)
         )
         .padding(.horizontal)
+        .padding(.bottom)
     }
 }
 

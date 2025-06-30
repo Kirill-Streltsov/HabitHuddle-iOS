@@ -21,32 +21,19 @@ struct FriendDetailView: View {
     var body: some View {
         ScrollView {
             VStack {
-                if !Hardcode.allHabits.isEmpty {
-                    VStack(alignment: .center) {
-                        CardView {
-                            VStack {
-                                Text("\(friend.name)'s activity")
-                                    .font(.title2)
-                                    .fontWeight(.semibold)
-                                HeatmapView(habits: viewModel.habits.map{ $0.toSwiftData() })
-                                    .id(heatmapID)
-                            }
-                        }
-                    }
-                    Divider()
-                    friendHabits
-                    Divider()
-                    VStack(alignment: .center) {
-                        Text("\(friend.name)'s challenges")
+                CardView {
+                    VStack {
+                        Text("\(friend.name)'s activity")
                             .font(.title2)
                             .fontWeight(.semibold)
-                        ForEach(viewModel.challenges) { challenge in
-                            ChallengeProgressCardView(challenge: challenge)
-                        }
+                        HeatmapView(habits: viewModel.habits.map{ $0.toSwiftData() })
+                            .id(heatmapID)
                     }
-                } else {
-                    EmptyActivityView(friendName: friend.name, onChallenge: {})
                 }
+                Divider()
+                friendHabits
+                Divider()
+                friendChallenges
             }
             .task {
                 await viewModel.getUserHabits(for: friend.id)
@@ -104,6 +91,21 @@ struct FriendDetailView: View {
                 }
             } else {
                 EmptyFriendHabitsView(name: friend.name)
+            }
+        }
+    }
+    
+    private var friendChallenges: some View {
+        Group {
+            if !viewModel.challenges.isEmpty {
+                VStack(alignment: .center) {
+                    Text("\(friend.name)'s challenges")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                    ForEach(viewModel.challenges) { challenge in
+                        ChallengeProgressCardView(challenge: challenge)
+                    }
+                }
             }
         }
     }

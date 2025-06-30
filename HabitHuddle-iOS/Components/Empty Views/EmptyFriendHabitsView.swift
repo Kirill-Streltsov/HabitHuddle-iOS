@@ -23,7 +23,7 @@ struct EmptyFriendHabitsView: View {
                 .font(.title2.weight(.semibold))
                 .foregroundStyle(.primary.opacity(0.7))
 
-            Text("Looks like \(name) hasn’t picked up any habits yet. Send them a challenge to get things rolling!")
+            Text("\(name) might be keeping their habits private — or just getting started.\nEither way, a challenge from you could be the perfect motivation!")
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
