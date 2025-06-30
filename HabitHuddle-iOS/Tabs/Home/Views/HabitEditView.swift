@@ -152,7 +152,7 @@ struct HabitEditView: View {
                 }
             }
                         
-            CustomStyledTextField(placeholder: "Or add a new one...", text: $viewModel.goal)
+            CustomStyledTextField(placeholder: goals.count == 0 ? "Add a new one..." : "Or add a new one...", text: $viewModel.goal)
         }
     }
     private var durationView: some View {

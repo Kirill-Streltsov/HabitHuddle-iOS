@@ -77,17 +77,16 @@ struct HabitDetailView: View {
                         HabitStatisticsView(habit: habit)
                             .frame(maxWidth: .infinity)
                         
+                        checkIns
+                            .padding(.top, -16)
+                        
                         if !viewModel.openAIAnswer.isEmpty {
                             CardView {
                                 TypewriterText(text: viewModel.openAIAnswer, typingInterval: askOpenAITapped ? 0.02 : 0)
                                     .id(typewriterTextID)
                             }
                             .id(aiTextID)
-                            .padding(.top, -16)
                         }
-                        
-                        checkIns
-                            .padding(.top, -16)
                         
                         SubmitButton(title: "Delete Habit", color: .red, iconName: "trash") {
                             HapticManager.trigger(.error)
