@@ -37,6 +37,7 @@ struct MyFriendsList: View {
                         .buttonStyle(.plain)
                     }
                 }
+                .padding(.bottom, 4)
                 .onAppear {
                     for friend in viewModel.friends {
                         let user = friend.toSwiftData()
@@ -51,7 +52,6 @@ struct MyFriendsList: View {
                 EmptyFriendsView()
             }
         }
-        .padding(.top)
         .task {
             await viewModel.getMyFriends()
         }

@@ -50,7 +50,7 @@ struct MyFriendsView: View {
                                 friendRequests
                                 MyFriendsList(isInFriendsTab: true)
                                     .id(friendsListID)
-                                    .padding(.bottom)
+                                    .padding(.bottom, 24)
                             }
                         }
                     }

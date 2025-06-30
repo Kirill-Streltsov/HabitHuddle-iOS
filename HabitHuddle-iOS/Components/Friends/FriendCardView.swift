@@ -77,13 +77,10 @@ struct FriendCardView: View {
             }
         }
         .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color(.systemBackground))
-                .shadow(color: Color(.label).opacity(0.1), radius: 8, x: 0, y: 4)
-        )
+        .background(Color(.systemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .shadow(color: Color(.label).opacity(0.1), radius: 2, x: 0, y: 2)
         .padding(.horizontal)
-        .padding(.bottom)
     }
 }
 
