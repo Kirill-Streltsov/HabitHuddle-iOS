@@ -124,10 +124,7 @@ struct HabitDetailView: View {
                 Button {
                     showEditSheet = true
                 } label: {
-                    HStack {
-                        Text("Edit")
-                        Image(systemName: "square.and.pencil")
-                    }
+                    Text("Edit")
                 }
             }
             .onAppear {
