@@ -102,10 +102,10 @@ struct HeatmapView: View {
             }
         } else {
             switch value {
-            case 1: return .green.opacity(0.3)
-            case 2, 3: return .green.opacity(0.6)
-            case 4...: return .green
-            default: return .gray.opacity(0.1)
+            case 1: return .green.opacity(0.5)
+            case 2: return .green.opacity(0.75)
+            case 3...: return .green
+            default: return .gray.opacity(0.2)
             }
         }
     }

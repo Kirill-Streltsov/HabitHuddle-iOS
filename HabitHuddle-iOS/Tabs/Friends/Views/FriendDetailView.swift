@@ -16,6 +16,7 @@ struct FriendDetailView: View {
     
     @State private var showToast = false
     @State private var message = ""
+    @State private var heatmapID = UUID()
     
     var body: some View {
         ScrollView {
@@ -28,6 +29,7 @@ struct FriendDetailView: View {
                                     .font(.title2)
                                     .fontWeight(.semibold)
                                 HeatmapView(habits: viewModel.habits.map{ $0.toSwiftData() })
+                                    .id(heatmapID)
                             }
                         }
                     }
@@ -49,6 +51,11 @@ struct FriendDetailView: View {
             .task {
                 await viewModel.getUserHabits(for: friend.id)
                 await viewModel.getUserChallenges(for: friend.id)
+            }
+        }
+        .onChange(of: viewModel.habits.count) { _, newValue in
+            if newValue > 0 {
+                heatmapID = UUID()
             }
         }
         .toast(isPresented: $showToast, message: message)
