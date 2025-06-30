@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import AuthenticationServices
 
 struct SettingsView: View {
     
@@ -68,6 +69,14 @@ struct SettingsView: View {
                                     .frame(width: 30, height: 30)
                             }
                         }
+                        
+                        SignInWithAppleButton(.signIn) { request in
+                            request.requestedScopes = [.fullName, .email]
+                        } onCompletion: { result in
+                            handleAppleSignIn(with: result)
+                        }
+                        .signInWithAppleButtonStyle(.black)
+                        .frame(height: 42)
                     }
                 }
 
@@ -96,6 +105,30 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+        }
+    }
+    
+    func handleAppleSignIn(with result: Result<ASAuthorization, any Error>) {
+        switch result {
+        case .success(let authResults):
+            if let credential = authResults.credential as? ASAuthorizationAppleIDCredential,
+               let tokenData = credential.identityToken,
+               let tokenString = String(data: tokenData, encoding: .utf8) {
+                
+                let name: String
+                
+                
+                if let givenName = credential.fullName?.givenName, let familyName = credential.fullName?.familyName {
+                    name = "\(givenName) \(familyName)"
+                } else {
+                    name = ""
+                }
+                Task {
+                    await loginViewModel.handleAppleSignIn(appleToken: tokenString, name: name, using: context)
+                }
+            }
+        case .failure(let error):
+            print("Authorization failed: \(error.localizedDescription)")
         }
     }
 }

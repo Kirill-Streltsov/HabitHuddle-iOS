@@ -21,6 +21,10 @@ struct Endpoint {
     static func googleSignIn() -> Endpoint {
         Endpoint(path: "auth/google")
     }
+    
+    static func appleSignIn() -> Endpoint {
+        Endpoint(path: "auth/apple")
+    }
 
     static func login() -> Endpoint {
         Endpoint(path: "auth/login")

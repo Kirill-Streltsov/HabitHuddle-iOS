@@ -90,6 +90,28 @@ final class LoginViewModel: ObservableObject {
             print("❌ Error: Failed to sign in with google. Didn't receive the token: \(error)")
         }
     }
+    
+    func handleAppleSignIn(appleToken: String, name: String, using context: ModelContext) async {
+        do {
+            let loginResponse = try await NetworkManager.shared.request(
+                endpoint: .appleSignIn(),
+                method: .post,
+                body: AppleAuthRequest(identityToken: appleToken, name: name),
+                responseType: LoginResponse.self,
+                isLoggingIn: true
+            )
+            let user = loginResponse.user
+            userManager.profile = LocalUser(
+                id: user.id,
+                username: user.username,
+                name: user.name,
+                isSignedInToServer: true)
+            TokenManager.token = loginResponse.token
+            handleUserResponse(user: user, in: context)
+        } catch {
+            print("❌ Error: Failed to sign in with apple. Couldn't authorize the apple token: \(error)")
+        }
+    }
 
     private func makeBase64Login(username: String, password: String) -> String {
         let loginString = "\(username):\(password)"
