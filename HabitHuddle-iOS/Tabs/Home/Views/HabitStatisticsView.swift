@@ -169,30 +169,19 @@ struct HabitStatisticsView: View {
                             streaksSection
                         }
                     }
-                } else {
-                    CardView {
-                        Text("Check in \(remaining) more \(remaining == 1 ? "time" : "times") to see your streak data!")
-                            .font(.body)
-                            .fontWeight(.semibold)
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(Color(.secondaryLabel))
-                    }
-                }
-                
-                if habit.checkIns.count >= 2 {
+                    
                     CardView {
                         ChartContainerView(title: "Time of Day Pattern", subtitle: "When you usually check in") {
                             checkInTimeDistributionSection
                         }
                     }
                 } else {
-                    CardView {
-                        Text("Check in \(remaining) more \(remaining == 1 ? "time" : "times") to see at what time of day you usually check in!")
-                            .font(.body)
-                            .fontWeight(.semibold)
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(Color(.secondaryLabel))
-                    }
+                    Text("Check in \(remaining) more \(remaining == 1 ? "time" : "times") to unlock your streak data and discover your usual check-in time!")
+                        .font(.body)
+                        .fontWeight(.semibold)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(Color(.secondaryLabel))
+                        .padding()
                 }
                 
                 CardView {
@@ -202,6 +191,7 @@ struct HabitStatisticsView: View {
                             .multilineTextAlignment(.center)
                     }
                 }
+                .frame(maxWidth: .infinity)
             }
             .padding(.bottom)
         }

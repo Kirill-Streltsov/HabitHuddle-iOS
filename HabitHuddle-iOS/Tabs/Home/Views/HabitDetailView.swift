@@ -20,12 +20,32 @@ struct HabitDetailView: View {
     @State private var showEditSheet = false
     @State private var askOpenAITapped = false
     @State private var scrollTarget: Int? = nil
+    @State private var showCheckIns = false
     
     @StateObject private var viewModel: ViewModel
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var userManager: LocalUserManager
+    
+    
+    // MARK: Date work
+    private var dateFormatter: DateFormatter {
+        let f = DateFormatter()
+        f.dateStyle = .medium
+        f.timeStyle = .short
+        return f
+    }
+    private var shortDateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "d. MMMM yyyy" // e.g. "29. June 2025"
+        return df
+    }()
+    private var timeFormatter: DateFormatter = {
+        let tf = DateFormatter()
+        tf.dateFormat = "H:mm" // e.g. "3:43"
+        return tf
+    }()
     
     init(habit: Habit) {
         _viewModel = StateObject(wrappedValue: ViewModel())
@@ -55,6 +75,7 @@ struct HabitDetailView: View {
                         }
                                                 
                         HabitStatisticsView(habit: habit)
+                            .frame(maxWidth: .infinity)
                         
                         if !viewModel.openAIAnswer.isEmpty {
                             CardView {
@@ -64,6 +85,9 @@ struct HabitDetailView: View {
                             .id(aiTextID)
                             .padding(.top, -16)
                         }
+                        
+                        checkIns
+                            .padding(.top, -16)
                         
                         SubmitButton(title: "Delete Habit", color: .red, iconName: "trash") {
                             HapticManager.trigger(.error)
@@ -75,9 +99,7 @@ struct HabitDetailView: View {
                         }
                         .padding(.horizontal)
                     }
-                    .padding(.horizontal)
                     .padding(.bottom)
-                    
                 }
             }
             .background(Color(.systemGroupedBackground))
@@ -146,6 +168,59 @@ struct HabitDetailView: View {
         }
     }
     
+    private var checkIns: some View {
+        Group {
+            if !habit.checkIns.isEmpty {
+                CardView {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Button {
+                            withAnimation {
+                                showCheckIns.toggle()
+                            }
+                        } label: {
+                            HStack {
+                                Text(showCheckIns ? "Hide Check-in History" : "View Check-in History")
+                                    .fontWeight(.medium)
+                                Spacer()
+                                Image(systemName: showCheckIns ? "chevron.up" : "chevron.down")
+                            }
+                            .foregroundStyle(Color(.label))
+                            .contentShape(Rectangle())
+                        }
+                        
+                        if showCheckIns {
+                            VStack(alignment: .leading, spacing: 8) {
+                                ForEach(habit.checkIns.map({$0.date}), id: \.self) { date in
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        HStack {
+                                            Text(shortDateFormatter.string(from: date))
+                                                .font(.callout)
+                                                .fontWeight(.regular)
+                                                .foregroundColor(.secondary)
+                                                .padding(.leading)
+                                            
+                                            Spacer()
+                                            
+                                            Text(timeFormatter.string(from: date))
+                                                .font(.body)
+                                                .fontWeight(.semibold)
+                                                .foregroundColor(.primary)
+                                                .padding(.trailing)
+                                        }
+                                        .padding(.vertical)
+                                        Divider()
+                                    }
+                                }
+                            }
+                            .transition(.opacity.combined(with: .move(edge: .top)))
+                        }
+                    }
+                    .background(Color(.systemBackground))
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
+    }
     private var habitDescription: some View {
         Text(habit.habitDescription)
             .font(.title2)

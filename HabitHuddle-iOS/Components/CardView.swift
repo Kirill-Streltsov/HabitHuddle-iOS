@@ -12,6 +12,7 @@ struct CardView<Content: View>: View {
 
     var body: some View {
         content()
+            .frame(maxWidth: .infinity)
             .padding()
             .background(Color(.systemBackground))
             .cornerRadius(16)
