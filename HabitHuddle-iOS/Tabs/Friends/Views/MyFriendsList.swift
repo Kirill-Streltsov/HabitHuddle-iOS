@@ -16,44 +16,48 @@ struct MyFriendsList: View {
     var habit: Habit?
     
     var body: some View {
-        ScrollView {
-            // Friends list below
-            if !viewModel.friends.isEmpty {
-                ForEach(viewModel.friends) { friend in
-                    if !isInFriendsTab {
-                        if let habit = habit {
-                            FriendCardView(friend: friend, showChallengeButton: true) {
-                                await viewModel.sendChallenge(to: friend.id, for: habit.id, ofType: .competitive)
-                            } onSupport: {
-                                await viewModel.sendChallenge(to: friend.id, for: habit.id, ofType: .supportive)
+        ZStack {
+            Color(.systemGroupedBackground)
+                .ignoresSafeArea()
+            ScrollView {
+                // Friends list below
+                if !viewModel.friends.isEmpty {
+                    ForEach(viewModel.friends) { friend in
+                        if !isInFriendsTab {
+                            if let habit = habit {
+                                FriendCardView(friend: friend, showChallengeButton: true) {
+                                    await viewModel.sendChallenge(to: friend.id, for: habit.id, ofType: .competitive)
+                                } onSupport: {
+                                    await viewModel.sendChallenge(to: friend.id, for: habit.id, ofType: .supportive)
+                                }
+                            }
+                        } else {
+                            NavigationLink {
+                                FriendDetailView(friend: friend)
+                            } label: {
+                                FriendCardView(friend: friend, showChallengeButton: false)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .padding(.bottom, 4)
+                    .onAppear {
+                        for friend in viewModel.friends {
+                            let user = friend.toSwiftData()
+                            do {
+                                try saveUserIfNeeded(user)
+                            } catch {
+                                print("❌ Error: Failed to save user \(user.id): \(error)")
                             }
                         }
-                    } else {
-                        NavigationLink {
-                            FriendDetailView(friend: friend)
-                        } label: {
-                            FriendCardView(friend: friend, showChallengeButton: false)
-                        }
-                        .buttonStyle(.plain)
                     }
+                } else {
+                    EmptyFriendsView()
                 }
-                .padding(.bottom, 4)
-                .onAppear {
-                    for friend in viewModel.friends {
-                        let user = friend.toSwiftData()
-                        do {
-                            try saveUserIfNeeded(user)
-                        } catch {
-                            print("❌ Error: Failed to save user \(user.id): \(error)")
-                        }
-                    }
-                }
-            } else {
-                EmptyFriendsView()
             }
-        }
-        .task {
-            await viewModel.getMyFriends()
+            .task {
+                await viewModel.getMyFriends()
+            }
         }
     }
     
