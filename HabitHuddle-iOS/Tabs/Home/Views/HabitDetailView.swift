@@ -171,7 +171,8 @@ struct HabitDetailView: View {
                         } label: {
                             HStack {
                                 Text(showCheckIns ? "Hide Check-in History" : "View Check-in History")
-                                    .fontWeight(.medium)
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
                                 Spacer()
                                 Image(systemName: showCheckIns ? "chevron.up" : "chevron.down")
                             }
@@ -180,7 +181,7 @@ struct HabitDetailView: View {
                         }
                         
                         if showCheckIns {
-                            VStack(alignment: .leading, spacing: 8) {
+                            LazyVStack(alignment: .leading, spacing: 8) {
                                 ForEach(habit.checkIns.map({$0.date}), id: \.self) { date in
                                     VStack(alignment: .leading, spacing: 2) {
                                         HStack(alignment: .bottom) {
@@ -212,6 +213,7 @@ struct HabitDetailView: View {
             }
         }
     }
+    
     private var habitDescription: some View {
         Text(habit.habitDescription)
             .font(.title2)

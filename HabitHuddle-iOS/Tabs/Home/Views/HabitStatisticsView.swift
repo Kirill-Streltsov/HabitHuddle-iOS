@@ -163,7 +163,7 @@ struct HabitStatisticsView: View {
                     }
                 }
                                 
-                if currentStreak.length >= 2 {
+                if habit.checkIns.count >= 2 {
                     CardView {
                         ChartContainerView(title: "Streaks Timeline", subtitle: "Your streaks over time") {
                             streaksSection
@@ -194,11 +194,6 @@ struct HabitStatisticsView: View {
                 .frame(maxWidth: .infinity)
             }
             .padding(.bottom)
-        }
-        .onAppear {
-            for checkIn in habit.checkIns {
-                print("DAY: \(checkIn.date.day), HOUR: \(checkIn.date.hour)")
-            }
         }
         .onChange(of: habit.checkIns.count) { _, _ in
             statisticsID = UUID()
