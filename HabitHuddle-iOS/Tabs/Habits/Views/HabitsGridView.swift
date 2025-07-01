@@ -53,7 +53,7 @@ struct HabitsGridView: View {
     private var groupedByCategoriesHabits: some View {
         ForEach(groupedHabits.keys.sorted(), id: \.self) { category in
             if let habitsForCategory = groupedHabits[category], !habitsForCategory.isEmpty {
-                Section {
+                VStack(alignment: .leading) {
                     Text(category)
                         .font(.headline)
                         .padding(.horizontal)
@@ -75,7 +75,7 @@ struct HabitsGridView: View {
     private var otherHabits: some View {
         Group {
             if !ungroupedHabits.isEmpty {
-                Section {
+                VStack(alignment: .leading) {
                     Text("Other Habits")
                         .font(.headline)
                         .padding(.horizontal)
