@@ -13,7 +13,7 @@ extension Habit {
             id: id,
             name: name,
             description: habitDescription,
-            goal: goal,
+            category: category,
             icon: icon,
             duration: duration.rawValue,
             reminderTime: reminderTime,

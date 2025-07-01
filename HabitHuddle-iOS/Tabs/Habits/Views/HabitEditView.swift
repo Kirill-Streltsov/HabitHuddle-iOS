@@ -14,7 +14,7 @@ struct HabitEditView: View {
     @Query
     var habits: [Habit]
     
-    @State private var goals = [String]()
+    @State private var categories = [String]()
     
     @ObservedObject var viewModel: HabitDetailView.ViewModel
     @State private var saveButtonPressed = false
@@ -45,7 +45,7 @@ struct HabitEditView: View {
                     VStack(spacing: 32) {
                         textFieldsView
                         iconPickerView
-                        goalView
+                        categoryView
                         durationView
                         remindersView
                     }
@@ -73,13 +73,7 @@ struct HabitEditView: View {
             }
             .padding()
             .onAppear {
-                for habit in habits {
-                    if !habit.goal.isEmpty {
-                        if !goals.contains(habit.goal) {
-                            goals.append(habit.goal)
-                        }
-                    }
-                }
+                fillCategories()
                 Task {
                     await checkNotifications()
                 }
@@ -96,6 +90,23 @@ struct HabitEditView: View {
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                 Task {
                     await checkNotifications()
+                }
+            }
+        }
+    }
+    
+    private func fillCategories() {
+        categories = [
+            "Health",
+            "Productivity",
+            "Mindfulness",
+            "Learning",
+            "Fitness"
+        ]
+        for habit in habits {
+            if !habit.category.isEmpty {
+                if !categories.contains(habit.category) {
+                    categories.append(habit.category)
                 }
             }
         }
@@ -127,25 +138,25 @@ struct HabitEditView: View {
                 )
         }
     }
-    private var goalView: some View {
+    private var categoryView: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Choose a Goal")
+                Text("Category")
                     .fontWeight(.semibold)
-                GoalInfoView(text: "A goal helps you organize your habits by category...")
+                CategoryInfoView(text: "Categories help you organize your habits into meaningful groups")
             }
             
-            if !goals.isEmpty {
+            if !categories.isEmpty {
                 Menu {
-                    ForEach(goals, id: \.self) { goal in
-                        Button("\(goal)") {
-                            viewModel.goal = goal
+                    ForEach(categories, id: \.self) { category in
+                        Button("\(category)") {
+                            viewModel.category = category
                         }
                     }
                 } label: {
                     HStack {
                         Image(systemName: "list.bullet")
-                        Text("Select an existing goal")
+                        Text("Select an existing category")
                             .foregroundColor(.accentColor)
                     }
                     .padding(8)
@@ -154,7 +165,7 @@ struct HabitEditView: View {
                 }
             }
                         
-            CustomStyledTextField(placeholder: goals.count == 0 ? "Add a new one..." : "Or add a new one...", text: $viewModel.goal)
+            CustomStyledTextField(placeholder: categories.count == 0 ? "Add a new one..." : "Or add a new one...", text: $viewModel.category)
         }
     }
     private var durationView: some View {
@@ -233,7 +244,7 @@ struct HabitEditView: View {
         await MainActor.run {
             habit.name = viewModel.name
             habit.habitDescription = viewModel.description
-            habit.goal = viewModel.goal
+            habit.category = viewModel.category
             habit.icon = viewModel.icon
             habit.duration = viewModel.duration
             habit.reminderTime = viewModel.hasReminder ? viewModel.reminderTime : nil
@@ -258,7 +269,7 @@ struct HabitEditView: View {
                 user: LightweightUser(id: userManager.profile.id),
                 name: viewModel.name,
                 description: viewModel.description,
-                goal: viewModel.goal,
+                category: viewModel.category,
                 icon: viewModel.icon,
                 duration: viewModel.duration,
                 reminderTime: viewModel.hasReminder ? viewModel.reminderTime : nil,

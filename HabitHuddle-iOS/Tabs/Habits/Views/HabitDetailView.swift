@@ -226,7 +226,7 @@ struct HabitDetailView: View {
     private func populateFields(with habit: Habit) {
         viewModel.name = habit.name
         viewModel.description = habit.habitDescription
-        viewModel.goal = habit.goal
+        viewModel.category = habit.category
         viewModel.icon = habit.icon
         viewModel.duration = habit.duration
         if let aiText = habit.aiText {

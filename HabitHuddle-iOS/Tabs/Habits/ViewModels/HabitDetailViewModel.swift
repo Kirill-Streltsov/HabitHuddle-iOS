@@ -18,7 +18,7 @@ extension HabitDetailView {
         @Published var hasCheckedIn: Bool = false
         @Published var duration: HabitDuration = .twoWeeks
         
-        @Published var goal: String = ""
+        @Published var category: String = ""
         
         @Published var hasReminder: Bool = false
         @Published var reminderTime: Date = .init()
@@ -34,7 +34,7 @@ extension HabitDetailView {
                     id: id,
                     name: name,
                     description: description,
-                    goal: goal,
+                    category: category,
                     icon: icon,
                     duration: duration.rawValue,
                     reminderTime: reminder,
@@ -62,7 +62,7 @@ extension HabitDetailView {
                     id: id,
                     name: name,
                     description: description,
-                    goal: goal,
+                    category: category,
                     icon: icon,
                     duration: duration.rawValue,
                     reminderTime: reminder,

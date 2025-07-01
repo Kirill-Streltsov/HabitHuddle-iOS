@@ -10,26 +10,26 @@ import SwiftUI
 struct HabitsGridView: View {
     let habits: [Habit]
     
-    // Group habits with non-empty goals
+    // Group habits with non-empty categories
     var groupedHabits: [String: [Habit]] {
         Dictionary(
-            grouping: habits.filter { !$0.goal.isEmpty },
-            by: { $0.goal }
+            grouping: habits.filter { !$0.category.isEmpty },
+            by: { $0.category }
         )
     }
     
-    // Habits with empty goal string
+    // Habits with empty category string
     var ungroupedHabits: [Habit] {
-        habits.filter { $0.goal.isEmpty }
+        habits.filter { $0.category.isEmpty }
     }
     
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 24) {
                 if groupedHabits.isEmpty {
-                    noGoalsHabits
+                    noCategoriesHabits
                 } else {
-                    groupedByGoalsHabits
+                    groupedByCategoriesHabits
                     otherHabits
                 }
             }
@@ -38,7 +38,7 @@ struct HabitsGridView: View {
         }
     }
     
-    private var noGoalsHabits: some View {
+    private var noCategoriesHabits: some View {
         LazyVGrid(columns: [GridItem(.flexible())], spacing: 12) {
             ForEach(habits) { habit in
                 NavigationLink(value: habit) {
@@ -50,16 +50,16 @@ struct HabitsGridView: View {
         .padding(.horizontal)
     }
     
-    private var groupedByGoalsHabits: some View {
-        ForEach(groupedHabits.keys.sorted(), id: \.self) { goal in
-            if let habitsForGoal = groupedHabits[goal], !habitsForGoal.isEmpty {
+    private var groupedByCategoriesHabits: some View {
+        ForEach(groupedHabits.keys.sorted(), id: \.self) { category in
+            if let habitsForCategory = groupedHabits[category], !habitsForCategory.isEmpty {
                 Section {
-                    Text(goal)
+                    Text(category)
                         .font(.headline)
                         .padding(.horizontal)
                     
                     LazyVGrid(columns: [GridItem(.flexible())], spacing: 12) {
-                        ForEach(habitsForGoal) { habit in
+                        ForEach(habitsForCategory) { habit in
                             NavigationLink(value: habit) {
                                 HabitCard(habit: habit)
                             }

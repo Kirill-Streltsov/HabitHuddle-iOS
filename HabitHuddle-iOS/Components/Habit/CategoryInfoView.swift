@@ -1,12 +1,12 @@
 //
-//  GoalInfoView.swift
+//  CategoryInfoView.swift
 //  HabitHuddle-iOS
 //
 //  Created by Kirill on 30.06.25.
 //
 import SwiftUI
 
-struct GoalInfoView: View {
+struct CategoryInfoView: View {
     @State private var showInfoPopover = false
     let text: String
 

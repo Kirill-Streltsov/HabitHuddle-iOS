@@ -70,9 +70,9 @@ struct RootView: View {
 //                context.insert(habit)
 //            }
             //context.insert(Habit.demoHabitWith13Of14CheckIns())
-            print("Habit goals")
+            print("Habit categories")
             for habit in habits {
-                print(habit.goal)
+                print(habit.category)
             }
             print("Users:")
             for user in users {

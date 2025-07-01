@@ -129,5 +129,5 @@ struct FriendHabitCard: View {
 }
 
 #Preview {
-    FriendHabitCard(habitDTO: HabitDTO(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Drink 2 liters a day", goal: "", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: [], challenges: [], icon: "brain"), onSupportiveCalled: {}, onCompetitiveCalled: {})
+    FriendHabitCard(habitDTO: HabitDTO(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Drink 2 liters a day", category: "", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: [], challenges: [], icon: "brain"), onSupportiveCalled: {}, onCompetitiveCalled: {})
 }

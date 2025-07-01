@@ -11,7 +11,7 @@ struct HabitPayload: Codable {
     let id: UUID
     let name: String
     let description: String?
-    let goal: String?
+    let category: String?
     let icon: String?
     let duration: String
     let reminderTime: Date?
