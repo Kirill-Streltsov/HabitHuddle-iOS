@@ -133,7 +133,7 @@ struct HabitCard: View {
         .animation(.easeInOut(duration: 0.3), value: scale)
         .sheet(isPresented: $challengeButtonPressed) {
             ZStack {
-                Color(.systemGroupedBackground).ignoresSafeArea()
+                Color(.secondarySystemGroupedBackground).ignoresSafeArea()
                 MyFriendsList(isInFriendsTab: false, habit: habit)
                     .presentationDetents([detent])
             }

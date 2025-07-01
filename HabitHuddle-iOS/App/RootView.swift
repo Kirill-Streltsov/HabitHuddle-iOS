@@ -12,6 +12,7 @@ struct RootView: View {
     
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding = false
     @AppStorage("selectedTab") var selectedTab = 0
+    @AppStorage("isDarkMode") var isDarkMode = false
     
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.modelContext) private var context
@@ -52,6 +53,7 @@ struct RootView: View {
                     .transition(.opacity)
             }
         }
+        .preferredColorScheme(isDarkMode ? .dark : .light)
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {
                 Task {
