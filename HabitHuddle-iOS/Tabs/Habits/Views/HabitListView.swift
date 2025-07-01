@@ -33,12 +33,25 @@ struct HabitListView: View {
             .background(Color(.systemGroupedBackground))
             .toolbar {
                 if !habits.isEmpty {
-                    Button {
-                        showNewHabitView = true
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .foregroundStyle(.blue)
-                            .font(.title2)
+                    ToolbarItem(placement: .topBarLeading) {
+                        
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "line.3.horizontal.decrease.circle")
+                                .foregroundStyle(.blue)
+                                .font(.title2)
+                        }
+                        
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            showNewHabitView = true
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundStyle(.blue)
+                                .font(.title2)
+                        }
                     }
                 }
             }
