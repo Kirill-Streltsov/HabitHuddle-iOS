@@ -9,38 +9,82 @@ import SwiftUI
 
 struct HabitsGridView: View {
     let habits: [Habit]
-    
+
+    enum SortMode: String, CaseIterable {
+        case alphabetical = "Alphabetical"
+        case createdAt = "Newest First"
+        case byGroup = "Grouped"
+    }
+
+    @State private var sortMode: SortMode = .byGroup
+
+    private var sortedHabits: [Habit] {
+        switch sortMode {
+        case .alphabetical:
+            return habits.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        case .createdAt:
+            return habits.sorted { $0.createdAt > $1.createdAt }
+        case .byGroup:
+            return habits
+        }
+    }
+
     // Group habits with non-empty categories
     var groupedHabits: [String: [Habit]] {
         Dictionary(
-            grouping: habits.filter { !$0.category.isEmpty },
+            grouping: sortedHabits.filter { !$0.category.isEmpty },
             by: { $0.category }
         )
     }
-    
+
     // Habits with empty category string
     var ungroupedHabits: [Habit] {
-        habits.filter { $0.category.isEmpty }
+        sortedHabits.filter { $0.category.isEmpty }
     }
-    
+
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 24) {
-                if groupedHabits.isEmpty {
+                if sortMode != .byGroup {
                     noCategoriesHabits
                 } else {
-                    groupedByCategoriesHabits
-                    otherHabits
+                    if groupedHabits.isEmpty {
+                        noCategoriesHabits
+                    } else {
+                        groupedByCategoriesHabits
+                        otherHabits
+                    }
                 }
             }
             .padding(.top)
             .padding(.bottom)
         }
+        .toolbar {
+            if !habits.isEmpty {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Menu {
+                        ForEach(SortMode.allCases, id: \.self) { mode in
+                            Button {
+                                withAnimation {
+                                    sortMode = mode
+                                }
+                            } label: {
+                                Label(mode.rawValue, systemImage: sortMode == mode ? "checkmark.circle" : "circle")
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease.circle")
+                            .foregroundStyle(.blue)
+                            .font(.title2)
+                    }
+                }
+            }
+        }
     }
-    
+
     private var noCategoriesHabits: some View {
         LazyVGrid(columns: [GridItem(.flexible())], spacing: 12) {
-            ForEach(habits) { habit in
+            ForEach(sortedHabits) { habit in
                 NavigationLink(value: habit) {
                     HabitCard(habit: habit)
                 }
@@ -49,15 +93,15 @@ struct HabitsGridView: View {
         }
         .padding(.horizontal)
     }
-    
+
     private var groupedByCategoriesHabits: some View {
         ForEach(groupedHabits.keys.sorted(), id: \.self) { category in
             if let habitsForCategory = groupedHabits[category], !habitsForCategory.isEmpty {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 8) {
                     Text(category)
                         .font(.headline)
                         .padding(.horizontal)
-                    
+
                     LazyVGrid(columns: [GridItem(.flexible())], spacing: 12) {
                         ForEach(habitsForCategory) { habit in
                             NavigationLink(value: habit) {
@@ -71,15 +115,15 @@ struct HabitsGridView: View {
             }
         }
     }
-    
+
     private var otherHabits: some View {
         Group {
             if !ungroupedHabits.isEmpty {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 8) {
                     Text("Other Habits")
                         .font(.headline)
                         .padding(.horizontal)
-                    
+
                     LazyVGrid(columns: [GridItem(.flexible())], spacing: 12) {
                         ForEach(ungroupedHabits) { habit in
                             NavigationLink(value: habit) {
