@@ -55,12 +55,11 @@ struct HabitEditView: View {
                 SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor, iconName: nil) {
                     HapticManager.trigger(.success)
                     Task {
-                        guard let habit = viewModel.habit else { return }
-                        if !habits.contains(where: { $0.id == habit.id }) {
+                        guard let habit = viewModel.habit else {
                             await addHabit()
-                        } else {
-                            await saveChanges()
+                            return
                         }
+                        await saveChanges()
                         if !viewModel.isSynced {
                             let _ = await viewModel.deleteHabit(with: habit.id)
                         }

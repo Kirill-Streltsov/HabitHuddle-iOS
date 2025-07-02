@@ -23,12 +23,8 @@ extension Habit {
     }
     
     func toggleCheckIn(in context: ModelContext) {
-        let utcCalendar = Calendar(identifier: .gregorian)
-        var utc = utcCalendar
-        utc.timeZone = TimeZone(secondsFromGMT: 0)!
         let now = Date()
-        
-        if let existing = checkIns.first(where: { utc.isDate($0.date, inSameDayAs: now) }) {
+        if let existing = checkIns.first(where: { Calendar.current.isDate($0.date, inSameDayAs: now) }) {
             context.delete(existing)
         } else {
             let newCheckIn = HabitCheckIn(date: now, habit: self, habitID: self.id)
