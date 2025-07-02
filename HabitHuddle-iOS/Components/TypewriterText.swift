@@ -13,7 +13,6 @@ struct TypewriterText: View {
 
     @State private var displayedText: String = ""
     @State private var charIndex = 0
-    @State private var isTyping = true
 
     init(text: String, typingInterval: Double = 0.01) {
         self.text = text
@@ -39,10 +38,8 @@ struct TypewriterText: View {
     private func startTyping() async {
         displayedText = ""
         charIndex = 0
-        isTyping = true
 
         for character in text {
-            if !isTyping { break }
             await MainActor.run {
                 displayedText.append(character)
                 charIndex += 1
