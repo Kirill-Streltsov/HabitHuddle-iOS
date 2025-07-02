@@ -12,13 +12,10 @@ import SwiftData
 
 extension Habit {
     var isCheckedInToday: Bool {
-        let utcCalendar = Calendar(identifier: .gregorian)
-        var utc = utcCalendar
-        utc.timeZone = TimeZone(secondsFromGMT: 0)!
-        let todayUTC = utc.startOfDay(for: Date())
+        let today = Calendar.current.startOfDay(for: Date())
         
         return checkIns.contains {
-            utc.isDate($0.date, inSameDayAs: todayUTC)
+            Calendar.current.isDate($0.date, inSameDayAs: today)
         }
     }
     
