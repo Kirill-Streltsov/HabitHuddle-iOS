@@ -34,7 +34,7 @@ final class Habit: Identifiable, Hashable {
         name: String,
         description: String,
         isPublic: Bool = false,
-        isSyncable: Bool = false,
+        isSyncable: Bool = true,
         category: String = "",
         icon: String? = nil,
         aiText: String? = nil,
