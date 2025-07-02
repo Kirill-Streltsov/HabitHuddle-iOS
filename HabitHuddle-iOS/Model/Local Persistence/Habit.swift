@@ -14,6 +14,8 @@ final class Habit: Identifiable, Hashable {
     var user: LightweightUser
     var name: String
     var habitDescription: String
+    var isPublic: Bool
+    var isSyncable: Bool
     var category: String
     var aiText: String?
     var icon: String?
@@ -31,6 +33,8 @@ final class Habit: Identifiable, Hashable {
         user: LightweightUser,
         name: String,
         description: String,
+        isPublic: Bool = false,
+        isSyncable: Bool = false,
         category: String = "",
         icon: String? = nil,
         aiText: String? = nil,
@@ -43,6 +47,8 @@ final class Habit: Identifiable, Hashable {
         self.user = user
         self.name = name
         self.habitDescription = description
+        self.isPublic = isPublic
+        self.isSyncable = isSyncable
         self.category = category
         self.icon = icon
         self.duration = duration
@@ -107,6 +113,7 @@ extension Habit {
                 user: LightweightUser(id: UUID()),
                 name: name,
                 description: description,
+                isPublic: false,
                 duration: duration,
                 reminderTime: calendar.date(bySettingHour: Int.random(in: 6 ... 22), minute: 0, second: 0, of: now)
             )
@@ -168,6 +175,7 @@ extension Habit {
                 user: LightweightUser(id: UUID()),
                 name: name,
                 description: description,
+                isPublic: false,
                 category: category,
                 duration: duration,
                 reminderTime: calendar.date(bySettingHour: Int.random(in: 6 ... 22), minute: 0, second: 0, of: now)
@@ -189,6 +197,7 @@ extension Habit {
             user: user,
             name: "Morning Meditation",
             description: "Take 10 minutes every morning to reset.",
+            isPublic: false,
             duration: .twoWeeks,
             reminderTime: calendar.date(bySettingHour: 8, minute: 0, second: 0, of: now)!
         )
@@ -219,6 +228,7 @@ extension Habit {
             user: user,
             name: "Workout",
             description: "Full 90-day workout challenge!",
+            isPublic: false,
             duration: .oneMonth, // Just for display
             reminderTime: calendar.date(bySettingHour: 9, minute: 0, second: 0, of: now)!
         )
@@ -252,6 +262,7 @@ extension Habit {
             user: user,
             name: "Read a Book",
             description: "Read at least 10 pages every day.",
+            isPublic: false,
             duration: .twoWeeks,
             reminderTime: calendar.date(bySettingHour: 20, minute: 0, second: 0, of: now)!
         )

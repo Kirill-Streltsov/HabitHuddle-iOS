@@ -17,14 +17,15 @@ struct HabitEditView: View {
     @State private var categories = [String]()
     
     @ObservedObject var viewModel: HabitDetailView.ViewModel
-    @State private var saveButtonPressed = false
     @State private var isCheckedIn = false
-    @State private var deleteButtonPressed = false
     @State private var notificationsAllowed = false
     @State private var notificationsDisabled = false
+    @State private var wasSyncedAtTheBeginning = false
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    
+    @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var userManager: LocalUserManager
     
     var isPartOfChallenge: Bool {
@@ -47,17 +48,24 @@ struct HabitEditView: View {
                         iconPickerView
                         categoryView
                         durationView
+                        privacyView
                         remindersView
                     }
                 
                 SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor, iconName: nil) {
                     HapticManager.trigger(.success)
-                    saveButtonPressed = true
                     Task {
-                        if viewModel.habit == nil {
+                        guard let habit = viewModel.habit else { return }
+                        if !habits.contains(where: { $0.id == habit.id }) {
                             await addHabit()
                         } else {
                             await saveChanges()
+                        }
+                        if !viewModel.isSynced {
+                            let _ = await viewModel.deleteHabit(with: habit.id)
+                        }
+                        if !wasSyncedAtTheBeginning && viewModel.isSynced {
+                            await addHabitToTheServer(with: habit.id)
                         }
                     }
                     dismiss()
@@ -73,18 +81,10 @@ struct HabitEditView: View {
             }
             .padding()
             .onAppear {
+                wasSyncedAtTheBeginning = viewModel.isSynced
                 fillCategories()
                 Task {
                     await checkNotifications()
-                }
-            }
-            .onDisappear {
-                if !deleteButtonPressed && !saveButtonPressed && !viewModel.name.isEmpty {
-                    Task {
-                        if let habit = viewModel.habit, habits.contains(where: { $0.id == habit.id }) {
-                            await saveChanges()
-                        }
-                    }
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
@@ -125,6 +125,7 @@ struct HabitEditView: View {
             )
         }
     }
+    
     private var iconPickerView: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Choose an Icon")
@@ -138,12 +139,13 @@ struct HabitEditView: View {
                 )
         }
     }
+    
     private var categoryView: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("Category")
                     .fontWeight(.semibold)
-                CategoryInfoView(text: "Categories help you organize your habits into meaningful groups")
+                InfoView(text: "Categories help you organize your habits into meaningful groups")
             }
             
             if !categories.isEmpty {
@@ -168,6 +170,7 @@ struct HabitEditView: View {
             CustomStyledTextField(placeholder: categories.count == 0 ? "Add a new one..." : "Or add a new one...", text: $viewModel.category)
         }
     }
+    
     private var durationView: some View {
         VStack(alignment: .leading, spacing: 20) {
             
@@ -194,6 +197,32 @@ struct HabitEditView: View {
             }
         }
     }
+    
+    private var privacyView: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Privacy Options")
+                    .fontWeight(.semibold)
+            }
+            HStack {
+                Text("Sync with Server")
+                InfoView(text: "Turn on to sync habits to our server and access them on all your devices.\n\nYou must be signed in.\n\nTurning off keeps habits only on this device and deletes them from the server.")
+                Spacer()
+                Toggle("", isOn: $viewModel.isSynced)
+                    .labelsHidden()
+                    .disabled(!appState.isAuthenticated)
+            }
+            HStack {
+                Text("Open to Friends")
+                InfoView(text: "Make a habit “open to friends” to let them see it and challenge you!\n\nOnly synced habits can be shared. Habits stay private unless you choose to share them.")
+                Spacer()
+                Toggle("", isOn: $viewModel.isPublic)
+                    .labelsHidden()
+                    .disabled(!viewModel.isSynced || !appState.isAuthenticated)
+            }
+        }
+    }
+    
     private var remindersView: some View {
         VStack(alignment: .leading, spacing: 12) {
             if notificationsDisabled {
@@ -240,10 +269,11 @@ struct HabitEditView: View {
     
     private func saveChanges() async {
         guard let habit = viewModel.habit else { return }
-        let result = await viewModel.updateHabit(with: habit.id)
         await MainActor.run {
             habit.name = viewModel.name
             habit.habitDescription = viewModel.description
+            habit.isSyncable = viewModel.isSynced
+            habit.isPublic = viewModel.isPublic
             habit.category = viewModel.category
             habit.icon = viewModel.icon
             habit.duration = viewModel.duration
@@ -251,8 +281,17 @@ struct HabitEditView: View {
             habit.updatedAt = .now
             try? context.save()
             setNotificationBehaviour(for: habit)
+            if viewModel.isSynced {
+                Task {
+                    await saveChangesOnTheServer(for: habit)
+                }
+            }
         }
-        if userManager.profile.isSignedInToServer {
+    }
+    
+    private func saveChangesOnTheServer(for habit: Habit) async {
+        if userManager.profile.isSignedInToServer && viewModel.isSynced {
+            let result = await viewModel.updateHabit(with: habit.id)
             Helpers.handleResult(result) { codableHabit in
                 print("✅ Updated the habit on the server with habit name: '\(codableHabit.name)' and id: '\(codableHabit.id)'")
             } onFailure: { error in
@@ -260,7 +299,7 @@ struct HabitEditView: View {
             }
         }
     }
-    
+            
     private func addHabit() async {
         let habitID = UUID()
         await MainActor.run {
@@ -269,6 +308,8 @@ struct HabitEditView: View {
                 user: LightweightUser(id: userManager.profile.id),
                 name: viewModel.name,
                 description: viewModel.description,
+                isPublic: viewModel.isPublic,
+                isSyncable: viewModel.isSynced,
                 category: viewModel.category,
                 icon: viewModel.icon,
                 duration: viewModel.duration,
@@ -278,7 +319,15 @@ struct HabitEditView: View {
             )
             context.insert(habit)
             setNotificationBehaviour(for: habit)
+            if viewModel.isSynced {
+                Task {
+                    await addHabitToTheServer(with: habitID)
+                }
+            }
         }
+    }
+    
+    private func addHabitToTheServer(with habitID: UUID) async {
         if userManager.profile.isSignedInToServer {
             let result = await viewModel.createHabit(with: habitID)
             Helpers.handleResult(result) { codableHabit in

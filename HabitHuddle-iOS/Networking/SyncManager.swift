@@ -166,9 +166,9 @@ final class SyncManager: ObservableObject {
         let serverIDs = Set(serverHabits.map { $0.id })
         let localIDs = Set(localHabits.map { $0.id })
 
-        let toUpdate = localHabits.filter { serverIDs.contains($0.id) }
-        let toCreate = localHabits.filter { !serverIDs.contains($0.id) }
-        let toDelete = serverHabits.filter { !localIDs.contains($0.id) }.map { $0.id }
+        let toUpdate = localHabits.filter { serverIDs.contains($0.id) && $0.isSyncable }
+        let toCreate = localHabits.filter { !serverIDs.contains($0.id) && $0.isSyncable }
+        let toDelete = serverHabits.filter { !localIDs.contains($0.id) }.map { $0.id } + localHabits.filter { !$0.isSyncable }.map { $0.id }
 
         async let createResult = createHabitsOnTheServer(with: toCreate)
         async let updateResult = updateHabitsOnTheServer(with: toUpdate)

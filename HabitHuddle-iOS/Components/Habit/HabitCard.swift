@@ -59,8 +59,13 @@ struct HabitCard: View {
                     }
                 }
                 Spacer()
-                Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
-                    .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)
+                HStack {
+                    Image(systemName: habit.isSyncable ? "antenna.radiowaves.left.and.right" : "antenna.radiowaves.left.and.right.slash")
+                        .foregroundStyle(habit.isSyncable ? .green : .gray)
+                    Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
+                        .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)
+                }
+                
                 
             }
             .frame(width: cardWidth)
@@ -114,7 +119,6 @@ struct HabitCard: View {
                     Image(systemName: "flag.pattern.checkered.2.crossed")
                         .foregroundStyle(.green)
                 }
-                
             }
             .padding(.bottom, 4)
             .frame(width: cardWidth)

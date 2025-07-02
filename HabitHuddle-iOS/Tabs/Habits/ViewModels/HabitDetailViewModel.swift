@@ -20,6 +20,9 @@ extension HabitDetailView {
         
         @Published var category: String = ""
         
+        @Published var isSynced: Bool = false
+        @Published var isPublic: Bool = false
+        
         @Published var hasReminder: Bool = false
         @Published var reminderTime: Date = .init()
         
@@ -34,6 +37,7 @@ extension HabitDetailView {
                     id: id,
                     name: name,
                     description: description,
+                    isPublic: isPublic,
                     category: category,
                     icon: icon,
                     duration: duration.rawValue,
@@ -62,6 +66,7 @@ extension HabitDetailView {
                     id: id,
                     name: name,
                     description: description,
+                    isPublic: isPublic,
                     category: category,
                     icon: icon,
                     duration: duration.rawValue,

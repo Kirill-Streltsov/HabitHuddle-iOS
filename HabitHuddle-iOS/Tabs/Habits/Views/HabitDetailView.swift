@@ -122,12 +122,6 @@ struct HabitDetailView: View {
                 }
             }
             .onAppear {
-                UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
-                    print("⏰ Pending notifications:")
-                    for request in requests {
-                        print("• \(request.identifier) — \(request.content.body)")
-                    }
-                }
                 populateFields(with: habit)
                 isCheckedIn = habit.isCheckedInToday
                 viewModel.habit = habit
@@ -226,6 +220,8 @@ struct HabitDetailView: View {
     private func populateFields(with habit: Habit) {
         viewModel.name = habit.name
         viewModel.description = habit.habitDescription
+        viewModel.isSynced = habit.isSyncable
+        viewModel.isPublic = habit.isPublic
         viewModel.category = habit.category
         viewModel.icon = habit.icon
         viewModel.duration = habit.duration

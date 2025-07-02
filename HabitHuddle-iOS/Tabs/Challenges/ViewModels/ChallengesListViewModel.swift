@@ -94,6 +94,7 @@ extension ChallengesListView {
                     id: habitDTO.id,
                     name: habitDTO.name,
                     description: habitDTO.description,
+                    isPublic: true,
                     category: habitDTO.category,
                     icon: habitDTO.icon,
                     duration: habitDTO.duration.rawValue,

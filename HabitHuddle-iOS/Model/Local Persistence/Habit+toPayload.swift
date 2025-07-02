@@ -13,6 +13,7 @@ extension Habit {
             id: id,
             name: name,
             description: habitDescription,
+            isPublic: isPublic,
             category: category,
             icon: icon,
             duration: duration.rawValue,
