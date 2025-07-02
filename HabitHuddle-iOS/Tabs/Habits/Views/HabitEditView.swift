@@ -213,7 +213,7 @@ struct HabitEditView: View {
             }
             HStack {
                 Text("Open to Friends")
-                InfoView(text: "Make a habit “open to friends” to let them see it and challenge you!\n\nOnly synced habits can be shared. Habits stay private unless you choose to share them.")
+                InfoView(text: "Make a habit “open to friends” to let them see it and challenge you!\n\nOnly synced habits can be shared.")
                 Spacer()
                 Toggle("", isOn: $viewModel.isPublic)
                     .labelsHidden()
