@@ -17,14 +17,19 @@ struct HabitListView: View {
     @Environment(\.modelContext) private var context
     
     @State private var showAllHabits = false
-    @State private var showNewHabitView = false    
+    @State private var showNewHabitView = false
+    
+    @StateObject private var newHabitViewModel = HabitDetailView.ViewModel()
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 if habits.isEmpty {
                     CardView {
-                        EmptyHabitsView(onAddHabit: { showNewHabitView = true })
+                        EmptyHabitsView() {
+                            resetNewHabitViewModel()
+                            showNewHabitView = true
+                        }
                     }
                 } else {
                     HabitsGridView(habits: habits)
@@ -35,6 +40,7 @@ struct HabitListView: View {
                 if !habits.isEmpty {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
+                            resetNewHabitViewModel()
                             showNewHabitView = true
                         } label: {
                             Image(systemName: "plus.circle.fill")
@@ -45,14 +51,27 @@ struct HabitListView: View {
                 }
             }
             .navigationDestination(isPresented: $showNewHabitView) {
-                HabitEditView(viewModel: HabitDetailView.ViewModel())
+                HabitEditView(viewModel: newHabitViewModel)
             }
             .navigationDestination(for: Habit.self) { habit in
                 HabitDetailView(habit: habit)
             }
             .navigationTitle("Habits")
         }
-        
+    }
+    
+    private func resetNewHabitViewModel() {
+        newHabitViewModel.name = ""
+        newHabitViewModel.description = ""
+        newHabitViewModel.category = ""
+        newHabitViewModel.icon = nil
+        newHabitViewModel.duration = .twoWeeks
+        newHabitViewModel.isSynced = false
+        newHabitViewModel.isPublic = false
+        newHabitViewModel.hasReminder = false
+        newHabitViewModel.reminderTime = Date()
+        newHabitViewModel.habit = nil
+        newHabitViewModel.openAIAnswer = ""
     }
 }
 
