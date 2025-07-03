@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+@MainActor
 final class SyncManager: ObservableObject {
     static let shared = SyncManager()
     
@@ -33,7 +34,6 @@ final class SyncManager: ObservableObject {
         await withTaskGroup(of: (UUID, Result<HabitDTO, HHError>).self) { group in
             for habit in habits {
                 group.addTask {
-                    
                     let payload = habit.toPayload
                     
                     do {

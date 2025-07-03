@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct HabitListView: View {
-    @Query(sort: [SortDescriptor(\Habit.createdAt, order: .reverse)])
+    @Query
     var habits: [Habit]
         
     @EnvironmentObject private var userManager: LocalUserManager

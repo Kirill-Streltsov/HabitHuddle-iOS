@@ -10,6 +10,9 @@ import SwiftData
 
 struct MyFriendsList: View {
     
+    @Query
+    var users: [User]
+    
     @EnvironmentObject private var viewModel: ViewModel
     @Environment(\.modelContext) private var context
     
@@ -74,8 +77,7 @@ struct MyFriendsList: View {
     
     private func saveUserIfNeeded(_ user: User) throws {
         let userID = user.id
-        let descriptor = FetchDescriptor<User>(predicate: #Predicate { $0.id == userID })
-        let existing = try context.fetch(descriptor)
+        let existing = users.filter({ $0.id == userID })
         if existing.isEmpty {
             print("💾 Saving user with id: \(userID) to Swift Data")
             context.insert(user)

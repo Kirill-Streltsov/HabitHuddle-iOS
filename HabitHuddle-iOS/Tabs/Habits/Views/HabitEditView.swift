@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SwiftData
-import UserNotifications
+@preconcurrency import UserNotifications
 
 struct HabitEditView: View {
 

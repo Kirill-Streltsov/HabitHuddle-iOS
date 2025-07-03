@@ -28,7 +28,7 @@ final class User: Identifiable {
 }
 
 extension User {
-    static let sampleFriends: [User] = [
+    @MainActor static let sampleFriends: [User] = [
         User(
             id: UUID(),
             username: "mountain_goat",
@@ -65,17 +65,4 @@ extension User {
             updatedAt: nil
         )
     ]
-}
-
-// Create a preview container and context
-extension ModelContainer {
-    static var preview: ModelContainer = {
-        do {
-            // In-memory container for preview
-            let container = try ModelContainer(for: User.self)
-            return container
-        } catch {
-            fatalError("Failed to create preview container: \(error)")
-        }
-    }()
 }

@@ -34,15 +34,17 @@ extension Habit {
     }
 
     func toggleCheckInRemotely() {
+        let habitID = id
+        let habitName = name
         Task {
             do {
                 _ = try await NetworkManager.shared.requestStatusCode(
-                    endpoint: .checkIntoHabit(with: id),
+                    endpoint: .checkIntoHabit(with: habitID),
                     method: .post
                 )
-                print("✅ Checked into habit from the HomeView: \(self.name)")
+                print("✅ Checked into habit from the HomeView: \(habitName)")
             } catch {
-                print("❌ Error: Could not check into habit from the HomeView: \(self.name)")
+                print("❌ Error: Could not check into habit from the HomeView: \(habitName)")
             }
         }
     }
