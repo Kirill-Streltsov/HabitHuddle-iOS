@@ -198,6 +198,7 @@ extension Habit {
             name: "Morning Meditation",
             description: "Take 10 minutes every morning to reset.",
             isPublic: false,
+            icon: "brain.head.profile",
             duration: .twoWeeks,
             reminderTime: calendar.date(bySettingHour: 8, minute: 0, second: 0, of: now)!
         )

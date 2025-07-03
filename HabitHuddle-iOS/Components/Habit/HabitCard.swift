@@ -43,12 +43,18 @@ struct HabitCard: View {
                         .clipShape(RoundedRectangle(cornerRadius: 4))
                 }
                 VStack(alignment: .leading) {
-                    HStack(spacing: 8) {
+                    HStack(alignment: .top, spacing: 8) {
                         Text(habit.name)
                             .font(.title3)
                             .fontWeight(.semibold)
                             .lineLimit(2)
-                        
+                        Spacer()
+                        HStack {
+                            Image(systemName: habit.isSyncable ? "antenna.radiowaves.left.and.right" : "antenna.radiowaves.left.and.right.slash")
+                                .foregroundStyle(habit.isSyncable ? .green : .gray)
+                            Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
+                                .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)
+                        }
                     }
                     if !habit.habitDescription.isEmpty {
                         Text(habit.habitDescription)
@@ -58,15 +64,6 @@ struct HabitCard: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
-                Spacer()
-                HStack {
-                    Image(systemName: habit.isSyncable ? "antenna.radiowaves.left.and.right" : "antenna.radiowaves.left.and.right.slash")
-                        .foregroundStyle(habit.isSyncable ? .green : .gray)
-                    Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
-                        .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)
-                }
-                
-                
             }
             .frame(width: cardWidth)
             
