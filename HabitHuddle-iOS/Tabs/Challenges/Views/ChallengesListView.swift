@@ -43,17 +43,25 @@ struct ChallengesListView: View {
         NavigationStack {
             ZStack {
                 ScrollView {
-                    if viewModel.challenges.isEmpty {
-                        EmptyChallengesView()
+                    if !appState.isAuthenticated {
+                        UnauthenticatedView(description: "Log in to view and take part in challenges with friends.")
                     } else {
-                        if !(viewModel.pendingChallengesSent + viewModel.pendingChallengesReceived).isEmpty {
-                            pendingChallenges
-                        }
-                        if !viewModel.acceptedChallenges.isEmpty {
-                            ongoingChallenges
-                        }
-                        if !viewModel.declinedChallenges.isEmpty {
-                            declinedChallenges
+                        if viewModel.challenges.isEmpty {
+                            EmptyContentView(
+                                icon: "flag.slash",
+                                title: "No Active Challenges Yet",
+                                description: "Start a challenge with a friend to stay accountable and reach your goals together."
+                            )
+                        } else {
+                            if !(viewModel.pendingChallengesSent + viewModel.pendingChallengesReceived).isEmpty {
+                                pendingChallenges
+                            }
+                            if !viewModel.acceptedChallenges.isEmpty {
+                                ongoingChallenges
+                            }
+                            if !viewModel.declinedChallenges.isEmpty {
+                                declinedChallenges
+                            }
                         }
                     }
                 }

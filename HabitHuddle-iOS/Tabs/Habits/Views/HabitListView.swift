@@ -25,11 +25,9 @@ struct HabitListView: View {
         NavigationStack {
             ScrollView {
                 if habits.isEmpty {
-                    CardView {
-                        EmptyHabitsView() {
-                            resetNewHabitViewModel()
-                            showNewHabitView = true
-                        }
+                    EmptyHabitsView() {
+                        resetNewHabitViewModel()
+                        showNewHabitView = true
                     }
                 } else {
                     HabitsGridView(habits: habits)

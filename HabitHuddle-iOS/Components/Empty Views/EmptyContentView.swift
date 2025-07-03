@@ -1,45 +1,36 @@
 //
-//  EmptyHabitsView.swift
+//  EmptyContentView.swift
 //  HabitHuddle-iOS
 //
-//  Created by Kirill on 29.05.25.
+//  Created by Kirill on 04.06.25.
 //
 
 import SwiftUI
 
-import SwiftUI
-
-struct EmptyHabitsView: View {
-    var onAddHabit: () -> Void
-
+struct EmptyContentView: View {
+    
+    let icon: String
+    let title: String
+    let description: String
+    
     var body: some View {
         CardView {
             VStack(spacing: 20) {
-                Image(systemName: "brain.head.profile")
+                Image(systemName: icon)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 70, height: 70)
                     .foregroundStyle(.gray.opacity(0.4))
 
-                Text("No habits yet")
+                Text(title)
                     .font(.title2.weight(.semibold))
                     .foregroundStyle(.primary.opacity(0.7))
 
-                Text("Create one now.")
+                Text(description)
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
-
-                Button(action: onAddHabit) {
-                    Text("Add your first habit")
-                        .font(.headline)
-                        .foregroundStyle(.white)
-                        .padding()
-                        .frame(maxWidth: 220)
-                        .background(Color(.systemBlue))
-                        .cornerRadius(12)
-                }
             }
             .padding()
             .frame(maxWidth: .infinity)
@@ -48,6 +39,7 @@ struct EmptyHabitsView: View {
     }
 }
 
+
 #Preview {
-    EmptyHabitsView(onAddHabit: {})
+    EmptyContentView(icon: "person", title: "No title", description: "No long description provided because this is a preview")
 }
