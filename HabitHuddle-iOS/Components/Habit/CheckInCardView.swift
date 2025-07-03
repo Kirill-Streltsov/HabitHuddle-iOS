@@ -11,13 +11,11 @@ struct CheckInCardView: View {
     @Environment(\.modelContext) private var context
     @State private var scale = 1.0
     let habit: Habit
-    let action: () -> Void
 
     var body: some View {
         Button {
             HapticManager.trigger(.success)
             habit.toggleCheckIn(in: context)
-            action()
             scale += 0.3
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 scale -= 0.3
@@ -48,5 +46,5 @@ struct CheckInCardView: View {
 }
 
 #Preview {
-    CheckInCardView(habit: Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "New Habit", description: "Some description", duration: .oneMonth, reminderTime: .now, createdAt: .now, updatedAt: .now), action: {})
+    CheckInCardView(habit: Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "New Habit", description: "Some description", duration: .oneMonth, reminderTime: .now, createdAt: .now, updatedAt: .now))
 }

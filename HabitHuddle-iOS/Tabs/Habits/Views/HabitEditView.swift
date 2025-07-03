@@ -86,6 +86,11 @@ struct HabitEditView: View {
                     await checkNotifications()
                 }
             }
+            .onChange(of: viewModel.isSynced) { _, newValue in
+                if !newValue {
+                    viewModel.isPublic = false
+                }
+            }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                 Task {
                     await checkNotifications()

@@ -65,9 +65,7 @@ struct HabitDetailView: View {
                         }
                         .padding(.horizontal)
                         
-                        CheckInCardView(habit: habit) {
-                            checkIntoHabit(habit)
-                        }
+                        CheckInCardView(habit: habit)
                                                 
                         HabitStatisticsView(habit: habit)
                             .frame(maxWidth: .infinity)
@@ -233,19 +231,6 @@ struct HabitDetailView: View {
             viewModel.hasReminder = true
         } else {
             viewModel.hasReminder = false
-        }
-    }
-    
-    private func checkIntoHabit(_ habit: Habit) {
-        Task {
-            if userManager.profile.isSignedInToServer {
-                let result = await viewModel.checkIntoHabit(with: habit.id)
-                Helpers.handleResult(result) { checkedIn in
-                    print("✅ The user has checked in: \(checkedIn)")
-                } onFailure: { error in
-                    print("❌ Error: Posting the check in: \(error)")
-                }
-            }
         }
     }
     
