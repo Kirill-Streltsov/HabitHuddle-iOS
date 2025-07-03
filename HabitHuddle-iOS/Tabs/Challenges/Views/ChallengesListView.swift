@@ -25,12 +25,9 @@ struct ChallengesListView: View {
     @State private var message = ""
     @State private var showChallengeDetail = false
     @State private var ongoingChallengeID = UUID()
-    @State private var selectedChallenge: ChallengeDTO?
         
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
-    
-    @Namespace private var animationNamespace
     
     let userID: UUID
     
@@ -41,7 +38,6 @@ struct ChallengesListView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
                 ScrollView {
                     if !appState.isAuthenticated {
                         UnauthenticatedView(description: "Log in to view and take part in challenges with friends.")
@@ -87,25 +83,7 @@ struct ChallengesListView: View {
                         }
                     }
                 }
-
-                // Overlay Detail View
-                if let selectedChallenge = selectedChallenge, showChallengeDetail {
-                    ChallengeDetailOverlayView(
-                        challenge: selectedChallenge,
-                        namespace: animationNamespace,
-                        onClose: {
-                            withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                                showChallengeDetail = false
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                self.selectedChallenge = nil
-                            }
-                        }
-                    )
-                    .transition(.opacity)
-                }
-            }
-            .navigationTitle("Challenges")
+                .navigationTitle("Challenges")
         }
     }
     
@@ -142,18 +120,13 @@ struct ChallengesListView: View {
                 .fontWeight(.semibold)
             ForEach(viewModel.acceptedChallenges) { challenge in
                 ChallengeProgressCardView(challenge: challenge)
-                    .matchedGeometryEffect(
-                        id: challenge.id,
-                        in: animationNamespace,
-                        isSource: challenge.id != selectedChallenge?.id
-                    )
                     .id(ongoingChallengeID)
                     .onTapGesture {
                         HapticManager.trigger(.selection)
-                        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                            selectedChallenge = challenge
-                            showChallengeDetail = true
-                        }
+                        showChallengeDetail = true
+                    }
+                    .sheet(isPresented: $showChallengeDetail) {
+                        ChallengeCheckInsListView(challenge: challenge)
                     }
             }
         }
@@ -238,6 +211,7 @@ struct ChallengesListView: View {
             Helpers.handleResult(sentHabitResult) { createdHabit in
                 if !habits.contains(where: { $0.id == createdHabit.id }) {
                     let habit = createdHabit.toSwiftData()
+                    habit.isPublic = true
                     context.insert(habit)
                     do {
                         try context.save()

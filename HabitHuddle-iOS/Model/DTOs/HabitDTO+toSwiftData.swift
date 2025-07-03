@@ -17,7 +17,8 @@ extension HabitDTO {
             isSyncable: true,
             category: self.category,
             icon: self.icon,
-            duration: self.duration)
+            duration: self.duration,
+            reminderTime: self.reminderTime)
         
         if let checkIns = self.checkIns, !checkIns.isEmpty {
             for checkIn in checkIns {

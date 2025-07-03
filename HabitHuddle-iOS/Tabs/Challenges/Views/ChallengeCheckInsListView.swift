@@ -25,6 +25,10 @@ struct ChallengeCheckInsListView: View {
                         .padding()
             } else {
                 VStack(spacing: 8) {
+                    Text("Challenge Timeline")
+                        .font(.largeTitle)
+                        .fontWeight(.semibold)
+                        .padding(.bottom)
                     ForEach(dateRange, id: \.self) { date in
                         DayRow(
                             date: date,
@@ -35,7 +39,7 @@ struct ChallengeCheckInsListView: View {
                         .padding(.horizontal)
                     }
                 }
-                .padding(.bottom)
+                .padding(.vertical)
             }
         }
         .task {
@@ -46,8 +50,6 @@ struct ChallengeCheckInsListView: View {
             }
             isLoading = false
         }
-        .navigationTitle("Challenge Timeline")
-        .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemGroupedBackground).ignoresSafeArea())
     }
 }
