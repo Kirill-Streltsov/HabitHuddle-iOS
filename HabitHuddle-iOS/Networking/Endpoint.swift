@@ -68,6 +68,10 @@ struct Endpoint {
         Endpoint(path: "habits/\(habitID)/checkins")
     }
     
+    static func askOpenAI(habitName: String, habitDescription: String, habitDuration: Int) -> Endpoint {
+        Endpoint(path: "habits/ask-open-ai/\(habitName)/\(habitDescription)/\(habitDuration)/")
+    }
+    
     // MARK: Users and Friendships
     
     static func searchForUser(username: String) -> Endpoint {

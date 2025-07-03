@@ -28,7 +28,6 @@ struct HabitDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var userManager: LocalUserManager
     
-    
     // MARK: Date work
     private var dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -55,7 +54,11 @@ struct HabitDetailView: View {
                         
                         habitDescription
                         
-                        SubmitButton(title: "Ask AI about benefits", color: .orange, iconName: "sparkles") {
+                        SubmitButton(
+                            title: viewModel.isLoadingAIResponse ? "Thinking..." : "Ask AI about benefits",
+                            color: Color.orange,
+                            iconName: "sparkles")
+                        {
                             HapticManager.trigger(.impact(.medium))
                             Task {
                                 askOpenAITapped = true

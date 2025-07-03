@@ -50,6 +50,8 @@ struct SettingsView: View {
                                 viewModel.loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
                                 viewModel.loadedHabits = []
                                 appState.logout(userManager: userManager)
+                                habits.forEach { $0.isSyncable = false }
+                                try? context.save()
                             }
                         } label: {
                             Label("Log Out", systemImage: "arrow.backward.square")

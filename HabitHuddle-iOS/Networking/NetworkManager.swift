@@ -158,37 +158,6 @@ actor NetworkManager {
 
         return HTTPStatus(statusCode: httpResponse.statusCode)
     }
-    
-    func askOpenAI(prompt: String) async -> Result<String, HHError> {
-        let apiKey = "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"
-        let url = URL(string: "https://api.openai.com/v1/chat/completions")!
-        let requestBody = ChatRequest(
-            model: "gpt-3.5-turbo",
-            messages: [ChatMessage(role: "user", content: prompt)]
-        )
-        
-        var urlRequest = URLRequest(url: url)
-        do {
-            urlRequest.httpBody = try jsonEncoder.encode(requestBody)
-        } catch {
-            print("❌ Error: Couldn't encode data for OpenAI API: \(error.localizedDescription)")
-            return .failure(.decodingError(error))
-        }
-        urlRequest.httpMethod = "POST"
-        urlRequest.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(for: urlRequest)
-            let decoded = try jsonDecoder.decode(ChatResponse.self, from: data)
-            guard let reply = decoded.choices.first?.message.content else {
-                return .failure(.customError(errorText: "No data from OpenAI at this time"))
-            }
-            return .success(reply)
-        } catch {
-            return .failure(.customError(errorText: "❌ Error: Couldn't fetch data from OpenAI API: \(error.localizedDescription)"))
-        }
-    }
 
     private func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
         switch response.statusCode {
