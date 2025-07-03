@@ -210,7 +210,7 @@ struct HabitEditView: View {
             }
             HStack {
                 Text("Sync with Server")
-                InfoView(text: "Turn on to sync habits to our server and access them on all your devices.\n\nYou must be signed in.\n\nTurning off keeps habits only on this device and deletes them from the server.")
+                InfoView(text: "Turn on to sync habits with our server and access them on all your devices.\n\nYou must be signed in.\n\nTurning off keeps habits only on this device and deletes them from the server.")
                 Spacer()
                 Toggle("", isOn: $viewModel.isSynced)
                     .labelsHidden()
