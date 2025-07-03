@@ -38,7 +38,11 @@ struct HabitProgressView: View {
 
     private func animateBar() {
         withAnimation(.easeOut) {
-            calculatedProgress = CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays)
+            if habit.checkIns.count <= habit.duration.numberOfDays {
+                calculatedProgress = CGFloat(habit.checkIns.count) / CGFloat(habit.duration.numberOfDays)
+            } else {
+                calculatedProgress = 1.0
+            }
         }
     }
 }
