@@ -15,6 +15,9 @@ struct LoginView: View {
         case password
     }
     
+    @Query
+    var habits: [Habit]
+    
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
@@ -23,7 +26,12 @@ struct LoginView: View {
     
     @FocusState private var focusedField: Field?
     
-    @EnvironmentObject private var viewModel: LoginViewModel
+    @EnvironmentObject private var userManager: LocalUserManager
+    @EnvironmentObject private var appState: AppState
+    @StateObject private var viewModel = LoginViewModel()
+    
+    @State private var showHabitsFound = false
+    @State private var newServerHabits = [HabitDTO]()
     
     private var inputFieldIsEmpty: Bool {
         username.isEmpty || password.isEmpty
@@ -81,6 +89,38 @@ struct LoginView: View {
 
                 Spacer()
             }
+            .onChange(of: viewModel.loadedUser) { _, newValue in
+                if newValue.createdAt != nil {
+                    appState.isAuthenticated = true
+                    userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
+                    dismiss()
+                }
+            }
+            .onChange(of: viewModel.loadedHabits) { _, newValue in
+                let existingHabitIds = Set(habits.map { $0.id })
+                newServerHabits = viewModel.loadedHabits.filter { !existingHabitIds.contains($0.id) }
+                showHabitsFound = !newServerHabits.isEmpty
+            }
+            .alert("Habits Found", isPresented: $showHabitsFound) {
+                Button("Delete on server", role: .destructive) {
+                    Task {
+                        await viewModel.deleteHabits(with: newServerHabits.map { $0.id })
+                    }
+                }
+                Button("Save locally") {
+                    for loadedHabit in newServerHabits {
+                        let habit = loadedHabit.toSwiftData()
+                        context.insert(habit)
+                    }
+                }
+            } message: {
+                Text("""
+                We found the following habits on the server that you previously created:
+                \(newServerHabits.map { "• \($0.name)" }.joined(separator: "\n"))
+
+                Would you like to save them locally or delete them from the server?
+                """)
+            }
             .navigationTitle("Login")
             .navigationBarTitleDisplayMode(.inline)
             .background(Color(.systemGroupedBackground))
@@ -90,8 +130,7 @@ struct LoginView: View {
     
     private func loginUser() {
         Task {
-            await viewModel.loginUser(username: username, password: password, using: context)
-            dismiss()
+            await viewModel.loginUser(username: username, password: password)
         }
     }    
 }

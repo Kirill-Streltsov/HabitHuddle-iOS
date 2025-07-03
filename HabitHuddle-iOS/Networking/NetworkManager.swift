@@ -10,8 +10,8 @@ import Foundation
 actor NetworkManager {
     static let shared = NetworkManager()
     
-    //private let baseURL = URL(string: "http://localhost:8080/api/")!
-    private let baseURL = URL(string: "https://a582-95-223-76-171.ngrok-free.app/api/")!
+    private let baseURL = URL(string: "http://localhost:8080/api/")!
+    //private let baseURL = URL(string: "https://a582-95-223-76-171.ngrok-free.app/api/")!
     //private let baseURL = URL(string: "https://habithuddle-backend.fly.dev/api/")!
     private let jsonDecoder: JSONDecoder
     private let jsonEncoder: JSONEncoder
@@ -193,7 +193,7 @@ actor NetworkManager {
     private func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
         switch response.statusCode {
         case 200 ..< 300:
-            print("RECEIVED DATA: \(data.prettyPrintedJSONString)")
+            //print("RECEIVED DATA: \(data.prettyPrintedJSONString)")
             do {
                 let decoded = try jsonDecoder.decode(T.self, from: data)
                 return decoded

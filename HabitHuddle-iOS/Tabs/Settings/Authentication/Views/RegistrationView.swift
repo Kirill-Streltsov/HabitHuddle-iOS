@@ -16,9 +16,10 @@ struct RegistrationView: View {
         case confirmPassword
     }
     
-    @StateObject private var viewModel: ViewModel
+    @StateObject private var viewModel = ViewModel()
     
     @EnvironmentObject var userManager: LocalUserManager
+    @EnvironmentObject var appState: AppState
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -51,10 +52,6 @@ struct RegistrationView: View {
         } else {
             return ""
         }
-    }
-
-    init(appState: AppState, userManager: LocalUserManager) {
-        _viewModel = StateObject(wrappedValue: ViewModel(appState: appState, userManager: userManager))
     }
 
     var body: some View {
@@ -102,7 +99,6 @@ struct RegistrationView: View {
             .padding(.horizontal)
             .padding(12)
             
-
             Button {
                 registerUser()
             } label: {
@@ -118,6 +114,13 @@ struct RegistrationView: View {
             .clipShape(.rect(cornerRadius: 10))
             Spacer()
         }
+        .onChange(of: viewModel.loadedUser) { _, newValue in
+            if newValue.createdAt != nil {
+                appState.isAuthenticated = true
+                userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
+                dismiss()
+            }
+        }
         .navigationTitle("Registration")
         .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemGroupedBackground))
@@ -127,19 +130,12 @@ struct RegistrationView: View {
         registerButtonPressed = true
         if inputFieldsAreValid {
             Task {
-                let result = try await viewModel.registerUser(username: username, name: name, password: password, context: context)
-                Helpers.handleResult(result) { codableUser in
-                    userManager.profile = LocalUser(id: codableUser.id, username: codableUser.username, name: codableUser.name, isSignedInToServer: true)
-                    print("TOKEN: \(TokenManager.token)")
-                    dismiss()
-                } onFailure: { error in
-                    print("❌ Error: Couldn't load the user after registration: \(error.localizedDescription)")
-                }
+                try await viewModel.registerUser(userID: userManager.profile.id, username: username, name: name, password: password)
             }
         }
     }
 }
 
 #Preview {
-    RegistrationView(appState: AppState(), userManager: LocalUserManager())
+    RegistrationView()
 }

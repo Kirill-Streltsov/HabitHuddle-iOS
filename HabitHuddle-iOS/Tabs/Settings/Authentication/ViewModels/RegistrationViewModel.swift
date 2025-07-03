@@ -11,18 +11,12 @@ import SwiftUI
 extension RegistrationView {
     @MainActor
     final class ViewModel: ObservableObject {
-        let appState: AppState
-        let userManager: LocalUserManager
 
         @Published var errorMessage: String = ""
+        @Published var loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
 
-        public init(appState: AppState, userManager: LocalUserManager) {
-            self.appState = appState
-            self.userManager = userManager
-        }
-
-        func registerUser(username: String, name: String, password: String, context: ModelContext) async throws -> Result<UserDTO, HHError> {
-            let payload = RegisterPayload(id: userManager.profile.id, username: username, name: name, password: password)
+        func registerUser(userID: UUID, username: String, name: String, password: String) async throws  {
+            let payload = RegisterPayload(id: userID, username: username, name: name, password: password)
 
             do {
                 let registrationResponse = try await NetworkManager.shared.request(
@@ -33,24 +27,9 @@ extension RegistrationView {
                     isLoggingIn: true
                 )
                 
-                let user = registrationResponse.user
-                let userToSave = User(
-                    id: user.id,
-                    username: user.username,
-                    name: user.name,
-                    createdAt: user.createdAt,
-                    updatedAt: user.updatedAt
-                )
-                userManager.profile = LocalUser(
-                    id: userToSave.id,
-                    username: userToSave.username,
-                    name: userToSave.name,
-                    isSignedInToServer: true)
-                context.insert(userToSave)
-                try? context.save()
+                loadedUser = registrationResponse.user
                 TokenManager.token = registrationResponse.token
-                appState.isAuthenticated = true
-                return .success(user)
+                
             } catch {
                 if let apiError = error as? HHError {
                     errorMessage = apiError.localizedDescription
@@ -60,8 +39,6 @@ extension RegistrationView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     self.errorMessage = ""
                 }
-                print("REGISTRATION ERROR: \(error)")
-                return .failure(HHError.networkError(error))
             }
         }
     }

@@ -10,17 +10,12 @@ import SwiftUI
 
 @MainActor
 final class LoginViewModel: ObservableObject {
-    let appState: AppState
-    let userManager: LocalUserManager
 
     @Published var errorMessage: String = ""
+    @Published var loadedHabits = [HabitDTO]()
+    @Published var loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
 
-    init(appState: AppState, userManager: LocalUserManager) {
-        self.appState = appState
-        self.userManager = userManager
-    }
-
-    func loginUser(username: String, password: String, using context: ModelContext) async {
+    func loginUser(username: String, password: String) async {
         let base64Login = makeBase64Login(username: username, password: password)
 
         do {
@@ -32,15 +27,9 @@ final class LoginViewModel: ObservableObject {
                 responseType: LoginResponse.self,
                 isLoggingIn: true
             )
-
             TokenManager.token = loginResponse.token
-            let user = loginResponse.user
-            userManager.profile = LocalUser(
-                id: user.id,
-                username: user.username,
-                name: user.name,
-                isSignedInToServer: true)
-            handleUserResponse(user: user, in: context)
+            loadedUser = loginResponse.user
+            await handleUserResponse()
         } catch {
             if let apiError = error as? HHError {
                 errorMessage = apiError.localizedDescription
@@ -53,7 +42,7 @@ final class LoginViewModel: ObservableObject {
         }
     }
     
-    func handleGoogleSignIn(using context: ModelContext) async {
+    func handleGoogleSignIn() async {
         // Wrap the callback-based Google sign-in into async/await
         do {
             let idToken = try await withCheckedThrowingContinuation { continuation in
@@ -75,14 +64,9 @@ final class LoginViewModel: ObservableObject {
                     responseType: LoginResponse.self,
                     isLoggingIn: true
                 )
-                let user = loginResponse.user
-                userManager.profile = LocalUser(
-                    id: user.id,
-                    username: user.username,
-                    name: user.name,
-                    isSignedInToServer: true)
                 TokenManager.token = loginResponse.token
-                handleUserResponse(user: user, in: context)
+                loadedUser = loginResponse.user
+                await handleUserResponse()
             } catch {
                 print("❌ Error: Failed to sign in with google. Couldn't authorize the google token: \(error)")
             }
@@ -91,7 +75,7 @@ final class LoginViewModel: ObservableObject {
         }
     }
     
-    func handleAppleSignIn(appleToken: String, name: String, using context: ModelContext) async {
+    func handleAppleSignIn(appleToken: String, name: String) async {
         do {
             let loginResponse = try await NetworkManager.shared.request(
                 endpoint: .appleSignIn(),
@@ -100,14 +84,9 @@ final class LoginViewModel: ObservableObject {
                 responseType: LoginResponse.self,
                 isLoggingIn: true
             )
-            let user = loginResponse.user
-            userManager.profile = LocalUser(
-                id: user.id,
-                username: user.username,
-                name: user.name,
-                isSignedInToServer: true)
             TokenManager.token = loginResponse.token
-            handleUserResponse(user: user, in: context)
+            loadedUser = loginResponse.user
+            await handleUserResponse()
         } catch {
             print("❌ Error: Failed to sign in with apple. Couldn't authorize the apple token: \(error)")
         }
@@ -119,32 +98,6 @@ final class LoginViewModel: ObservableObject {
             return data.base64EncodedString()
         } else {
             fatalError("Couldn't encode your username or password")
-        }
-    }
-
-    func saveUser(_ user: UserDTO, in context: ModelContext) {
-        let descriptor = FetchDescriptor<User>()
-
-        do {
-            let existingUsers = try context.fetch(descriptor)
-
-            // Delete all previous instances
-            for user in existingUsers {
-                context.delete(user)
-            }
-
-            let newUser = User(
-                id: user.id,
-                username: user.username,
-                name: user.name,
-                createdAt: user.createdAt,
-                updatedAt: user.updatedAt
-            )
-            context.insert(newUser)
-            try? context.save()
-            appState.isAuthenticated = true
-        } catch {
-            fatalError("Couldn't save user's information")
         }
     }
 
@@ -161,82 +114,43 @@ final class LoginViewModel: ObservableObject {
         }
     }
     
-    private func handleUserResponse(user: UserDTO, in context: ModelContext) {
-        Task {
-            print("TOKEN: \(String(describing: TokenManager.token))")
-            let codableHabitsResult = await getUserHabits()
-            Helpers.handleResult(codableHabitsResult) { codableHabits in
-                let localHabits = fetchLocalHabits(from: context)
-                if codableHabits.isEmpty && !localHabits.isEmpty {
-                    Task {
-                        await SyncManager.shared.performFullSync(localHabits: localHabits, in: context)
-                    }
-                }
-                saveHabitsLocally(codableHabits, in: context)
-                saveUser(user, in: context)
-                print("TOKEN: \(TokenManager.token)")
-            } onFailure: { apiError in
-                print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")
-            }
-        }
-    }
-    
-    private func fetchLocalHabits(from context: ModelContext) -> [Habit] {
-        let descriptor = FetchDescriptor<Habit>()
-        do {
-            let habits = try context.fetch(descriptor)
-            return habits
-        } catch {
-            print("❌ Error: Couldn't fetch local habits: \(error.localizedDescription)")
-            return []
-        }
-    }
-
-    private func saveHabitsLocally(_ codableHabits: [HabitDTO], in context: ModelContext) {
-        for codableHabit in codableHabits {
-            var habit: Habit
-
-            if let existingHabit = fetchHabit(withId: codableHabit.id, in: context) {
-                habit = existingHabit
-            } else {
-                habit = codableHabit.toSwiftData()
-                context.insert(habit)
-            }
-
-            if let checkIns = codableHabit.checkIns {
-                for checkInDTO in checkIns {
-                    let date = checkInDTO.date
-
-                    if !checkInExists(for: habit.id, date: date, in: context) {
-                        print("SAVING THE CHECK IN FOR HABIT: \(codableHabit.name)")
-                        let checkIn = HabitCheckIn(date: date, habit: habit, habitID: habit.id)
-                        context.insert(checkIn)
+    func deleteHabits(with ids: [UUID]) async {
+        var deletedHabits = [HabitDTO]()
+        var failedIDs = [UUID]()
+        await withTaskGroup(of: (UUID, Result<HabitDTO, HHError>).self) { group in
+            for id in ids {
+                group.addTask {
+                    do {
+                        let deleted = try await NetworkManager.shared.request(
+                            endpoint: .deleteHabit(with: id),
+                            method: .delete,
+                            responseType: HabitDTO.self
+                        )
+                        return (id, .success(deleted))
+                    } catch {
+                        return (id, .failure(.networkError(error)))
                     }
                 }
             }
+            
+            for await (id, result) in group {
+                switch result {
+                case .success(let dto):
+                    deletedHabits.append(dto)
+                case .failure(let error):
+                    failedIDs.append(id)
+                    print("❌ Error: Failed to delete habit with ID \(id): \(error.localizedDescription)")
+                }
+            }
         }
-
-        try? context.save()
     }
     
-    private func fetchHabit(withId id: UUID, in context: ModelContext) -> Habit? {
-        let descriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.id == id })
-        return try? context.fetch(descriptor).first
-    }
-
-    private func checkInExists(for habitID: UUID, date: Date, in context: ModelContext) -> Bool {
-
-        let descriptor = FetchDescriptor<HabitCheckIn>(predicate: #Predicate { $0.habitID == habitID })
-        
-        guard let checkInsCount = try? context.fetchCount(descriptor) else {
-            return false
+    private func handleUserResponse() async {
+        let codableHabitsResult = await getUserHabits()
+        Helpers.handleResult(codableHabitsResult) { codableHabits in
+            loadedHabits = codableHabits
+        } onFailure: { apiError in
+            print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")
         }
-
-        return checkInsCount > 0
-    }
-    
-    private func habitExists(withId id: UUID, in context: ModelContext) -> Bool {
-        let descriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.id == id })
-        return (try? context.fetchCount(descriptor)) ?? 0 > 0
     }
 }

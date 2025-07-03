@@ -11,13 +11,20 @@ import AuthenticationServices
 
 struct SettingsView: View {
     
+    @Query
+    var habits: [Habit]
+    
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
 
     @Environment(\.modelContext) private var context
             
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var userManager: LocalUserManager
-    @EnvironmentObject private var loginViewModel: LoginViewModel
+    
+    @StateObject private var viewModel = LoginViewModel()
+    
+    @State private var showHabitsFound = false
+    @State private var newServerHabits = [HabitDTO]()
     
     var body: some View {
         NavigationStack {
@@ -40,6 +47,8 @@ struct SettingsView: View {
 
                         Button(role: .destructive) {
                             withAnimation {
+                                viewModel.loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
+                                viewModel.loadedHabits = []
                                 appState.logout(userManager: userManager)
                             }
                         } label: {
@@ -50,13 +59,13 @@ struct SettingsView: View {
                             Label("Log In", systemImage: "person.fill")
                         }
 
-                        NavigationLink(destination: RegistrationView(appState: appState, userManager: userManager)) {
+                        NavigationLink(destination: RegistrationView()) {
                             Label("Register", systemImage: "person.badge.plus")
                         }
                         
                         Button {
                             Task {
-                                await loginViewModel.handleGoogleSignIn(using: context)
+                                await viewModel.handleGoogleSignIn()
                             }
                         } label: {
                             googleButtonLabel
@@ -99,11 +108,43 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
         }
+        .onChange(of: viewModel.loadedUser) { _, newValue in
+            if newValue.createdAt != nil {
+                appState.isAuthenticated = true
+                userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
+            }
+        }
+        .onChange(of: viewModel.loadedHabits) { _, newValue in
+            let existingHabitIds = Set(habits.map { $0.id })
+            newServerHabits = viewModel.loadedHabits.filter { !existingHabitIds.contains($0.id) }
+            showHabitsFound = !newServerHabits.isEmpty
+        }
+        .alert("Habits Found",
+               isPresented: $showHabitsFound) {
+            Button("Delete on server", role: .destructive) {
+                Task {
+                    await viewModel.deleteHabits(with: newServerHabits.map { $0.id })
+                }
+            }
+            Button("Save locally") {
+                for loadedHabit in viewModel.loadedHabits {
+                    let habit = loadedHabit.toSwiftData()
+                    context.insert(habit)
+                }
+            }
+        } message: {
+            Text("""
+            We found the following habits on the server that you previously created:
+            \(newServerHabits.map { "• \($0.name)" }.joined(separator: "\n"))
+
+            Would you like to save them locally or delete them from the server?
+            """)
+        }
     }
     
     private var googleButtonLabel: some View {
         HStack {
-            Image("google") // Add a Google logo asset named "google-icon" to Assets.xcassets
+            Image("google")
                 .resizable()
                 .frame(width: 30, height: 30)
             
@@ -137,7 +178,7 @@ struct SettingsView: View {
                     name = ""
                 }
                 Task {
-                    await loginViewModel.handleAppleSignIn(appleToken: tokenString, name: name, using: context)
+                    await viewModel.handleAppleSignIn(appleToken: tokenString, name: name)
                 }
             }
         case .failure(let error):

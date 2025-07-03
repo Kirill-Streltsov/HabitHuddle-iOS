@@ -170,8 +170,8 @@ struct OnboardingView: View {
                             } else {
                                 userManager.profile = LocalUser(
                                     id: userID,
-                                    username: "username",
-                                    name: "user",
+                                    username: "",
+                                    name: "",
                                     isSignedInToServer: false
                                 )
                                 HapticManager.trigger(.success)

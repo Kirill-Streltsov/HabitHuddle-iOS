@@ -15,7 +15,7 @@ struct EmptyContentView: View {
     
     var body: some View {
         CardView {
-            VStack(spacing: 20) {
+            VStack(alignment: .center, spacing: 20) {
                 Image(systemName: icon)
                     .resizable()
                     .scaledToFit()
@@ -23,6 +23,7 @@ struct EmptyContentView: View {
                     .foregroundStyle(.gray.opacity(0.4))
 
                 Text(title)
+                    .multilineTextAlignment(.center)
                     .font(.title2.weight(.semibold))
                     .foregroundStyle(.primary.opacity(0.7))
 

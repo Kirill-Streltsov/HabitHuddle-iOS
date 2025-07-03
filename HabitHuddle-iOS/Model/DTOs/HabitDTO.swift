@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HabitDTO: Codable, Identifiable {
+struct HabitDTO: Codable, Identifiable, Equatable {
     var id: UUID
     let user: LightweightUser
     let name: String
@@ -36,5 +36,9 @@ struct HabitDTO: Codable, Identifiable {
         self.checkIns = checkIns
         self.challenges = challenges
         self.icon = icon
+    }
+    
+    static func == (lhs: HabitDTO, rhs: HabitDTO) -> Bool {
+        lhs.id == rhs.id
     }
 }

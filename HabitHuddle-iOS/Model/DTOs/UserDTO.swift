@@ -12,4 +12,8 @@ struct UserDTO: Identifiable, Codable, Equatable {
     let name: String
     let createdAt: Date?
     let updatedAt: Date?
+    
+    static func == (lhs: UserDTO, rhs: UserDTO) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

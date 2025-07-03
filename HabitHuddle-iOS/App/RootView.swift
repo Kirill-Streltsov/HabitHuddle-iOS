@@ -44,7 +44,6 @@ struct RootView: View {
                     }
                     Tab("Settings", systemImage: "gear", value: 3) {
                         SettingsView()
-                            .environmentObject(LoginViewModel(appState: appState, userManager: userManager))
                     }
                 }
                 .transition(.opacity)
