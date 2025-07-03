@@ -259,15 +259,14 @@ struct HabitEditView: View {
                     }
                 }
             
-            if viewModel.hasReminder {
-                DatePicker(selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute) {
-                    Text("Reminder Time")
-                        .fontWeight(.medium)
-                }
-                .transition(.opacity.combined(with: .slide))                    
+            DatePicker(selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute) {
+                Text("Reminder Time")
+                    .fontWeight(.medium)
             }
+                .opacity(viewModel.hasReminder ? 1 : 0.5)
+                .disabled(!viewModel.hasReminder)
+                .animation(.easeInOut(duration: 0.3), value: viewModel.hasReminder)
         }
-        .animation(.easeInOut(duration: 0.3), value: viewModel.hasReminder)
     }
     
     // MARK: Saving/Updating functionality
