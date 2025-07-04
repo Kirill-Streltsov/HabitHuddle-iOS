@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Habit.png",
+      "filename" : "13-1024.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,6 +13,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "12-1024.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -24,6 +25,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "11-1024.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
