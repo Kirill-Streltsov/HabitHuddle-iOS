@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="86.6138mm" height="86.6139mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 884.15 884.15"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:#E8F9E8}
+    .fil5 {fill:url(#id0)}
+    .fil2 {fill:url(#id1)}
+    .fil4 {fill:url(#id2)}
+    .fil1 {fill:url(#id3)}
+    .fil3 {fill:url(#id4)}
+   ]]>
+  </style>
+  <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="595.83" y1="140.85" x2="595.83" y2="261.72">
+   <stop offset="0" style="stop-opacity:1; stop-color:#378959"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#165637"/>
+  </linearGradient>
+  <linearGradient id="id1" gradientUnits="userSpaceOnUse" xlink:href="#id0" x1="595.82" y1="616.29" x2="595.84" y2="364.94">
+  </linearGradient>
+  <linearGradient id="id2" gradientUnits="userSpaceOnUse" xlink:href="#id0" x1="258.65" y1="140.85" x2="258.65" y2="261.72">
+  </linearGradient>
+  <linearGradient id="id3" gradientUnits="userSpaceOnUse" xlink:href="#id0" x1="258.64" y1="616.29" x2="258.66" y2="364.94">
+  </linearGradient>
+  <linearGradient id="id4" gradientUnits="userSpaceOnUse" xlink:href="#id0" x1="448.94" y1="354.9" x2="488.56" y2="523.71">
+  </linearGradient>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_1401576833840">
+   <rect class="fil0" x="-0" y="-0" width="884.15" height="884.15" rx="218.86" ry="218.86"/>
+   <g>
+    <rect class="fil1" x="204.54" y="426.81" width="137.9" height="286.75"/>
+    <rect class="fil2" x="541.72" y="426.81" width="137.9" height="286.75"/>
+    <path class="fil3" d="M679.61 472.75c-70.58,39.05 -151.57,61.34 -237.53,61.34l-0 0c-85.96,0 -166.96,-22.29 -237.53,-61.34l0 -168.26c63.13,56.92 146.53,91.71 237.54,91.71 91,0 174.4,-34.79 237.53,-91.71l0 168.26z"/>
+    <rect class="fil4" x="204.54" y="170.6" width="137.9" height="137.9" rx="68.95" ry="68.95"/>
+    <rect class="fil5" x="541.72" y="170.6" width="137.9" height="137.9" rx="68.95" ry="68.95"/>
+   </g>
+  </g>
+ </g>
+</svg>
