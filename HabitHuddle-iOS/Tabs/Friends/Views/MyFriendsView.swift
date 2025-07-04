@@ -12,6 +12,8 @@ struct MyFriendsView: View {
     @Environment(\.modelContext) private var context
     @StateObject private var viewModel = ViewModel()
     
+    @EnvironmentObject private var appState: AppState
+    
     @FocusState private var searchIsFocused: Bool
     
     @State private var searchText = ""
@@ -25,22 +27,13 @@ struct MyFriendsView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    // Search bar inside ScrollView now
-                    TextField("Search usernames...", text: $searchText)
-                        .focused($searchIsFocused)
-                        .padding(12)
-                        .background(Color(.secondarySystemBackground))
-                        .cornerRadius(10)
-                        .padding(.horizontal)
-                        .padding(.top)
-                        .onChange(of: searchText) { _, newValue in
-                            if newValue.count >= 2 {
-                                viewModel.searchUsers(query: newValue)
-                            }
+                    VStack {
+                        if appState.isAuthenticated {
+                            searchBar
+                            Divider()
+                                .padding(.vertical, 4)
                         }
-
-                    Divider()
-                        .padding(.vertical, 4)
+                    }
 
                     Group {
                         if searchText.count >= 2 {
@@ -63,6 +56,21 @@ struct MyFriendsView: View {
                 await viewModel.getMyFriendRequests()
             }
         }
+    }
+    
+    private var searchBar: some View {
+        TextField("Search usernames...", text: $searchText)
+            .focused($searchIsFocused)
+            .padding(12)
+            .background(Color(.secondarySystemBackground))
+            .cornerRadius(10)
+            .padding(.horizontal)
+            .padding(.top)
+            .onChange(of: searchText) { _, newValue in
+                if newValue.count >= 2 {
+                    viewModel.searchUsers(query: newValue)
+                }
+            }
     }
     
     private var friendRequests: some View {
