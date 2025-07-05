@@ -65,16 +65,16 @@ extension MyFriendsView {
             }
         }
         
-        func requestFriend(with id: UUID) async -> Result<HTTPStatus, HHError> {
+        func requestFriend(with id: UUID) async {
             do {
                 let payload = MakeFriendsRequest(friendID: id)
-                let requestFriendResponse = try await NetworkManager.shared.requestStatusCode(
+                let requestStatus = try await NetworkManager.shared.requestStatusCode(
                     endpoint: .requestFriend(with: id),
                     method: .post,
                     body: payload)
-                return .success(requestFriendResponse)
+                print("✅ Requested friend. Status code: \(requestStatus)")
             } catch {
-                return .failure(.decodingError(error))
+                errorMessage = "❌ Error: Couldn't request friendship: \(error)"
             }
         }
         
