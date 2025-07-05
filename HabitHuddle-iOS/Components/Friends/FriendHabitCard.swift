@@ -9,18 +9,21 @@
 import SwiftUI
 
 struct FriendHabitCard: View {
+    
+    @State private var scale: Double = 1
+    @State private var didSendBoost = false
+    @Binding var showBoostSent: Bool
+    var onSendBoost: @MainActor () async -> Void
+    
     let habitDTO: HabitDTO
     let cardWidth: CGFloat = UIScreen.main.bounds.width - 60
     private var habit: Habit
-    var onSupportiveCalled: @MainActor () async -> Void
-    var onCompetitiveCalled: @MainActor () async -> Void
     
-    
-    init(habitDTO: HabitDTO, onSupportiveCalled: @escaping @MainActor () async -> Void, onCompetitiveCalled: @escaping @MainActor () async -> Void) {
+    init(didShowBoostSent: Binding<Bool>, habitDTO: HabitDTO, onSendBoost: @escaping () async -> Void) {
+        self._showBoostSent = didShowBoostSent
         self.habitDTO = habitDTO
         self.habit = habitDTO.toSwiftData()
-        self.onSupportiveCalled = onSupportiveCalled
-        self.onCompetitiveCalled = onCompetitiveCalled
+        self.onSendBoost = onSendBoost
     }
     
     @State private var showActionSheet = false
@@ -44,7 +47,6 @@ struct FriendHabitCard: View {
                             .font(.title3)
                             .fontWeight(.semibold)
                             .lineLimit(2)
-                        
                     }
                     if !habit.habitDescription.isEmpty {
                         Text(habit.habitDescription)
@@ -55,64 +57,64 @@ struct FriendHabitCard: View {
                     }
                 }
                 Spacer()
-                Image(systemName: habit.reminderTime != nil ? "bell.fill" : "bell.slash.fill")
-                    .foregroundStyle(habit.reminderTime != nil ? .orange : .gray)
-                
             }
             .frame(width: cardWidth)
             
             ZStack {
-                CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 85, shouldFlicker: false)
-                    .offset(y: -5)
+                VStack {
+                    CheckedInStateView(
+                        isOn: didSendBoost,
+                        fontSize: 65,
+                        shouldFlicker: true,
+                        iconOn: "bolt.circle.fill",
+                        iconOff: "bolt.circle",
+                        color: .orange
+                    )
+                    .scaleEffect(scale)
+                    .allowsHitTesting(!didSendBoost)
+                    .onTapGesture {
+                        HapticManager.trigger(.success)
+                        showBoostSent = true
+                        didSendBoost = true
+                        Task {
+                            await onSendBoost()
+                        }
+                        scale += 0.15
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                            scale -= 0.15
+                        }
+                    }
+                    .animation(.easeInOut(duration: 0.3), value: scale)
+                    
+                    Text("Tap to boost!")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .opacity(didSendBoost ? 0 : 1)
+                }
+                .offset(y: -5)
                 HStack {
                     StatItem(title: "Longest Streak", value: "\(habit.longestStreak) days")
                     Spacer()
-                    StatItem(title: "Completion", value: "\(habit.completionPercentage)%")
+                    StatItem(title: "Done", value: "\(habit.completionPercentage)%")
                 }
             }
             .offset(y: 15)
             .frame(width: cardWidth)
             
-            HStack(alignment: .bottom) {
-                
-                Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays) days")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                
-                Spacer()
-                
-                if habit.challenges.isEmpty {
-                    Button {
-                        showActionSheet = true
-                    } label: {
-                        Image(systemName: "flag.pattern.checkered.2.crossed")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.blue)
-                    .confirmationDialog("Choose the challenge type", isPresented: $showActionSheet, titleVisibility: .visible) {
-                        Button("Supportive") {
-                            Task {
-                                await onSupportiveCalled()
-                            }
-                        }
-                        Button("Competitive", role: .destructive) {
-                            Task {
-                                await onCompetitiveCalled()
-                            }
-                        }
-                        Button("Cancel", role: .cancel) { }
-                    }
-                } else if habit.challenges[0].type == .competitive {
-                    Image(systemName: "flag.pattern.checkered.2.crossed")
-                        .foregroundStyle(.pink)
-                } else if habit.challenges[0].type == .supportive {
-                    Image(systemName: "flag.pattern.checkered.2.crossed")
+            HStack {
+                if habit.isCompleted {
+                    Text("🎉 Habit finished!")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
                         .foregroundStyle(.green)
+                } else {
+                    Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays) days")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                 }
-                
+                Spacer()
             }
             .padding(.bottom, 4)
-            .frame(width: cardWidth)
             
             HabitProgressView(
                 habit: habit,
@@ -129,5 +131,5 @@ struct FriendHabitCard: View {
 }
 
 #Preview {
-    FriendHabitCard(habitDTO: HabitDTO(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Drink 2 liters a day", category: "", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: [], challenges: [], icon: "brain"), onSupportiveCalled: {}, onCompetitiveCalled: {})
+    FriendHabitCard(didShowBoostSent: .constant(true), habitDTO: HabitDTO(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Drink 2 liters a day", category: "", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: [], challenges: [], icon: "brain"), onSendBoost: {})
 }

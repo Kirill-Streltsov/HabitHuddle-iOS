@@ -51,20 +51,12 @@ extension FriendDetailView {
             }
         }
         
-        func sendChallenge(to userID: UUID, for habitID: UUID, ofType type: ChallengeType) async -> Result<HTTPStatus, HHError> {
-            let payload = ChallengeRequest(
-                receiverID: userID,
-                initiatorHabitID: habitID,
-                receiverHabitID: nil,
-                type: type)
+        func sendBoost(to friendID: UUID, about habitID: UUID) async {
             do {
-                let status = try await NetworkManager.shared.requestStatusCode(
-                    endpoint: .sendChallenge(),
-                    method: .post,
-                    body: payload)
-                return .success(status)
+                let status = try await NetworkManager.shared.requestStatusCode(endpoint: .boostFriend(friendID, about: habitID), method: .post)
+                print("✅ Sent a boost to friend \(friendID): \(status)")
             } catch {
-                return .failure(.networkError(error))
+                print("❌ Error: Couldn't send a boost to friend \(friendID): \(error)")
             }
         }
     }

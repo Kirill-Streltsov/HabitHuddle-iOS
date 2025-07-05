@@ -7,9 +7,9 @@
 
 import Foundation
 extension Habit {
-    var currentStreak: Int? {
+    var currentStreak: Int {
         let sortedCheckIns = checkIns.sorted { $0.date > $1.date }
-        guard !sortedCheckIns.isEmpty else { return nil }
+        guard !sortedCheckIns.isEmpty else { return 0 }
 
         var streak = 1
         var previousDate = Calendar.current.startOfDay(for: sortedCheckIns.first!.date)

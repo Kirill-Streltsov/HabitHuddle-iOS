@@ -17,6 +17,7 @@ struct FriendDetailView: View {
     @State private var showToast = false
     @State private var message = ""
     @State private var heatmapID = UUID()
+    @State private var didShowBoostSent = false
     
     var body: some View {
         ScrollView {
@@ -45,6 +46,11 @@ struct FriendDetailView: View {
                 heatmapID = UUID()
             }
         }
+        .toast(
+            isPresented: $didShowBoostSent,
+            message: "Boost notification sent!",
+            icon: "bell.fill"
+        )
         .toast(isPresented: $showToast, message: message)
         .background(Color(.systemGroupedBackground))
         .toolbar {
@@ -70,22 +76,8 @@ struct FriendDetailView: View {
                     .fontWeight(.semibold)
                 VStack(alignment: .center) {
                     ForEach(viewModel.habits) { habitDTO in
-                        FriendHabitCard(habitDTO: habitDTO) {
-                            Task {
-                                let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .supportive)
-                                Helpers.handleResult(result) { result in
-                                    showToast = true
-                                    message = "Supportive challenge sent!"
-                                }
-                            }
-                        } onCompetitiveCalled: {
-                            Task {
-                                let result = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, ofType: .competitive)
-                                Helpers.handleResult(result) { result in
-                                    showToast = true
-                                    message = "Competitive challenge sent!"
-                                }
-                            }
+                        FriendHabitCard(didShowBoostSent: $didShowBoostSent, habitDTO: habitDTO) {
+                            print("onSendBoost()")
                         }
                     }
                 }

@@ -82,7 +82,6 @@ struct HabitEditView: View {
             }
             .padding()
             .onAppear {
-                print("DEVICE TOKEN: \(hasSentDeviceToken)")
                 wasSyncedAtTheBeginning = viewModel.isSynced
                 fillCategories()
                 Task {

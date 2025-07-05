@@ -8,18 +8,21 @@
 import SwiftUI
 
 struct CheckedInStateView: View {
-    let isCheckedIn: Bool
+    let isOn: Bool
     let fontSize: CGFloat
     let shouldFlicker: Bool
+    let iconOn: String
+    let iconOff: String
+    let color: Color
 
     var body: some View {
         Group {
-            if isCheckedIn {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundStyle(.green)
+            if isOn {
+                Image(systemName: iconOn)
+                    .foregroundStyle(color)
                     .font(.system(size: fontSize))
             } else {
-                Image(systemName: "checkmark.circle")
+                Image(systemName: iconOff)
                     .foregroundStyle(.gray)
                     .fontWeight(.light)
                     .font(.system(size: fontSize))
@@ -30,5 +33,5 @@ struct CheckedInStateView: View {
 }
 
 #Preview {
-    CheckedInStateView(isCheckedIn: true, fontSize: 50, shouldFlicker: true)
+    CheckedInStateView(isOn: true, fontSize: 50, shouldFlicker: true, iconOn: "", iconOff: "", color: .green)
 }

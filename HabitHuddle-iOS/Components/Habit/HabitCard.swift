@@ -68,7 +68,14 @@ struct HabitCard: View {
             .frame(width: cardWidth)
             
             ZStack {
-                CheckedInStateView(isCheckedIn: habit.isCheckedInToday, fontSize: 85, shouldFlicker: true)
+                CheckedInStateView(
+                    isOn: habit.isCheckedInToday,
+                    fontSize: 85,
+                    shouldFlicker: true,
+                    iconOn: "checkmark.circle.fill",
+                    iconOff: "checkmark.circle",
+                    color: .green
+                )
                     .offset(y: -5)
                     .scaleEffect(scale)
                     .onTapGesture {
@@ -82,7 +89,7 @@ struct HabitCard: View {
                 HStack {
                     StatItem(title: "Longest Streak", value: "\(habit.longestStreak) days")
                     Spacer()
-                    StatItem(title: "Completion", value: "\(habit.completionPercentage)%")
+                    StatItem(title: "Done", value: "\(habit.completionPercentage)%")
                 }
             }
             .offset(y: 15)

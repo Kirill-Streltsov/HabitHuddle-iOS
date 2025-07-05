@@ -68,7 +68,7 @@ struct Endpoint {
         Endpoint(path: "habits/ask-open-ai/\(habitName)/\(habitDescription)/\(habitDuration)/")
     }
     
-    // MARK: Users and Friendships
+    // MARK: Users
     
     static func searchForUser(username: String) -> Endpoint {
         Endpoint(
@@ -84,6 +84,17 @@ struct Endpoint {
     static func updateUser() -> Endpoint {
         Endpoint(path: "users/me")
     }
+    
+    
+    static func getUserHabits(for id: UUID) -> Endpoint {
+        Endpoint(path: "users/\(id)/habits")
+    }
+    
+    static func deleteMyself() -> Endpoint {
+        Endpoint(path: "users/me")
+    }
+    
+    // MARK: Friends
     
     static func getMyFriends() -> Endpoint {
         Endpoint(path: "friends")
@@ -101,6 +112,10 @@ struct Endpoint {
         Endpoint(path: "friends/reject/\(id)")
     }
     
+    static func boostFriend(_ friendID: UUID, about habitID: UUID) -> Endpoint {
+        Endpoint(path: "friends/boost/\(friendID)/\(habitID)")
+    }
+    
     static func deleteFriend(with id: UUID) -> Endpoint {
         Endpoint(path: "friends/\(id)")
     }
@@ -108,15 +123,6 @@ struct Endpoint {
     static func getFriendshipRequests() -> Endpoint {
         Endpoint(path: "friends/requests")
     }
-    
-    static func getUserHabits(for id: UUID) -> Endpoint {
-        Endpoint(path: "users/\(id)/habits")
-    }
-    
-    static func deleteMyself() -> Endpoint {
-        Endpoint(path: "users/me")
-    }
-    
     // MARK: Challenges
     
     static func sendChallenge() -> Endpoint {
