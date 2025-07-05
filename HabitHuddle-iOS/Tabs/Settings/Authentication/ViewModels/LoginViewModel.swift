@@ -10,6 +10,8 @@ import SwiftUI
 
 @MainActor
 final class LoginViewModel: ObservableObject {
+    
+    @AppStorage("deviceToken") private var deviceToken: String = ""
 
     @Published var errorMessage: String = ""
     @Published var loadedHabits = [HabitDTO]()
@@ -60,7 +62,7 @@ final class LoginViewModel: ObservableObject {
                 let loginResponse = try await NetworkManager.shared.request(
                     endpoint: .googleSignIn(),
                     method: .post,
-                    body: GoogleTokenRequest(idToken: idToken),
+                    body: GoogleTokenRequest(idToken: idToken, deviceToken: deviceToken),
                     responseType: LoginResponse.self,
                     isLoggingIn: true
                 )
@@ -80,7 +82,7 @@ final class LoginViewModel: ObservableObject {
             let loginResponse = try await NetworkManager.shared.request(
                 endpoint: .appleSignIn(),
                 method: .post,
-                body: AppleAuthRequest(identityToken: appleToken, name: name),
+                body: AppleAuthRequest(identityToken: appleToken, name: name, deviceToken: deviceToken),
                 responseType: LoginResponse.self,
                 isLoggingIn: true
             )

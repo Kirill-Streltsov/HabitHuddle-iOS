@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct RegisterPayload: Encodable {
+struct UserPayload: Encodable {
     let id: UUID
     let username: String
     let name: String
-    let password: String
+    let password: String?
+    let deviceToken: String
 }

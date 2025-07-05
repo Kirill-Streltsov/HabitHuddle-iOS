@@ -29,6 +29,9 @@ extension HabitDetailView {
         @Published var openAIAnswer = ""
         @Published var isLoadingAIResponse = false
         
+        @AppStorage("deviceToken") private var deviceToken: String = ""
+        @AppStorage("hasSentDeviceToken") private var hasSentDeviceToken: Bool = false
+        
         var habit: Habit?
 
         func createHabit(with id: UUID) async -> Result<HabitDTO, HHError> {
@@ -131,6 +134,27 @@ extension HabitDetailView {
                 } else {
                     openAIAnswer = "AI is not available at this moment. Try again later..."
                 }
+            }
+        }
+        
+        func updateUser(user: LocalUser) async {
+            do {
+                let status = try await NetworkManager.shared.requestStatusCode(
+                    endpoint: .updateUser(),
+                    method: .put,
+                    body: UserPayload(
+                        id: user.id,
+                        username: user.username,
+                        name: user.name,
+                        password: nil,
+                        deviceToken: deviceToken)
+                )
+                if status == .ok && !deviceToken.isEmpty {
+                    hasSentDeviceToken = true
+                }
+                print("✅ Successfully updated user data: \(status)")
+            } catch {
+                print("❌ Error: Couldn't update user data: \(error)")
             }
         }
     }

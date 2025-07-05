@@ -9,4 +9,5 @@ import Foundation
 struct AppleAuthRequest: Codable {
     let identityToken: String
     let name: String
+    let deviceToken: String
 }

@@ -8,9 +8,12 @@
 import SwiftData
 import SwiftUI
 import GoogleSignIn
+import UserNotifications
 
 @main
 struct HabitHuddle_iOSApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     @StateObject private var appState = AppState()
     @StateObject private var userManager = LocalUserManager()
@@ -34,6 +37,9 @@ struct HabitHuddle_iOSApp: App {
                         print("Resorted user from google: \(String(describing: user))")
                     }
                 }
+                .onAppear {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
             
         }
         .modelContainer(sharedModelContainer)
@@ -54,4 +60,26 @@ struct HabitHuddle_iOSApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+}
+
+
+class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    
+    @AppStorage("deviceToken") private var token: String = ""
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
+        return true
+    }
+    
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        token = tokenString
+    }
+    
+    func application(_ application: UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("❌ Failed to register for push notifications: \(error)")
+    }
 }

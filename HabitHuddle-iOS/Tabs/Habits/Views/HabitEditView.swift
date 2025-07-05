@@ -28,6 +28,8 @@ struct HabitEditView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var userManager: LocalUserManager
     
+    @AppStorage("hasSentDeviceToken") private var hasSentDeviceToken = false
+    
     var isPartOfChallenge: Bool {
         if let habit = viewModel.habit, !habit.challenges.isEmpty {
             return true
@@ -80,6 +82,7 @@ struct HabitEditView: View {
             }
             .padding()
             .onAppear {
+                print("DEVICE TOKEN: \(hasSentDeviceToken)")
                 wasSyncedAtTheBeginning = viewModel.isSynced
                 fillCategories()
                 Task {
@@ -344,20 +347,21 @@ struct HabitEditView: View {
     
     // MARK: Notification functionality
     
-    private func areNotificationsAllowed() async -> Bool {
-        let settings = await UNUserNotificationCenter.current().notificationSettings()
-        return settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional
-    }
-    
-    private func areNotificationsDisabled() async -> Bool {
-        let settings = await UNUserNotificationCenter.current().notificationSettings()
-        return settings.authorizationStatus == .denied
-    }
-    
     private func checkNotifications() async {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        if settings.authorizationStatus == .authorized {
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+                if appState.isAuthenticated && !hasSentDeviceToken {
+                    Task {
+                        await viewModel.updateUser(user: userManager.profile)
+                    }
+                }
+            }
+        }
         Task {
-            notificationsAllowed = await areNotificationsAllowed()
-            notificationsDisabled = await areNotificationsDisabled()
+            notificationsAllowed = settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional
+            notificationsDisabled = settings.authorizationStatus == .denied
         }
     }
     
@@ -373,6 +377,9 @@ struct HabitEditView: View {
             if let error = error {
                 print("Permission error: \(error)")
             } else {
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
                 print("Permission granted: \(granted)")
             }
         }

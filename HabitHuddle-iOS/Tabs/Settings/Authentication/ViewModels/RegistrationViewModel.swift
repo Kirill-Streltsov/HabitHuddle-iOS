@@ -11,12 +11,20 @@ import SwiftUI
 extension RegistrationView {
     @MainActor
     final class ViewModel: ObservableObject {
+        
+        @AppStorage("deviceToken") private var deviceToken: String = ""
 
         @Published var errorMessage: String = ""
         @Published var loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
 
         func registerUser(userID: UUID, username: String, name: String, password: String) async throws  {
-            let payload = RegisterPayload(id: userID, username: username, name: name, password: password)
+            let payload = UserPayload(
+                id: userID,
+                username: username,
+                name: name,
+                password: password,
+                deviceToken: deviceToken
+            )
 
             do {
                 let registrationResponse = try await NetworkManager.shared.request(

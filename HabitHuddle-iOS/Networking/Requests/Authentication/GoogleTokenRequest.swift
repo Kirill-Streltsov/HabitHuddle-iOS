@@ -8,4 +8,5 @@
 import Foundation
 struct GoogleTokenRequest: Codable {
     let idToken: String
+    let deviceToken: String
 }

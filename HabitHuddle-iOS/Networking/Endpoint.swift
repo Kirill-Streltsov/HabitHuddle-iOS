@@ -34,10 +34,6 @@ struct Endpoint {
         Endpoint(path: "auth/register")
     }
 
-    static func me() -> Endpoint {
-        Endpoint(path: "auth/me")
-    }
-
     // MARK: Habits
     
     static func createHabit() -> Endpoint {
@@ -83,6 +79,10 @@ struct Endpoint {
     
     static func getUser(with id: UUID) -> Endpoint {
         Endpoint(path: "users/\(id)")
+    }
+    
+    static func updateUser() -> Endpoint {
+        Endpoint(path: "users/me")
     }
     
     static func getMyFriends() -> Endpoint {
