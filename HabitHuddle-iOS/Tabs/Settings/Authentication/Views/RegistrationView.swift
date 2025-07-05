@@ -120,6 +120,7 @@ struct RegistrationView: View {
         .onChange(of: viewModel.loadedUser) { _, newValue in
             if newValue.createdAt != nil {
                 habits.forEach { $0.isSyncable = true }
+                HapticManager.trigger(.success)
                 appState.isAuthenticated = true
                 userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
                 dismiss()
