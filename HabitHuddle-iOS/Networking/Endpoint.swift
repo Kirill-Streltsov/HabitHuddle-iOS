@@ -113,6 +113,10 @@ struct Endpoint {
         Endpoint(path: "users/\(id)/habits")
     }
     
+    static func deleteMyself() -> Endpoint {
+        Endpoint(path: "users/me")
+    }
+    
     // MARK: Challenges
     
     static func sendChallenge() -> Endpoint {

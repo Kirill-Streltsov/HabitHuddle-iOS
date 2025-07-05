@@ -15,9 +15,9 @@ struct SettingsView: View {
     var habits: [Habit]
     
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
-
+    
     @Environment(\.modelContext) private var context
-            
+    
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var userManager: LocalUserManager
     
@@ -29,85 +29,29 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section(header: Text("Account")) {
-                    HStack {
-                        Label("Status", systemImage: "person.circle")
-                        Spacer()
-                        Text(appState.isAuthenticated ? "Signed In" : "Guest")
-                            .foregroundStyle(.secondary)
-                    }
-
-                    if appState.isAuthenticated {
-                            HStack {
-                                Label("Your Username", systemImage: "person")
-                                Spacer()
-                                Text(userManager.profile.username)
-                                    .foregroundStyle(.secondary)
-                            }
-
-                        Button(role: .destructive) {
-                            withAnimation {
-                                viewModel.loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
-                                viewModel.loadedHabits = []
-                                appState.logout(userManager: userManager)
-                                habits.forEach { $0.isSyncable = false }
-                                try? context.save()
-                            }
-                        } label: {
-                            Label("Log Out", systemImage: "arrow.backward.square")
-                        }
-                    } else {
-                        NavigationLink(destination: LoginView()) {
-                            Label("Log In", systemImage: "person.fill")
-                        }
-
-                        NavigationLink(destination: RegistrationView()) {
-                            Label("Register", systemImage: "person.badge.plus")
-                        }
-                        
-                        Button {
+                accountSection
+                preferencesSection
+                informationSection
+                
+                if appState.isAuthenticated {
+                    Section {
+                        SubmitButton(title: "Delete my account", color: .red, iconName: "trash") {
+                            HapticManager.trigger(.error)
                             Task {
-                                await viewModel.handleGoogleSignIn()
+                                let deleteResult = await viewModel.deleteMyAccount()
+                                Helpers.handleResult(deleteResult) { status in
+                                    print("✅ Successfully deleted the account. Status: \(status)")
+                                    appState.logout(userManager: userManager)
+                                } onFailure: { error in
+                                    print("❌ Error: couldn't delete the account: \(error)")
+                                }
                             }
-                        } label: {
-                            googleButtonLabel
                         }
-                        .buttonStyle(.plain)
-                        
-                        SignInWithAppleButton(.signIn) { request in
-                            request.requestedScopes = [.fullName, .email]
-                        } onCompletion: { result in
-                            handleAppleSignIn(with: result)
-                        }
-                        .signInWithAppleButtonStyle(.black)
-                        .frame(height: 45)
                     }
-                }
-
-                Section(header: Text("Preferences")) {
-                    Toggle(isOn: $isDarkMode) {
-                        Label("Dark Mode", systemImage: "moon.fill")
-                    }
-
-                    NavigationLink(destination: Text("SUBSCRIPTIONS")) {
-                        Label("Manage Subscription", systemImage: "star.fill")
-                    }
-                }
-
-                Section(header: Text("Information")) {
-                    NavigationLink(destination: Text("TERMS OF SERVICES")) {
-                        Label("Terms of Service", systemImage: "doc.text")
-                    }
-
-                    NavigationLink(destination: Text("PRIVACY POLICY")) {
-                        Label("Privacy Policy", systemImage: "lock.shield")
-                    }
-
-                    NavigationLink(destination: Text("ABOUT")) {
-                        Label("About", systemImage: "info.circle")
-                    }
+                    .listRowBackground(Color.clear)
                 }
             }
+            .listStyle(InsetGroupedListStyle())
             .navigationTitle("Settings")
         }
         .onChange(of: viewModel.loadedUser) { _, newValue in
@@ -138,9 +82,94 @@ struct SettingsView: View {
             Text("""
             We found the following habits on the server that you previously created:
             \(newServerHabits.map { "• \($0.name)" }.joined(separator: "\n"))
-
+            
             Would you like to save them locally or delete them from the server?
             """)
+        }
+    }
+    
+    private var accountSection: some View {
+        Section(header: Text("Account")) {
+            HStack {
+                Label("Status", systemImage: "person.circle")
+                Spacer()
+                Text(appState.isAuthenticated ? "Signed In" : "Guest")
+                    .foregroundStyle(.secondary)
+            }
+            
+            if appState.isAuthenticated {
+                HStack {
+                    Label("Your Username", systemImage: "person")
+                    Spacer()
+                    Text(userManager.profile.username)
+                        .foregroundStyle(.secondary)
+                }
+                
+                Button(role: .destructive) {
+                    withAnimation {
+                        viewModel.loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
+                        viewModel.loadedHabits = []
+                        appState.logout(userManager: userManager)
+                        habits.forEach { $0.isSyncable = false }
+                        try? context.save()
+                    }
+                } label: {
+                    Label("Log Out", systemImage: "arrow.backward.square")
+                }
+            } else {
+                NavigationLink(destination: LoginView()) {
+                    Label("Log In", systemImage: "person.fill")
+                }
+                
+                NavigationLink(destination: RegistrationView()) {
+                    Label("Register", systemImage: "person.badge.plus")
+                }
+                
+                Button {
+                    Task {
+                        await viewModel.handleGoogleSignIn()
+                    }
+                } label: {
+                    googleButtonLabel
+                }
+                .buttonStyle(.plain)
+                
+                SignInWithAppleButton(.signIn) { request in
+                    request.requestedScopes = [.fullName, .email]
+                } onCompletion: { result in
+                    handleAppleSignIn(with: result)
+                }
+                .signInWithAppleButtonStyle(.black)
+                .frame(height: 45)
+            }
+        }
+    }
+    
+    private var preferencesSection: some View {
+        Section(header: Text("Preferences")) {
+            Toggle(isOn: $isDarkMode) {
+                Label("Dark Mode", systemImage: "moon.fill")
+            }
+            
+            NavigationLink(destination: Text("SUBSCRIPTIONS")) {
+                Label("Manage Subscription", systemImage: "star.fill")
+            }
+        }
+    }
+    
+    private var informationSection: some View {
+        Section(header: Text("Information")) {
+            NavigationLink(destination: Text("TERMS OF SERVICES")) {
+                Label("Terms of Service", systemImage: "doc.text")
+            }
+            
+            NavigationLink(destination: Text("PRIVACY POLICY")) {
+                Label("Privacy Policy", systemImage: "lock.shield")
+            }
+            
+            NavigationLink(destination: Text("ABOUT")) {
+                Label("About", systemImage: "info.circle")
+            }
         }
     }
     

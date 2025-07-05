@@ -147,6 +147,18 @@ final class LoginViewModel: ObservableObject {
         }
     }
     
+    func deleteMyAccount() async -> Result<HTTPStatus, HHError> {
+        do {
+            let status = try await NetworkManager.shared.requestStatusCode(
+                endpoint: .deleteMyself(),
+                method: .delete
+            )
+            return .success(status)
+        } catch {
+            return .failure(.networkError(error))
+        }
+    }
+    
     private func handleUserResponse() async {
         let codableHabitsResult = await getUserHabits()
         Helpers.handleResult(codableHabitsResult) { codableHabits in
