@@ -283,4 +283,43 @@ extension Habit {
         habit.checkIns = checkIns
         return habit
     }
+    
+    static func demoHabitWith25Of14CheckIns() -> Habit {
+        let calendar = Calendar.current
+        let now = Date()
+        let user = LightweightUser(id: UUID())
+
+        // Create a habit with a 14-day duration
+        let habit = Habit(
+            id: UUID(),
+            user: user,
+            name: "Read a Book",
+            description: "Read at least 10 pages every day.",
+            isPublic: false,
+            duration: .twoWeeks,
+            reminderTime: calendar.date(bySettingHour: 20, minute: 0, second: 0, of: now)!
+        )
+
+        // Set creation date to 13 days ago (14-day habit: today included)
+        habit.createdAt = calendar.date(byAdding: .day, value: -13, to: now)!
+
+        var checkIns: [HabitCheckIn] = []
+
+        // Create check-ins: distribute 25 check-ins over the last 14 days (including today)
+        for dayOffset in stride(from: 13, through: 0, by: -1) {
+            let checkInCountForDay = Int.random(in: 1...3) // Some days may have multiple check-ins
+            if let dayDate = calendar.date(byAdding: .day, value: -dayOffset, to: now) {
+                for _ in 0..<checkInCountForDay {
+                    if checkIns.count >= 25 { break } // Cap at 25 check-ins
+                    if let randomTime = calendar.date(bySettingHour: Int.random(in: 7...22), minute: Int.random(in: 0..<60), second: 0, of: dayDate) {
+                        checkIns.append(HabitCheckIn(date: randomTime, habit: habit, habitID: habit.id))
+                    }
+                }
+            }
+            if checkIns.count >= 25 { break }
+        }
+
+        habit.checkIns = checkIns
+        return habit
+    }
 }

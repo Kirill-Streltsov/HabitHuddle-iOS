@@ -148,6 +148,7 @@ final class LoginViewModel: ObservableObject {
     private func handleUserResponse() async {
         let codableHabitsResult = await getUserHabits()
         Helpers.handleResult(codableHabitsResult) { codableHabits in
+            print("LOADED HABITS COUNT: \(loadedHabits.count)")
             loadedHabits = codableHabits
         } onFailure: { apiError in
             print("❌ Error: Could not load user habits: \(apiError.localizedDescription)")

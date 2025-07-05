@@ -177,7 +177,7 @@ struct HabitDetailView: View {
                         
                         if showCheckIns {
                             LazyVStack(alignment: .leading, spacing: 8) {
-                                ForEach(habit.checkIns.map({$0.date}), id: \.self) { date in
+                                ForEach(habit.checkIns.sorted(by: { $0.date < $1.date }).map({ $0.date }), id: \.self) { date in
                                     VStack(alignment: .leading, spacing: 2) {
                                         HStack(alignment: .bottom) {
                                             Text(dateFormatter.string(from: date))
@@ -238,7 +238,7 @@ struct HabitDetailView: View {
     }
     
     private func deleteHabit() async {
-        cancelHabitNotification(for: habit)
+        habit.cancelHabitNotification()
         context.delete(habit)
         try? context.save()
         
@@ -252,12 +252,6 @@ struct HabitDetailView: View {
                 }
             }
         }
-    }
-    
-    func cancelHabitNotification(for habit: Habit) {
-        let identifier = "habit_\(habit.id)"
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
-        print("Notification cancelled for \(habit.name)")
     }
 }
 

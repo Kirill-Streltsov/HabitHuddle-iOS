@@ -62,13 +62,17 @@ struct RootView: View {
         }
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {
+            setHabitsSyncSetting()
             print("TOKEN: \(TokenManager.token)")
         }
         .onAppear {
 //            for habit in Habit.createTestHabitsWithCheckIns() {
 //                context.insert(habit)
 //            }
-            //context.insert(Habit.demoHabitWith13Of14CheckIns())
+//            context.insert(Habit.demoHabitWith13Of14CheckIns())
+//            context.insert(Habit.demoHabitWith25Of14CheckIns())
+//            context.insert(Habit.demoHabitWithFullCheckIns())
+//            context.insert(Habit.demoHabitWithFullCheckIns())
             print("Habit categories")
             for habit in habits {
                 print(habit.category)
@@ -81,6 +85,12 @@ struct RootView: View {
             for challenge in challenges {
                 print(challenge.habit?.name)
             }
+        }
+    }
+    
+    private func setHabitsSyncSetting() {
+        if TokenManager.token == nil {
+            habits.forEach { $0.isSyncable = false }
         }
     }
 }

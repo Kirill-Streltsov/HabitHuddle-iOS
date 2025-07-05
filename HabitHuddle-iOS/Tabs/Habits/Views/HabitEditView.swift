@@ -382,7 +382,7 @@ struct HabitEditView: View {
         if habit.reminderTime != nil {
             scheduleHabitNotification(for: habit)
         } else {
-            cancelHabitNotification(for: habit)
+            habit.cancelHabitNotification()
         }
     }
     
@@ -408,12 +408,6 @@ struct HabitEditView: View {
                 print("Notification scheduled for \(habit.name) at \(String(describing: habit.reminderTime?.hour)):\(String(describing: habit.reminderTime?.minute))")
             }
         }
-    }
-    
-    func cancelHabitNotification(for habit: Habit) {
-        let identifier = "habit_\(habit.id)"
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
-        print("Notification cancelled for \(habit.name)")
     }
 }
 

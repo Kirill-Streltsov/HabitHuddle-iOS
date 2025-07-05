@@ -93,18 +93,27 @@ struct LoginView: View {
                 if newValue.createdAt != nil {
                     appState.isAuthenticated = true
                     userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
-                    dismiss()
                 }
+            }
+            .onChange(of: showHabitsFound) { _, newValue in
+                print("SHOW HABITS FOUND: \(newValue)")
             }
             .onChange(of: viewModel.loadedHabits) { _, newValue in
                 let existingHabitIds = Set(habits.map { $0.id })
-                newServerHabits = viewModel.loadedHabits.filter { !existingHabitIds.contains($0.id) }
-                showHabitsFound = !newServerHabits.isEmpty
+                if !newValue.isEmpty {
+                    newServerHabits = newValue.filter { !existingHabitIds.contains($0.id) }
+                }
+                if !newServerHabits.isEmpty  {
+                    showHabitsFound = true
+                } else {
+                    dismiss()
+                }
             }
             .alert("Habits Found", isPresented: $showHabitsFound) {
                 Button("Delete on server", role: .destructive) {
                     Task {
                         await viewModel.deleteHabits(with: newServerHabits.map { $0.id })
+                        dismiss()
                     }
                 }
                 Button("Save locally") {
@@ -112,6 +121,7 @@ struct LoginView: View {
                         let habit = loadedHabit.toSwiftData()
                         context.insert(habit)
                     }
+                    dismiss()
                 }
             } message: {
                 Text("""
