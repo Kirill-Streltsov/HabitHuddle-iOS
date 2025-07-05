@@ -25,27 +25,28 @@ final class SyncManager: ObservableObject {
         }
     }
     
-    func createHabitsOnTheServer(with habits: [Habit]) async -> Result<[HabitDTO], HHError> {
-        guard !habits.isEmpty else { return .success([]) }
+    func createHabitsOnTheServer(with habitPayloads: [HabitPayload]) async -> Result<[HabitDTO], HHError> {
+        guard !habitPayloads.isEmpty else { return .success([]) }
         
         var createdHabits = [HabitDTO]()
         var failedHabitIDs = [UUID]()
         
         await withTaskGroup(of: (UUID, Result<HabitDTO, HHError>).self) { group in
-            for habit in habits {
+            for habitPayload in habitPayloads {
+                
+                let habitID = habitPayload.id
+                
                 group.addTask {
-                    let payload = habit.toPayload
-                    
                     do {
                         let created = try await NetworkManager.shared.request(
                             endpoint: .createHabit(),
                             method: .post,
-                            body: payload,
+                            body: habitPayload,
                             responseType: HabitDTO.self
                         )
-                        return (habit.id, .success(created))
+                        return (habitID, .success(created))
                     } catch {
-                        return (habit.id, .failure(.networkError(error)))
+                        return (habitID, .failure(.networkError(error)))
                     }
                 }
             }
@@ -68,27 +69,28 @@ final class SyncManager: ObservableObject {
         }
     }
     
-    func updateHabitsOnTheServer(with habits: [Habit]) async -> Result<[HabitDTO], HHError> {
-        guard !habits.isEmpty else { return .success([]) }
+    func updateHabitsOnTheServer(with habitPayloads: [HabitPayload]) async -> Result<[HabitDTO], HHError> {
+        guard !habitPayloads.isEmpty else { return .success([]) }
 
         var updatedHabits = [HabitDTO]()
         var failedHabitIDs = [UUID]()
 
         await withTaskGroup(of: (UUID, Result<HabitDTO, HHError>).self) { group in
-            for habit in habits {
+            for habitPayload in habitPayloads {
+                
+                let habitID = habitPayload.id
+                
                 group.addTask {
-                    let payload = habit.toPayload
-
                     do {
                         let updated = try await NetworkManager.shared.request(
-                            endpoint: .updateHabit(with: habit.id),
+                            endpoint: .updateHabit(with: habitID),
                             method: .put,
-                            body: payload,
+                            body: habitPayload,
                             responseType: HabitDTO.self
                         )
-                        return (habit.id, .success(updated))
+                        return (habitID, .success(updated))
                     } catch {
-                        return (habit.id, .failure(.networkError(error)))
+                        return (habitID, .failure(.networkError(error)))
                     }
                 }
             }
@@ -158,18 +160,16 @@ final class SyncManager: ObservableObject {
         guard case let .success(serverHabits) = serverResult else { return }
         
         if localHabits.isEmpty && !serverHabits.isEmpty {
-            Task {
-                await saveHabits(serverHabits, in: modelContext)
-            }
+            saveHabits(serverHabits, in: modelContext)
         }
 
         let serverIDs = Set(serverHabits.map { $0.id })
         let localIDs = Set(localHabits.map { $0.id })
 
-        let toUpdate = localHabits.filter { serverIDs.contains($0.id) && $0.isSyncable }
-        let toCreate = localHabits.filter { !serverIDs.contains($0.id) && $0.isSyncable }
+        let toUpdate = localHabits.filter { serverIDs.contains($0.id) && $0.isSyncable }.map { $0.toPayload }
+        let toCreate = localHabits.filter { !serverIDs.contains($0.id) && $0.isSyncable }.map { $0.toPayload }
         let toDelete = serverHabits.filter { !localIDs.contains($0.id) }.map { $0.id } + localHabits.filter { !$0.isSyncable }.map { $0.id }
-
+        
         async let createResult = createHabitsOnTheServer(with: toCreate)
         async let updateResult = updateHabitsOnTheServer(with: toUpdate)
         async let deleteResult = deleteHabitsOnTheServer(with: toDelete)
