@@ -80,7 +80,7 @@ struct SettingsView: View {
             }
         } message: {
             Text("""
-            We found the following habits on the server that you previously created:
+            We found the following habits on the server that you previously created:\n
             \(newServerHabits.map { "• \($0.name)" }.joined(separator: "\n"))
             
             Would you like to save them locally or delete them from the server?
