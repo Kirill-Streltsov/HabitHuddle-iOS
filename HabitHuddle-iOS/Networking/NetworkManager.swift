@@ -10,8 +10,8 @@ import Foundation
 actor NetworkManager {
     static let shared = NetworkManager()
     
-    //private let baseURL = URL(string: "http://localhost:8080/api/")!
-    private let baseURL = URL(string: "https://b650-95-223-76-171.ngrok-free.app/api/")!
+    private let baseURL = URL(string: "http://localhost:8080/api/")!
+    //private let baseURL = URL(string: "https://b650-95-223-76-171.ngrok-free.app/api/")!
     //private let baseURL = URL(string: "https://habithuddle-backend.fly.dev/api/")!
     private let jsonDecoder: JSONDecoder
     private let jsonEncoder: JSONEncoder

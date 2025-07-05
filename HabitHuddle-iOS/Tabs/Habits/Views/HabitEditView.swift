@@ -28,6 +28,7 @@ struct HabitEditView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var userManager: LocalUserManager
     
+    @AppStorage("deviceToken") private var deviceToken: String = ""
     @AppStorage("hasSentDeviceToken") private var hasSentDeviceToken = false
     
     var isPartOfChallenge: Bool {
@@ -350,6 +351,7 @@ struct HabitEditView: View {
         let settings = await UNUserNotificationCenter.current().notificationSettings()
         if settings.authorizationStatus == .authorized {
             DispatchQueue.main.async {
+                print("DEVICE TOKEN: \(deviceToken)")
                 UIApplication.shared.registerForRemoteNotifications()
                 if appState.isAuthenticated && !hasSentDeviceToken {
                     Task {
@@ -376,6 +378,7 @@ struct HabitEditView: View {
             if let error = error {
                 print("Permission error: \(error)")
             } else {
+                deviceToken
                 DispatchQueue.main.async {
                     UIApplication.shared.registerForRemoteNotifications()
                 }

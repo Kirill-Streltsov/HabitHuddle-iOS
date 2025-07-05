@@ -62,29 +62,35 @@ struct FriendHabitCard: View {
             
             ZStack {
                 VStack {
-                    CheckedInStateView(
-                        isOn: didSendBoost,
-                        fontSize: 65,
-                        shouldFlicker: true,
-                        iconOn: "bolt.circle.fill",
-                        iconOff: "bolt.circle",
-                        color: .orange
-                    )
-                    .scaleEffect(scale)
-                    .allowsHitTesting(!didSendBoost)
-                    .onTapGesture {
-                        HapticManager.trigger(.success)
-                        showBoostSent = true
-                        didSendBoost = true
-                        Task {
-                            await onSendBoost()
+                    if habit.isCheckedInToday {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(.green)
+                            .font(.system(size: 85))
+                    } else {
+                        CheckedInStateView(
+                            isOn: didSendBoost,
+                            fontSize: 80,
+                            shouldFlicker: true,
+                            iconOn: "bolt.circle.fill",
+                            iconOff: "bolt.circle",
+                            color: .orange
+                        )
+                        .scaleEffect(scale)
+                        .allowsHitTesting(!didSendBoost)
+                        .onTapGesture {
+                            HapticManager.trigger(.success)
+                            showBoostSent = true
+                            didSendBoost = true
+                            Task {
+                                await onSendBoost()
+                            }
+                            scale += 0.15
+                            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                scale -= 0.15
+                            }
                         }
-                        scale += 0.15
-                        DispatchQueue.main.asyncAfter(deadline: .now()) {
-                            scale -= 0.15
-                        }
+                        .animation(.easeInOut(duration: 0.3), value: scale)
                     }
-                    .animation(.easeInOut(duration: 0.3), value: scale)
                     
                     Text("Tap to boost!")
                         .font(.caption)

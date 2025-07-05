@@ -77,7 +77,7 @@ struct FriendDetailView: View {
                 VStack(alignment: .center) {
                     ForEach(viewModel.habits) { habitDTO in
                         FriendHabitCard(didShowBoostSent: $didShowBoostSent, habitDTO: habitDTO) {
-                            print("onSendBoost()")
+                            await viewModel.sendBoost(to: friend.id, about: habitDTO.id)
                         }
                     }
                 }
