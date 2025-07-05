@@ -95,7 +95,7 @@ struct FriendHabitCard: View {
                     Text("Tap to boost!")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                        .opacity(didSendBoost ? 0 : 1)
+                        .opacity(didSendBoost || habit.isCheckedInToday ? 0 : 1)
                 }
                 .offset(y: -5)
                 HStack {

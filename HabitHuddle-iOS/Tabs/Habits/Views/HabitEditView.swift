@@ -84,6 +84,9 @@ struct HabitEditView: View {
             .padding()
             .onAppear {
                 wasSyncedAtTheBeginning = viewModel.isSynced
+                if appState.isAuthenticated && viewModel.habit == nil {
+                    viewModel.isSynced = true
+                }
                 fillCategories()
                 Task {
                     await checkNotifications()
@@ -95,6 +98,11 @@ struct HabitEditView: View {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                Task {
+                    await checkNotifications()
+                }
+            }
+            .onDisappear {
                 Task {
                     await checkNotifications()
                 }
@@ -378,7 +386,6 @@ struct HabitEditView: View {
             if let error = error {
                 print("Permission error: \(error)")
             } else {
-                deviceToken
                 DispatchQueue.main.async {
                     UIApplication.shared.registerForRemoteNotifications()
                 }

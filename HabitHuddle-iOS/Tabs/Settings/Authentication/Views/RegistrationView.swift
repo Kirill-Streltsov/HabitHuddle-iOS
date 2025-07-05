@@ -16,6 +16,9 @@ struct RegistrationView: View {
         case confirmPassword
     }
     
+    @Query
+    var habits: [Habit]
+    
     @StateObject private var viewModel = ViewModel()
     
     @EnvironmentObject var userManager: LocalUserManager
@@ -116,6 +119,7 @@ struct RegistrationView: View {
         }
         .onChange(of: viewModel.loadedUser) { _, newValue in
             if newValue.createdAt != nil {
+                habits.forEach { $0.isSyncable = true }
                 appState.isAuthenticated = true
                 userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
                 dismiss()

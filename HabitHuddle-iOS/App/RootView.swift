@@ -90,7 +90,10 @@ struct RootView: View {
     
     private func setHabitsSyncSetting() {
         if TokenManager.token == nil {
-            habits.forEach { $0.isSyncable = false }
+            habits.forEach {
+                $0.isSyncable = false
+                $0.isPublic = false
+            }
         }
     }
 }

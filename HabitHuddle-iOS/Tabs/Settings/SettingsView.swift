@@ -40,6 +40,10 @@ struct SettingsView: View {
                             Task {
                                 let deleteResult = await viewModel.deleteMyAccount()
                                 Helpers.handleResult(deleteResult) { status in
+                                    habits.forEach {
+                                        $0.isSyncable = false
+                                        $0.isPublic = false
+                                    }
                                     print("✅ Successfully deleted the account. Status: \(status)")
                                     appState.logout(userManager: userManager)
                                 } onFailure: { error in
@@ -111,7 +115,10 @@ struct SettingsView: View {
                         viewModel.loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
                         viewModel.loadedHabits = []
                         appState.logout(userManager: userManager)
-                        habits.forEach { $0.isSyncable = false }
+                        habits.forEach {
+                            $0.isSyncable = false
+                            $0.isPublic = false
+                        }
                         try? context.save()
                     }
                 } label: {
