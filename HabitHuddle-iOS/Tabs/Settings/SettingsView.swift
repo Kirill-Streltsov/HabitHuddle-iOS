@@ -40,12 +40,14 @@ struct SettingsView: View {
                             Task {
                                 let deleteResult = await viewModel.deleteMyAccount()
                                 Helpers.handleResult(deleteResult) { status in
-                                    habits.forEach {
-                                        $0.isSyncable = false
-                                        $0.isPublic = false
+                                    if status == .ok {
+                                        habits.forEach {
+                                            $0.isSyncable = false
+                                            $0.isPublic = false
+                                        }
+                                        print("✅ Successfully deleted the account. Status: \(status)")
+                                        appState.logout(userManager: userManager)
                                     }
-                                    print("✅ Successfully deleted the account. Status: \(status)")
-                                    appState.logout(userManager: userManager)
                                 } onFailure: { error in
                                     print("❌ Error: couldn't delete the account: \(error)")
                                 }
