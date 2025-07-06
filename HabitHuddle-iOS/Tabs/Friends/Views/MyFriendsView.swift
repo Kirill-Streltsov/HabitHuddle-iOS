@@ -54,6 +54,11 @@ struct MyFriendsView: View {
             .navigationTitle("Friends")
             .task {
                 await viewModel.getMyFriendRequests()
+                friendsListID = UUID()
+            }
+            .refreshable {
+                await viewModel.getMyFriendRequests()
+                friendsListID = UUID()
             }
         }
     }
