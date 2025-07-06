@@ -404,8 +404,10 @@ struct HabitEditView: View {
     
     private func scheduleHabitNotification(for habit: Habit) {
         let content = UNMutableNotificationContent()
-        content.title = "Habit Reminder"
-        content.body = "Time for your habit: \(habit.name)"
+        let notification = NotificationGenerator.randomNotification(for: habit.name)
+        content.title = notification.title
+        content.subtitle = notification.subtitle
+        content.body = notification.body
         content.sound = .default
 
         var dateComponents = DateComponents()
