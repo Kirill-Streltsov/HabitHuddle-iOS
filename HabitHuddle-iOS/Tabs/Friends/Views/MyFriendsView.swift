@@ -109,7 +109,7 @@ struct MyFriendsView: View {
                             Task {
                                 showToast = true
                                 toastMessage = "Friend request ignored"
-                                let result = await viewModel.rejectFriend(with: request.id)
+                                let _ = await viewModel.rejectFriend(with: request.id)
                             }
                         }
                         .padding(.horizontal)
