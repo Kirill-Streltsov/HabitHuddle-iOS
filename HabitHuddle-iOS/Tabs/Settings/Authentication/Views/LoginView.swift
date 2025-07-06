@@ -120,9 +120,9 @@ struct LoginView: View {
                 }
                 Button("Save locally") {
                     for loadedHabit in newServerHabits {
-                        let habit = loadedHabit.toSwiftData()
-                        context.insert(habit)
+                        let _ = loadedHabit.saved(in: context)
                     }
+                    try? context.save()
                     dismiss()
                 }
             } message: {

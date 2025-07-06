@@ -7,6 +7,7 @@
 
 
 import SwiftUI
+import SwiftData
 
 struct FriendHabitCard: View {
     
@@ -15,14 +16,14 @@ struct FriendHabitCard: View {
     @Binding var showBoostSent: Bool
     var onSendBoost: @MainActor () async -> Void
     
+    @Environment(\.modelContext) private var context
+    
     let habitDTO: HabitDTO
     let cardWidth: CGFloat = UIScreen.main.bounds.width - 60
-    private var habit: Habit
     
     init(didShowBoostSent: Binding<Bool>, habitDTO: HabitDTO, onSendBoost: @escaping () async -> Void) {
         self._showBoostSent = didShowBoostSent
         self.habitDTO = habitDTO
-        self.habit = habitDTO.toSwiftData()
         self.onSendBoost = onSendBoost
     }
     
@@ -32,7 +33,7 @@ struct FriendHabitCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top) {
-                if let icon = habit.icon {
+                if let icon = habitDTO.icon {
                     Image(systemName: icon)
                         .resizable()
                         .scaledToFit()
@@ -43,13 +44,13 @@ struct FriendHabitCard: View {
                 }
                 VStack(alignment: .leading) {
                     HStack(spacing: 8) {
-                        Text(habit.name)
+                        Text(habitDTO.name)
                             .font(.title3)
                             .fontWeight(.semibold)
                             .lineLimit(2)
                     }
-                    if !habit.habitDescription.isEmpty {
-                        Text(habit.habitDescription)
+                    if !habitDTO.description.isEmpty {
+                        Text(habitDTO.description)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                             .lineLimit(nil)
@@ -62,7 +63,7 @@ struct FriendHabitCard: View {
             
             ZStack {
                 VStack {
-                    if habit.isCheckedInToday {
+                    if habitDTO.isCheckedInToday {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundStyle(.green)
                             .font(.system(size: 85))
@@ -95,35 +96,37 @@ struct FriendHabitCard: View {
                     Text("Tap to boost!")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                        .opacity(didSendBoost || habit.isCheckedInToday ? 0 : 1)
+                        .opacity(didSendBoost || habitDTO.isCheckedInToday ? 0 : 1)
                 }
                 .offset(y: -5)
                 HStack {
-                    StatItem(title: "Longest Streak", value: "\(habit.longestStreak) days")
+                    StatItem(title: "Longest Streak", value: "\(habitDTO.longestStreak) days")
                     Spacer()
-                    StatItem(title: "Done", value: "\(habit.completionPercentage)%")
+                    StatItem(title: "Done", value: "\(habitDTO.completionPercentage)%")
                 }
             }
             .offset(y: 15)
             .frame(width: cardWidth)
             
             HStack {
-                if habit.isCompleted {
+                if habitDTO.isCompleted {
                     Text("🎉 Habit finished!")
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundStyle(.green)
                 } else {
-                    Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays) days")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                    if let checkIns = habitDTO.checkIns {
+                        Text("\(checkIns.count) / \(habitDTO.duration.numberOfDays) days")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 Spacer()
             }
             .padding(.bottom, 4)
             
-            HabitProgressView(
-                habit: habit,
+            HabitDTOProgressView(
+                habit: habitDTO,
                 width: cardWidth,
                 height: 8
             )

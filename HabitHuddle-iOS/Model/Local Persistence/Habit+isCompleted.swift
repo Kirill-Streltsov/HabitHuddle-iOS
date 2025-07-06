@@ -10,8 +10,4 @@ extension Habit {
     var isCompleted: Bool {
         checkIns.count >= duration.numberOfDays
     }
-    
-    var isFullyCompletedButNotToday: Bool {
-        isCompleted && !isCheckedInToday
-    }
 }

@@ -10,7 +10,8 @@ import SwiftUI
 struct FriendDetailView: View {
     
     @Environment(\.dismiss) private var dismiss
-    
+    @Environment(\.modelContext) private var context
+        
     @StateObject private var viewModel = ViewModel()
     let friend: UserDTO
     
@@ -27,8 +28,8 @@ struct FriendDetailView: View {
                         Text("\(friend.name)'s activity")
                             .font(.title2)
                             .fontWeight(.semibold)
-                        HeatmapView(habits: viewModel.habits.map{ $0.toSwiftData() })
-                            .id(heatmapID)
+//                        HeatmapView(habits: viewModel.habits.map{ $0.toSwiftData(in: context) })
+//                            .id(heatmapID)
                     }
                 }
                 Divider()

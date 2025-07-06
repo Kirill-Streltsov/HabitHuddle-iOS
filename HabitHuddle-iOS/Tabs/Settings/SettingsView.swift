@@ -82,9 +82,9 @@ struct SettingsView: View {
             }
             Button("Save locally") {
                 for loadedHabit in viewModel.loadedHabits {
-                    let habit = loadedHabit.toSwiftData()
-                    context.insert(habit)
+                    let _ = loadedHabit.saved(in: context)
                 }
+                try? context.save()
             }
         } message: {
             Text("""

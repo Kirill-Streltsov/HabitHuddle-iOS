@@ -180,8 +180,7 @@ final class SyncManager: ObservableObject {
     @MainActor
     func saveHabits(_ habits: [HabitDTO], in context: ModelContext) {
         for habit in habits {
-            let habitToSave = habit.toSwiftData()
-            context.insert(habitToSave)
+            let _ = habit.saved(in: context)
         }
         try? context.save()
     }

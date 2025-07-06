@@ -210,9 +210,8 @@ struct ChallengesListView: View {
             let sentHabitResult = await viewModel.createHabitAfterAcceptingChallenge(habitDTO: habitDTO, for: challengeDTO.id)
             Helpers.handleResult(sentHabitResult) { createdHabit in
                 if !habits.contains(where: { $0.id == createdHabit.id }) {
-                    let habit = createdHabit.toSwiftData()
+                    let habit = createdHabit.saved(in: context)
                     habit.isPublic = true
-                    context.insert(habit)
                     do {
                         try context.save()
                         saveChallengeLocally(from: challengeDTO, for: habit)
