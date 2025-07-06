@@ -1,14 +1,14 @@
 //
-//  HeatmapView.swift
+//  HeatmapHabitDTOView.swift
 //  HabitHuddle-iOS
 //
-//  Created by Kirill on 01.06.25.
+//  Created by Kirill on 06.07.25.
 //
 
 import SwiftUI
 
-struct HeatmapView: View {
-    let habits: [Habit]
+struct HeatmapHabitDTOView: View {
+    let habits: [HabitDTO]
 
     private let calendar: Calendar = {
         var cal = Calendar(identifier: .iso8601)
@@ -110,7 +110,7 @@ struct HeatmapView: View {
         }
     }
 
-    init(habits: [Habit]) {
+    init(habits: [HabitDTO]) {
         self.habits = habits
     }
 
@@ -165,7 +165,8 @@ struct HeatmapView: View {
                 
                 if habits.count == 1 {
                     // Use Set for O(1) lookup instead of iterating through array
-                    let checkInDates = Set(habits[0].checkIns.map { calendar.startOfDay(for: $0.date) })
+                    guard let checkIns = habits[0].checkIns else { return }
+                    let checkInDates = Set(checkIns.map { calendar.startOfDay(for: $0.date) })
                     for date in allDates {
                         let day = calendar.startOfDay(for: date)
                         tempCheckInData[day] = checkInDates.contains(day) ? 1 : 0
@@ -174,7 +175,8 @@ struct HeatmapView: View {
                     // Build lookup dictionary for all habits at once
                     var checkInCounts: [Date: Int] = [:]
                     for habit in habits {
-                        for checkIn in habit.checkIns {
+                        guard let checkIns = habit.checkIns else { return }
+                        for checkIn in checkIns {
                             let day = calendar.startOfDay(for: checkIn.date)
                             checkInCounts[day, default: 0] += 1
                         }
@@ -194,9 +196,4 @@ struct HeatmapView: View {
             }
         }
     }
-}
-
-#Preview {
-    let habit = Habit.createTestHabitsWithCheckIns()[0]
-    HeatmapView(habits: [habit])
 }

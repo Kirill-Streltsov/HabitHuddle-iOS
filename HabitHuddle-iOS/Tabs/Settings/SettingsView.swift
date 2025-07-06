@@ -14,6 +14,9 @@ struct SettingsView: View {
     @Query
     var habits: [Habit]
     
+    @Query
+    var users: [User]
+    
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     
     @Environment(\.modelContext) private var context
@@ -44,9 +47,13 @@ struct SettingsView: View {
                                         habits.forEach {
                                             $0.isSyncable = false
                                             $0.isPublic = false
+                                            $0.challenges = []
                                         }
                                         print("✅ Successfully deleted the account. Status: \(status)")
                                         appState.logout(userManager: userManager)
+                                        guard let currentUser = users.first(where: { $0.id == userManager.profile.id }) else { return }
+                                        context.delete(currentUser)
+                                        try? context.save()
                                     }
                                 } onFailure: { error in
                                     print("❌ Error: couldn't delete the account: \(error)")
@@ -66,6 +73,8 @@ struct SettingsView: View {
                 HapticManager.trigger(.success)
                 appState.isAuthenticated = true
                 userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
+                context.insert(newValue.toSwiftData())
+                try? context.save()
             }
         }
         .onChange(of: viewModel.loadedHabits) { _, newValue in
@@ -121,7 +130,10 @@ struct SettingsView: View {
                         habits.forEach {
                             $0.isSyncable = false
                             $0.isPublic = false
+                            $0.challenges = []
                         }
+                        guard let currentUser = users.first(where: { $0.id == userManager.profile.id }) else { return }
+                        context.delete(currentUser)
                         try? context.save()
                     }
                 } label: {

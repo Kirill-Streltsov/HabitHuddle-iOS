@@ -18,7 +18,7 @@ struct RegistrationView: View {
     
     @Query
     var habits: [Habit]
-    
+        
     @StateObject private var viewModel = ViewModel()
     
     @EnvironmentObject var userManager: LocalUserManager
@@ -124,6 +124,8 @@ struct RegistrationView: View {
                 appState.isAuthenticated = true
                 userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
                 dismiss()
+                context.insert(newValue.toSwiftData())
+                try? context.save()
             }
         }
         .navigationTitle("Registration")

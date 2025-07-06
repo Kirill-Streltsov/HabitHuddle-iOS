@@ -18,6 +18,9 @@ struct LoginView: View {
     @Query
     var habits: [Habit]
     
+    @Query
+    var users: [User]
+    
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
@@ -95,10 +98,12 @@ struct LoginView: View {
                     HapticManager.trigger(.success)
                     appState.isAuthenticated = true
                     userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
+                    context.insert(newValue.toSwiftData())
+                    try? context.save()
+                    if !showHabitsFound {
+                        dismiss()
+                    }
                 }
-            }
-            .onChange(of: showHabitsFound) { _, newValue in
-                print("SHOW HABITS FOUND: \(newValue)")
             }
             .onChange(of: viewModel.loadedHabits) { _, newValue in
                 let existingHabitIds = Set(habits.map { $0.id })

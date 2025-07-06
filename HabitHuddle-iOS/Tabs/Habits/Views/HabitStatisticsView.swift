@@ -158,7 +158,7 @@ struct HabitStatisticsView: View {
                 let remaining = 2 - habit.checkIns.count
                 CardView {
                     ChartContainerView(title: "Check in overview", subtitle: "Frequency of your check ins") {
-                        HeatmapView(habits: [habit])
+                        HeatmapHabitView(habit: habit)
                             .id(statisticsID)
                     }
                 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct FriendDetailView: View {
     
@@ -20,6 +21,9 @@ struct FriendDetailView: View {
     @State private var heatmapID = UUID()
     @State private var didShowBoostSent = false
     
+    @Query
+    var users: [User]
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -28,8 +32,8 @@ struct FriendDetailView: View {
                         Text("\(friend.name)'s activity")
                             .font(.title2)
                             .fontWeight(.semibold)
-//                        HeatmapView(habits: viewModel.habits.map{ $0.toSwiftData(in: context) })
-//                            .id(heatmapID)
+                        HeatmapHabitDTOView(habits: viewModel.habits)
+                            .id(heatmapID)
                     }
                 }
                 Divider()
@@ -59,6 +63,7 @@ struct FriendDetailView: View {
                 Task {
                     await viewModel.deleteFriend(with: friend.id)
                 }
+                deleteFriendLocally()
                 dismiss()
             } label: {
                 Image(systemName: "trash")
@@ -101,6 +106,12 @@ struct FriendDetailView: View {
                 }
             }
         }
+    }
+    
+    private func deleteFriendLocally() {
+        guard let friend = users.filter({ $0.id == friend.id }).first else { return }
+        context.delete(friend)
+        try? context.save()
     }
 }
 

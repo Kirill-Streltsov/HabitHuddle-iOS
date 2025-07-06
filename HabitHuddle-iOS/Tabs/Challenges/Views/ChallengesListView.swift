@@ -233,6 +233,7 @@ struct ChallengesListView: View {
         do {
             context.insert(challenge)
             try context.save()
+            print("✅ Saved challenge locally")
         } catch {
             print("❌ Error: Couldn't save challenge locally: \(error)")
         }
