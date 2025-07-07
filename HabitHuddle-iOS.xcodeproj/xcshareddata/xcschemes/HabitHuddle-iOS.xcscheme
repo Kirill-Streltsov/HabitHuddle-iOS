@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "ED50599F2DD4B7A900E28D64"
-               BuildableName = "HabitHuddle-iOS.app"
+               BuildableName = "Habit Huddle.app"
                BlueprintName = "HabitHuddle-iOS"
                ReferencedContainer = "container:HabitHuddle-iOS.xcodeproj">
             </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ED50599F2DD4B7A900E28D64"
-            BuildableName = "HabitHuddle-iOS.app"
+            BuildableName = "Habit Huddle.app"
             BlueprintName = "HabitHuddle-iOS"
             ReferencedContainer = "container:HabitHuddle-iOS.xcodeproj">
          </BuildableReference>
@@ -86,7 +86,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ED50599F2DD4B7A900E28D64"
-            BuildableName = "HabitHuddle-iOS.app"
+            BuildableName = "Habit Huddle.app"
             BlueprintName = "HabitHuddle-iOS"
             ReferencedContainer = "container:HabitHuddle-iOS.xcodeproj">
          </BuildableReference>

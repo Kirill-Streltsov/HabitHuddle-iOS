@@ -29,7 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		ED5059A02DD4B7A900E28D64 /* HabitHuddle-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HabitHuddle-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED5059A02DD4B7A900E28D64 /* Habit Huddle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Huddle.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5059AF2DD4B7AC00E28D64 /* HabitHuddle-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "HabitHuddle-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5059B92DD4B7AC00E28D64 /* HabitHuddle-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "HabitHuddle-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -106,7 +106,7 @@
 		ED5059A12DD4B7A900E28D64 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ED5059A02DD4B7A900E28D64 /* HabitHuddle-iOS.app */,
+				ED5059A02DD4B7A900E28D64 /* Habit Huddle.app */,
 				ED5059AF2DD4B7AC00E28D64 /* HabitHuddle-iOSTests.xctest */,
 				ED5059B92DD4B7AC00E28D64 /* HabitHuddle-iOSUITests.xctest */,
 			);
@@ -144,7 +144,7 @@
 				EDC0411F2E05CEDA00A5A4B0 /* GoogleSignInSwift */,
 			);
 			productName = "HabitHuddle-iOS";
-			productReference = ED5059A02DD4B7A900E28D64 /* HabitHuddle-iOS.app */;
+			productReference = ED5059A02DD4B7A900E28D64 /* Habit Huddle.app */;
 			productType = "com.apple.product-type.application";
 		};
 		ED5059AE2DD4B7AC00E28D64 /* HabitHuddle-iOSTests */ = {
@@ -450,7 +450,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.krlsrlsv.HabitHuddle-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Habit Huddle";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -482,7 +482,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.krlsrlsv.HabitHuddle-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Habit Huddle";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
