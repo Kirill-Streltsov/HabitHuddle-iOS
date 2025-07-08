@@ -29,6 +29,10 @@ struct Endpoint {
     static func login() -> Endpoint {
         Endpoint(path: "auth/login")
     }
+    
+    static func logout() -> Endpoint {
+        Endpoint(path: "auth/logout")
+    }
 
     static func register() -> Endpoint {
         Endpoint(path: "auth/register")

@@ -44,6 +44,19 @@ final class LoginViewModel: ObservableObject {
         }
     }
     
+    func logout() async -> Result<HTTPStatus, HHError> {
+        do {
+            let response = try await NetworkManager.shared.requestStatusCode(
+                endpoint: .logout(),
+                method: .delete
+            )
+            return .success(response)
+        } catch {
+            print("❌ Error: Couldn't logout: \(error)")
+            return .failure(.networkError(error))
+        }
+    }
+    
     func handleGoogleSignIn() async {
         // Wrap the callback-based Google sign-in into async/await
         do {

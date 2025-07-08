@@ -123,19 +123,7 @@ struct SettingsView: View {
                 }
                 
                 Button(role: .destructive) {
-                    withAnimation {
-                        viewModel.loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
-                        viewModel.loadedHabits = []
-                        appState.logout(userManager: userManager)
-                        habits.forEach {
-                            $0.isSyncable = false
-                            $0.isPublic = false
-                            $0.challenges = []
-                        }
-                        guard let currentUser = users.first(where: { $0.id == userManager.profile.id }) else { return }
-                        context.delete(currentUser)
-                        try? context.save()
-                    }
+                    handleLogout()
                 } label: {
                     Label("Log Out", systemImage: "arrow.backward.square")
                 }
@@ -214,6 +202,31 @@ struct SettingsView: View {
                 .stroke(Color.gray.opacity(0.4), lineWidth: 1)
         )
         .cornerRadius(8)
+    }
+    
+    func handleLogout() {
+        Task {
+            let logoutResult = await viewModel.logout()
+            Helpers.handleResult(logoutResult) { status in
+                if status == .ok {
+                    withAnimation {
+                        viewModel.loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
+                        viewModel.loadedHabits = []
+                        appState.logout(userManager: userManager)
+                        habits.forEach {
+                            $0.isSyncable = false
+                            $0.isPublic = false
+                            $0.challenges = []
+                        }
+                        guard let currentUser = users.first(where: { $0.id == userManager.profile.id }) else { return }
+                        context.delete(currentUser)
+                        try? context.save()
+                    }
+                }
+            } onFailure: { _ in
+                // TODO: show error alert
+            }
+        }
     }
     
     func handleAppleSignIn(with result: Result<ASAuthorization, any Error>) {
