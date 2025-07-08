@@ -68,51 +68,36 @@ struct RootView: View {
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {
             verifyToken()
-            print("TOKEN: \(TokenManager.token)")
-        }
-        .onAppear {
-//            for habit in Habit.createTestHabitsWithCheckIns() {
-//                context.insert(habit)
-//            }
-//            context.insert(Habit.demoHabitWith13Of14CheckIns())
-//            context.insert(Habit.demoHabitWith25Of14CheckIns())
-//            context.insert(Habit.demoHabitWithFullCheckIns())
-//            context.insert(Habit.demoHabitWithFullCheckIns())
-            print("Habit categories")
-            for habit in habits {
-                print(habit.category)
-            }
-            print("Users:")
-            for user in users {
-                print(user.name)
-            }
-            print("Challenges:")
-            for challenge in challenges {
-                print(challenge.habit?.name)
-            }
+            //print("TOKEN: \(TokenManager.token)")
         }
     }
     
     private func verifyToken() {
-        if TokenManager.token != nil {
-            Task {
-                do {
-                    let _ = try await NetworkManager.shared.request(
-                        endpoint: .me(),
-                        method: .get,
-                        responseType: UserDTO.self
-                    )
-                } catch {
-                    if let error = error as? HHError, error == .unauthorized {
-                        showLoggedOut = true
-                        habits.forEach {
-                            $0.isSyncable = false
-                            $0.isPublic = false
-                        }
-                        appState.logout(userManager: userManager)
-                    }
-                }
+        guard let _ = TokenManager.token else { return }
+
+        Task {
+            do {
+                _ = try await NetworkManager.shared.request(
+                    endpoint: .me(),
+                    method: .get,
+                    responseType: UserDTO.self
+                )
+            } catch {
+                handleTokenError(error)
             }
+        }
+    }
+    
+    private func handleTokenError(_ error: Error) {
+        if let error = error as? HHError, error == .unauthorized {
+            showLoggedOut = true
+
+            habits.forEach {
+                $0.isSyncable = false
+                $0.isPublic = false
+            }
+
+            appState.logout(userManager: userManager)
         }
     }
 }
