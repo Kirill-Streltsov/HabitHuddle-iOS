@@ -98,37 +98,28 @@ struct LoginView: View {
                     HapticManager.trigger(.success)
                     appState.isAuthenticated = true
                     userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
-                    context.insert(newValue.toSwiftData())
-                    try? context.save()
-                    if !showHabitsFound {
-                        dismiss()
+                    if !users.contains(where: { $0.id == newValue.id }) {
+                        context.insert(newValue.toSwiftData())
+                        try? context.save()
                     }
                 }
             }
             .onChange(of: viewModel.loadedHabits) { _, newValue in
                 let existingHabitIds = Set(habits.map { $0.id })
-                if !newValue.isEmpty {
-                    newServerHabits = newValue.filter { !existingHabitIds.contains($0.id) }
-                }
-                if !newServerHabits.isEmpty  {
-                    showHabitsFound = true
-                } else {
-                    dismiss()
-                }
+                newServerHabits = viewModel.loadedHabits.filter { !existingHabitIds.contains($0.id) }
+                showHabitsFound = !newServerHabits.isEmpty
             }
             .alert("Habits Found", isPresented: $showHabitsFound) {
                 Button("Delete on server", role: .destructive) {
                     Task {
                         await viewModel.deleteHabits(with: newServerHabits.map { $0.id })
-                        dismiss()
                     }
                 }
                 Button("Save locally") {
                     for loadedHabit in newServerHabits {
-                        let _ = loadedHabit.saved(in: context)
+                        _ = loadedHabit.saved(in: context)
                     }
                     try? context.save()
-                    dismiss()
                 }
             } message: {
                 Text("""
