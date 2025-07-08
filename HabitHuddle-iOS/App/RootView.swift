@@ -19,6 +19,8 @@ struct RootView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var userManager: LocalUserManager
+    
+    @State private var showLoggedOut = false
                 
     @Query
     var habits: [Habit]
@@ -60,12 +62,12 @@ struct RootView: View {
                 }
             }
         }
+        .alert("You've been logged out", isPresented: $showLoggedOut) {} message: {
+            Text("This can happen if your session expires. Log back in to continue syncing your habits and using all social features.")
+        }
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {
-            setHabitsSyncSetting()
-            Task {
-                await verifyToken()
-            }
+            verifyToken()
             print("TOKEN: \(TokenManager.token)")
         }
         .onAppear {
@@ -91,28 +93,25 @@ struct RootView: View {
         }
     }
     
-    private func verifyToken() async {
-        do {
-            let authResponse = try await NetworkManager.shared.request(
-                endpoint: .me(),
-                method: .get,
-                responseType: UserDTO.self
-            )
-            
-        } catch let error as HHError {
-            if error == .unauthorized {
-                print("IS UNAUTHORIZED")
-            }
-        } catch {
-            print("OTHER ERROR OCCURED: \(error)")
-        }
-    }
-    
-    private func setHabitsSyncSetting() {
-        if TokenManager.token == nil {
-            habits.forEach {
-                $0.isSyncable = false
-                $0.isPublic = false
+    private func verifyToken() {
+        if TokenManager.token != nil {
+            Task {
+                do {
+                    let _ = try await NetworkManager.shared.request(
+                        endpoint: .me(),
+                        method: .get,
+                        responseType: UserDTO.self
+                    )
+                } catch {
+                    if let error = error as? HHError, error == .unauthorized {
+                        showLoggedOut = true
+                        habits.forEach {
+                            $0.isSyncable = false
+                            $0.isPublic = false
+                        }
+                        appState.logout(userManager: userManager)
+                    }
+                }
             }
         }
     }
