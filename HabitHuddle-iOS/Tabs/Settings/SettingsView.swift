@@ -73,8 +73,10 @@ struct SettingsView: View {
                 HapticManager.trigger(.success)
                 appState.isAuthenticated = true
                 userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
-                context.insert(newValue.toSwiftData())
-                try? context.save()
+                if !users.contains(where: { $0.id == newValue.id }) {
+                    context.insert(newValue.toSwiftData())
+                    try? context.save()
+                }
             }
         }
         .onChange(of: viewModel.loadedHabits) { _, newValue in
