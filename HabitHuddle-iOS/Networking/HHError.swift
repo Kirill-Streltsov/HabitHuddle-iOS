@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum HHError: Error, LocalizedError {
+enum HHError: Error, LocalizedError, Equatable {
     case invalidURL
     case requestFailed(statusCode: Int, data: Data?)
     case decodingError(Error)
@@ -54,6 +54,33 @@ enum HHError: Error, LocalizedError {
             return "Couldn't update all habits. Habit updated: \(habits). Failed IDs: \(failedIDs)"
         case .customError(errorText: let errorText):
             return errorText
+        }
+    }
+    
+    static func == (lhs: HHError, rhs: HHError) -> Bool {
+        switch (lhs, rhs) {
+        case (.invalidURL, .invalidURL),
+             (.unauthorized, .unauthorized),
+             (.forbidden, .forbidden),
+             (.notFound, .notFound),
+             (.conflict, .conflict),
+             (.serverError, .serverError),
+             (.noData, .noData),
+             (.invalidResponse, .invalidResponse),
+             (.unknown, .unknown):
+            return true
+            
+        case let (.requestFailed(lhsCode, _), .requestFailed(rhsCode, _)):
+            return lhsCode == rhsCode
+
+        case let (.customError(lhsText), .customError(rhsText)):
+            return lhsText == rhsText
+
+        case let (.partialFailure(lhsUpdated, lhsFailed), .partialFailure(rhsUpdated, rhsFailed)):
+            return lhsUpdated == rhsUpdated && lhsFailed == rhsFailed
+
+        default:
+            return false
         }
     }
 }

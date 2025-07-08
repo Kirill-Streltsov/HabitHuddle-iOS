@@ -37,6 +37,10 @@ struct Endpoint {
     static func register() -> Endpoint {
         Endpoint(path: "auth/register")
     }
+    
+    static func me() -> Endpoint {
+        Endpoint(path: "auth/me")
+    }
 
     // MARK: Habits
     

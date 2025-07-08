@@ -63,6 +63,9 @@ struct RootView: View {
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {
             setHabitsSyncSetting()
+            Task {
+                await verifyToken()
+            }
             print("TOKEN: \(TokenManager.token)")
         }
         .onAppear {
@@ -85,6 +88,23 @@ struct RootView: View {
             for challenge in challenges {
                 print(challenge.habit?.name)
             }
+        }
+    }
+    
+    private func verifyToken() async {
+        do {
+            let authResponse = try await NetworkManager.shared.request(
+                endpoint: .me(),
+                method: .get,
+                responseType: UserDTO.self
+            )
+            
+        } catch let error as HHError {
+            if error == .unauthorized {
+                print("IS UNAUTHORIZED")
+            }
+        } catch {
+            print("OTHER ERROR OCCURED: \(error)")
         }
     }
     
