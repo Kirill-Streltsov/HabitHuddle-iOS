@@ -19,7 +19,7 @@ struct RootView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var userManager: LocalUserManager
-    
+
     @State private var showLoggedOut = false
 
     @Query
