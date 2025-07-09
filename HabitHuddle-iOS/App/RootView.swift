@@ -71,7 +71,7 @@ struct RootView: View {
             //print("TOKEN: \(TokenManager.token)")
         }
     }
-    
+
     private func verifyToken() {
         guard let _ = TokenManager.token else { return }
 
