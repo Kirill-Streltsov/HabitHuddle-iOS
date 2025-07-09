@@ -16,7 +16,7 @@ struct RootView: View {
     
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.modelContext) private var context
-    
+
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var userManager: LocalUserManager
 
