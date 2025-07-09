@@ -21,7 +21,7 @@ struct RootView: View {
     @EnvironmentObject private var userManager: LocalUserManager
     
     @State private var showLoggedOut = false
-                
+
     @Query
     var habits: [Habit]
 
