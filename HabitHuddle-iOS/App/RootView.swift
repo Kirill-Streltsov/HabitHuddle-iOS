@@ -30,7 +30,7 @@ struct RootView: View {
     
     @Query
     var challenges: [Challenge]
-    
+
     var body: some View {
         ZStack {
             if hasSeenOnboarding {
