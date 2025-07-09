@@ -24,7 +24,7 @@ struct RootView: View {
                 
     @Query
     var habits: [Habit]
-    
+
     @Query
     var users: [User]
 
