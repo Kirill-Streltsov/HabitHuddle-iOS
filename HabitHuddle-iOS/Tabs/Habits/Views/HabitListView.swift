@@ -57,7 +57,7 @@ struct HabitListView: View {
             .navigationTitle("Habits")
         }
     }
-    
+
     private func resetNewHabitViewModel() {
         newHabitViewModel.name = ""
         newHabitViewModel.description = ""
