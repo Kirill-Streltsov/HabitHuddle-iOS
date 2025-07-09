@@ -87,7 +87,7 @@ struct RootView: View {
             }
         }
     }
-    
+
     private func handleTokenError(_ error: Error) {
         if let error = error as? HHError, error == .unauthorized {
             showLoggedOut = true
