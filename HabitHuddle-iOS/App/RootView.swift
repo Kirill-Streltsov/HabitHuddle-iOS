@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct RootView: View {
-    
+
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding = false
     @AppStorage("selectedTab") var selectedTab = 0
     @AppStorage("isDarkMode") var isDarkMode = false
