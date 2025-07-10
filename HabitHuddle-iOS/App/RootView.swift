@@ -96,7 +96,6 @@ struct RootView: View {
                 $0.isSyncable = false
                 $0.isPublic = false
             }
-
             appState.logout(userManager: userManager)
         }
     }
