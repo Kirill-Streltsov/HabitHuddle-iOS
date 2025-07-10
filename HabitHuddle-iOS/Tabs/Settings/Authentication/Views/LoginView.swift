@@ -135,7 +135,6 @@ struct LoginView: View {
         }
     }
 
-
     private func loginUser() {
         Task {
             await viewModel.loginUser(username: username, password: password)
