@@ -208,7 +208,7 @@ struct HabitDetailView: View {
             }
         }
     }
-    
+
     private var habitDescription: some View {
         Text(habit.habitDescription)
             .font(.title2)
