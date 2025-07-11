@@ -174,7 +174,7 @@ struct HabitDetailView: View {
                             .foregroundStyle(Color(.label))
                             .contentShape(Rectangle())
                         }
-                    
+                
                         if showCheckIns {
                             LazyVStack(alignment: .leading, spacing: 8) {
                                 ForEach(habit.checkIns.sorted(by: { $0.date < $1.date }).map({ $0.date }), id: \.self) { date in
