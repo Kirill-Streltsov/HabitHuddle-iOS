@@ -241,7 +241,7 @@ struct HabitDetailView: View {
         habit.cancelHabitNotification()
         context.delete(habit)
         try? context.save()
-        
+    
         Task {
             if userManager.profile.isSignedInToServer {
                 let result = await viewModel.deleteHabit(with: habit.id)
