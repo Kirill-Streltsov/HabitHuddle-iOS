@@ -236,7 +236,7 @@ struct HabitDetailView: View {
             viewModel.hasReminder = false
         }
     }
-    
+
     private func deleteHabit() async {
         habit.cancelHabitNotification()
         context.delete(habit)
