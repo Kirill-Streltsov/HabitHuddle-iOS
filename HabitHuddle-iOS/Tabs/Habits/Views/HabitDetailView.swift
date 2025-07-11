@@ -217,7 +217,7 @@ struct HabitDetailView: View {
             .multilineTextAlignment(.leading)
             .padding(.horizontal)
     }
-    
+
     private func populateFields(with habit: Habit) {
         viewModel.name = habit.name
         viewModel.description = habit.habitDescription
