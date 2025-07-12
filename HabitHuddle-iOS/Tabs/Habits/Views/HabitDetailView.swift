@@ -75,7 +75,7 @@ struct HabitDetailView: View {
                         
                         checkIns
                             .padding(.top, -16)
-        
+    
                         if !viewModel.openAIAnswer.isEmpty {
                             CardView {
                                 TypewriterText(text: viewModel.openAIAnswer, typingInterval: askOpenAITapped ? 0.02 : 0)
