@@ -153,7 +153,7 @@ struct HabitDetailView: View {
             }
         }
     }
-    
+
     private var checkIns: some View {
         Group {
             if !habit.checkIns.isEmpty {
