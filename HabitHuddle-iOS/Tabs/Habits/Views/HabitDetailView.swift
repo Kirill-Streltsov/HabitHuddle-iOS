@@ -72,7 +72,7 @@ struct HabitDetailView: View {
                                                 
                         HabitStatisticsView(habit: habit)
                             .frame(maxWidth: .infinity)
-            
+        
                         checkIns
                             .padding(.top, -16)
 
