@@ -15,7 +15,7 @@ struct FriendDetailView: View {
         
     @StateObject private var viewModel = ViewModel()
     let friend: UserDTO
-    
+
     @State private var showToast = false
     @State private var message = ""
     @State private var heatmapID = UUID()
