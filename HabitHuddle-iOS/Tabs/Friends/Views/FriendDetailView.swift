@@ -73,7 +73,7 @@ struct FriendDetailView: View {
         .navigationTitle(friend.username)
         .navigationBarTitleDisplayMode(.inline)
     }
-    
+
     private var friendHabits: some View {
         Group {
             if !viewModel.habits.isEmpty {
