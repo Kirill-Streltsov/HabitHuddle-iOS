@@ -12,7 +12,7 @@ struct FriendDetailView: View {
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
-    
+
     @StateObject private var viewModel = ViewModel()
     let friend: UserDTO
 
