@@ -20,7 +20,7 @@ struct FriendDetailView: View {
     @State private var message = ""
     @State private var heatmapID = UUID()
     @State private var didShowBoostSent = false
-    
+
     @Query
     var users: [User]
 
