@@ -23,7 +23,7 @@ struct FriendDetailView: View {
     
     @Query
     var users: [User]
-    
+
     var body: some View {
         ScrollView {
             VStack {
