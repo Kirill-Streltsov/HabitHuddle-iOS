@@ -111,7 +111,7 @@ actor NetworkManager {
             guard let token = TokenManager.token else { throw HHError.unauthorized }
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-        
+    
         urlRequest.httpMethod = method.rawValue
 
         headers?.forEach { key, value in
