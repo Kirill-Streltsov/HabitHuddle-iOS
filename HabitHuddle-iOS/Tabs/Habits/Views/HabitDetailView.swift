@@ -53,7 +53,7 @@ struct HabitDetailView: View {
                     VStack(spacing: 12) {
 
                         habitDescription
-            
+        
                         SubmitButton(
                             title: viewModel.isLoadingAIResponse ? "Thinking..." : "Ask AI about benefits",
                             color: Color.orange,
