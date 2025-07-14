@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct FriendDetailView: View {
-    
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
 
