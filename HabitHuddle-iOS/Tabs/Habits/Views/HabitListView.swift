@@ -20,7 +20,7 @@ struct HabitListView: View {
     @State private var showNewHabitView = false
     
     @StateObject private var newHabitViewModel = HabitDetailView.ViewModel()
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
