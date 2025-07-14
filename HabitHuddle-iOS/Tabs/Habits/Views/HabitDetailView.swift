@@ -51,7 +51,7 @@ struct HabitDetailView: View {
             ScrollView {
                 VStack(spacing: 16) {
                     VStack(spacing: 12) {
-    
+
                         habitDescription
                         
                         SubmitButton(
