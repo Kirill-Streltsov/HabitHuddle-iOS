@@ -45,7 +45,7 @@ struct HabitDetailView: View {
         _viewModel = StateObject(wrappedValue: ViewModel())
         self.habit = habit
     }
-    
+
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
