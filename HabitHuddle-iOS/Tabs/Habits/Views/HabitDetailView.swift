@@ -27,7 +27,7 @@ struct HabitDetailView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var userManager: LocalUserManager
-    
+
     // MARK: Date work
     private var dateFormatter: DateFormatter = {
         let df = DateFormatter()
