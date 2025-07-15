@@ -34,7 +34,7 @@ struct HabitDetailView: View {
         df.dateFormat = "EEEE, d. MMMM yyyy" // e.g. "Monday, 29. June 2025"
         return df
     }()
-    
+
     private var timeFormatter: DateFormatter = {
         let tf = DateFormatter()
         tf.dateFormat = "H:mm" // e.g. "3:43"
