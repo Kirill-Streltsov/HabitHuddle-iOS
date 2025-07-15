@@ -40,7 +40,7 @@ struct HabitDetailView: View {
         tf.dateFormat = "H:mm" // e.g. "3:43"
         return tf
     }()
-    
+
     init(habit: Habit) {
         _viewModel = StateObject(wrappedValue: ViewModel())
         self.habit = habit
