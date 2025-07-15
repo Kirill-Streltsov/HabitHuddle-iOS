@@ -23,7 +23,7 @@ struct HabitDetailView: View {
     @State private var showCheckIns = false
     
     @StateObject private var viewModel: ViewModel
-    
+
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var userManager: LocalUserManager
