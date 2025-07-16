@@ -13,7 +13,7 @@ struct HabitDetailView: View {
     
     var habit: Habit
     let aiTextID = 0
-    
+
     @State private var typewriterTextID = UUID()
     @State private var isCheckedIn = false
     @State private var deleteButtonPressed = false
