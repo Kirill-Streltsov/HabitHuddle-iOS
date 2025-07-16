@@ -75,7 +75,7 @@ struct LoginView: View {
                 }
                 .padding(.horizontal)
                 .padding(12)
-                
+            
                 Button {
                     loginUser()
                 } label: {
