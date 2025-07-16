@@ -10,7 +10,7 @@ import SwiftUI
 import UserNotifications
 
 struct HabitDetailView: View {
-    
+
     var habit: Habit
     let aiTextID = 0
 
