@@ -21,7 +21,7 @@ struct HabitDetailView: View {
     @State private var askOpenAITapped = false
     @State private var scrollTarget: Int? = nil
     @State private var showCheckIns = false
-    
+
     @StateObject private var viewModel: ViewModel
 
     @Environment(\.modelContext) private var context
