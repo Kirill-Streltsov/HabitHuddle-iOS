@@ -51,7 +51,6 @@ struct LoginView: View {
                     ErrorText(text: viewModel.errorMessage)
                         .frame(height: 20)
                     
-
                     InputView(text: $username,
                               title: "Username",
                               placeholder: "Enter your username...")
