@@ -32,7 +32,7 @@ struct LoginView: View {
     @EnvironmentObject private var userManager: LocalUserManager
     @EnvironmentObject private var appState: AppState
     @StateObject private var viewModel = LoginViewModel()
-    
+
     @State private var showHabitsFound = false
     @State private var newServerHabits = [HabitDTO]()
 
