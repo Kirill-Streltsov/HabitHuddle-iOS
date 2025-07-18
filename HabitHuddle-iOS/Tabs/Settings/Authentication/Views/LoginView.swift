@@ -35,7 +35,7 @@ struct LoginView: View {
     
     @State private var showHabitsFound = false
     @State private var newServerHabits = [HabitDTO]()
-    
+
     private var inputFieldIsEmpty: Bool {
         username.isEmpty || password.isEmpty
     }
