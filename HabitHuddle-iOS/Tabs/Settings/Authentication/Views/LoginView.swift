@@ -20,7 +20,7 @@ struct LoginView: View {
     
     @Query
     var users: [User]
-    
+
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
