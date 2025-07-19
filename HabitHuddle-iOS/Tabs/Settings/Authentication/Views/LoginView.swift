@@ -26,7 +26,7 @@ struct LoginView: View {
 
     @State private var username = ""
     @State private var password = ""
-    
+
     @FocusState private var focusedField: Field?
 
     @EnvironmentObject private var userManager: LocalUserManager
