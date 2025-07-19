@@ -14,7 +14,7 @@ struct LoginView: View {
         case username
         case password
     }
-    
+
     @Query
     var habits: [Habit]
 
