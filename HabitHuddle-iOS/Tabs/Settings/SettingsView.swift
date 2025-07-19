@@ -28,7 +28,7 @@ struct SettingsView: View {
     
     @State private var showHabitsFound = false
     @State private var newServerHabits = [HabitDTO]()
-    
+
     var body: some View {
         NavigationStack {
             List {
