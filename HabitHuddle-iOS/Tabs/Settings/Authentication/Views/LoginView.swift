@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct LoginView: View {
-    
+
     enum Field {
         case username
         case password
