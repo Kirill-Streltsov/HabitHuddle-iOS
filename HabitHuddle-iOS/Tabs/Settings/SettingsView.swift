@@ -20,7 +20,7 @@ struct SettingsView: View {
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     
     @Environment(\.modelContext) private var context
-    
+
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var userManager: LocalUserManager
 
