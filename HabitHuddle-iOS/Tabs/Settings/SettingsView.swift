@@ -25,7 +25,7 @@ struct SettingsView: View {
     @EnvironmentObject private var userManager: LocalUserManager
     
     @StateObject private var viewModel = LoginViewModel()
-    
+
     @State private var showHabitsFound = false
     @State private var newServerHabits = [HabitDTO]()
 
