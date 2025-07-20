@@ -16,7 +16,7 @@ struct SettingsView: View {
     
     @Query
     var users: [User]
-    
+
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
 
     @Environment(\.modelContext) private var context
