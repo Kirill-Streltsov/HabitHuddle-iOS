@@ -14,7 +14,7 @@ final class GoogleAuthManager {
     static let shared = GoogleAuthManager()
     
     private init() {}
-    
+
     func signIn(completion: @escaping (Result<String, Error>) -> Void) {
         guard let presentingVC = UIApplication.topViewController() else {
             completion(.failure(NSError(domain: "NoRootVC", code: -1, userInfo: [NSLocalizedDescriptionKey: "No root view controller found."])))
