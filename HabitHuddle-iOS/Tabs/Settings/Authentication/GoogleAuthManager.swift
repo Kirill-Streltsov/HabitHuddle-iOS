@@ -12,7 +12,7 @@ import UIKit
 final class GoogleAuthManager {
     
     static let shared = GoogleAuthManager()
-    
+
     private init() {}
 
     func signIn(completion: @escaping (Result<String, Error>) -> Void) {
