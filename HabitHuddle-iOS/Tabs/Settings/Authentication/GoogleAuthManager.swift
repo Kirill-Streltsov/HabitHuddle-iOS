@@ -31,7 +31,6 @@ final class GoogleAuthManager {
                 completion(.failure(NSError(domain: "NoIDToken", code: -1, userInfo: [NSLocalizedDescriptionKey: "No ID Token found."])))
                 return
             }
-
             completion(.success(idToken))
         }
     }
