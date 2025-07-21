@@ -10,7 +10,7 @@ import UIKit
 
 @MainActor
 final class GoogleAuthManager {
-    
+
     static let shared = GoogleAuthManager()
 
     private init() {}
