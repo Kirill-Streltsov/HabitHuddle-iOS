@@ -26,7 +26,6 @@ final class GoogleAuthManager {
                 completion(.failure(error))
                 return
             }
-
             guard let idToken = result?.user.idToken?.tokenString else {
                 completion(.failure(NSError(domain: "NoIDToken", code: -1, userInfo: [NSLocalizedDescriptionKey: "No ID Token found."])))
                 return
