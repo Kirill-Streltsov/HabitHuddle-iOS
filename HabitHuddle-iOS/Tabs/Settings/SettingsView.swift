@@ -10,7 +10,7 @@ import SwiftData
 import AuthenticationServices
 
 struct SettingsView: View {
-    
+
     @Query
     var habits: [Habit]
 
