@@ -23,7 +23,7 @@ struct RegistrationView: View {
     
     @EnvironmentObject var userManager: LocalUserManager
     @EnvironmentObject var appState: AppState
-    
+
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
