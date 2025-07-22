@@ -132,7 +132,7 @@ struct RegistrationView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemGroupedBackground))
     }
-    
+
     private func registerUser() {
         registerButtonPressed = true
         if inputFieldsAreValid {
