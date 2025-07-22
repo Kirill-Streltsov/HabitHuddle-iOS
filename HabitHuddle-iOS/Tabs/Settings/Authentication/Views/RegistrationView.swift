@@ -101,7 +101,7 @@ struct RegistrationView: View {
             }
             .padding(.horizontal)
             .padding(12)
-    
+
             Button {
                 registerUser()
             } label: {
