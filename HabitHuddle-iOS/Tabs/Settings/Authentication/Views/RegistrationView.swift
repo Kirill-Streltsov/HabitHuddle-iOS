@@ -26,7 +26,7 @@ struct RegistrationView: View {
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-    
+
     @State private var username = ""
     @State private var name = ""
     @State private var password = ""
