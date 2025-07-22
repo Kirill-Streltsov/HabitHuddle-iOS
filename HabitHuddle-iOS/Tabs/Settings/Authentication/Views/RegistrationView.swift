@@ -32,7 +32,7 @@ struct RegistrationView: View {
     @State private var password = ""
     @State private var confirmPassword = ""
     @State private var registerButtonPressed = false
-    
+
     @FocusState private var focusedField: Field?
 
     private var inputFieldsAreEmpty: Bool {
