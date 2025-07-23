@@ -20,7 +20,7 @@ struct RegistrationView: View {
     var habits: [Habit]
         
     @StateObject private var viewModel = ViewModel()
-    
+
     @EnvironmentObject var userManager: LocalUserManager
     @EnvironmentObject var appState: AppState
 
