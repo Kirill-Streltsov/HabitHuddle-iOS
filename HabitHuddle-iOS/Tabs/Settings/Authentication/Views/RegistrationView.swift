@@ -15,7 +15,7 @@ struct RegistrationView: View {
         case password
         case confirmPassword
     }
-    
+
     @Query
     var habits: [Habit]
 
