@@ -18,7 +18,7 @@ struct RegistrationView: View {
     
     @Query
     var habits: [Habit]
-        
+    
     @StateObject private var viewModel = ViewModel()
 
     @EnvironmentObject var userManager: LocalUserManager
