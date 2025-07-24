@@ -256,7 +256,7 @@ struct HabitStatisticsView: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
             }
-            
+        
             HStack(alignment: .top, spacing: 40) {
                 VStack {
                     Text("Current Streak")
