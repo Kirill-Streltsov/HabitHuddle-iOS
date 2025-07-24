@@ -250,7 +250,7 @@ struct HabitStatisticsView: View {
                 .lineStyle(StrokeStyle(lineWidth: 2))
             }
             .frame(height: 150)
-            
+        
             if currentStreak.length == longestStreak.length {
                 Text("You're making great progress — this is your longest streak so far.")
                     .font(.subheadline)
