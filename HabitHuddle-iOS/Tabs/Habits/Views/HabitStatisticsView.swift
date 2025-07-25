@@ -134,7 +134,6 @@ struct HabitStatisticsView: View {
         }
 
         let startDate = calendar.date(byAdding: .day, value: -(streak - 1), to: today) ?? today
-
         return Streak(length: streak, startDate: startDate, endDate: today)
     }
 
