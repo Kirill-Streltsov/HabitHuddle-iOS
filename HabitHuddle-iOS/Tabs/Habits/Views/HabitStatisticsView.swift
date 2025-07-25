@@ -150,7 +150,6 @@ struct HabitStatisticsView: View {
         }
     }
 
-    // MARK: Body
 
     var body: some View {
         ScrollView {
