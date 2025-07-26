@@ -126,7 +126,7 @@ struct HabitCard: View {
             }
             .padding(.bottom, 4)
             .frame(width: cardWidth)
-    
+
             HabitProgressView(
                 habit: habit,
                 width: cardWidth,
