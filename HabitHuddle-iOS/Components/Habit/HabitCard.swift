@@ -107,7 +107,7 @@ struct HabitCard: View {
                         .foregroundStyle(.secondary)
                 }
                 Spacer()
-                
+            
                 if habit.challenges.isEmpty {
                     Button {
                         challengeButtonPressed = true
