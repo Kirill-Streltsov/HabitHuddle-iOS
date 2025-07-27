@@ -94,7 +94,7 @@ struct HabitCard: View {
             }
             .offset(y: 15)
             .frame(width: cardWidth)
-    
+
             HStack(alignment: .bottom) {
                 if habit.isCompleted {
                     Text("🎉 Finished! Keep the streak alive!")
