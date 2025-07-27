@@ -66,7 +66,7 @@ struct HabitCard: View {
                 }
             }
             .frame(width: cardWidth)
-    
+
             ZStack {
                 CheckedInStateView(
                     isOn: habit.isCheckedInToday,
