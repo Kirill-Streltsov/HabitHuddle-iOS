@@ -29,7 +29,7 @@ struct HabitCard: View {
             return .large
         }
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top) {
