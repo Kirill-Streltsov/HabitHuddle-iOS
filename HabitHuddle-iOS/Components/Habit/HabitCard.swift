@@ -19,7 +19,7 @@ struct HabitCard: View {
     
     @Query
     var users: [User]
-    
+
     var detent: PresentationDetent {
         if users.count >= 0 && users.count <= 2 {
             return .fraction(0.4)
