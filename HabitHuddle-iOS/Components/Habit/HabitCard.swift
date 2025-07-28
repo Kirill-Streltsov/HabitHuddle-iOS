@@ -16,7 +16,7 @@ struct HabitCard: View {
         
     let habit: Habit
     let cardWidth: CGFloat = UIScreen.main.bounds.width - 60
-    
+
     @Query
     var users: [User]
 
