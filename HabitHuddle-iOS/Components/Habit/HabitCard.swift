@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct HabitCard: View {
-    
+
     @Environment(\.modelContext) private var context
     @State private var scale = 1.0
     @State private var challengeButtonPressed = false
