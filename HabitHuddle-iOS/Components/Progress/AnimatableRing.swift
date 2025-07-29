@@ -16,7 +16,6 @@ struct AnimatableRing: View {
             Circle()
                 .stroke(Color.gray.opacity(0.2), lineWidth: 20)
 
-            // Animated ring
             RingShape(progress: progress)
                 .stroke(
                     .green,
