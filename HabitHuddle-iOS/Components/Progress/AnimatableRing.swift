@@ -13,7 +13,6 @@ struct AnimatableRing: View {
 
     var body: some View {
         ZStack {
-            // Background circle
             Circle()
                 .stroke(Color.gray.opacity(0.2), lineWidth: 20)
 
