@@ -22,7 +22,7 @@ struct AnimatableRing: View {
                     style: StrokeStyle(lineWidth: 20, lineCap: .round)
                 )
                 .rotationEffect(.degrees(-90))
-    
+
             Text("\(habit.checkIns.count)/\(habit.duration.numberOfDays) days")
                 .contentTransition(.numericText())
                 .font(.title2)
