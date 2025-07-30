@@ -29,7 +29,6 @@ struct AnimatableRing: View {
                 .fontWeight(.semibold)
         }
         .onAppear {
-            // Animate the progress when view appears
             withAnimation(.easeOut(duration: 0.5)) {
                 calculateProgress()
             }
