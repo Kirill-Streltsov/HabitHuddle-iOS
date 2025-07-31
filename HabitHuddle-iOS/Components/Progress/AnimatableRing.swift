@@ -11,7 +11,6 @@ struct AnimatableRing: View {
     let habit: Habit
     @State private var progress: CGFloat = 0.0
 
-
     var body: some View {
         ZStack {
             Circle()
