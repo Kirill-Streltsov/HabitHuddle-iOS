@@ -115,7 +115,6 @@ struct HabitStatisticsView: View {
         return Streak(length: maxLength, startDate: maxStart, endDate: maxEnd)
     }
 
-    // Calculate current streak ending today (or yesterday if missed today)
     private var currentStreak: Streak {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
