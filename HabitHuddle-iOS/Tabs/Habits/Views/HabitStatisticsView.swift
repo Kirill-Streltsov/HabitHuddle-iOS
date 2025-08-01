@@ -78,7 +78,6 @@ struct HabitStatisticsView: View {
         return missed
     }
 
-    // Calculate longest consecutive streak
     private var longestStreak: Streak {
         let calendar = Calendar.current
         let sortedCheckIns = habit.checkIns.map { calendar.startOfDay(for: $0.date) }.sorted()
