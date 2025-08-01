@@ -34,8 +34,6 @@ struct HabitStatisticsView: View {
     @State private var statisticsID = UUID()
     let habit: Habit
     
-    // MARK: Computed properties
-
     private var hourlyData: [HourlyPatternData] {
         generateHourlyData()
     }
