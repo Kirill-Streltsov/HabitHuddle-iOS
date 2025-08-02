@@ -41,7 +41,7 @@ struct HabitStatisticsView: View {
     private var streakData: [StreakData] {
         generateStreakData()
     }
-    
+
     private var totalDays: Int {
         let days = Calendar.current.dateComponents([.day], from: habit.createdAt, to: Date()).day ?? 1
         return max(days, 1)
