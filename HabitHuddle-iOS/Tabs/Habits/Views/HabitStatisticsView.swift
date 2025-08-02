@@ -64,7 +64,6 @@ struct HabitStatisticsView: View {
         // Create a Set of check-in dates normalized to day
         let checkInDays: Set<Date> = Set(habit.checkIns.map { calendar.startOfDay(for: $0.date) })
 
-        // Iterate over each day and count days without check-in
         var missed = 0
         for dayOffset in 0 ... totalDays {
             if let dateToCheck = calendar.date(byAdding: .day, value: dayOffset, to: startDate) {
