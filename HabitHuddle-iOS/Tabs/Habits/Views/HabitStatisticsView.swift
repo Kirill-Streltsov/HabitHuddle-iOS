@@ -37,7 +37,7 @@ struct HabitStatisticsView: View {
     private var hourlyData: [HourlyPatternData] {
         generateHourlyData()
     }
-    
+
     private var streakData: [StreakData] {
         generateStreakData()
     }
