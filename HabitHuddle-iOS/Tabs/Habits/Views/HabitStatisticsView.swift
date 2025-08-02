@@ -30,7 +30,7 @@ struct StreakData: Identifiable {
 // MARK: - Main Statistics View
 
 struct HabitStatisticsView: View {
-    
+
     @State private var statisticsID = UUID()
     let habit: Habit
 
