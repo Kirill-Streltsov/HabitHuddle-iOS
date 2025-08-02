@@ -33,7 +33,7 @@ struct HabitStatisticsView: View {
     
     @State private var statisticsID = UUID()
     let habit: Habit
-    
+
     private var hourlyData: [HourlyPatternData] {
         generateHourlyData()
     }
