@@ -61,7 +61,6 @@ struct HabitStatisticsView: View {
             return 0
         }
 
-        // Create a Set of check-in dates normalized to day
         let checkInDays: Set<Date> = Set(habit.checkIns.map { calendar.startOfDay(for: $0.date) })
 
         var missed = 0
