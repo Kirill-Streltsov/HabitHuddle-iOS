@@ -56,7 +56,6 @@ struct HabitStatisticsView: View {
         let today = calendar.startOfDay(for: Date())
         let startDate = calendar.startOfDay(for: habit.createdAt)
 
-        // Total days from createdAt to today (inclusive)
         guard let totalDays = calendar.dateComponents([.day], from: startDate, to: today).day else {
             return 0
         }
