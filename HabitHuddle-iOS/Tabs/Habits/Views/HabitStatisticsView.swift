@@ -99,7 +99,6 @@ struct HabitStatisticsView: View {
             }
         }
 
-        // Check last streak
         if currentLength > maxLength {
             maxLength = currentLength
             maxStart = currentStart
