@@ -151,7 +151,7 @@ struct HabitStatisticsView: View {
                             .id(statisticsID)
                     }
                 }
-                
+            
                 if habit.checkIns.count >= 2 {
                     CardView {
                         ChartContainerView(title: "Streaks Timeline", subtitle: "Your streaks over time") {
