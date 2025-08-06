@@ -158,7 +158,7 @@ struct HabitStatisticsView: View {
                             streaksSection
                         }
                     }
-            
+        
                     CardView {
                         ChartContainerView(title: "Time of Day Pattern", subtitle: "When you usually check in") {
                             checkInTimeDistributionSection
