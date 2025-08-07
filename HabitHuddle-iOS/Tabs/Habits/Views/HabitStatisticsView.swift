@@ -172,7 +172,7 @@ struct HabitStatisticsView: View {
                         .foregroundStyle(Color(.secondaryLabel))
                         .padding()
                 }
-                
+            
                 CardView {
                     ChartContainerView(title: "Missed days", subtitle: "The number of days you've missed") {
                         missedDaysSection
