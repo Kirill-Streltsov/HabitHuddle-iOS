@@ -188,7 +188,6 @@ struct HabitStatisticsView: View {
             statisticsID = UUID()
         }
     }
-
     private var missedDaysSection: some View {
         VStack(spacing: 16) {
             ZStack {
