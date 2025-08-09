@@ -222,7 +222,7 @@ struct HabitStatisticsView: View {
         }
     }
 
-
+    
     private var streaksSection: some View {
         VStack(spacing: 24) {
             Chart(streakData) { data in
