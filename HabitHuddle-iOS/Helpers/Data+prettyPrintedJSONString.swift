@@ -16,6 +16,7 @@ extension Data {
         else {
             return nil
         }
+        
         return prettyJSON
     }
 }
