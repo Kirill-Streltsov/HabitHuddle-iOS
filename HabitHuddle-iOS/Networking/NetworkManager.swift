@@ -159,6 +159,7 @@ actor NetworkManager {
         return HTTPStatus(statusCode: httpResponse.statusCode)
     }
 
+    
     private func handleResponse<T: Decodable>(data: Data, response: HTTPURLResponse, responseType _: T.Type) throws -> T {
         switch response.statusCode {
         case 200 ..< 300:
