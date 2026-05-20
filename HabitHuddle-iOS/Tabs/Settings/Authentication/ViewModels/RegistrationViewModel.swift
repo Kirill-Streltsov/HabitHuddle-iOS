@@ -44,7 +44,8 @@ extension RegistrationView {
                 } else {
                     errorMessage = "Something went wrong. Please try again."
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                Task {
+                    try? await Task.sleep(for: .seconds(3))
                     self.errorMessage = ""
                 }
             }

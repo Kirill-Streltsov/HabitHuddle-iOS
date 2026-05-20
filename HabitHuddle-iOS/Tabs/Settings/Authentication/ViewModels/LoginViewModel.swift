@@ -38,7 +38,8 @@ final class LoginViewModel: ObservableObject {
             } else {
                 errorMessage = "Something went wrong. Please try again."
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            Task {
+                try? await Task.sleep(for: .seconds(3))
                 self.errorMessage = ""
             }
         }
@@ -109,11 +110,11 @@ final class LoginViewModel: ObservableObject {
 
     private func makeBase64Login(username: String, password: String) -> String {
         let loginString = "\(username):\(password)"
-        if let data = loginString.data(using: .utf8) {
-            return data.base64EncodedString()
-        } else {
-            fatalError("Couldn't encode your username or password")
+        guard let data = loginString.data(using: .utf8) else {
+            assertionFailure("UTF-8 encoding failed for login string")
+            return ""
         }
+        return data.base64EncodedString()
     }
 
     func getUserHabits() async -> Result<[HabitDTO], HHError> {

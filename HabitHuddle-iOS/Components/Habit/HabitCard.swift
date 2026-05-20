@@ -15,7 +15,6 @@ struct HabitCard: View {
     @State private var challengeButtonPressed = false
 
     let habit: Habit
-    let cardWidth: CGFloat = UIScreen.main.bounds.width - 60
 
     @Query
     var users: [User]
@@ -65,7 +64,7 @@ struct HabitCard: View {
                     }
                 }
             }
-            .frame(width: cardWidth)
+            .frame(maxWidth: .infinity)
 
             ZStack {
                 CheckedInStateView(
@@ -82,9 +81,7 @@ struct HabitCard: View {
                         HapticManager.trigger(.success)
                         habit.toggleCheckIn(in: context)
                         scale += 0.15
-                        DispatchQueue.main.asyncAfter(deadline: .now()) {
-                            scale -= 0.15
-                        }
+                        Task { scale -= 0.15 }
                     }
                 HStack {
                     StatItem(title: "Longest Streak", value: "\(habit.longestStreak) days")
@@ -93,7 +90,7 @@ struct HabitCard: View {
                 }
             }
             .offset(y: 15)
-            .frame(width: cardWidth)
+            .frame(maxWidth: .infinity)
 
             HStack(alignment: .bottom) {
                 if habit.isCompleted {
@@ -125,19 +122,15 @@ struct HabitCard: View {
                 }
             }
             .padding(.bottom, 4)
-            .frame(width: cardWidth)
+            .frame(maxWidth: .infinity)
 
-            HabitProgressView(
-                habit: habit,
-                width: cardWidth,
-                height: 8
-            )
+            HabitProgressView(habit: habit, height: 8)
         }
         .padding()
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
-        .frame(maxWidth: cardWidth)
+        .frame(maxWidth: .infinity)
         .animation(.easeInOut(duration: 0.3), value: scale)
         .sheet(isPresented: $challengeButtonPressed) {
             ZStack {

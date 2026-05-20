@@ -69,7 +69,7 @@ extension MyFriendsView {
             do {
                 let payload = MakeFriendsRequest(friendID: id)
                 let requestStatus = try await NetworkManager.shared.requestStatusCode(
-                    endpoint: .requestFriend(with: id),
+                    endpoint: .requestFriend(),
                     method: .post,
                     body: payload)
                 print("✅ Requested friend. Status code: \(requestStatus)")

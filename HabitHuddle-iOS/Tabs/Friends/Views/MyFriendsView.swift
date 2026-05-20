@@ -127,10 +127,9 @@ struct MyFriendsView: View {
             } else if let errorMessage = viewModel.errorMessage {
                 NoConnectionView(errorMessage: errorMessage)
                     .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                            withAnimation {
-                                viewModel.errorMessage = nil
-                            }
+                        Task {
+                            try? await Task.sleep(for: .seconds(5))
+                            withAnimation { viewModel.errorMessage = nil }
                         }
                     }
             } else if viewModel.results.isEmpty {

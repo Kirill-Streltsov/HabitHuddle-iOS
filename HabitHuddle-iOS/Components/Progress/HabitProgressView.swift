@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HabitProgressView: View {
     let habit: Habit
-    let width: CGFloat
     let height: CGFloat
     var cornerRadius: CGFloat = 4
     var color: Color = Color.gray.opacity(0.3)
@@ -17,17 +16,20 @@ struct HabitProgressView: View {
     @State private var calculatedProgress: Double = 0.0
 
     var body: some View {
-        ZStack(alignment: .leading) {
-            Rectangle()
-                .fill(color)
-                .frame(width: width, height: height)
-                .cornerRadius(cornerRadius)
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .fill(color)
+                    .frame(width: geo.size.width, height: height)
+                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
 
-            Rectangle()
-                .fill(Color.green)
-                .frame(width: width * CGFloat(calculatedProgress), height: height)
-                .cornerRadius(cornerRadius)
+                Rectangle()
+                    .fill(Color.green)
+                    .frame(width: geo.size.width * CGFloat(calculatedProgress), height: height)
+                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+            }
         }
+        .frame(height: height)
         .onChange(of: habit.checkIns.count) { _, _ in
             animateBar()
         }
@@ -48,5 +50,9 @@ struct HabitProgressView: View {
 }
 
 #Preview {
-    HabitProgressView(habit: Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "2 liters a day", duration: .oneMonth, reminderTime: .now, createdAt: .now, updatedAt: .now), width: 50, height: 50)
+    HabitProgressView(
+        habit: Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "2 liters a day", duration: .oneMonth, reminderTime: .now, createdAt: .now, updatedAt: .now),
+        height: 8
+    )
+    .padding()
 }

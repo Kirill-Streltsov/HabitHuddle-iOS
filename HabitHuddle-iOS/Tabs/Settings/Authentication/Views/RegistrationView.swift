@@ -105,16 +105,15 @@ struct RegistrationView: View {
             Button {
                 registerUser()
             } label: {
-                HStack {
-                    Text("SIGN UP")
-                        .fontWeight(.semibold)
-                }
-                .foregroundStyle(.white)
-                .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                Text("SIGN UP")
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity, minHeight: 48)
             }
             .disabled(inputFieldsAreEmpty)
             .background(inputFieldsAreEmpty ? Color.accentColor.opacity(0.5) : Color.accentColor)
             .clipShape(.rect(cornerRadius: 10))
+            .padding(.horizontal, 16)
             Spacer()
         }
         .onChange(of: viewModel.loadedUser) { _, newValue in

@@ -78,16 +78,15 @@ struct LoginView: View {
                 Button {
                     loginUser()
                 } label: {
-                    HStack {
-                        Text("SIGN IN")
-                            .fontWeight(.semibold)
-                    }
-                    .foregroundStyle(.white)
-                    .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                    Text("SIGN IN")
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity, minHeight: 48)
                 }
                 .disabled(inputFieldIsEmpty)
                 .background(inputFieldIsEmpty ? Color.accentColor.opacity(0.5) : Color.accentColor)
                 .clipShape(.rect(cornerRadius: 10))
+                .padding(.horizontal, 16)
 
                 Spacer()
             }

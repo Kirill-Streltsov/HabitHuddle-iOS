@@ -19,7 +19,6 @@ struct FriendHabitCard: View {
     @Environment(\.modelContext) private var context
     
     let habitDTO: HabitDTO
-    let cardWidth: CGFloat = UIScreen.main.bounds.width - 60
     
     init(didShowBoostSent: Binding<Bool>, habitDTO: HabitDTO, onSendBoost: @escaping () async -> Void) {
         self._showBoostSent = didShowBoostSent
@@ -59,7 +58,7 @@ struct FriendHabitCard: View {
                 }
                 Spacer()
             }
-            .frame(width: cardWidth)
+            .frame(maxWidth: .infinity)
             
             ZStack {
                 VStack {
@@ -86,9 +85,7 @@ struct FriendHabitCard: View {
                                 await onSendBoost()
                             }
                             scale += 0.15
-                            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                scale -= 0.15
-                            }
+                            Task { scale -= 0.15 }
                         }
                         .animation(.easeInOut(duration: 0.3), value: scale)
                     }
@@ -106,7 +103,7 @@ struct FriendHabitCard: View {
                 }
             }
             .offset(y: 15)
-            .frame(width: cardWidth)
+            .frame(maxWidth: .infinity)
             
             HStack {
                 if habitDTO.isCompleted {
@@ -125,17 +122,13 @@ struct FriendHabitCard: View {
             }
             .padding(.bottom, 4)
             
-            HabitDTOProgressView(
-                habit: habitDTO,
-                width: cardWidth,
-                height: 8
-            )
+            HabitDTOProgressView(habit: habitDTO, height: 8)
         }
         .padding()
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
-        .frame(maxWidth: cardWidth)
+        .frame(maxWidth: .infinity)
     }
 }
 

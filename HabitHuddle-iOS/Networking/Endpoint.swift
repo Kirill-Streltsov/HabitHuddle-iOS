@@ -108,7 +108,7 @@ struct Endpoint {
         Endpoint(path: "friends")
     }
     
-    static func requestFriend(with id: UUID) -> Endpoint {
+    static func requestFriend() -> Endpoint {
         Endpoint(path: "friends/request")
     }
     

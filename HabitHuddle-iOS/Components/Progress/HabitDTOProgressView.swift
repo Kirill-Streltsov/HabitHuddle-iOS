@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HabitDTOProgressView: View {
     let habit: HabitDTO
-    let width: CGFloat
     let height: CGFloat
     var cornerRadius: CGFloat = 4
     var color: Color = Color.gray.opacity(0.3)
@@ -17,17 +16,20 @@ struct HabitDTOProgressView: View {
     @State private var calculatedProgress: Double = 0.0
 
     var body: some View {
-        ZStack(alignment: .leading) {
-            Rectangle()
-                .fill(color)
-                .frame(width: width, height: height)
-                .cornerRadius(cornerRadius)
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .fill(color)
+                    .frame(width: geo.size.width, height: height)
+                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
 
-            Rectangle()
-                .fill(Color.green)
-                .frame(width: width * CGFloat(calculatedProgress), height: height)
-                .cornerRadius(cornerRadius)
+                Rectangle()
+                    .fill(Color.green)
+                    .frame(width: geo.size.width * CGFloat(calculatedProgress), height: height)
+                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+            }
         }
+        .frame(height: height)
         .onAppear {
             animateBar()
         }
