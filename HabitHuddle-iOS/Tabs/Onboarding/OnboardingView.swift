@@ -28,7 +28,7 @@ struct OnboardingView: View {
             ),
             OnboardingPageData(
                 symbol: "flame.fill",
-                title: "Track your pogress",
+                title: "Track your progress",
                 text: "Track your check-ins, streaks, and progress.",
                 customView: AnyView(
                     VStack {
