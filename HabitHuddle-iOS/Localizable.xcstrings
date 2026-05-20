@@ -1,0 +1,3770 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "@%@" : {
+
+    },
+    "%@" : {
+
+    },
+    "%@ (You) vs %@" : {
+      "comment" : "Competitive challenge title when the current user is the initiator",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (Du) vs. %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (Вы) против %@"
+          }
+        }
+      }
+    },
+    "%@ (You) with %@" : {
+      "comment" : "Supportive challenge title when the current user is the initiator",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (Du) mit %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (Вы) с %@"
+          }
+        }
+      }
+    },
+    "%@ challenged you!" : {
+      "comment" : "Challenge card subtitle; %@ is the challenger's name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ hat dich herausgefordert!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ бросил вам вызов!"
+          }
+        }
+      }
+    },
+    "%@ has no habits" : {
+      "comment" : "Empty state title on a friend's profile; %@ is the friend's name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ hat keine Gewohnheiten"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "У %@ нет привычек"
+          }
+        }
+      }
+    },
+    "%@ hasn't started any habits yet.\nSend a challenge to help get things going!" : {
+
+    },
+    "%@ might be keeping their habits private — or just getting started.\nEither way, a challenge from you could be the perfect motivation!" : {
+      "comment" : "Empty state description on a friend's profile; %@ is the friend's name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ hält seine Gewohnheiten vielleicht privat – oder fängt gerade erst an.\nEin Duell von dir könnte die perfekte Motivation sein!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ скрывает свои привычки или только начинает.\nВаш вызов может стать отличной мотивацией!"
+          }
+        }
+      }
+    },
+    "%@ vs %@ (You)" : {
+      "comment" : "Competitive challenge title when the current user is the receiver",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ vs. %@ (Du)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ против %@ (Вы)"
+          }
+        }
+      }
+    },
+    "%@ with %@ (You)" : {
+      "comment" : "Supportive challenge title when the current user is the receiver",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ mit %@ (Du)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ с %@ (Вы)"
+          }
+        }
+      }
+    },
+    "%@'s activity" : {
+      "comment" : "Friend detail screen section header; %@ is the friend's name",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivität von %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активность %@"
+          }
+        }
+      }
+    },
+    "%@'s challenges" : {
+      "comment" : "Friend detail screen section header; %@ is the friend's name",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausforderungen von %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Испытания %@"
+          }
+        }
+      }
+    },
+    "%@'s habits" : {
+      "comment" : "Friend detail screen section header; %@ is the friend's name",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewohnheiten von %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Привычки %@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+
+    },
+    "%lld / %lld days" : {
+      "comment" : "Check-in count out of total habit duration days",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld / %lld Tage"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld / %lld дней"
+          }
+        }
+      }
+    },
+    "%lld days" : {
+      "comment" : "Number of days (streak length, duration, etc.)",
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tag"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tage"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days"
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld дня"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld дней"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld день"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld дней"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld/%lld days" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld days"
+          }
+        }
+      }
+    },
+    "%lld%" : {
+      "comment" : "Percentage value (completion rate, progress)",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+
+    },
+    "⏰ It's Habit O'Clock!" : {
+      "comment" : "Push notification title variant 4",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Zeit für deine Gewohnheit!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Время привычек!"
+          }
+        }
+      }
+    },
+    "⏰ It’s Habit O’Clock!" : {
+
+    },
+    "✅ Stay on Track!" : {
+      "comment" : "Push notification title variant 1",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ Bleib auf Kurs!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ Держись курса!"
+          }
+        }
+      }
+    },
+    "🌅 New Day, New Win!" : {
+      "comment" : "Push notification title variant 2",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌅 Neuer Tag, neuer Erfolg!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌅 Новый день — новая победа!"
+          }
+        }
+      }
+    },
+    "🎉 Finished! Keep the streak alive!" : {
+      "comment" : "Habit card label when the habit duration goal has been met",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Fertig! Halte die Serie am Leben!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Готово! Держи серию!"
+          }
+        }
+      }
+    },
+    "🎉 Habit finished!" : {
+      "comment" : "Friend habit card label when the habit is completed",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Gewohnheit abgeschlossen!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Привычка завершена!"
+          }
+        }
+      }
+    },
+    "📈 Tiny Habits. Big Results." : {
+      "comment" : "Push notification title variant 3",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📈 Kleine Gewohnheiten. Große Ergebnisse."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📈 Маленькие привычки. Большие результаты."
+          }
+        }
+      }
+    },
+    "1 Month" : {
+      "comment" : "Habit duration option",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 Monat"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 месяц"
+          }
+        }
+      }
+    },
+    "1 Week" : {
+      "comment" : "Habit duration option",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 Woche"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 неделя"
+          }
+        }
+      }
+    },
+    "2 Weeks" : {
+      "comment" : "Habit duration option",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 Wochen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 недели"
+          }
+        }
+      }
+    },
+    "100% consistency!" : {
+      "comment" : "Label shown when zero days are missed",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100 % Konstanz!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100% постоянства!"
+          }
+        }
+      }
+    },
+    "A network error occurred: %@" : {
+      "comment" : "Error description for a network failure; %@ is the underlying error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Netzwerkfehler ist aufgetreten: %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произошла ошибка сети: %@"
+          }
+        }
+      }
+    },
+    "About" : {
+      "comment" : "Settings link to about screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über die App"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О приложении"
+          }
+        }
+      }
+    },
+    "ABOUT" : {
+      "comment" : "Placeholder content for the about screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ÜBER DIE APP"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О ПРИЛОЖЕНИИ"
+          }
+        }
+      }
+    },
+    "Accept" : {
+      "comment" : "Button to accept a challenge or friend request",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annehmen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Принять"
+          }
+        }
+      }
+    },
+    "Account" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аккаунт"
+          }
+        }
+      }
+    },
+    "Add a new one..." : {
+      "comment" : "Placeholder when no categories exist yet",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neu hinzufügen..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать новую..."
+          }
+        }
+      }
+    },
+    "Add Friend" : {
+      "comment" : "Button to send a friend request to a found user",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freund hinzufügen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить в друзья"
+          }
+        }
+      }
+    },
+    "Add your first habit" : {
+      "comment" : "Empty state call-to-action button",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erste Gewohnheit hinzufügen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить первую привычку"
+          }
+        }
+      }
+    },
+    "Alphabetical" : {
+      "comment" : "Sort mode: alphabetical order",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alphabetisch"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По алфавиту"
+          }
+        }
+      }
+    },
+    "An unknown error occurred." : {
+      "comment" : "Generic error description",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein unbekannter Fehler ist aufgetreten."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произошла неизвестная ошибка."
+          }
+        }
+      }
+    },
+    "Ask AI about benefits" : {
+      "comment" : "Button to ask AI about habit benefits",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KI nach Vorteilen fragen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спросить ИИ о пользе"
+          }
+        }
+      }
+    },
+    "Back" : {
+      "comment" : "Onboarding back navigation button",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurück"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
+        }
+      }
+    },
+    "Boost notification sent!" : {
+      "comment" : "Toast message after sending a boost to a friend",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boost-Benachrichtigung gesendet!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Буст отправлен!"
+          }
+        }
+      }
+    },
+    "Build habits, stay on track, and grow step by step." : {
+      "comment" : "Onboarding page 1 subtitle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewohnheiten aufbauen, auf Kurs bleiben und Schritt für Schritt wachsen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Формируйте привычки, следите за прогрессом и растите шаг за шагом."
+          }
+        }
+      }
+    },
+    "Cancel Challenge" : {
+      "comment" : "Button to withdraw a sent challenge",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausforderung zurückziehen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отозвать испытание"
+          }
+        }
+      }
+    },
+    "Categories help you organize your habits into meaningful groups" : {
+      "comment" : "Info popover text for the category field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorien helfen dir, deine Gewohnheiten sinnvoll zu ordnen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Категории помогают организовать ваши привычки по группам"
+          }
+        }
+      }
+    },
+    "Category" : {
+      "comment" : "Section header for habit category selection",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Категория"
+          }
+        }
+      }
+    },
+    "Challenge %@" : {
+
+    },
+    "Challenge accepted!" : {
+      "comment" : "Toast message after accepting a challenge",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausforderung angenommen!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Испытание принято!"
+          }
+        }
+      }
+    },
+    "Challenge friends and grow together." : {
+      "comment" : "Onboarding page 3 subtitle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fordere Freunde heraus und wachst gemeinsam."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Соревнуйтесь с друзьями и развивайтесь вместе."
+          }
+        }
+      }
+    },
+    "Challenge rejected!" : {
+      "comment" : "Toast message after rejecting a challenge",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausforderung abgelehnt!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Испытание отклонено!"
+          }
+        }
+      }
+    },
+    "Challenge Timeline" : {
+      "comment" : "Title on the challenge day-by-day timeline screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausforderungs-Zeitachse"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хронология испытания"
+          }
+        }
+      }
+    },
+    "Challenge withdrawn" : {
+      "comment" : "Toast message after cancelling a sent challenge",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausforderung zurückgezogen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Испытание отозвано"
+          }
+        }
+      }
+    },
+    "Challenge your friends" : {
+      "comment" : "Onboarding page 3 title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fordere deine Freunde heraus"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вызывайте друзей"
+          }
+        }
+      }
+    },
+    "Challenges" : {
+      "comment" : "Tab bar and navigation title for the challenges screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausforderungen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Испытания"
+          }
+        }
+      }
+    },
+    "Check in %lld more times to unlock your streak data and discover your usual check-in time!" : {
+      "comment" : "Prompt shown when fewer than 2 check-ins exist; %lld is the remaining count",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Noch 1 Mal einchecken, um Serien-Daten freizuschalten!"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Noch %lld Mal einchecken, um Serien-Daten freizuschalten!"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Check in 1 more time to unlock your streak data and discover your usual check-in time!"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Check in %lld more times to unlock your streak data and discover your usual check-in time!"
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Отметьтесь ещё %lld раза, чтобы увидеть данные о сериях!"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Отметьтесь ещё %lld раз, чтобы увидеть данные о сериях!"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Отметьтесь ещё 1 раз, чтобы увидеть данные о сериях!"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Отметьтесь ещё %lld раза, чтобы увидеть данные о сериях!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Check in overview" : {
+      "comment" : "Statistics chart title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eincheck-Übersicht"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обзор отметок"
+          }
+        }
+      }
+    },
+    "Checked In" : {
+
+    },
+    "Choose an Icon" : {
+      "comment" : "Section header in habit edit form",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Symbol wählen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите иконку"
+          }
+        }
+      }
+    },
+    "Compete" : {
+      "comment" : "Button to send a competitive challenge to a friend",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wettkampf"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Соревноваться"
+          }
+        }
+      }
+    },
+    "Competitive" : {
+      "comment" : "Challenge type label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wettkampf"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Соревнование"
+          }
+        }
+      }
+    },
+    "Completion" : {
+      "comment" : "Stat label – completion percentage",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortschritt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выполнение"
+          }
+        }
+      }
+    },
+    "Confirm password" : {
+      "comment" : "Label for the confirm password input field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwort bestätigen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подтвердите пароль"
+          }
+        }
+      }
+    },
+    "Confirm your password..." : {
+      "comment" : "Placeholder for confirm password field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwort bestätigen..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подтвердите пароль..."
+          }
+        }
+      }
+    },
+    "Connect with friends to send challenges, track habits together, and stay motivated." : {
+      "comment" : "Empty state description for the friends list",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinde dich mit Freunden, um Herausforderungen zu schicken, Gewohnheiten gemeinsam zu verfolgen und motiviert zu bleiben."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавляйте друзей, чтобы соревноваться, отслеживать привычки вместе и оставаться мотивированными."
+          }
+        }
+      }
+    },
+    "Couldn’t update all habits. Habit updated: %@. Failed IDs: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Couldn’t update all habits. Habit updated: %1$@. Failed IDs: %2$@"
+          }
+        }
+      }
+    },
+    "Count" : {
+
+    },
+    "Create one now." : {
+      "comment" : "Empty state subtitle prompting habit creation",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt eine erstellen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создайте первую."
+          }
+        }
+      }
+    },
+    "Create space for growth.\nBegin with a few popular habits." : {
+      "comment" : "Onboarding page 4 subtitle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schaffe Raum für Wachstum.\nBeginne mit einigen beliebten Gewohnheiten."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создайте пространство для роста.\nНачните с нескольких популярных привычек."
+          }
+        }
+      }
+    },
+    "Current Streak" : {
+      "comment" : "Label for current streak stat",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuelle Serie"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущая серия"
+          }
+        }
+      }
+    },
+    "Daily Walks" : {
+      "comment" : "Default onboarding habit name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tägliche Spaziergänge"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ежедневные прогулки"
+          }
+        }
+      }
+    },
+    "Dark Mode" : {
+      "comment" : "Settings toggle for dark mode",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dunkelmodus"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тёмная тема"
+          }
+        }
+      }
+    },
+    "Date" : {
+
+    },
+    "Declined" : {
+      "comment" : "Section header for declined challenges",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgelehnt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отклонённые"
+          }
+        }
+      }
+    },
+    "Delete Habit" : {
+      "comment" : "Button to permanently delete a habit",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewohnheit löschen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить привычку"
+          }
+        }
+      }
+    },
+    "Delete my account" : {
+      "comment" : "Settings button to permanently delete the user account",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto löschen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить аккаунт"
+          }
+        }
+      }
+    },
+    "Delete on server" : {
+      "comment" : "Alert button to delete server habits",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vom Server löschen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить с сервера"
+          }
+        }
+      }
+    },
+    "Description (optional)" : {
+      "comment" : "Placeholder for the habit description text field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beschreibung (optional)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Описание (необязательно)"
+          }
+        }
+      }
+    },
+    "Desired duration" : {
+      "comment" : "Section header for habit duration picker",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewünschte Dauer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Желаемая длительность"
+          }
+        }
+      }
+    },
+    "Digital Detox" : {
+      "comment" : "Default onboarding habit name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digitaler Detox"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цифровой детокс"
+          }
+        }
+      }
+    },
+    "Don’t forget to check in for “%@”! Small steps lead to big changes." : {
+
+    },
+    "Don't forget to check in for “%@”! Small steps lead to big changes." : {
+      "comment" : "Push notification body variant 1; %@ is the habit name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vergiss nicht einzuchecken für „%@“! Kleine Schritte führen zu großen Veränderungen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не забудь отметиться для «%@»! Маленькие шаги ведут к большим переменам."
+          }
+        }
+      }
+    },
+    "Done" : {
+      "comment" : "Stat label – completion percentage",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erledigt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выполнено"
+          }
+        }
+      }
+    },
+    "Duration" : {
+      "comment" : "Label for the segmented picker in habit edit form",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dauer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Длительность"
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "comment" : "Toolbar button to edit a habit",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeiten"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Редактировать"
+          }
+        }
+      }
+    },
+    "Enable Reminders" : {
+      "comment" : "Toggle label for daily reminders",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerungen aktivieren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить напоминания"
+          }
+        }
+      }
+    },
+    "Enter your name..." : {
+      "comment" : "Placeholder for name field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Namen eingeben..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите имя..."
+          }
+        }
+      }
+    },
+    "Enter your password..." : {
+      "comment" : "Placeholder for password field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwort eingeben..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите пароль..."
+          }
+        }
+      }
+    },
+    "Enter your username..." : {
+      "comment" : "Placeholder for username field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutzername eingeben..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите логин..."
+          }
+        }
+      }
+    },
+    "Failed to decode response: %@" : {
+      "comment" : "Error description for a decoding failure; %@ is the underlying error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antwort konnte nicht dekodiert werden: %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось декодировать ответ: %@"
+          }
+        }
+      }
+    },
+    "Fitness" : {
+      "comment" : "Default habit category",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fitness"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фитнес"
+          }
+        }
+      }
+    },
+    "Frequency of your check ins" : {
+      "comment" : "Statistics chart subtitle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Häufigkeit deiner Check-ins"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Частота ваших отметок"
+          }
+        }
+      }
+    },
+    "Friend request accepted" : {
+      "comment" : "Toast message after accepting a friend request",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freundschaftsanfrage angenommen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заявка принята"
+          }
+        }
+      }
+    },
+    "Friend request ignored" : {
+      "comment" : "Toast message after ignoring a friend request",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freundschaftsanfrage ignoriert"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заявка проигнорирована"
+          }
+        }
+      }
+    },
+    "Friend request sent" : {
+      "comment" : "Toast message after sending a friend request",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freundschaftsanfrage gesendet"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заявка отправлена"
+          }
+        }
+      }
+    },
+    "Friend Requests" : {
+      "comment" : "Section header for incoming friend requests",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freundschaftsanfragen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заявки в друзья"
+          }
+        }
+      }
+    },
+    "Friends" : {
+      "comment" : "Tab bar and navigation title for the friends screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freunde"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Друзья"
+          }
+        }
+      }
+    },
+    "From %@ to %@" : {
+      "comment" : "Date range label; both %@ are formatted dates",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Von %@ bis %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "С %@ по %@"
+          }
+        }
+      }
+    },
+    "Go to Settings" : {
+      "comment" : "Button to navigate to the Settings tab",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zu Einstellungen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перейти в настройки"
+          }
+        }
+      }
+    },
+    "Grouped" : {
+      "comment" : "Sort mode: grouped by category",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gruppiert"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По группам"
+          }
+        }
+      }
+    },
+    "Guest" : {
+      "comment" : "Settings status value when not signed in",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gast"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Гость"
+          }
+        }
+      }
+    },
+    "Habit name" : {
+      "comment" : "Placeholder for the habit name text field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name der Gewohnheit"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название привычки"
+          }
+        }
+      }
+    },
+    "Habits" : {
+      "comment" : "Tab bar and navigation title for the habits screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewohnheiten"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Привычки"
+          }
+        }
+      }
+    },
+    "Habits Found" : {
+      "comment" : "Alert title shown when server habits are found after login",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewohnheiten gefunden"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Найдены привычки"
+          }
+        }
+      }
+    },
+    "Habits selected: %lld / 3" : {
+      "comment" : "Onboarding screen – count of selected default habits",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgewählte Gewohnheiten: %lld / 3"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрано привычек: %lld / 3"
+          }
+        }
+      }
+    },
+    "Health" : {
+      "comment" : "Default habit category",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesundheit"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Здоровье"
+          }
+        }
+      }
+    },
+    "Hide Check-in History" : {
+      "comment" : "Button to collapse the check-in history list",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlauf ausblenden"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрыть историю"
+          }
+        }
+      }
+    },
+    "Hour" : {
+
+    },
+    "Ignore" : {
+      "comment" : "Button to ignore a friend request",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ignorieren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пропустить"
+          }
+        }
+      }
+    },
+    "Information" : {
+      "comment" : "Settings section header for legal and about links",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informationen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Информация"
+          }
+        }
+      }
+    },
+    "Invalid HTTP response." : {
+      "comment" : "Error description for an invalid HTTP response",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültige HTTP-Antwort."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверный HTTP-ответ."
+          }
+        }
+      }
+    },
+    "Joined %@" : {
+      "comment" : "Friend request card label; %@ is a formatted month/year date",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beigetreten %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "С нами с %@"
+          }
+        }
+      }
+    },
+    "Learning" : {
+      "comment" : "Default habit category",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lernen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обучение"
+          }
+        }
+      }
+    },
+    "Let's Start Small" : {
+      "comment" : "Onboarding page 4 title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klein anfangen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начнём с малого"
+          }
+        }
+      }
+    },
+    "Loading check-ins..." : {
+      "comment" : "Loading state on the challenge timeline screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lädt Check-ins..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка отметок..."
+          }
+        }
+      }
+    },
+    "Loading user..." : {
+
+    },
+    "Log In" : {
+      "comment" : "Settings link to the login screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anmelden"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войти"
+          }
+        }
+      }
+    },
+    "Log in to view and take part in challenges with friends." : {
+      "comment" : "Unauthenticated state description on the challenges screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melde dich an, um Herausforderungen mit Freunden zu sehen und daran teilzunehmen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войдите, чтобы участвовать в испытаниях с друзьями."
+          }
+        }
+      }
+    },
+    "Log Out" : {
+      "comment" : "Settings button to sign out",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abmelden"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выйти"
+          }
+        }
+      }
+    },
+    "Login" : {
+      "comment" : "Navigation title for the login screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anmelden"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вход"
+          }
+        }
+      }
+    },
+    "Longest Streak" : {
+      "comment" : "Label for longest streak stat",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Längste Serie"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Лучшая серия"
+          }
+        }
+      }
+    },
+    "Make a habit “open to friends” to let them see it and challenge you!\n\nOnly synced habits can be shared." : {
+      "comment" : "Info popover for the Open to Friends toggle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mache eine Gewohnheit „für Freunde sichtbar“, damit sie diese sehen und dich herausfordern können!\n\nNur synchronisierte Gewohnheiten können geteilt werden."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сделайте привычку видимой для друзей, чтобы они могли видеть её и вызвать вас на соревнование!\n\nТолько синхронизированные привычки можно делить."
+          }
+        }
+      }
+    },
+    "Make sure both password fields are the same" : {
+      "comment" : "Validation error when passwords do not match",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beide Passwortfelder müssen übereinstimmen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Убедитесь, что оба поля пароля совпадают"
+          }
+        }
+      }
+    },
+    "Manage Subscription" : {
+      "comment" : "Settings link for subscription management",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abonnement verwalten"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление подпиской"
+          }
+        }
+      }
+    },
+    "Meditate" : {
+      "comment" : "Default onboarding habit name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meditieren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Медитация"
+          }
+        }
+      }
+    },
+    "Member since %@" : {
+      "comment" : "Friend card label; %@ is a formatted month/year date",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mitglied seit %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Участник с %@"
+          }
+        }
+      }
+    },
+    "Mindfulness" : {
+      "comment" : "Default habit category",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achtsamkeit"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Осознанность"
+          }
+        }
+      }
+    },
+    "Missed" : {
+
+    },
+    "Missed days" : {
+      "comment" : "Statistics chart title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verpasste Tage"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пропущенные дни"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "comment" : "Label for the display name input field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя"
+          }
+        }
+      }
+    },
+    "Newest First" : {
+      "comment" : "Sort mode: newest habits first",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neueste zuerst"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сначала новые"
+          }
+        }
+      }
+    },
+    "Next" : {
+      "comment" : "Onboarding next navigation button",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Далее"
+          }
+        }
+      }
+    },
+    "No Active Challenges Yet" : {
+      "comment" : "Empty state title for challenges list",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine aktiven Herausforderungen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пока нет активных испытаний"
+          }
+        }
+      }
+    },
+    "No Activity Yet" : {
+
+    },
+    "No data was received from the server." : {
+      "comment" : "Error description when the server returns no data",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vom Server wurden keine Daten empfangen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сервер не вернул данные."
+          }
+        }
+      }
+    },
+    "No Friends Yet" : {
+      "comment" : "Empty state title for the friends list",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Freunde"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пока нет друзей"
+          }
+        }
+      }
+    },
+    "No habits yet" : {
+      "comment" : "Empty state title when no habits exist",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Gewohnheiten"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет привычек"
+          }
+        }
+      }
+    },
+    "No Internet Connection" : {
+      "comment" : "Title for the no-connection error view",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Internetverbindung"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет подключения к интернету"
+          }
+        }
+      }
+    },
+    "No social media after 8 PM" : {
+      "comment" : "Default onboarding habit description",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine sozialen Medien nach 20 Uhr"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не пользоваться соцсетями после 20:00"
+          }
+        }
+      }
+    },
+    "No users found." : {
+      "comment" : "Empty state when a user search returns no results",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Nutzer gefunden."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пользователи не найдены."
+          }
+        }
+      }
+    },
+    "Not Signed In" : {
+      "comment" : "Title for the unauthenticated state card",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht angemeldet"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не авторизован"
+          }
+        }
+      }
+    },
+    "Now's the perfect time to complete “%@”. Keep the streak alive!" : {
+      "comment" : "Push notification body variant 4; %@ is the habit name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt ist der perfekte Zeitpunkt, um „%@“ abzuschließen. Halte die Serie am Leben!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сейчас самое время выполнить «%@». Поддержи серию!"
+          }
+        }
+      }
+    },
+    "Now’s the perfect time to complete “%@”. Keep the streak alive!" : {
+
+    },
+    "Ongoing" : {
+      "comment" : "Section header for accepted/active challenges",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laufend"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активные"
+          }
+        }
+      }
+    },
+    "Open to Friends" : {
+      "comment" : "Toggle label to make a habit visible to friends",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für Freunde sichtbar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Видно друзьям"
+          }
+        }
+      }
+    },
+    "Or add a new one..." : {
+      "comment" : "Placeholder when categories already exist",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oder neu hinzufügen..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Или создать новую..."
+          }
+        }
+      }
+    },
+    "Other Habits" : {
+      "comment" : "Category header for habits without a category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weitere Gewohnheiten"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Другие привычки"
+          }
+        }
+      }
+    },
+    "Password" : {
+      "comment" : "Label for the password input field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwort"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пароль"
+          }
+        }
+      }
+    },
+    "Pending" : {
+      "comment" : "Section header for pending challenges",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausstehend"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ожидает ответа"
+          }
+        }
+      }
+    },
+    "Practice meditation for 10 minutes daily" : {
+      "comment" : "Default onboarding habit description",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Täglich 10 Minuten meditieren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Медитировать 10 минут каждый день"
+          }
+        }
+      }
+    },
+    "Preferences" : {
+      "comment" : "Settings section header for app preferences",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Präferenzen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предпочтения"
+          }
+        }
+      }
+    },
+    "Privacy Options" : {
+      "comment" : "Section header for sync and visibility settings",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datenschutz-Einstellungen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Параметры приватности"
+          }
+        }
+      }
+    },
+    "Privacy Policy" : {
+      "comment" : "Settings link to privacy policy",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datenschutzerklärung"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Политика конфиденциальности"
+          }
+        }
+      }
+    },
+    "PRIVACY POLICY" : {
+      "comment" : "Placeholder content for the privacy policy screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DATENSCHUTZERKLÄRUNG"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ"
+          }
+        }
+      }
+    },
+    "Productivity" : {
+      "comment" : "Default habit category",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produktivität"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продуктивность"
+          }
+        }
+      }
+    },
+    "Register" : {
+      "comment" : "Settings link to the registration screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrieren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зарегистрироваться"
+          }
+        }
+      }
+    },
+    "Registration" : {
+      "comment" : "Navigation title for the registration screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrierung"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регистрация"
+          }
+        }
+      }
+    },
+    "Reject" : {
+      "comment" : "Button to reject a challenge",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ablehnen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отклонить"
+          }
+        }
+      }
+    },
+    "Reminder Time" : {
+      "comment" : "Label for the time picker for daily reminders",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerungszeit"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Время напоминания"
+          }
+        }
+      }
+    },
+    "Request failed with status code %lld." : {
+      "comment" : "Error description for a failed HTTP request; %lld is the status code",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anfrage fehlgeschlagen mit Statuscode %lld."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрос завершился с кодом %lld."
+          }
+        }
+      }
+    },
+    "Request Sent" : {
+      "comment" : "Label shown after a friend request has been sent",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anfrage gesendet"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заявка отправлена"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "comment" : "Button to save habit changes",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить"
+          }
+        }
+      }
+    },
+    "Save locally" : {
+      "comment" : "Alert button to save server habits to the device",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lokal speichern"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить локально"
+          }
+        }
+      }
+    },
+    "Search usernames..." : {
+      "comment" : "Placeholder text in the friends search bar",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutzernamen suchen..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск по имени пользователя..."
+          }
+        }
+      }
+    },
+    "Searching..." : {
+      "comment" : "Loading indicator while searching for users",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suche..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск..."
+          }
+        }
+      }
+    },
+    "Select an existing category" : {
+      "comment" : "Menu label to pick a previously used category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestehende Kategorie auswählen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать существующую"
+          }
+        }
+      }
+    },
+    "Server error occurred." : {
+      "comment" : "Error description for 500 server error",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serverfehler aufgetreten."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка сервера."
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "comment" : "Tab bar and navigation title for the settings screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки"
+          }
+        }
+      }
+    },
+    "SIGN IN" : {
+      "comment" : "Login button label",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ANMELDEN"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ВОЙТИ"
+          }
+        }
+      }
+    },
+    "Sign in with Google" : {
+      "comment" : "Google sign-in button label",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Google anmelden"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войти через Google"
+          }
+        }
+      }
+    },
+    "SIGN UP" : {
+      "comment" : "Registration button label",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REGISTRIEREN"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ЗАРЕГИСТРИРОВАТЬСЯ"
+          }
+        }
+      }
+    },
+    "Signed In" : {
+      "comment" : "Settings status value when the user is authenticated",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Angemeldet"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Авторизован"
+          }
+        }
+      }
+    },
+    "Start" : {
+      "comment" : "Onboarding final button to enter the app",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starten"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начать"
+          }
+        }
+      }
+    },
+    "Start a challenge with a friend to stay accountable and reach your goals together." : {
+      "comment" : "Empty state description for challenges list",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starte eine Herausforderung mit einem Freund, um gemeinsam eure Ziele zu erreichen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начните испытание с другом, чтобы достигать целей вместе."
+          }
+        }
+      }
+    },
+    "Start your day strong with “%@”. You've got this!" : {
+      "comment" : "Push notification body variant 2; %@ is the habit name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starte stark in den Tag mit „%@“. Du schaffst das!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начни день сильно с «%@». У тебя получится!"
+          }
+        }
+      }
+    },
+    "Start your day strong with “%@”. You’ve got this!" : {
+
+    },
+    "Status" : {
+      "comment" : "Settings row label showing sign-in status",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус"
+          }
+        }
+      }
+    },
+    "Stay consistent, stay strong." : {
+      "comment" : "Push notification subtitle variant 4",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bleib konsequent, bleib stark."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будь последователен, оставайся сильным."
+          }
+        }
+      }
+    },
+    "Streak" : {
+
+    },
+    "Streaks Timeline" : {
+      "comment" : "Statistics chart title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serien-Verlauf"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "История серий"
+          }
+        }
+      }
+    },
+    "SUBSCRIPTIONS" : {
+      "comment" : "Placeholder content for the subscription screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ABONNEMENTS"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ПОДПИСКИ"
+          }
+        }
+      }
+    },
+    "Support" : {
+      "comment" : "Button to send a supportive challenge to a friend",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unterstützen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поддержать"
+          }
+        }
+      }
+    },
+    "Supportive" : {
+      "comment" : "Challenge type label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unterstützend"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поддержка"
+          }
+        }
+      }
+    },
+    "Sync with Server" : {
+      "comment" : "Toggle label for server synchronisation",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Server synchronisieren"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Синхронизация с сервером"
+          }
+        }
+      }
+    },
+    "Tap to boost!" : {
+      "comment" : "Caption below the boost button on a friend's habit card",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippen zum Boosten!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите, чтобы поддержать!"
+          }
+        }
+      }
+    },
+    "Tap to Check In" : {
+      "comment" : "Check-in card call-to-action when not yet checked in",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Einchecken tippen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите для отметки"
+          }
+        }
+      }
+    },
+    "Terms of Service" : {
+      "comment" : "Settings link to terms of service",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutzungsbedingungen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Условия использования"
+          }
+        }
+      }
+    },
+    "TERMS OF SERVICES" : {
+      "comment" : "Placeholder content for the terms screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NUTZUNGSBEDINGUNGEN"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "УСЛОВИЯ ИСПОЛЬЗОВАНИЯ"
+          }
+        }
+      }
+    },
+    "The number of days you've missed" : {
+      "comment" : "Statistics chart subtitle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Anzahl der Tage, die du verpasst hast"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Количество пропущенных вами дней"
+          }
+        }
+      }
+    },
+    "The requested resource was not found." : {
+      "comment" : "Error description for 404 not found",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die angeforderte Ressource wurde nicht gefunden."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрашиваемый ресурс не найден."
+          }
+        }
+      }
+    },
+    "The URL is invalid." : {
+      "comment" : "Error description for invalid URL",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die URL ist ungültig."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверный URL."
+          }
+        }
+      }
+    },
+    "There's a conflict with the current state of the resource." : {
+      "comment" : "Error description for 409 conflict",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es gibt einen Konflikt mit dem aktuellen Zustand der Ressource."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Конфликт с текущим состоянием ресурса."
+          }
+        }
+      }
+    },
+    "There’s a conflict with the current state of the resource." : {
+
+    },
+    "Thinking..." : {
+      "comment" : "Button label while AI is generating a response",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denke nach..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Думаю..."
+          }
+        }
+      }
+    },
+    "This can happen if your session expires. Log back in to continue syncing your habits and using all social features." : {
+      "comment" : "Alert body when the user's session has expired",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das kann passieren, wenn deine Sitzung abläuft. Melde dich erneut an, um deine Gewohnheiten zu synchronisieren und alle sozialen Funktionen zu nutzen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это произошло из-за истечения сессии. Войдите снова, чтобы продолжить синхронизацию привычек."
+          }
+        }
+      }
+    },
+    "This habit is currently part of a challenge, so you can't change its duration right now." : {
+      "comment" : "Warning shown when a habit is in an active challenge",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Gewohnheit ist Teil einer Herausforderung und kann daher nicht geändert werden."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта привычка участвует в испытании, поэтому длительность нельзя изменить."
+          }
+        }
+      }
+    },
+    "This habit is currently part of a challenge, so you can’t change its duration right now." : {
+
+    },
+    "Time of Day Pattern" : {
+      "comment" : "Statistics chart title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tageszeitmuster"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Время суток"
+          }
+        }
+      }
+    },
+    "Time to build momentum." : {
+      "comment" : "Push notification subtitle variant 2",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeit, Schwung aufzubauen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Время набирать обороты."
+          }
+        }
+      }
+    },
+    "To receive reminders, enable notifications in " : {
+
+    },
+    "To receive reminders, enable notifications in Settings" : {
+      "comment" : "Message shown when notifications are disabled; tapping opens iOS Settings",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um Erinnerungen zu erhalten, aktiviere Benachrichtigungen in den Einstellungen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтобы получать напоминания, включите уведомления в Настройках"
+          }
+        }
+      }
+    },
+    "Total Check-Ins" : {
+      "comment" : "Stat label – total number of check-ins",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamt-Check-ins"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Всего отметок"
+          }
+        }
+      }
+    },
+    "Track your check-ins, streaks, and progress." : {
+      "comment" : "Onboarding page 2 subtitle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verfolge deine Check-ins, Serien und Fortschritte."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Следите за отметками, сериями и прогрессом."
+          }
+        }
+      }
+    },
+    "Track your progress" : {
+      "comment" : "Onboarding page 2 title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verfolge deinen Fortschritt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отслеживайте прогресс"
+          }
+        }
+      }
+    },
+    "Turn on to sync habits with our server and access them on all your devices.\n\nYou must be signed in.\n\nTurning off keeps habits only on this device and deletes them from the server." : {
+      "comment" : "Info popover for the Sync with Server toggle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiviere, um Gewohnheiten auf unserem Server zu synchronisieren und auf allen Geräten zuzugreifen.\n\nDu musst angemeldet sein.\n\nDeaktivieren hält Gewohnheiten nur auf diesem Gerät und löscht sie vom Server."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включите, чтобы синхронизировать привычки с сервером и получить доступ со всех устройств.\n\nТребуется авторизация.\n\nОтключение удалит привычки с сервера."
+          }
+        }
+      }
+    },
+    "Username" : {
+      "comment" : "Label for the username input field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutzername"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Логин"
+          }
+        }
+      }
+    },
+    "Username should have at least 3 symbols" : {
+      "comment" : "Validation error for username too short",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Nutzername muss mindestens 3 Zeichen haben"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Логин должен содержать минимум 3 символа"
+          }
+        }
+      }
+    },
+    "View Check-in History" : {
+      "comment" : "Button to expand the check-in history list",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlauf anzeigen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать историю"
+          }
+        }
+      }
+    },
+    "Walk at least 10,000 steps per day" : {
+      "comment" : "Default onboarding habit description",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Täglich mindestens 10.000 Schritte gehen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проходить не менее 10 000 шагов в день"
+          }
+        }
+      }
+    },
+    "We found the following habits on the server that you previously created:\n\n%@\n\nWould you like to save them locally or delete them from the server?" : {
+      "comment" : "Alert message; %@ is a bullet-list of habit names",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folgende Gewohnheiten wurden auf dem Server gefunden:\n\n%@\n\nMöchtest du sie lokal speichern oder vom Server löschen?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "На сервере найдены следующие привычки:\n\n%@\n\nСохранить локально или удалить с сервера?"
+          }
+        }
+      }
+    },
+    "Welcome to\nHabit Huddle" : {
+      "comment" : "Onboarding page 1 title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommen bei\nHabit Huddle"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добро пожаловать\nв Habit Huddle"
+          }
+        }
+      }
+    },
+    "When you usually check in" : {
+      "comment" : "Statistics chart subtitle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wann du normalerweise eincheckst"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда вы обычно отмечаетесь"
+          }
+        }
+      }
+    },
+    "Wrong username or password." : {
+      "comment" : "Error description for 401 unauthorized",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Falscher Nutzername oder Passwort."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверный логин или пароль."
+          }
+        }
+      }
+    },
+    "You don't have permission to access this resource." : {
+      "comment" : "Error description for 403 forbidden",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du hast keine Berechtigung für diese Ressource."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "У вас нет доступа к этому ресурсу."
+          }
+        }
+      }
+    },
+    "You don’t have permission to access this resource." : {
+
+    },
+    "You need to log in to add friends." : {
+      "comment" : "Unauthenticated state description on the friends tab",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melde dich an, um Freunde hinzuzufügen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войдите, чтобы добавлять друзей."
+          }
+        }
+      }
+    },
+    "You sent this challenge to %@" : {
+      "comment" : "Sent challenge card subtitle; %@ is the receiver's name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du hast %@ herausgefordert"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы отправили это испытание %@"
+          }
+        }
+      }
+    },
+    "You're all set for today!" : {
+      "comment" : "Check-in card label when already checked in",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für heute bist du fertig!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы всё сделали на сегодня!"
+          }
+        }
+      }
+    },
+    "You're just one check-in away from progress. Let's crush “%@” today!" : {
+      "comment" : "Push notification body variant 3; %@ is the habit name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du bist nur ein Check-in vom Fortschritt entfernt. Lass uns „%@“ heute angehen!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ты в одном шаге от прогресса. Одолей «%@» сегодня!"
+          }
+        }
+      }
+    },
+    "You’re just one check-in away from progress. Let’s crush “%@” today!" : {
+
+    },
+    "You're making great progress — this is your longest streak so far." : {
+      "comment" : "Motivational text shown when current streak equals the longest streak",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du machst großartige Fortschritte – das ist deine längste Serie bisher!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отличный прогресс — это ваша самая длинная серия!"
+          }
+        }
+      }
+    },
+    "You've been logged out" : {
+      "comment" : "Alert title when the user's session has expired",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du wurdest abgemeldet"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы вышли из системы"
+          }
+        }
+      }
+    },
+    "Your activity in the last 2 months" : {
+      "comment" : "Onboarding heatmap section title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Aktivität in den letzten 2 Monaten"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша активность за последние 2 месяца"
+          }
+        }
+      }
+    },
+    "Your future self is watching." : {
+      "comment" : "Push notification subtitle variant 3",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein zukünftiges Ich schaut zu."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Твоё будущее «я» наблюдает."
+          }
+        }
+      }
+    },
+    "Your habit needs you today." : {
+      "comment" : "Push notification subtitle variant 1",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Gewohnheit braucht dich heute."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Твоя привычка нуждается в тебе сегодня."
+          }
+        }
+      }
+    },
+    "Your password should have at least 5 symbols" : {
+      "comment" : "Validation error for password too short",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Passwort muss mindestens 5 Zeichen haben"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пароль должен содержать минимум 5 символов"
+          }
+        }
+      }
+    },
+    "Your streaks over time" : {
+      "comment" : "Statistics chart subtitle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Serien im Zeitverlauf"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваши серии по времени"
+          }
+        }
+      }
+    },
+    "Your Username" : {
+      "comment" : "Settings row label showing the signed-in username",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Nutzername"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш логин"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

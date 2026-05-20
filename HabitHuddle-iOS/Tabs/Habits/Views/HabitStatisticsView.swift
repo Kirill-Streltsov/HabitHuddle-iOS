@@ -165,7 +165,7 @@ struct HabitStatisticsView: View {
                         }
                     }
                 } else {
-                    Text("Check in \(remaining) more \(remaining == 1 ? "time" : "times") to unlock your streak data and discover your usual check-in time!")
+                    Text("Check in \(remaining) more times to unlock your streak data and discover your usual check-in time!")
                         .font(.body)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)

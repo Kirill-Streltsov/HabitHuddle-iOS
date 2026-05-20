@@ -10,8 +10,8 @@ import SwiftUI
 struct EmptyContentView: View {
     
     let icon: String
-    let title: String
-    let description: String
+    let title: LocalizedStringKey
+    let description: LocalizedStringKey
     
     var body: some View {
         CardView {

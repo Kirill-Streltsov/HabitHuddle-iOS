@@ -25,7 +25,7 @@ struct ChallengeProgressCardView: View {
                 
                 Spacer()
                 
-                Label(challenge.type.rawValue.capitalized, systemImage: challenge.type == .competitive ? "flame.fill" : "heart.fill")
+                Label(challenge.type.displayName, systemImage: challenge.type == .competitive ? "flame.fill" : "heart.fill")
                     .font(.footnote)
                     .fontWeight(.semibold)
                     .padding(8)
@@ -57,18 +57,20 @@ struct ChallengeProgressCardView: View {
     }
     
     private func challengeTitleText() -> String {
+        let i = challenge.initiator.user.name
+        let r = challenge.receiver.user.name
         switch challenge.type {
         case .competitive:
             if userManager.profile.id == challenge.initiator.user.id {
-                return "\(challenge.initiator.user.name) (You) vs \(challenge.receiver.user.name)"
+                return String(localized: "\(i) (You) vs \(r)")
             } else {
-                return "\(challenge.initiator.user.name) vs \(challenge.receiver.user.name) (You)"
+                return String(localized: "\(i) vs \(r) (You)")
             }
         case .supportive:
             if userManager.profile.id == challenge.initiator.user.id {
-                return "\(challenge.initiator.user.name) (You) with \(challenge.receiver.user.name)"
+                return String(localized: "\(i) (You) with \(r)")
             } else {
-                return "\(challenge.initiator.user.name) with \(challenge.receiver.user.name) (You)"
+                return String(localized: "\(i) with \(r) (You)")
             }
         }
     }

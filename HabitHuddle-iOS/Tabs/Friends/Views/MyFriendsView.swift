@@ -93,7 +93,7 @@ struct MyFriendsView: View {
                                 let result = await viewModel.acceptFriend(with: request.id)
                                 Helpers.handleResult(result) { friend in
                                     showToast = true
-                                    toastMessage = "Friend request accepted"
+                                    toastMessage = String(localized: "Friend request accepted")
                                     Task {
                                         await viewModel.getMyFriendRequests()
                                     }
@@ -108,7 +108,7 @@ struct MyFriendsView: View {
                         } onIgnore: {
                             Task {
                                 showToast = true
-                                toastMessage = "Friend request ignored"
+                                toastMessage = String(localized: "Friend request ignored")
                                 let _ = await viewModel.rejectFriend(with: request.id)
                             }
                         }
@@ -146,7 +146,7 @@ struct MyFriendsView: View {
                             ) {
                                 Task {
                                     showToast = true
-                                    toastMessage = "Friend request sent"
+                                    toastMessage = String(localized: "Friend request sent")
                                     await viewModel.requestFriend(with: user.id)
                                     searchText = ""
                                     searchIsFocused = false

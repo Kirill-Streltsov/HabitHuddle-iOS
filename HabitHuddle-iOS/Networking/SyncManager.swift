@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+@MainActor
 final class SyncManager {
     static let shared = SyncManager()
     private let network: any NetworkManagerProtocol
@@ -158,7 +159,6 @@ final class SyncManager {
         }
     }
 
-    @MainActor
     func performFullSync(localHabits: [Habit], in modelContext: ModelContext) async {
         let serverResult = await getHabitsFromServer()
         guard case let .success(serverHabits) = serverResult else { return }
@@ -184,7 +184,6 @@ final class SyncManager {
         _ = await (createResult, updateResult, deleteResult)
     }
 
-    @MainActor
     func saveHabits(_ habits: [HabitDTO], in context: ModelContext) {
         for habit in habits {
             let _ = habit.saved(in: context)

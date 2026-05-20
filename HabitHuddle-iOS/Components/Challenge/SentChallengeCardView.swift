@@ -21,18 +21,14 @@ struct SentChallengeCardView: View {
                     Text(challenge.habitName)
                         .font(.headline)
 
-                    (Text("You sent this challenge to ")
+                    Text("You sent this challenge to \(challenge.receiver.user.name)")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                     + Text(challenge.receiver.user.name)
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.primary))
                 }
 
                 Spacer()
 
-                Label(challenge.type.rawValue.capitalized, systemImage: challenge.type == .competitive ? "flame.fill" : "heart.fill")
+                Label(challenge.type.displayName, systemImage: challenge.type == .competitive ? "flame.fill" : "heart.fill")
                     .font(.footnote)
                     .fontWeight(.semibold)
                     .padding(8)

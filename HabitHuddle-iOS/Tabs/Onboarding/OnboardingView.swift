@@ -24,6 +24,7 @@ struct OnboardingView: View {
                 customView: AnyView(
                     HabitCard(habit: Habit.demoHabitWithRecentCheckIns())
                         .allowsHitTesting(false)
+                        .padding(.horizontal)
                 )
             ),
             OnboardingPageData(

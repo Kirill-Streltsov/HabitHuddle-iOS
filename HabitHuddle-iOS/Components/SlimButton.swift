@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct SlimButton: View {
-    let title: String
+    let title: LocalizedStringKey
     let color: Color
     let action: () -> ()
-    
-    init(title: String, color: Color = .blue.opacity(0.9), action: @escaping () -> Void) {
+
+    init(title: LocalizedStringKey, color: Color = .blue.opacity(0.9), action: @escaping () -> Void) {
         self.title = title
         self.color = color
         self.action = action

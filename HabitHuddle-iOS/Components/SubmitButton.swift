@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SubmitButton: View {
-    let title: String
+    let title: LocalizedStringKey
     let color: Color
     let iconName: String?
     let action: () -> ()

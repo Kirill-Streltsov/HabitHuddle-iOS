@@ -101,7 +101,7 @@ struct ChallengesListView: View {
                     Helpers.handleResult(result) { status in
                         if status == .ok {
                             showToast = true
-                            message = "Challenge withdrawn"
+                            message = String(localized: "Challenge withdrawn")
                             HapticManager.trigger(.success)
                             Task {
                                 await viewModel.getChallenges(for: userID)
@@ -157,7 +157,7 @@ struct ChallengesListView: View {
             Helpers.handleResult(acceptedResult) { status in
                 if status == .ok {
                     HapticManager.trigger(.success)
-                    message = "Challenge accepted!"
+                    message = String(localized: "Challenge accepted!")
                     showToast = true
                     Task {
                         await viewModel.getChallenges(for: userID)
@@ -172,7 +172,7 @@ struct ChallengesListView: View {
             Helpers.handleResult(rejectedResult) { status in
                 if status == .ok {
                     HapticManager.trigger(.success)
-                    message = "Challenge rejected!"
+                    message = String(localized: "Challenge rejected!")
                     showToast = true
                 }
                 Task {
