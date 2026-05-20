@@ -36,7 +36,7 @@ struct FoundUserView: View {
                 }
             } else {
                 withAnimation {
-                    SlimButton(title: "Add Friend") {
+                    SlimButton(title: .addFriend) {
                         action()
                     }
                     .buttonStyle(.plain)

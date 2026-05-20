@@ -146,7 +146,7 @@ struct HabitStatisticsView: View {
             VStack(spacing: 12) {
                 let remaining = 2 - habit.checkIns.count
                 CardView {
-                    ChartContainerView(title: "Check in overview", subtitle: "Frequency of your check ins") {
+                    ChartContainerView(title: String(localized: .checkInOverview), subtitle: String(localized: .frequencyOfYourCheckIns)) {
                         HeatmapHabitView(habit: habit)
                             .id(statisticsID)
                     }
@@ -154,18 +154,18 @@ struct HabitStatisticsView: View {
 
                 if habit.checkIns.count >= 2 {
                     CardView {
-                        ChartContainerView(title: "Streaks Timeline", subtitle: "Your streaks over time") {
+                        ChartContainerView(title: String(localized: .streaksTimeline), subtitle: String(localized: .yourStreaksOverTime)) {
                             streaksSection
                         }
                     }
 
                     CardView {
-                        ChartContainerView(title: "Time of Day Pattern", subtitle: "When you usually check in") {
+                        ChartContainerView(title: String(localized: .timeOfDayPattern), subtitle: String(localized: .whenYouUsuallyCheckIn)) {
                             checkInTimeDistributionSection
                         }
                     }
                 } else {
-                    Text("Check in \(remaining) more times to unlock your streak data and discover your usual check-in time!")
+                    Text(.checkInMoreTimesToUnlockYourStreakDataAndDiscoverYourUsualCheckInTime(remaining))
                         .font(.body)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
@@ -174,7 +174,7 @@ struct HabitStatisticsView: View {
                 }
 
                 CardView {
-                    ChartContainerView(title: "Missed days", subtitle: "The number of days you've missed") {
+                    ChartContainerView(title: String(localized: .missedDays), subtitle: String(localized: .theNumberOfDaysYouveMissed)) {
                         missedDaysSection
                             .font(.subheadline)
                             .multilineTextAlignment(.center)
@@ -241,7 +241,7 @@ struct HabitStatisticsView: View {
             .frame(height: 150)
 
             if currentStreak.length == longestStreak.length {
-                Text("You're making great progress — this is your longest streak so far.")
+                Text("You're making great progress. This is your longest streak so far.")
                     .font(.subheadline)
                     .fontWeight(.semibold)
             }

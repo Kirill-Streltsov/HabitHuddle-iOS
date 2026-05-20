@@ -22,7 +22,7 @@ struct ChallengeCardView: View {
                     Text("\(challenge.habitName)")
                         .font(.headline)
                     
-                    Text("\(challenge.initiator.user.name) challenged you!")
+                    Text(.challengedYou(challenge.initiator.user.name))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

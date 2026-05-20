@@ -91,9 +91,9 @@ struct HabitStatsCard: View {
             Divider()
 
             HStack(spacing: 24) {
-                StatItem(title: "Total Check-Ins", value: "\(totalCheckIns)")
+                StatItem(title: .totalCheckIns, value: "\(totalCheckIns)")
                 StatItem(title: "Longest Streak", value: "\(longestStreak) days")
-                StatItem(title: "Completion", value: "\(completionPercentage)%")
+                StatItem(title: .completion, value: "\(completionPercentage)%")
             }
 
             ProgressView(value: progress)
@@ -119,8 +119,8 @@ struct HabitStatsCard: View {
 }
 
 struct StatItem: View {
-    let title: LocalizedStringKey
-    let value: LocalizedStringKey
+    let title: LocalizedStringResource
+    let value: LocalizedStringResource
 
     var body: some View {
         VStack(alignment: .leading) {

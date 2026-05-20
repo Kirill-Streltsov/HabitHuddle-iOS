@@ -38,7 +38,7 @@ struct SettingsView: View {
                 
                 if appState.isAuthenticated {
                     Section {
-                        SubmitButton(title: "Delete my account", color: .red, iconName: "trash") {
+                        SubmitButton(title: .deleteMyAccount, color: .red, iconName: "trash") {
                             HapticManager.trigger(.error)
                             Task {
                                 let deleteResult = await viewModel.deleteMyAccount()

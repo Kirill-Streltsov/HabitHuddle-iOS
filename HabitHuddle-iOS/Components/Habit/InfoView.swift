@@ -8,7 +8,7 @@ import SwiftUI
 
 struct InfoView: View {
     @State private var showInfoPopover = false
-    let text: LocalizedStringKey
+    let text: LocalizedStringResource
 
     var body: some View {
         HStack {

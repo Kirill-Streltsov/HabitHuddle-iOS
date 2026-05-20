@@ -62,15 +62,15 @@ struct ChallengeProgressCardView: View {
         switch challenge.type {
         case .competitive:
             if userManager.profile.id == challenge.initiator.user.id {
-                return String(localized: "\(i) (You) vs \(r)")
+                return String(localized: .youVs(i, r))
             } else {
-                return String(localized: "\(i) vs \(r) (You)")
+                return String(localized: .vsYou(i, r))
             }
         case .supportive:
             if userManager.profile.id == challenge.initiator.user.id {
-                return String(localized: "\(i) (You) with \(r)")
+                return String(localized: .youWith(i, r))
             } else {
-                return String(localized: "\(i) with \(r) (You)")
+                return String(localized: .withYou(i, r))
             }
         }
     }

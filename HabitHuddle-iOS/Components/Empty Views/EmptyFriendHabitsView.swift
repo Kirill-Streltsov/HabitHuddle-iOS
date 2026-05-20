@@ -14,8 +14,8 @@ struct EmptyFriendHabitsView: View {
     var body: some View {
         EmptyContentView(
             icon: "questionmark.folder",
-            title: "\(name) has no habits",
-            description: "\(name) might be keeping their habits private — or just getting started.\nEither way, a challenge from you could be the perfect motivation!"
+            title: .hasNoHabits(name),
+            description: .mightBeKeepingTheirHabitsPrivateOrJustGettingStartedEitherWayAChallengeFromYouCouldBeThePerfectMotivation(name)
         )
     }
 }

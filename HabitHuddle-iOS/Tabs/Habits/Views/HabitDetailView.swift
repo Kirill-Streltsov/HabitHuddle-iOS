@@ -55,7 +55,7 @@ struct HabitDetailView: View {
                         habitDescription
 
                         SubmitButton(
-                            title: viewModel.isLoadingAIResponse ? "Thinking..." : "Ask AI about benefits",
+                            title: viewModel.isLoadingAIResponse ? .thinking : .askAiAboutBenefits,
                             color: Color.orange,
                             iconName: "sparkles")
                         {
@@ -84,7 +84,7 @@ struct HabitDetailView: View {
                             .id(aiTextID)
                         }
                         
-                        SubmitButton(title: "Delete Habit", color: .red, iconName: "trash") {
+                        SubmitButton(title: .deleteHabit, color: .red, iconName: "trash") {
                             HapticManager.trigger(.error)
                             deleteButtonPressed = true
                             Task {

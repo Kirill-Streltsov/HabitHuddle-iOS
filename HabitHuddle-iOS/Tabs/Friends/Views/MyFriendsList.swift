@@ -28,7 +28,7 @@ struct MyFriendsList: View {
             ScrollView {
                 // Friends list below
                 if !appState.isAuthenticated {
-                    UnauthenticatedView(description: "You need to log in to add friends.")
+                    UnauthenticatedView(description: .youNeedToLogInToAddFriends)
                 } else {
                     if !viewModel.friends.isEmpty {
                         ForEach(viewModel.friends) { friend in
@@ -63,8 +63,8 @@ struct MyFriendsList: View {
                     } else {
                         EmptyContentView(
                             icon: "person.2.slash",
-                            title: "No Friends Yet",
-                            description: "Connect with friends to send challenges, track habits together, and stay motivated."
+                            title: .noFriendsYet,
+                            description: .connectWithFriendsToSendChallengesTrackHabitsTogetherAndStayMotivated
                         )
                     }
                 }

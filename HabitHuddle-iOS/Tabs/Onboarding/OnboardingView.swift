@@ -19,8 +19,8 @@ struct OnboardingView: View {
         [
             OnboardingPageData(
                 symbol: "hand.wave.fill",
-                title: "Welcome to\nHabit Huddle",
-                text: "Build habits, stay on track, and grow step by step.",
+                title: String(localized: .welcomeToHabitHuddle),
+                text: String(localized: .buildHabitsStayOnTrackAndGrowStepByStep),
                 customView: AnyView(
                     HabitCard(habit: Habit.demoHabitWithRecentCheckIns())
                         .allowsHitTesting(false)
@@ -29,8 +29,8 @@ struct OnboardingView: View {
             ),
             OnboardingPageData(
                 symbol: "flame.fill",
-                title: "Track your progress",
-                text: "Track your check-ins, streaks, and progress.",
+                title: String(localized: .trackYourProgress),
+                text: String(localized: .trackYourCheckInsStreaksAndProgress),
                 customView: AnyView(
                     VStack {
                         CardView {
@@ -47,8 +47,8 @@ struct OnboardingView: View {
             ),
             OnboardingPageData(
                 symbol: "person.2.fill",
-                title: "Challenge your friends",
-                text: "Challenge friends and grow together.",
+                title: String(localized: .challengeYourFriends),
+                text: String(localized: .challengeFriendsAndGrowTogether),
                 customView: AnyView(
                     VStack {
                         ChallengeProgressCardView(
@@ -120,8 +120,8 @@ struct OnboardingView: View {
             ),
             OnboardingPageData(
                 symbol: "sparkles",
-                title: "Let’s Start Small",
-                text: "Create space for growth.\nBegin with a few popular habits.",
+                title: String(localized: .letsStartSmall),
+                text: String(localized: .createSpaceForGrowthBeginWithAFewPopularHabits),
                 customView: AnyView(
                     OnboardingHabitList(userID: userID)
                         .offset(y: -20)

@@ -45,11 +45,11 @@ struct RegistrationView: View {
 
     private var errorText: String {
         if username.count < 3 {
-            return String(localized: "Username should have at least 3 symbols")
+            return String(localized: .usernameShouldHaveAtLeast3Symbols)
         } else if password != confirmPassword {
-            return String(localized: "Make sure both password fields are the same")
+            return String(localized: .makeSureBothPasswordFieldsAreTheSame)
         } else if password.count < 5 {
-            return String(localized: "Your password should have at least 5 symbols")
+            return String(localized: .yourPasswordShouldHaveAtLeast5Symbols)
         } else if !viewModel.errorMessage.isEmpty {
             return viewModel.errorMessage
         } else {

@@ -21,7 +21,7 @@ struct SentChallengeCardView: View {
                     Text(challenge.habitName)
                         .font(.headline)
 
-                    Text("You sent this challenge to \(challenge.receiver.user.name)")
+                    Text(.youSentThisChallengeTo(challenge.receiver.user.name))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

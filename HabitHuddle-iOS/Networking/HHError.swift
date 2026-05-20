@@ -27,29 +27,29 @@ enum HHError: Error, LocalizedError, Equatable {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return String(localized: "The URL is invalid.")
+            return String(localized: .theUrlIsInvalid)
         case .unauthorized:
-            return String(localized: "Wrong username or password.")
+            return String(localized: .wrongUsernameOrPassword)
         case .forbidden:
-            return String(localized: "You don’t have permission to access this resource.")
+            return String(localized: .youDontHavePermissionToAccessThisResource)
         case .notFound:
-            return String(localized: "The requested resource was not found.")
+            return String(localized: .theRequestedResourceWasNotFound)
         case .conflict:
-            return String(localized: "There’s a conflict with the current state of the resource.")
+            return String(localized: .theresAConflictWithTheCurrentStateOfTheResource)
         case .serverError:
-            return String(localized: "Server error occurred.")
+            return String(localized: .serverErrorOccurred)
         case .noData:
-            return String(localized: "No data was received from the server.")
+            return String(localized: .noDataWasReceivedFromTheServer)
         case let .requestFailed(statusCode, _):
-            return String(localized: "Request failed with status code \(statusCode).")
+            return String(localized: .requestFailedWithStatusCode(statusCode))
         case let .decodingError(error):
-            return String(localized: "Failed to decode response: \(error.localizedDescription)")
+            return String(localized: .failedToDecodeResponse(error.localizedDescription))
         case let .networkError(error):
-            return String(localized: "A network error occurred: \(error.localizedDescription)")
+            return String(localized: .aNetworkErrorOccurred(error.localizedDescription))
         case .invalidResponse:
-            return String(localized: "Invalid HTTP response.")
+            return String(localized: .invalidHttpResponse)
         case .unknown:
-            return String(localized: "An unknown error occurred.")
+            return String(localized: .anUnknownErrorOccurred)
         case .partialFailure(updated: let habits, failedIDs: let failedIDs):
             return String(localized: "Couldn’t update all habits. Habit updated: \(habits). Failed IDs: \(failedIDs)")
         case .customError(errorText: let errorText):

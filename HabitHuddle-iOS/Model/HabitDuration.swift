@@ -16,9 +16,9 @@ enum HabitDuration: String, CaseIterable, Identifiable, Codable {
 
     var displayName: String {
         switch self {
-        case .oneWeek: return String(localized: "1 Week")
-        case .twoWeeks: return String(localized: "2 Weeks")
-        case .oneMonth: return String(localized: "1 Month")
+        case .oneWeek: return String(localized: ._1Week)
+        case .twoWeeks: return String(localized: ._2Weeks)
+        case .oneMonth: return String(localized: ._1Month)
         }
     }
 

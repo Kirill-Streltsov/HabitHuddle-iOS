@@ -13,8 +13,8 @@ enum ChallengeType: String, Codable {
 
     var displayName: String {
         switch self {
-        case .competitive: return String(localized: "Competitive")
-        case .supportive: return String(localized: "Supportive")
+        case .competitive: return String(localized: .competitive)
+        case .supportive: return String(localized: .supportive)
         }
     }
 }

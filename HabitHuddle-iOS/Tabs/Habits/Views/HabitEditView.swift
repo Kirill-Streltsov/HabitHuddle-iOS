@@ -55,7 +55,7 @@ struct HabitEditView: View {
                         remindersView
                     }
                 
-                SubmitButton(title: "Save", color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor, iconName: nil) {
+                SubmitButton(title: .save, color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor, iconName: nil) {
                     HapticManager.trigger(.success)
                     Task {
                         guard let habit = viewModel.habit else {
@@ -133,7 +133,7 @@ struct HabitEditView: View {
                 placeholder: "Habit name",
                 text: $viewModel.name
             )
-            
+
             CustomStyledTextField(
                 placeholder: "Description (optional)",
                 text: $viewModel.description
@@ -160,7 +160,7 @@ struct HabitEditView: View {
             HStack {
                 Text("Category")
                     .fontWeight(.semibold)
-                InfoView(text: "Categories help you organize your habits into meaningful groups")
+                InfoView(text: .categoriesHelpYouOrganizeYourHabitsIntoMeaningfulGroups)
             }
             
             if !categories.isEmpty {
@@ -195,7 +195,7 @@ struct HabitEditView: View {
                         .fontWeight(.semibold)
                     
                     if isPartOfChallenge {
-                        Text("This habit is currently part of a challenge, so you can’t change its duration right now.")
+                        Text(.thisHabitIsCurrentlyPartOfAChallengeSoYouCantChangeItsDurationRightNow)
                             .font(.footnote)
                             .foregroundColor(.gray)
                     }
@@ -221,7 +221,7 @@ struct HabitEditView: View {
             }
             HStack {
                 Text("Sync with Server")
-                InfoView(text: "Turn on to sync habits with our server and access them on all your devices.\n\nYou must be signed in.\n\nTurning off keeps habits only on this device and deletes them from the server.")
+                InfoView(text: .turnOnToSyncHabitsWithOurServerAndAccessThemOnAllYourDevicesYouMustBeSignedInTurningOffKeepsHabitsOnlyOnThisDeviceAndDeletesThemFromTheServer)
                 Spacer()
                 Toggle("", isOn: $viewModel.isSynced)
                     .labelsHidden()
@@ -229,7 +229,7 @@ struct HabitEditView: View {
             }
             HStack {
                 Text("Open to Friends")
-                InfoView(text: "Make a habit “open to friends” to let them see it and challenge you!\n\nOnly synced habits can be shared.")
+                InfoView(text: .makeAHabitOpenToFriendsToLetThemSeeItAndChallengeYouOnlySyncedHabitsCanBeShared)
                 Spacer()
                 Toggle("", isOn: $viewModel.isPublic)
                     .labelsHidden()

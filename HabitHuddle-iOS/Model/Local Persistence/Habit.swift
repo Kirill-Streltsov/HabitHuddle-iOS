@@ -63,9 +63,9 @@ final class Habit: Identifiable, Hashable {
 extension Habit {
     static func createTestHabitsWithoutCheckIns() -> [Habit] {
         let namesDescriptionsCategories: [(String, String, String)] = [
-            (String(localized: "Meditate"), String(localized: "Practice meditation for 10 minutes daily"), String(localized: "Mindfulness")),
-            (String(localized: "Digital Detox"), String(localized: "No social media after 8 PM"), String(localized: "Productivity")),
-            (String(localized: "Daily Walks"), String(localized: "Walk at least 10,000 steps per day"), String(localized: "Fitness"))
+            (String(localized: .meditate), String(localized: .practiceMeditationFor10MinutesDaily), String(localized: .mindfulness)),
+            (String(localized: .digitalDetox), String(localized: .noSocialMediaAfter8Pm), String(localized: .productivity)),
+            (String(localized: .dailyWalks), String(localized: .walkAtLeast10000StepsPerDay), String(localized: .fitness))
         ]
         
         func days(for duration: HabitDuration) -> Int {

@@ -10,7 +10,7 @@ import SwiftUI
 struct UnauthenticatedView: View {
     
     @AppStorage("selectedTab") private var selectedTab: Int?
-    let description: LocalizedStringKey
+    let description: LocalizedStringResource
     
     var body: some View {
         CardView {

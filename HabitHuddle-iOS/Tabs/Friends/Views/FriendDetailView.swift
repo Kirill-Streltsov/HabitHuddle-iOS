@@ -53,7 +53,7 @@ struct FriendDetailView: View {
         }
         .toast(
             isPresented: $didShowBoostSent,
-            message: String(localized: "Boost notification sent!"),
+            message: String(localized: .boostNotificationSent),
             icon: "bell.fill"
         )
         .toast(isPresented: $showToast, message: message)
