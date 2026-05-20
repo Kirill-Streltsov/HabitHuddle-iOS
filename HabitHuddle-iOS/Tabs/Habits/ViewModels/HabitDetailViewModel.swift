@@ -14,30 +14,35 @@ extension HabitDetailView {
         @Published var name: String = ""
         @Published var icon: String? = nil
         @Published var description: String = ""
-        
+
         @Published var hasCheckedIn: Bool = false
         @Published var duration: HabitDuration = .twoWeeks
-        
+
         @Published var category: String = ""
-        
+
         @Published var isSynced: Bool = false
         @Published var isPublic: Bool = false
-        
+
         @Published var hasReminder: Bool = false
         @Published var reminderTime: Date = .init()
-        
+
         @Published var openAIAnswer = ""
         @Published var isLoadingAIResponse = false
-        
+
         @AppStorage("deviceToken") private var deviceToken: String = ""
         @AppStorage("hasSentDeviceToken") private var hasSentDeviceToken: Bool = false
-        
+
         var habit: Habit?
+
+        private let network: any NetworkManagerProtocol
+
+        init(network: any NetworkManagerProtocol = NetworkManager.shared) {
+            self.network = network
+        }
 
         func createHabit(with id: UUID) async -> Result<HabitDTO, HHError> {
             do {
                 let reminder: Date? = hasReminder ? reminderTime : nil
-
                 let payload = HabitPayload(
                     id: id,
                     name: name,
@@ -50,7 +55,7 @@ extension HabitDetailView {
                     checkIns: [],
                     challenges: []
                 )
-                let habitResponse = try await NetworkManager.shared.request(
+                let habitResponse = try await network.request(
                     endpoint: .createHabit(),
                     method: .post,
                     body: payload,
@@ -66,7 +71,6 @@ extension HabitDetailView {
             do {
                 guard let habit = habit else { return .failure(.notFound) }
                 let reminder: Date? = hasReminder ? reminderTime : nil
-                
                 let payload = HabitPayload(
                     id: id,
                     name: name,
@@ -79,7 +83,7 @@ extension HabitDetailView {
                     checkIns: habit.checkIns.map { LightweightCheckIn(id: $0.id, date: $0.date) },
                     challenges: []
                 )
-                let habitResponse = try await NetworkManager.shared.request(
+                let habitResponse = try await network.request(
                     endpoint: .updateHabit(with: id),
                     method: .put,
                     body: payload,
@@ -93,7 +97,7 @@ extension HabitDetailView {
 
         func checkIntoHabit(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
-                let checkInResponse = try await NetworkManager.shared.requestStatusCode(
+                let checkInResponse = try await network.requestStatusCode(
                     endpoint: .checkIntoHabit(with: id),
                     method: .post
                 )
@@ -105,7 +109,7 @@ extension HabitDetailView {
 
         func deleteHabit(with id: UUID) async -> Result<HabitDTO, HHError> {
             do {
-                let deletedHabitResponse = try await NetworkManager.shared.request(
+                let deletedHabitResponse = try await network.request(
                     endpoint: .deleteHabit(with: id),
                     method: .delete,
                     responseType: HabitDTO.self
@@ -115,12 +119,12 @@ extension HabitDetailView {
                 return .failure(.networkError(error))
             }
         }
-        
+
         func askAI(about habit: Habit) async {
             isLoadingAIResponse = true
             do {
                 let description = habit.habitDescription.isEmpty ? "no description" : habit.habitDescription
-                let openAIResult = try await NetworkManager.shared.request(
+                let openAIResult = try await network.request(
                     endpoint: .askOpenAI(habitName: habit.name, habitDescription: description, habitDuration: habit.duration.numberOfDays),
                     method: .post,
                     responseType: AIResponse.self
@@ -136,10 +140,10 @@ extension HabitDetailView {
                 }
             }
         }
-        
+
         func updateUser(user: LocalUser) async {
             do {
-                let status = try await NetworkManager.shared.requestStatusCode(
+                let status = try await network.requestStatusCode(
                     endpoint: .updateUser(),
                     method: .put,
                     body: UserPayload(

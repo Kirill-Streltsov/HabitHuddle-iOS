@@ -11,13 +11,19 @@ import SwiftUI
 extension RegistrationView {
     @MainActor
     final class ViewModel: ObservableObject {
-        
+
         @AppStorage("deviceToken") private var deviceToken: String = ""
 
         @Published var errorMessage: String = ""
         @Published var loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
 
-        func registerUser(userID: UUID, username: String, name: String, password: String) async throws  {
+        private let network: any NetworkManagerProtocol
+
+        init(network: any NetworkManagerProtocol = NetworkManager.shared) {
+            self.network = network
+        }
+
+        func registerUser(userID: UUID, username: String, name: String, password: String) async throws {
             let payload = UserPayload(
                 id: userID,
                 username: username,
@@ -27,17 +33,17 @@ extension RegistrationView {
             )
 
             do {
-                let registrationResponse = try await NetworkManager.shared.request(
+                let registrationResponse = try await network.request(
                     endpoint: .register(),
                     method: .post,
                     body: payload,
                     responseType: LoginResponse.self,
                     isLoggingIn: true
                 )
-                
+
                 loadedUser = registrationResponse.user
                 TokenManager.token = registrationResponse.token
-                
+
             } catch {
                 if let apiError = error as? HHError {
                     errorMessage = apiError.localizedDescription

@@ -10,23 +10,25 @@ import SwiftUI
 extension ChallengesListView {
     @MainActor
     final class ViewModel: ObservableObject {
-        
+
         @Published var challenges: [ChallengeDTO] = []
-        
+
         @Published var pendingChallengesSent: [ChallengeDTO] = []
         @Published var pendingChallengesReceived: [ChallengeDTO] = []
         @Published var acceptedChallenges: [ChallengeDTO] = []
         @Published var declinedChallenges: [ChallengeDTO] = []
-        
+
         let userID: UUID
-        
-        init(userID: UUID) {
+        private let network: any NetworkManagerProtocol
+
+        init(userID: UUID, network: any NetworkManagerProtocol = NetworkManager.shared) {
             self.userID = userID
+            self.network = network
         }
-        
+
         func getChallenges(for userID: UUID) async {
             do {
-                let fetchedChallenges = try await NetworkManager.shared.request(
+                let fetchedChallenges = try await network.request(
                     endpoint: .getChallenges(for: userID),
                     method: .get,
                     responseType: [ChallengeDTO].self)
@@ -36,10 +38,10 @@ extension ChallengesListView {
                 print("❌ Error: Couldn't fetch challenges for \(userID): \(error.localizedDescription)")
             }
         }
-        
+
         func acceptChallenge(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
-                let response = try await NetworkManager.shared.requestStatusCode(
+                let response = try await network.requestStatusCode(
                     endpoint: .acceptChallenge(id: id),
                     method: .post)
                 print("✅ Accepted the challenge with id: \(id)")
@@ -49,10 +51,10 @@ extension ChallengesListView {
                 return .failure(.networkError(error))
             }
         }
-        
+
         func rejectChallenge(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
-                let response = try await NetworkManager.shared.requestStatusCode(
+                let response = try await network.requestStatusCode(
                     endpoint: .rejectChallenge(id: id),
                     method: .post)
                 print("✅ Rejected the challenge with id: \(id)")
@@ -62,10 +64,10 @@ extension ChallengesListView {
                 return .failure(.networkError(error))
             }
         }
-        
+
         func cancelChallenge(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
-                let status = try await NetworkManager.shared.requestStatusCode(
+                let status = try await network.requestStatusCode(
                     endpoint: .cancelChallenge(id: id),
                     method: .delete)
                 return .success(status)
@@ -74,10 +76,10 @@ extension ChallengesListView {
                 return .failure(.networkError(error))
             }
         }
-        
+
         func getHabitFromChallenge(with habitID: UUID) async -> Result<HabitDTO, HHError> {
             do {
-                let habit = try await NetworkManager.shared.request(
+                let habit = try await network.request(
                     endpoint: .getHabit(with: habitID),
                     method: .get,
                     responseType: HabitDTO.self)
@@ -87,7 +89,7 @@ extension ChallengesListView {
                 return .failure(.networkError(error))
             }
         }
-        
+
         func createHabitAfterAcceptingChallenge(habitDTO: HabitDTO, for challengeID: UUID) async -> Result<HabitDTO, HHError> {
             do {
                 let payload = HabitPayload(
@@ -102,8 +104,7 @@ extension ChallengesListView {
                     checkIns: [],
                     challenges: [LightweightChallenge(id: challengeID)]
                 )
-
-                let habitResponse = try await NetworkManager.shared.request(
+                let habitResponse = try await network.request(
                     endpoint: .createHabit(),
                     method: .post,
                     body: payload,
@@ -114,7 +115,7 @@ extension ChallengesListView {
                 return .failure(.networkError(error))
             }
         }
-        
+
         func updateChallengeData() {
             pendingChallengesSent = challenges.filter({ $0.status == .pending && $0.receiver.user.id != userID })
             pendingChallengesReceived = challenges.filter({ $0.status == .pending && $0.receiver.user.id == userID })

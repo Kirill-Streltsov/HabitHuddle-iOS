@@ -7,7 +7,7 @@
 
 import Foundation
 
-actor NetworkManager {
+actor NetworkManager: NetworkManagerProtocol {
     static let shared = NetworkManager()
     
     private let baseURL = Config.baseURL

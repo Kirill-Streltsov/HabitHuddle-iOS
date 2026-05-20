@@ -10,12 +10,18 @@ import Foundation
 extension MyFriendsList {
     @MainActor
     final class ViewModel: ObservableObject {
-        
+
         @Published var friends: [UserDTO] = []
-        
+
+        private let network: any NetworkManagerProtocol
+
+        init(network: any NetworkManagerProtocol = NetworkManager.shared) {
+            self.network = network
+        }
+
         func getMyFriends() async {
             do {
-                let fetchedFriends = try await NetworkManager.shared.request(
+                let fetchedFriends = try await network.request(
                     endpoint: .getMyFriends(),
                     method: .get,
                     responseType: [UserDTO].self)
@@ -24,7 +30,7 @@ extension MyFriendsList {
                 print("❌ Error: Couldn't fetch friends: \(error.localizedDescription)")
             }
         }
-        
+
         func sendChallenge(to userID: UUID, for habitID: UUID, ofType type: ChallengeType) async {
             let payload = ChallengeRequest(
                 receiverID: userID,
@@ -32,7 +38,7 @@ extension MyFriendsList {
                 receiverHabitID: nil,
                 type: type)
             do {
-                let status = try await NetworkManager.shared.requestStatusCode(
+                let status = try await network.requestStatusCode(
                     endpoint: .sendChallenge(),
                     method: .post,
                     body: payload)

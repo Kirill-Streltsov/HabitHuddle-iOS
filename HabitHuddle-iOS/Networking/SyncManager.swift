@@ -10,10 +10,15 @@ import SwiftData
 
 final class SyncManager {
     static let shared = SyncManager()
-    
+    private let network: any NetworkManagerProtocol
+
+    init(network: any NetworkManagerProtocol = NetworkManager.shared) {
+        self.network = network
+    }
+
     func getHabitsFromServer() async -> Result<[HabitDTO], HHError> {
         do {
-            let fetchedHabits = try await NetworkManager.shared.request(
+            let fetchedHabits = try await network.request(
                 endpoint: .getMyHabits(),
                 method: .get,
                 responseType: [HabitDTO].self)
@@ -23,21 +28,20 @@ final class SyncManager {
             return .failure(.networkError(error))
         }
     }
-    
+
     func createHabitsOnTheServer(with habitPayloads: [HabitPayload]) async -> Result<[HabitDTO], HHError> {
         guard !habitPayloads.isEmpty else { return .success([]) }
-        
+
         var createdHabits = [HabitDTO]()
         var failedHabitIDs = [UUID]()
-        
+        let network = network
+
         await withTaskGroup(of: (UUID, Result<HabitDTO, HHError>).self) { group in
             for habitPayload in habitPayloads {
-                
                 let habitID = habitPayload.id
-                
                 group.addTask {
                     do {
-                        let created = try await NetworkManager.shared.request(
+                        let created = try await network.request(
                             endpoint: .createHabit(),
                             method: .post,
                             body: habitPayload,
@@ -49,7 +53,7 @@ final class SyncManager {
                     }
                 }
             }
-            
+
             for await (id, result) in group {
                 switch result {
                 case .success(let dto):
@@ -67,21 +71,20 @@ final class SyncManager {
             return .failure(.partialFailure(updated: createdHabits, failedIDs: failedHabitIDs))
         }
     }
-    
+
     func updateHabitsOnTheServer(with habitPayloads: [HabitPayload]) async -> Result<[HabitDTO], HHError> {
         guard !habitPayloads.isEmpty else { return .success([]) }
 
         var updatedHabits = [HabitDTO]()
         var failedHabitIDs = [UUID]()
+        let network = network
 
         await withTaskGroup(of: (UUID, Result<HabitDTO, HHError>).self) { group in
             for habitPayload in habitPayloads {
-                
                 let habitID = habitPayload.id
-                
                 group.addTask {
                     do {
-                        let updated = try await NetworkManager.shared.request(
+                        let updated = try await network.request(
                             endpoint: .updateHabit(with: habitID),
                             method: .put,
                             body: habitPayload,
@@ -112,18 +115,19 @@ final class SyncManager {
             return .failure(.partialFailure(updated: updatedHabits, failedIDs: failedHabitIDs))
         }
     }
-    
+
     func deleteHabitsOnTheServer(with ids: [UUID]) async -> Result<[HabitDTO], HHError> {
         guard !ids.isEmpty else { return .success([]) }
 
         var deletedHabits = [HabitDTO]()
         var failedIDs = [UUID]()
+        let network = network
 
         await withTaskGroup(of: (UUID, Result<HabitDTO, HHError>).self) { group in
             for id in ids {
                 group.addTask {
                     do {
-                        let deleted = try await NetworkManager.shared.request(
+                        let deleted = try await network.request(
                             endpoint: .deleteHabit(with: id),
                             method: .delete,
                             responseType: HabitDTO.self
@@ -153,14 +157,17 @@ final class SyncManager {
             return .failure(.partialFailure(updated: deletedHabits, failedIDs: failedIDs))
         }
     }
-    
+
     @MainActor
     func performFullSync(localHabits: [Habit], in modelContext: ModelContext) async {
         let serverResult = await getHabitsFromServer()
         guard case let .success(serverHabits) = serverResult else { return }
-        
+
+        // When local is empty, populate from server and stop — don't diff against empty set
+        // (which would immediately re-delete everything we just saved).
         if localHabits.isEmpty && !serverHabits.isEmpty {
             saveHabits(serverHabits, in: modelContext)
+            return
         }
 
         let serverIDs = Set(serverHabits.map { $0.id })
@@ -169,14 +176,14 @@ final class SyncManager {
         let toUpdate = localHabits.filter { serverIDs.contains($0.id) && $0.isSyncable }.map { $0.toPayload }
         let toCreate = localHabits.filter { !serverIDs.contains($0.id) && $0.isSyncable }.map { $0.toPayload }
         let toDelete = serverHabits.filter { !localIDs.contains($0.id) }.map { $0.id } + localHabits.filter { !$0.isSyncable }.map { $0.id }
-        
+
         async let createResult = createHabitsOnTheServer(with: toCreate)
         async let updateResult = updateHabitsOnTheServer(with: toUpdate)
         async let deleteResult = deleteHabitsOnTheServer(with: toDelete)
-        
+
         _ = await (createResult, updateResult, deleteResult)
     }
-    
+
     @MainActor
     func saveHabits(_ habits: [HabitDTO], in context: ModelContext) {
         for habit in habits {

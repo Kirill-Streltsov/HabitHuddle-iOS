@@ -10,19 +10,25 @@ import SwiftUI
 
 @MainActor
 final class LoginViewModel: ObservableObject {
-    
+
     @AppStorage("deviceToken") private var deviceToken: String = ""
 
     @Published var errorMessage: String = ""
     @Published var loadedHabits = [HabitDTO]()
     @Published var loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
 
+    private let network: any NetworkManagerProtocol
+
+    init(network: any NetworkManagerProtocol = NetworkManager.shared) {
+        self.network = network
+    }
+
     func loginUser(username: String, password: String) async {
         let base64Login = makeBase64Login(username: username, password: password)
 
         do {
             let headers = ["Authorization": "Basic \(base64Login)"]
-            let loginResponse = try await NetworkManager.shared.request(
+            let loginResponse = try await network.request(
                 endpoint: .login(),
                 method: .post,
                 headers: headers,
@@ -44,10 +50,10 @@ final class LoginViewModel: ObservableObject {
             }
         }
     }
-    
+
     func logout() async -> Result<HTTPStatus, HHError> {
         do {
-            let response = try await NetworkManager.shared.requestStatusCode(
+            let response = try await network.requestStatusCode(
                 endpoint: .logout(),
                 method: .delete
             )
@@ -57,9 +63,8 @@ final class LoginViewModel: ObservableObject {
             return .failure(.networkError(error))
         }
     }
-    
+
     func handleGoogleSignIn() async {
-        // Wrap the callback-based Google sign-in into async/await
         do {
             let idToken = try await withCheckedThrowingContinuation { continuation in
                 GoogleAuthManager.shared.signIn { result in
@@ -73,7 +78,7 @@ final class LoginViewModel: ObservableObject {
                 }
             }
             do {
-                let loginResponse = try await NetworkManager.shared.request(
+                let loginResponse = try await network.request(
                     endpoint: .googleSignIn(),
                     method: .post,
                     body: GoogleTokenRequest(idToken: idToken, deviceToken: deviceToken),
@@ -90,10 +95,10 @@ final class LoginViewModel: ObservableObject {
             print("❌ Error: Failed to sign in with google. Didn't receive the token: \(error)")
         }
     }
-    
+
     func handleAppleSignIn(appleToken: String, name: String) async {
         do {
-            let loginResponse = try await NetworkManager.shared.request(
+            let loginResponse = try await network.request(
                 endpoint: .appleSignIn(),
                 method: .post,
                 body: AppleAuthRequest(identityToken: appleToken, name: name, deviceToken: deviceToken),
@@ -119,7 +124,7 @@ final class LoginViewModel: ObservableObject {
 
     func getUserHabits() async -> Result<[HabitDTO], HHError> {
         do {
-            let habits = try await NetworkManager.shared.request(
+            let habits = try await network.request(
                 endpoint: .getMyHabits(),
                 method: .get,
                 responseType: [HabitDTO].self
@@ -129,14 +134,14 @@ final class LoginViewModel: ObservableObject {
             return .failure(.networkError(error))
         }
     }
-    
+
     func deleteHabits(with ids: [UUID]) async {
         _ = await SyncManager.shared.deleteHabitsOnTheServer(with: ids)
     }
-    
+
     func deleteMyAccount() async -> Result<HTTPStatus, HHError> {
         do {
-            let status = try await NetworkManager.shared.requestStatusCode(
+            let status = try await network.requestStatusCode(
                 endpoint: .deleteMyself(),
                 method: .delete
             )
@@ -145,7 +150,7 @@ final class LoginViewModel: ObservableObject {
             return .failure(.networkError(error))
         }
     }
-    
+
     private func handleUserResponse() async {
         let codableHabitsResult = await getUserHabits()
         Helpers.handleResult(codableHabitsResult) { codableHabits in
