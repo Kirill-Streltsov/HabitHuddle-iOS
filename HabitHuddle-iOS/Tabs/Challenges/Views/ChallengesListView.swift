@@ -83,7 +83,7 @@ struct ChallengesListView: View {
                         }
                     }
                 }
-                .navigationTitle("Challenges")
+                .navigationTitle(String(localized: .challenges))
         }
     }
     

@@ -65,7 +65,7 @@ struct SettingsView: View {
                 }
             }
             .listStyle(InsetGroupedListStyle())
-            .navigationTitle("Settings")
+            .navigationTitle(String(localized: .settings))
         }
         .onChange(of: viewModel.loadedUser) { _, newValue in
             if newValue.createdAt != nil {
@@ -84,14 +84,14 @@ struct SettingsView: View {
             newServerHabits = viewModel.loadedHabits.filter { !existingHabitIds.contains($0.id) }
             showHabitsFound = !newServerHabits.isEmpty
         }
-        .alert("Habits Found",
+        .alert(String(localized: .habitsFound),
                isPresented: $showHabitsFound) {
-            Button("Delete on server", role: .destructive) {
+            Button(String(localized: .deleteOnServer), role: .destructive) {
                 Task {
                     await viewModel.deleteHabits(with: newServerHabits.map { $0.id })
                 }
             }
-            Button("Save locally") {
+            Button(String(localized: .saveLocally)) {
                 for loadedHabit in viewModel.loadedHabits {
                     let _ = loadedHabit.saved(in: context)
                 }
@@ -108,7 +108,7 @@ struct SettingsView: View {
     }
     
     private var accountSection: some View {
-        Section(header: Text("Account")) {
+        Section(header: Text(.account)) {
             HStack {
                 Label("Status", systemImage: "person.circle")
                 Spacer()
@@ -159,7 +159,7 @@ struct SettingsView: View {
     }
     
     private var preferencesSection: some View {
-        Section(header: Text("Preferences")) {
+        Section(header: Text(.preferences)) {
             Toggle(isOn: $isDarkMode) {
                 Label("Dark Mode", systemImage: "moon.fill")
             }
@@ -171,17 +171,17 @@ struct SettingsView: View {
     }
     
     private var informationSection: some View {
-        Section(header: Text("Information")) {
-            NavigationLink(destination: Text("TERMS OF SERVICES")) {
-                Label("Terms of Service", systemImage: "doc.text")
+        Section(header: Text(.information)) {
+            NavigationLink(destination: Text(.termsOfService)) {
+                Label(String(localized: .termsOfService), systemImage: "doc.text")
             }
-            
-            NavigationLink(destination: Text("PRIVACY POLICY")) {
-                Label("Privacy Policy", systemImage: "lock.shield")
+
+            NavigationLink(destination: Text(.privacyPolicy)) {
+                Label(String(localized: .privacyPolicy), systemImage: "lock.shield")
             }
-            
-            NavigationLink(destination: Text("ABOUT")) {
-                Label("About", systemImage: "info.circle")
+
+            NavigationLink(destination: Text(.about)) {
+                Label(String(localized: .about), systemImage: "info.circle")
             }
         }
     }

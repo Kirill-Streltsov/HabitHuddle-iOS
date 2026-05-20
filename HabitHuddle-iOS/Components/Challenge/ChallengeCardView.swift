@@ -49,7 +49,7 @@ struct ChallengeCardView: View {
                         await onReject()
                     }
                 } label: {
-                    Text("Reject")
+                    Text(.reject)
                         .fontWeight(.semibold)
                         .frame(minWidth: 80)
                         .padding(.vertical, 8)
@@ -63,7 +63,7 @@ struct ChallengeCardView: View {
                         await onAccept()
                     }
                 } label: {
-                    Text("Accept")
+                    Text(.accept)
                         .fontWeight(.semibold)
                         .frame(minWidth: 80)
                         .padding(.vertical, 8)

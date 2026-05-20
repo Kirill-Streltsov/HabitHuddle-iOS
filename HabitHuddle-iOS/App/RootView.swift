@@ -35,16 +35,16 @@ struct RootView: View {
         ZStack {
             if hasSeenOnboarding {
                 TabView(selection: $selectedTab) {
-                    Tab("Habits", systemImage: "checklist", value: 0) {
+                    Tab(String(localized: .habits), systemImage: "checklist", value: 0) {
                         HabitListView()
                     }
-                    Tab("Friends", systemImage: "person.2", value: 1) {
+                    Tab(String(localized: .friends), systemImage: "person.2", value: 1) {
                         MyFriendsView()
                     }
-                    Tab("Challenges", systemImage: "flag.pattern.checkered.2.crossed", value: 2) {
+                    Tab(String(localized: .challenges), systemImage: "flag.pattern.checkered.2.crossed", value: 2) {
                         ChallengesListView(userID: userManager.profile.id)
                     }
-                    Tab("Settings", systemImage: "gear", value: 3) {
+                    Tab(String(localized: .settings), systemImage: "gear", value: 3) {
                         SettingsView()
                     }
                 }
@@ -62,8 +62,8 @@ struct RootView: View {
                 }
             }
         }
-        .alert("You've been logged out", isPresented: $showLoggedOut) {} message: {
-            Text("This can happen if your session expires. Log back in to continue syncing your habits and using all social features.")
+        .alert(String(localized: .youveBeenLoggedOut), isPresented: $showLoggedOut) {} message: {
+            Text(.thisCanHappenIfYourSessionExpiresLogBackInToContinueSyncingYourHabitsAndUsingAllSocialFeatures)
         }
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {

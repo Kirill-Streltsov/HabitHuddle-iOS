@@ -9,8 +9,8 @@ import SwiftUI
 
 struct InputView: View {
     @Binding var text: String
-    let title: LocalizedStringKey
-    let placeholder: LocalizedStringKey
+    let title: LocalizedStringResource
+    let placeholder: LocalizedStringResource
     var isSecureField = false
 
     var body: some View {
@@ -20,11 +20,15 @@ struct InputView: View {
                 .fontWeight(.semibold)
 
             if isSecureField {
-                SecureField(placeholder, text: $text)
-                    .font(.system(size: 14))
+                SecureField(text: $text) {
+                    Text(placeholder)
+                }
+                .font(.system(size: 14))
             } else {
-                TextField(placeholder, text: $text)
-                    .font(.system(size: 14))
+                TextField(text: $text) {
+                    Text(placeholder)
+                }
+                .font(.system(size: 14))
             }
             Divider()
         }
@@ -32,5 +36,5 @@ struct InputView: View {
 }
 
 #Preview {
-    InputView(text: .constant(""), title: "Username", placeholder: "name@example.com")
+    InputView(text: .constant(""), title: .username, placeholder: .enterYourUsername)
 }

@@ -97,7 +97,7 @@ struct FriendHabitCard: View {
                 }
                 .offset(y: -5)
                 HStack {
-                    StatItem(title: "Longest Streak", value: "\(habitDTO.longestStreak) days")
+                    StatItem(title: .longestStreak, value: .days(habitDTO.longestStreak))
                     Spacer()
                     StatItem(title: .done, value: "\(habitDTO.completionPercentage)%")
                 }

@@ -52,13 +52,13 @@ struct LoginView: View {
                         .frame(height: 20)
 
                     InputView(text: $username,
-                              title: "Username",
-                              placeholder: "Enter your username...")
+                              title: .username,
+                              placeholder: .enterYourUsername)
                         .textInputAutocapitalization(.never)
                         .focused($focusedField, equals: .username)
                         .submitLabel(.next)
 
-                    InputView(text: $password, title: "Password", placeholder: "Enter your password...", isSecureField: true)
+                    InputView(text: $password, title: .password, placeholder: .enterYourPassword, isSecureField: true)
                         .focused($focusedField, equals: .password)
                         .submitLabel(.done)
                 }
@@ -107,13 +107,13 @@ struct LoginView: View {
                 newServerHabits = viewModel.loadedHabits.filter { !existingHabitIds.contains($0.id) }
                 showHabitsFound = !newServerHabits.isEmpty
             }
-            .alert("Habits Found", isPresented: $showHabitsFound) {
-                Button("Delete on server", role: .destructive) {
+            .alert(String(localized: .habitsFound), isPresented: $showHabitsFound) {
+                Button(String(localized: .deleteOnServer), role: .destructive) {
                     Task {
                         await viewModel.deleteHabits(with: newServerHabits.map { $0.id })
                     }
                 }
-                Button("Save locally") {
+                Button(String(localized: .saveLocally)) {
                     for loadedHabit in newServerHabits {
                         _ = loadedHabit.saved(in: context)
                     }
@@ -127,7 +127,7 @@ struct LoginView: View {
                 Would you like to save them locally or delete them from the server?
                 """)
             }
-            .navigationTitle("Login")
+            .navigationTitle(String(localized: .login))
             .navigationBarTitleDisplayMode(.inline)
             .background(Color(.systemGroupedBackground))
         }

@@ -51,7 +51,7 @@ enum HHError: Error, LocalizedError, Equatable {
         case .unknown:
             return String(localized: .anUnknownErrorOccurred)
         case .partialFailure(updated: let habits, failedIDs: let failedIDs):
-            return String(localized: "Couldn’t update all habits. Habit updated: \(habits). Failed IDs: \(failedIDs)")
+            return "Couldn’t update all habits. Updated: \(habits.count). Failed: \(failedIDs.count)."
         case .customError(errorText: let errorText):
             return errorText
         }

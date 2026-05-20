@@ -215,7 +215,7 @@ struct HabitStatisticsView: View {
                     .fontWeight(.semibold)
             }
             if missedDays == 0 {
-                Text("100% consistency!")
+                Text(._100Consistency)
                     .font(.subheadline)
                     .fontWeight(.semibold)
             }
@@ -248,10 +248,10 @@ struct HabitStatisticsView: View {
 
             HStack(alignment: .top, spacing: 40) {
                 VStack {
-                    Text("Current Streak")
+                    Text(.currentStreak)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                    Text("\(currentStreak.length) days")
+                    Text(.days(currentStreak.length))
                         .font(.title2.bold())
                         .foregroundStyle(.green)
                     Text("From \(currentStreak.startDate.formatted(date: .numeric, time: .omitted)) to \(currentStreak.endDate.formatted(date: .numeric, time: .omitted))")
@@ -262,10 +262,10 @@ struct HabitStatisticsView: View {
                 }
 
                 VStack {
-                    Text("Longest Streak")
+                    Text(.longestStreak)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                    Text("\(longestStreak.length) days")
+                    Text(.days(longestStreak.length))
                         .font(.title2.bold())
                         .foregroundStyle(.blue)
                     Text("From \(longestStreak.startDate.formatted(date: .numeric, time: .omitted)) to \(longestStreak.endDate.formatted(date: .numeric, time: .omitted))")

@@ -84,7 +84,7 @@ struct HabitCard: View {
                         Task { scale -= 0.15 }
                     }
                 HStack {
-                    StatItem(title: "Longest Streak", value: "\(habit.longestStreak) days")
+                    StatItem(title: .longestStreak, value: .days(habit.longestStreak))
                     Spacer()
                     StatItem(title: .done, value: "\(habit.completionPercentage)%")
                 }

@@ -54,7 +54,7 @@ struct HabitListView: View {
             .navigationDestination(for: Habit.self) { habit in
                 HabitDetailView(habit: habit)
             }
-            .navigationTitle("Habits")
+            .navigationTitle(String(localized: .habits))
         }
     }
 

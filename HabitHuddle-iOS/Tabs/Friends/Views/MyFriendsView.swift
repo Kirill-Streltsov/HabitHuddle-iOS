@@ -51,7 +51,7 @@ struct MyFriendsView: View {
             }
             .toast(isPresented: $showToast, message: toastMessage, icon: "person.2")
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("Friends")
+            .navigationTitle(String(localized: .friends))
             .task {
                 await viewModel.getMyFriendRequests()
                 friendsListID = UUID()
@@ -82,7 +82,7 @@ struct MyFriendsView: View {
         Group {
             // Friend requests on top
             if !viewModel.friendRequests.isEmpty {
-                Section(header: Text("Friend Requests")
+                Section(header: Text(.friendRequests)
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)

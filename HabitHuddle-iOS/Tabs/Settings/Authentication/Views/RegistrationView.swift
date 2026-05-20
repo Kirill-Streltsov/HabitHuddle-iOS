@@ -68,20 +68,20 @@ struct RegistrationView: View {
                     .opacity(registerButtonPressed ? 1 : 0)
                     .frame(height: 20)
 
-                InputView(text: $username, title: "Username", placeholder: "Enter your username...")
+                InputView(text: $username, title: .username, placeholder: .enterYourUsername)
                     .textInputAutocapitalization(.never)
                     .focused($focusedField, equals: .username)
                     .submitLabel(.next)
 
-                InputView(text: $name, title: "Name", placeholder: "Enter your name...")
+                InputView(text: $name, title: .name, placeholder: .enterYourName)
                     .focused($focusedField, equals: .name)
                     .submitLabel(.next)
 
-                InputView(text: $password, title: "Password", placeholder: "Enter your password...", isSecureField: false)
+                InputView(text: $password, title: .password, placeholder: .enterYourPassword, isSecureField: false)
                     .focused($focusedField, equals: .password)
                     .submitLabel(.next)
-                
-                InputView(text: $confirmPassword, title: "Confirm password", placeholder: "Confirm your password...", isSecureField: false)
+
+                InputView(text: $confirmPassword, title: .confirmPassword, placeholder: .confirmYourPassword, isSecureField: false)
                     .focused($focusedField, equals: .confirmPassword)
                     .submitLabel(.done)
             }
@@ -127,7 +127,7 @@ struct RegistrationView: View {
                 context.saveOrLog()
             }
         }
-        .navigationTitle("Registration")
+        .navigationTitle(String(localized: .registration))
         .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemGroupedBackground))
     }

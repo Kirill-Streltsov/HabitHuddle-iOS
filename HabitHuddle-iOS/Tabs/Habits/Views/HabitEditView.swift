@@ -418,12 +418,15 @@ struct HabitEditView: View {
 
         let identifier = "habit_\(habit.id)"
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        let habitName = habit.name
+        let hour = habit.reminderTime?.hour
+        let minute = habit.reminderTime?.minute
 
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print("Failed to schedule: \(error)")
             } else {
-                print("Notification scheduled for \(habit.name) at \(String(describing: habit.reminderTime?.hour)):\(String(describing: habit.reminderTime?.minute))")
+                print("Notification scheduled for \(habitName) at \(String(describing: hour)):\(String(describing: minute))")
             }
         }
     }

@@ -92,7 +92,7 @@ struct HabitStatsCard: View {
 
             HStack(spacing: 24) {
                 StatItem(title: .totalCheckIns, value: "\(totalCheckIns)")
-                StatItem(title: "Longest Streak", value: "\(longestStreak) days")
+                StatItem(title: .longestStreak, value: .days(longestStreak))
                 StatItem(title: .completion, value: "\(completionPercentage)%")
             }
 

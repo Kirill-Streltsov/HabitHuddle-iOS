@@ -19,16 +19,9 @@ struct HeatmapHabitDTOView: View {
 
     // Cache weekdays computation
     private let weekDays: [String] = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale.current
-        let symbols = formatter.shortWeekdaySymbols
-        let cal = Calendar(identifier: .iso8601)
-        let firstWeekdayIndex = cal.firstWeekday - 1
-        if let symbols = symbols {
-            return Array(symbols[firstWeekdayIndex ..< symbols.count]) + symbols[0 ..< firstWeekdayIndex]
-        } else {
-            return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-        }
+        var symbols = Calendar.current.shortWeekdaySymbols  // starts Sunday
+        symbols.append(symbols.removeFirst())                // rotate: Mon..Sun
+        return symbols
     }()
 
     @State private var checkInData: [Date: Int] = [:]

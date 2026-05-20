@@ -40,7 +40,7 @@ struct FriendRequestCardView: View {
 
             // Action buttons
             VStack(alignment: .trailing) {
-                Button("Ignore") {
+                Button(String(localized: .ignore)) {
                     onIgnore()
                 }
                 .font(.subheadline)
@@ -50,7 +50,7 @@ struct FriendRequestCardView: View {
                 .foregroundStyle(.gray)
                 .clipShape(Capsule())
                 
-                Button("Accept") {
+                Button(String(localized: .accept)) {
                     onAccept()
                 }
                 .font(.subheadline.bold())
