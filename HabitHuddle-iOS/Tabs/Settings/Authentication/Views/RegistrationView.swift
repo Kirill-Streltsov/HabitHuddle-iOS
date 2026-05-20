@@ -124,7 +124,7 @@ struct RegistrationView: View {
                 userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
                 dismiss()
                 context.insert(newValue.toSwiftData())
-                try? context.save()
+                context.saveOrLog()
             }
         }
         .navigationTitle("Registration")

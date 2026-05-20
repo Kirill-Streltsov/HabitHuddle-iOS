@@ -73,7 +73,14 @@ struct Endpoint {
     }
     
     static func askOpenAI(habitName: String, habitDescription: String, habitDuration: Int) -> Endpoint {
-        Endpoint(path: "habits/ask-open-ai/\(habitName)/\(habitDescription)/\(habitDuration)/")
+        Endpoint(
+            path: "habits/ask-open-ai",
+            queryItems: [
+                URLQueryItem(name: "name", value: habitName),
+                URLQueryItem(name: "description", value: habitDescription),
+                URLQueryItem(name: "duration", value: String(habitDuration))
+            ]
+        )
     }
     
     // MARK: Users

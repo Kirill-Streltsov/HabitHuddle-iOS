@@ -46,7 +46,7 @@ struct OnboardingHabitList: View {
                     context.insert(habit)
                 }
             }
-            try? context.save()
+            context.saveOrLog()
         }
     }
 }

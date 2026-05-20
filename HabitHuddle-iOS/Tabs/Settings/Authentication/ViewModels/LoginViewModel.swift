@@ -131,34 +131,7 @@ final class LoginViewModel: ObservableObject {
     }
     
     func deleteHabits(with ids: [UUID]) async {
-        var deletedHabits = [HabitDTO]()
-        var failedIDs = [UUID]()
-        await withTaskGroup(of: (UUID, Result<HabitDTO, HHError>).self) { group in
-            for id in ids {
-                group.addTask {
-                    do {
-                        let deleted = try await NetworkManager.shared.request(
-                            endpoint: .deleteHabit(with: id),
-                            method: .delete,
-                            responseType: HabitDTO.self
-                        )
-                        return (id, .success(deleted))
-                    } catch {
-                        return (id, .failure(.networkError(error)))
-                    }
-                }
-            }
-            
-            for await (id, result) in group {
-                switch result {
-                case .success(let dto):
-                    deletedHabits.append(dto)
-                case .failure(let error):
-                    failedIDs.append(id)
-                    print("❌ Error: Failed to delete habit with ID \(id): \(error.localizedDescription)")
-                }
-            }
-        }
+        _ = await SyncManager.shared.deleteHabitsOnTheServer(with: ids)
     }
     
     func deleteMyAccount() async -> Result<HTTPStatus, HHError> {

@@ -111,7 +111,7 @@ struct FriendDetailView: View {
     private func deleteFriendLocally() {
         guard let friend = users.filter({ $0.id == friend.id }).first else { return }
         context.delete(friend)
-        try? context.save()
+        context.saveOrLog()
     }
 }
 

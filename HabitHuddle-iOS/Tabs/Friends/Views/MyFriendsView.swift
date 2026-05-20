@@ -100,7 +100,7 @@ struct MyFriendsView: View {
                                     friendsListID = UUID()
                                     let user = User(id: friend.id, username: friend.username, name: friend.name, createdAt: friend.createdAt, updatedAt: friend.updatedAt, habits: [])
                                     context.insert(user)
-                                    try? context.save()
+                                    context.saveOrLog()
                                 } onFailure: { _ in
                                     print("❌ Error: Couldn't accept friend")
                                 }

@@ -131,7 +131,7 @@ struct HabitDetailView: View {
                 Task {
                     await MainActor.run {
                         habit.duration = newValue
-                        try? context.save()
+                        context.saveOrLog()
                     }
                 }
             }
@@ -140,7 +140,7 @@ struct HabitDetailView: View {
                     scrollTarget = aiTextID
                     if !answer.isEmpty {
                         habit.aiText = answer
-                        try? context.save()
+                        context.saveOrLog()
                     }
                 }
             }
@@ -240,7 +240,7 @@ struct HabitDetailView: View {
     private func deleteHabit() async {
         habit.cancelHabitNotification()
         context.delete(habit)
-        try? context.save()
+        context.saveOrLog()
 
         Task {
             if userManager.profile.isSignedInToServer {

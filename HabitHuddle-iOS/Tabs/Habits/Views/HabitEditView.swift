@@ -294,7 +294,7 @@ struct HabitEditView: View {
             habit.duration = viewModel.duration
             habit.reminderTime = viewModel.hasReminder ? viewModel.reminderTime : nil
             habit.updatedAt = .now
-            try? context.save()
+            context.saveOrLog()
             setNotificationBehaviour(for: habit)
             if viewModel.isSynced {
                 Task {

@@ -8,8 +8,7 @@
 import Foundation
 import SwiftData
 
-@MainActor
-final class SyncManager: ObservableObject {
+final class SyncManager {
     static let shared = SyncManager()
     
     func getHabitsFromServer() async -> Result<[HabitDTO], HHError> {
@@ -155,6 +154,7 @@ final class SyncManager: ObservableObject {
         }
     }
     
+    @MainActor
     func performFullSync(localHabits: [Habit], in modelContext: ModelContext) async {
         let serverResult = await getHabitsFromServer()
         guard case let .success(serverHabits) = serverResult else { return }
@@ -182,6 +182,6 @@ final class SyncManager: ObservableObject {
         for habit in habits {
             let _ = habit.saved(in: context)
         }
-        try? context.save()
+        context.saveOrLog()
     }
 }

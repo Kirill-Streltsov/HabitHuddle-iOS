@@ -31,7 +31,7 @@ extension Habit {
         }
         
         updatedAt = .now
-        try? context.save()
+        context.saveOrLog()
         toggleCheckInRemotely()
     }
 

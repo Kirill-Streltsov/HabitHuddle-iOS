@@ -53,7 +53,7 @@ struct SettingsView: View {
                                         appState.logout(userManager: userManager)
                                         guard let currentUser = users.first(where: { $0.id == userManager.profile.id }) else { return }
                                         context.delete(currentUser)
-                                        try? context.save()
+                                        context.saveOrLog()
                                     }
                                 } onFailure: { error in
                                     print("❌ Error: couldn't delete the account: \(error)")
@@ -75,7 +75,7 @@ struct SettingsView: View {
                 userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
                 if !users.contains(where: { $0.id == newValue.id }) {
                     context.insert(newValue.toSwiftData())
-                    try? context.save()
+                    context.saveOrLog()
                 }
             }
         }
@@ -95,7 +95,7 @@ struct SettingsView: View {
                 for loadedHabit in viewModel.loadedHabits {
                     let _ = loadedHabit.saved(in: context)
                 }
-                try? context.save()
+                context.saveOrLog()
             }
         } message: {
             Text("""
@@ -222,7 +222,7 @@ struct SettingsView: View {
                         }
                         guard let currentUser = users.first(where: { $0.id == userManager.profile.id }) else { return }
                         context.delete(currentUser)
-                        try? context.save()
+                        context.saveOrLog()
                     }
                 }
             } onFailure: { _ in

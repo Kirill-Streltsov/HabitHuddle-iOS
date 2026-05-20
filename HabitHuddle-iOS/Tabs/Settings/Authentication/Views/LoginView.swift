@@ -98,7 +98,7 @@ struct LoginView: View {
                     userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
                     if !users.contains(where: { $0.id == newValue.id }) {
                         context.insert(newValue.toSwiftData())
-                        try? context.save()
+                        context.saveOrLog()
                     }
                 }
             }
@@ -117,7 +117,7 @@ struct LoginView: View {
                     for loadedHabit in newServerHabits {
                         _ = loadedHabit.saved(in: context)
                     }
-                    try? context.save()
+                    context.saveOrLog()
                 }
             } message: {
                 Text("""
