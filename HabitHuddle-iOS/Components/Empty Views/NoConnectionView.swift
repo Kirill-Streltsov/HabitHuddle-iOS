@@ -18,7 +18,7 @@ struct NoConnectionView: View {
                 .frame(width: 70, height: 70)
                 .foregroundStyle(.gray.opacity(0.4))
 
-            Text("No Internet Connection")
+            Text(.noInternetConnection)
                 .font(.title2.weight(.semibold))
                 .foregroundStyle(.primary.opacity(0.7))
 

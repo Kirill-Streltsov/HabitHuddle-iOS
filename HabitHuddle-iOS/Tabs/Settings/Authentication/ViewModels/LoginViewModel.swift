@@ -42,7 +42,7 @@ final class LoginViewModel: ObservableObject {
             if let apiError = error as? HHError {
                 errorMessage = apiError.localizedDescription
             } else {
-                errorMessage = "Something went wrong. Please try again."
+                errorMessage = String(localized: .somethingWentWrongPleaseTryAgain)
             }
             Task {
                 try? await Task.sleep(for: .seconds(3))

@@ -28,7 +28,7 @@ struct CheckInCardView: View {
                         .scaleEffect(scale)
                         .animation(.easeInOut(duration: 0.3), value: scale)
                 }
-                Text(habit.isCheckedInToday ? "You're all set for today!" : "Tap to Check In")
+                habit.isCheckedInToday ? Text(.youreAllSetForToday) : Text(.tapToCheckIn)
                     .font(.headline)
                     .foregroundStyle(habit.isCheckedInToday ? .green : .primary)
             }

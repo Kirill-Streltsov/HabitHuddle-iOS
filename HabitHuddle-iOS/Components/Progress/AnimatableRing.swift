@@ -24,7 +24,7 @@ struct AnimatableRing: View {
                 .rotationEffect(.degrees(-90))
 
 
-            Text("\(habit.checkIns.count)/\(habit.duration.numberOfDays) days")
+            (Text(verbatim: "\(habit.checkIns.count) / ") + Text(.days(habit.duration.numberOfDays)))
                 .contentTransition(.numericText())
                 .font(.title2)
                 .fontWeight(.semibold)

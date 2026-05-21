@@ -194,15 +194,15 @@ struct HabitStatisticsView: View {
             ZStack {
                 Chart {
                     SectorMark(
-                        angle: .value("Checked In", Double(habit.checkIns.count)),
+                        angle: .value(String(localized: .checkedIn), Double(habit.checkIns.count)),
                         innerRadius: .ratio(0.6)
                     )
                     .foregroundStyle(
                         Color.green
                     )
-                    
+
                     SectorMark(
-                        angle: .value("Missed", Double(missedDays)),
+                        angle: .value(String(localized: .missed), Double(missedDays)),
                         innerRadius: .ratio(0.6)
                     )
                     .foregroundStyle(
@@ -226,14 +226,14 @@ struct HabitStatisticsView: View {
         VStack(spacing: 24) {
             Chart(streakData) { data in
                 AreaMark(
-                    x: .value("Date", data.date, unit: .day),
-                    y: .value("Streak", data.streakLength)
+                    x: .value(String(localized: .date), data.date, unit: .day),
+                    y: .value(String(localized: .streak), data.streakLength)
                 )
                 .foregroundStyle(Color.orange.gradient.opacity(0.3))
-                
+
                 LineMark(
-                    x: .value("Date", data.date, unit: .day),
-                    y: .value("Streak", data.streakLength)
+                    x: .value(String(localized: .date), data.date, unit: .day),
+                    y: .value(String(localized: .streak), data.streakLength)
                 )
                 .foregroundStyle(Color.orange)
                 .lineStyle(StrokeStyle(lineWidth: 2))
@@ -241,7 +241,7 @@ struct HabitStatisticsView: View {
             .frame(height: 150)
 
             if currentStreak.length == longestStreak.length {
-                Text("You're making great progress. This is your longest streak so far.")
+                Text(.youreMakingGreatProgressThisIsYourLongestStreakSoFar)
                     .font(.subheadline)
                     .fontWeight(.semibold)
             }
@@ -254,7 +254,7 @@ struct HabitStatisticsView: View {
                     Text(.days(currentStreak.length))
                         .font(.title2.bold())
                         .foregroundStyle(.green)
-                    Text("From \(currentStreak.startDate.formatted(date: .numeric, time: .omitted)) to \(currentStreak.endDate.formatted(date: .numeric, time: .omitted))")
+                    Text(.fromTo(currentStreak.startDate.formatted(date: .numeric, time: .omitted), currentStreak.endDate.formatted(date: .numeric, time: .omitted)))
                         .font(.caption)
                         .foregroundStyle(.gray)
                         .multilineTextAlignment(.center)
@@ -268,7 +268,7 @@ struct HabitStatisticsView: View {
                     Text(.days(longestStreak.length))
                         .font(.title2.bold())
                         .foregroundStyle(.blue)
-                    Text("From \(longestStreak.startDate.formatted(date: .numeric, time: .omitted)) to \(longestStreak.endDate.formatted(date: .numeric, time: .omitted))")
+                    Text(.fromTo(longestStreak.startDate.formatted(date: .numeric, time: .omitted), longestStreak.endDate.formatted(date: .numeric, time: .omitted)))
                         .font(.caption)
                         .foregroundStyle(.gray)
                         .multilineTextAlignment(.center)
@@ -282,8 +282,8 @@ struct HabitStatisticsView: View {
     private var checkInTimeDistributionSection: some View {
         Chart(hourlyData) { data in
             BarMark(
-                x: .value("Hour", data.hour),
-                y: .value("Count", data.count)
+                x: .value(String(localized: .hour), data.hour),
+                y: .value(String(localized: .count), data.count)
             )
             .foregroundStyle(Color.purple.gradient)
             .cornerRadius(4)

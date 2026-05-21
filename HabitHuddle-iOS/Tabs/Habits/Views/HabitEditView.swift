@@ -112,11 +112,11 @@ struct HabitEditView: View {
     
     private func fillCategories() {
         categories = [
-            "Health",
-            "Productivity",
-            "Mindfulness",
-            "Learning",
-            "Fitness"
+            String(localized: .health),
+            String(localized: .productivity),
+            String(localized: .mindfulness),
+            String(localized: .learning),
+            String(localized: .fitness)
         ]
         for habit in habits {
             if !habit.category.isEmpty {
@@ -130,12 +130,12 @@ struct HabitEditView: View {
     private var textFieldsView: some View {
         VStack(spacing: 16) {
             CustomStyledTextField(
-                placeholder: "Habit name",
+                placeholder: String(localized: .habitName),
                 text: $viewModel.name
             )
 
             CustomStyledTextField(
-                placeholder: "Description (optional)",
+                placeholder: String(localized: .descriptionOptional),
                 text: $viewModel.description
             )
         }
@@ -143,7 +143,7 @@ struct HabitEditView: View {
     
     private var iconPickerView: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Choose an Icon")
+            Text(.chooseAnIcon)
                 .fontWeight(.semibold)
             IconPickerView(selectedIcon: $viewModel.icon)
                 .frame(maxHeight: 300)
@@ -158,7 +158,7 @@ struct HabitEditView: View {
     private var categoryView: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Category")
+                Text(.category)
                     .fontWeight(.semibold)
                 InfoView(text: .categoriesHelpYouOrganizeYourHabitsIntoMeaningfulGroups)
             }
@@ -166,14 +166,14 @@ struct HabitEditView: View {
             if !categories.isEmpty {
                 Menu {
                     ForEach(categories, id: \.self) { category in
-                        Button("\(category)") {
+                        Button(LocalizedStringKey(category)) {
                             viewModel.category = category
                         }
                     }
                 } label: {
                     HStack {
                         Image(systemName: "list.bullet")
-                        Text("Select an existing category")
+                        Text(.selectAnExistingCategory)
                             .foregroundColor(.accentColor)
                     }
                     .padding(8)
@@ -182,7 +182,7 @@ struct HabitEditView: View {
                 }
             }
                         
-            CustomStyledTextField(placeholder: categories.count == 0 ? "Add a new one..." : "Or add a new one...", text: $viewModel.category)
+            CustomStyledTextField(placeholder: categories.count == 0 ? String(localized: .addANewOne) : String(localized: .orAddANewOne), text: $viewModel.category)
         }
     }
     
@@ -191,7 +191,7 @@ struct HabitEditView: View {
             
             VStack(alignment: .leading, spacing: 12) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Desired duration")
+                    Text(.desiredDuration)
                         .fontWeight(.semibold)
                     
                     if isPartOfChallenge {
@@ -201,7 +201,7 @@ struct HabitEditView: View {
                     }
                 }
                 
-                Picker("Duration", selection: $viewModel.duration) {
+                Picker(String(localized: .duration), selection: $viewModel.duration) {
                     ForEach(HabitDuration.allCases) { option in
                         Text(option.displayName)
                             .tag(option)
@@ -216,11 +216,11 @@ struct HabitEditView: View {
     private var privacyView: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Privacy Options")
+                Text(.privacyOptions)
                     .fontWeight(.semibold)
             }
             HStack {
-                Text("Sync with Server")
+                Text(.syncWithServer)
                 InfoView(text: .turnOnToSyncHabitsWithOurServerAndAccessThemOnAllYourDevicesYouMustBeSignedInTurningOffKeepsHabitsOnlyOnThisDeviceAndDeletesThemFromTheServer)
                 Spacer()
                 Toggle("", isOn: $viewModel.isSynced)
@@ -228,7 +228,7 @@ struct HabitEditView: View {
                     .disabled(!appState.isAuthenticated)
             }
             HStack {
-                Text("Open to Friends")
+                Text(.openToFriends)
                 InfoView(text: .makeAHabitOpenToFriendsToLetThemSeeItAndChallengeYouOnlySyncedHabitsCanBeShared)
                 Spacer()
                 Toggle("", isOn: $viewModel.isPublic)
@@ -243,9 +243,9 @@ struct HabitEditView: View {
             if notificationsDisabled {
                 VStack(alignment: .leading, spacing: 8) {
                             (
-                                Text("To receive reminders, enable notifications in ")
+                                Text(.toReceiveRemindersEnableNotificationsIn)
                                 +
-                                Text("Settings")
+                                Text(.settings)
                                     .foregroundColor(.blue)
                                     .underline()
                                     
@@ -259,7 +259,7 @@ struct HabitEditView: View {
             }
             
             Toggle(isOn: $viewModel.hasReminder) {
-                Text("Enable Reminders")
+                Text(.enableReminders)
                     .fontWeight(.medium)
             }
                 .disabled(notificationsDisabled)
@@ -271,7 +271,7 @@ struct HabitEditView: View {
                 }
             
             DatePicker(selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute) {
-                Text("Reminder Time")
+                Text(.reminderTime)
                     .fontWeight(.medium)
             }
                 .opacity(viewModel.hasReminder ? 1 : 0.5)

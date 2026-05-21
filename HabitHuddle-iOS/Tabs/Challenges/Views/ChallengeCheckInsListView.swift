@@ -20,12 +20,12 @@ struct ChallengeCheckInsListView: View {
     var body: some View {
         ScrollView {
             if isLoading {
-                ProgressView("Loading check-ins...")
+                ProgressView(String(localized: .loadingCheckIns))
                         .frame(maxWidth: .infinity)
                         .padding()
             } else {
                 VStack(spacing: 8) {
-                    Text("Challenge Timeline")
+                    Text(.challengeTimeline)
                         .font(.largeTitle)
                         .fontWeight(.semibold)
                         .padding(.bottom)

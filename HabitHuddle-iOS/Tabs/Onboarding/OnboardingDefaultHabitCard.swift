@@ -30,9 +30,9 @@ struct OnboardingDefaultHabitCard: View {
                             .foregroundStyle(.gray)
                             .multilineTextAlignment(.center)
                     }
-                    Picker("Duration", selection: $duration) {
+                    Picker(String(localized: .duration), selection: $duration) {
                         ForEach(HabitDuration.allCases) { option in
-                            Text("\(option.numberOfDays) days")
+                            Text(.days(option.numberOfDays))
                                 .tag(option)
                         }
                     }

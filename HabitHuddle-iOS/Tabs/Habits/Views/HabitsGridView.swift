@@ -14,6 +14,14 @@ struct HabitsGridView: View {
         case alphabetical = "Alphabetical"
         case createdAt = "Newest First"
         case byGroup = "Grouped"
+
+        var localizedName: LocalizedStringResource {
+            switch self {
+            case .alphabetical: .alphabetical
+            case .createdAt: .newestFirst
+            case .byGroup: .grouped
+            }
+        }
     }
 
     @State private var sortMode: SortMode = .byGroup
@@ -69,7 +77,7 @@ struct HabitsGridView: View {
                                     sortMode = mode
                                 }
                             } label: {
-                                Label(mode.rawValue, systemImage: sortMode == mode ? "checkmark.circle" : "circle")
+                                Label(String(localized: mode.localizedName), systemImage: sortMode == mode ? "checkmark.circle" : "circle")
                             }
                         }
                     } label: {
@@ -98,7 +106,7 @@ struct HabitsGridView: View {
         ForEach(groupedHabits.keys.sorted(), id: \.self) { category in
             if let habitsForCategory = groupedHabits[category], !habitsForCategory.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(category)
+                    Text(LocalizedStringKey(category))
                         .font(.headline)
                         .padding(.horizontal)
 
@@ -120,7 +128,7 @@ struct HabitsGridView: View {
         Group {
             if !ungroupedHabits.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Other Habits")
+                    Text(.otherHabits)
                         .font(.headline)
                         .padding(.horizontal)
 
@@ -139,6 +147,8 @@ struct HabitsGridView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     HabitsGridView(habits: Habit.createTestHabitsWithCheckIns())
 }
+#endif

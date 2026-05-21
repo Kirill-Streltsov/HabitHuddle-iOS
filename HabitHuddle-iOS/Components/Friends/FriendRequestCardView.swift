@@ -30,7 +30,7 @@ struct FriendRequestCardView: View {
                     .foregroundStyle(.secondary)
 
                 if let joinDate = user.createdAt {
-                    Text("Joined \(joinDate.formattedAsMonthYear())")
+                    Text(.joined(joinDate.formattedAsMonthYear()))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }

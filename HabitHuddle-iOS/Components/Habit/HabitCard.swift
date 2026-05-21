@@ -94,12 +94,12 @@ struct HabitCard: View {
 
             HStack(alignment: .bottom) {
                 if habit.isCompleted {
-                    Text("🎉 Finished! Keep the streak alive!")
+                    Text(LocalizedStringResource.finishedKeepTheStreakAlive)
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundStyle(.green)
                 } else {
-                    Text("\(habit.checkIns.count) / \(habit.duration.numberOfDays) days")
+                    (Text(verbatim: "\(habit.checkIns.count) / ") + Text(.days(habit.duration.numberOfDays)))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

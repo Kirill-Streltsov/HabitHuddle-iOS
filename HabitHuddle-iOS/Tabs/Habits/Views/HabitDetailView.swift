@@ -119,7 +119,7 @@ struct HabitDetailView: View {
                 Button {
                     showEditSheet = true
                 } label: {
-                    Text("Edit")
+                    Text(.edit)
                 }
             }
             .onAppear {
@@ -165,7 +165,7 @@ struct HabitDetailView: View {
                             }
                         } label: {
                             HStack {
-                                Text(showCheckIns ? "Hide Check-in History" : "View Check-in History")
+                                showCheckIns ? Text(.hideCheckInHistory) : Text(.viewCheckInHistory)
                                     .font(.headline)
                                     .fontWeight(.semibold)
                                 Spacer()
@@ -255,6 +255,8 @@ struct HabitDetailView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     HabitDetailView(habit: Habit.demoHabitWith13Of14CheckIns())
 }
+#endif

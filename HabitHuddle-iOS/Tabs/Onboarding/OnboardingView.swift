@@ -35,7 +35,7 @@ struct OnboardingView: View {
                     VStack {
                         CardView {
                             VStack(alignment: .center) {
-                                Text("Your activity in the last 2 months")
+                                Text(.yourActivityInTheLast2Months)
                                     .font(.headline)
                                 HeatmapHabitView(habit: Habit.demoHabitWithFullCheckIns())
                             }
@@ -152,7 +152,7 @@ struct OnboardingView: View {
                                 pageIndex -= 1
                             }
                         } label: {
-                            Text("Back")
+                            Text(.back)
                                 .font(.headline)
                                 .padding()
                                 .frame(maxWidth: .infinity)
@@ -180,7 +180,7 @@ struct OnboardingView: View {
                             }
                         }
                     } label: {
-                        Text(pageIndex == pages.count - 1 ? "Start" : "Next")
+                        (pageIndex == pages.count - 1 ? Text(.start) : Text(.next))
                             .font(.headline)
                             .foregroundStyle(Color(.systemBackground))
                             .padding()

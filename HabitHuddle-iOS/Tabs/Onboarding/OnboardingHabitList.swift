@@ -26,7 +26,7 @@ struct OnboardingHabitList: View {
                     OnboardingDefaultHabitCard(habit: defaultHabits[index], isSelected: $isHabitSelected[index], duration: $habitDuration[index])
                 }
             }
-            Text("Habits selected: \(isHabitSelected.filter { $0 == true }.count) / 3")
+            Text(.habitsSelected3(isHabitSelected.filter { $0 == true }.count))
                 .font(.headline)
                 .foregroundStyle(Color.gray)
         }

@@ -51,7 +51,7 @@ extension MyFriendsView {
                     // Do nothing – task was cancelled
                 } catch {
                     results = []
-                    errorMessage = "Failed to fetch users: login or register to add friends!"
+                    errorMessage = String(localized: .failedToFetchUsersLoginOrRegisterToAddFriends)
                 }
 
                 isLoading = false

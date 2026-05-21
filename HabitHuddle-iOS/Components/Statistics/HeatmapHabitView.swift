@@ -162,7 +162,9 @@ struct HeatmapHabitView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let habit = Habit.createTestHabitsWithCheckIns()[0]
     HeatmapHabitView(habit: habit)
 }
+#endif

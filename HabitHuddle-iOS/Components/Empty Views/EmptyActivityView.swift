@@ -19,7 +19,7 @@ struct EmptyActivityView: View {
                 .frame(width: 70, height: 70)
                 .foregroundStyle(.gray.opacity(0.4))
 
-            Text("No Activity Yet")
+            Text(.noActivityYet)
                 .font(.title2.weight(.semibold))
                 .foregroundStyle(.primary.opacity(0.7))
 
@@ -30,7 +30,7 @@ struct EmptyActivityView: View {
                 .padding(.horizontal, 32)
 
             Button(action: onChallenge) {
-                Text("Challenge \(friendName)")
+                Text(.challenge(friendName))
                     .font(.headline)
                     .foregroundStyle(.white)
                     .padding()

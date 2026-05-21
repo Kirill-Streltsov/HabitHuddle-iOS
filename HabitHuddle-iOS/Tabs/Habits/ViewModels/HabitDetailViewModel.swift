@@ -134,9 +134,9 @@ extension HabitDetailView {
             } catch {
                 isLoadingAIResponse = false
                 if TokenManager.token == nil {
-                    openAIAnswer = "You have to log in to use AI"
+                    openAIAnswer = String(localized: .youHaveToLogInToUseAi)
                 } else {
-                    openAIAnswer = "AI is not available at this moment. Try again later..."
+                    openAIAnswer = String(localized: .aiIsNotAvailableAtThisMomentTryAgainLater)
                 }
             }
         }

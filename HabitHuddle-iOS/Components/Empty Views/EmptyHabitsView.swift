@@ -21,18 +21,18 @@ struct EmptyHabitsView: View {
                     .frame(width: 70, height: 70)
                     .foregroundStyle(.gray.opacity(0.4))
 
-                Text("No habits yet")
+                Text(.noHabitsYet)
                     .font(.title2.weight(.semibold))
                     .foregroundStyle(.primary.opacity(0.7))
 
-                Text("Create one now.")
+                Text(.createOneNow)
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
 
                 Button(action: onAddHabit) {
-                    Text("Add your first habit")
+                    Text(.addYourFirstHabit)
                         .font(.headline)
                         .foregroundStyle(.white)
                         .padding()

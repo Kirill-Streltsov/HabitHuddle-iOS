@@ -29,7 +29,7 @@ struct FriendDetailView: View {
             VStack {
                 CardView {
                     VStack {
-                        Text("\(friend.name)'s activity")
+                        Text(.sActivity(friend.name))
                             .font(.title2)
                             .fontWeight(.semibold)
                         HeatmapHabitDTOView(habits: viewModel.habits)
@@ -77,7 +77,7 @@ struct FriendDetailView: View {
     private var friendHabits: some View {
         Group {
             if !viewModel.habits.isEmpty {
-                Text("\(friend.name)'s habits")
+                Text(.sHabits(friend.name))
                     .font(.title2)
                     .fontWeight(.semibold)
                 VStack(alignment: .center) {
@@ -97,7 +97,7 @@ struct FriendDetailView: View {
         Group {
             if !viewModel.challenges.isEmpty {
                 VStack(alignment: .center) {
-                    Text("\(friend.name)'s challenges")
+                    Text(.sChallenges(friend.name))
                         .font(.title2)
                         .fontWeight(.semibold)
                     ForEach(viewModel.challenges) { challenge in

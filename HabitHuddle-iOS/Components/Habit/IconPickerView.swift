@@ -9,7 +9,7 @@ import SwiftUI
 
 struct IconCategory: Identifiable {
     let id = UUID()
-    let name: String
+    let name: LocalizedStringResource
     let icons: [String]
 }
 
@@ -17,43 +17,43 @@ struct IconPickerView: View {
     @Binding var selectedIcon: String?
     
     private let categories: [IconCategory] = [
-        IconCategory(name: "Health & Fitness", icons: [
+        IconCategory(name: .healthFitness, icons: [
             "figure.walk", "figure.run", "bicycle", "dumbbell", "heart.fill", "flame", "bandage", "lungs.fill", "drop.fill"
         ]),
-        IconCategory(name: "Mindfulness & Sleep", icons: [
+        IconCategory(name: .mindfulnessSleep, icons: [
             "brain.head.profile", "waveform.path.ecg", "sparkles", "moon.zzz", "medal.fill", "wind", "eye", "face.smiling", "wifi.slash"
         ]),
-        IconCategory(name: "Productivity", icons: [
+        IconCategory(name: .productivity, icons: [
             "calendar", "clock", "pencil", "lightbulb", "bookmark.fill", "doc.text", "tray.full", "folder.fill", "gear"
         ]),
-        IconCategory(name: "Learning", icons: [
+        IconCategory(name: .learning, icons: [
             "book.fill", "graduationcap", "brain", "highlighter", "books.vertical", "magnifyingglass", "rectangle.and.pencil.and.ellipsis"
         ]),
-        IconCategory(name: "Self-Care & Lifestyle", icons: [
+        IconCategory(name: .selfCareLifestyle, icons: [
             "leaf.fill", "drop", "hands.sparkles", "fork.knife", "bed.double.fill", "face.smiling.fill", "sparkles.tv"
         ]),
-        IconCategory(name: "Hobbies", icons: [
+        IconCategory(name: .hobbies, icons: [
             "camera", "paintpalette", "gamecontroller", "guitars", "music.note", "tennis.racket", "film", "puzzlepiece"
         ]),
-        IconCategory(name: "Work & Career", icons: [
+        IconCategory(name: .workCareer, icons: [
             "briefcase.fill", "chart.bar", "chart.line.uptrend.xyaxis", "laptopcomputer", "network", "person.2.wave.2", "case.fill"
         ]),
-        IconCategory(name: "Motivation & Rewards", icons: [
+        IconCategory(name: .motivationRewards, icons: [
             "trophy.fill", "star.fill", "checkmark.circle", "flag.fill", "rosette", "medal", "target", "crown.fill"
         ]),
-        IconCategory(name: "Home & Daily Life", icons: [
+        IconCategory(name: .homeDailyLife, icons: [
             "house.fill", "house.and.flag", "bed.double", "washer", "trash", "lightbulb.fill", "sink", "wrench"
         ]),
-        IconCategory(name: "Finance & Budgeting", icons: [
+        IconCategory(name: .financeBudgeting, icons: [
             "dollarsign.circle", "creditcard.fill", "chart.pie.fill", "wallet.pass", "banknote", "chart.bar.fill", "percent"
         ]),
-        IconCategory(name: "Travel & Exploration", icons: [
+        IconCategory(name: .travelExploration, icons: [
             "airplane", "car.fill", "globe", "location.fill", "map", "suitcase.fill", "ferry.fill"
         ]),
-        IconCategory(name: "Social & Relationships", icons: [
+        IconCategory(name: .socialRelationships, icons: [
             "person.2.fill", "heart.circle", "message.fill", "phone.fill", "hands.clap", "face.smiling", "person.crop.circle.badge.plus"
         ]),
-        IconCategory(name: "Environment & Nature", icons: [
+        IconCategory(name: .environmentNature, icons: [
             "leaf", "tornado", "sun.max.fill", "cloud.rain.fill", "snow", "drop.degreesign", "globe.americas", "tree"
         ])
     ]

@@ -105,7 +105,7 @@ struct RegistrationView: View {
             Button {
                 registerUser()
             } label: {
-                Text("SIGN UP")
+                Text(.signUp)
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, minHeight: 48)

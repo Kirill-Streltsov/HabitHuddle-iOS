@@ -90,7 +90,7 @@ struct FriendHabitCard: View {
                         .animation(.easeInOut(duration: 0.3), value: scale)
                     }
                     
-                    Text("Tap to boost!")
+                    Text(.tapToBoost)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .opacity(didSendBoost || habitDTO.isCheckedInToday ? 0 : 1)
@@ -107,13 +107,13 @@ struct FriendHabitCard: View {
             
             HStack {
                 if habitDTO.isCompleted {
-                    Text("🎉 Habit finished!")
+                    Text(.habitFinished)
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundStyle(.green)
                 } else {
                     if let checkIns = habitDTO.checkIns {
-                        Text("\(checkIns.count) / \(habitDTO.duration.numberOfDays) days")
+                        (Text(verbatim: "\(checkIns.count) / ") + Text(.days(habitDTO.duration.numberOfDays)))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }

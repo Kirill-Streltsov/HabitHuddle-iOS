@@ -38,7 +38,7 @@ struct ChallengeCardView: View {
 
             HStack {
                 Image(systemName: "calendar")
-                Text("From \(formattedDate(challenge.startDate)) to \(formattedDate(challenge.endDate))")
+                Text(.fromTo(formattedDate(challenge.startDate), formattedDate(challenge.endDate)))
                     .font(.caption)
             }
             .foregroundStyle(.secondary)

@@ -24,7 +24,7 @@ struct UserDataView<Content: View>: View {
         } else {
             VStack(spacing: 8) {
                 ProgressView()
-                Text("Loading user...")
+                Text(.loadingUser)
                     .font(.subheadline)
                     .foregroundStyle(.gray)
             }

@@ -40,7 +40,7 @@ struct SentChallengeCardView: View {
             // Dates
             HStack(spacing: 8) {
                 Image(systemName: "calendar")
-                Text("From \(formattedDate(challenge.startDate)) to \(formattedDate(challenge.endDate))")
+                Text(.fromTo(formattedDate(challenge.startDate), formattedDate(challenge.endDate)))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -51,7 +51,7 @@ struct SentChallengeCardView: View {
                     await onCancel()
                 }
             } label: {
-                Text("Cancel Challenge")
+                Text(.cancelChallenge)
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 10)

@@ -64,7 +64,7 @@ struct MyFriendsView: View {
     }
     
     private var searchBar: some View {
-        TextField("Search usernames...", text: $searchText)
+        TextField(String(localized: .searchUsernames), text: $searchText)
             .focused($searchIsFocused)
             .padding(12)
             .background(Color(.secondarySystemBackground))
@@ -122,7 +122,7 @@ struct MyFriendsView: View {
     private var searchingStateView: some View {
         Group {
             if viewModel.isLoading {
-                ProgressView("Searching...")
+                ProgressView(String(localized: .searching))
                     .padding()
             } else if let errorMessage = viewModel.errorMessage {
                 NoConnectionView(errorMessage: errorMessage)
@@ -133,7 +133,7 @@ struct MyFriendsView: View {
                         }
                     }
             } else if viewModel.results.isEmpty {
-                Text("No users found.")
+                Text(.noUsersFound)
                     .foregroundColor(.secondary)
                     .padding()
             } else {

@@ -78,7 +78,7 @@ struct LoginView: View {
                 Button {
                     loginUser()
                 } label: {
-                    Text("SIGN IN")
+                    Text(.signIn)
                         .fontWeight(.semibold)
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity, minHeight: 48)

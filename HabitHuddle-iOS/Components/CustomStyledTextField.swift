@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomStyledTextField: View {
-    let placeholder: LocalizedStringKey
+    let placeholder: String
     @Binding var text: String
 
     var body: some View {

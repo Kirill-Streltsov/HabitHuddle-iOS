@@ -110,15 +110,15 @@ struct SettingsView: View {
     private var accountSection: some View {
         Section(header: Text(.account)) {
             HStack {
-                Label("Status", systemImage: "person.circle")
+                Label(String(localized: .status), systemImage: "person.circle")
                 Spacer()
-                Text(appState.isAuthenticated ? "Signed In" : "Guest")
+                appState.isAuthenticated ? Text(.signedIn) : Text(.guest)
                     .foregroundStyle(.secondary)
             }
             
             if appState.isAuthenticated {
                 HStack {
-                    Label("Your Username", systemImage: "person")
+                    Label(String(localized: .yourUsername), systemImage: "person")
                     Spacer()
                     Text(userManager.profile.username)
                         .foregroundStyle(.secondary)
@@ -127,15 +127,15 @@ struct SettingsView: View {
                 Button(role: .destructive) {
                     handleLogout()
                 } label: {
-                    Label("Log Out", systemImage: "arrow.backward.square")
+                    Label(String(localized: .logOut), systemImage: "arrow.backward.square")
                 }
             } else {
                 NavigationLink(destination: LoginView()) {
-                    Label("Log In", systemImage: "person.fill")
+                    Label(String(localized: .logIn), systemImage: "person.fill")
                 }
                 
                 NavigationLink(destination: RegistrationView()) {
-                    Label("Register", systemImage: "person.badge.plus")
+                    Label(String(localized: .register), systemImage: "person.badge.plus")
                 }
                 
                 Button {
@@ -161,11 +161,11 @@ struct SettingsView: View {
     private var preferencesSection: some View {
         Section(header: Text(.preferences)) {
             Toggle(isOn: $isDarkMode) {
-                Label("Dark Mode", systemImage: "moon.fill")
+                Label(String(localized: .darkMode), systemImage: "moon.fill")
             }
-            
+
             NavigationLink(destination: Text("SUBSCRIPTIONS")) {
-                Label("Manage Subscription", systemImage: "star.fill")
+                Label(String(localized: .manageSubscription), systemImage: "star.fill")
             }
         }
     }
@@ -192,7 +192,7 @@ struct SettingsView: View {
                 .resizable()
                 .frame(width: 30, height: 30)
             
-            Text("Sign in with Google")
+            Text(.signInWithGoogle)
                 .font(.system(size: 16, weight: .semibold))
         }
         .foregroundColor(.black)

@@ -21,7 +21,7 @@ struct UnauthenticatedView: View {
                     .frame(width: 70, height: 70)
                     .foregroundStyle(.gray.opacity(0.4))
 
-                Text("Not Signed In")
+                Text(.notSignedIn)
                     .font(.title2.weight(.semibold))
                     .foregroundStyle(.primary.opacity(0.7))
 
@@ -32,7 +32,7 @@ struct UnauthenticatedView: View {
                     .padding(.horizontal, 32)
 
                 Button(action: { selectedTab = 3 }) {
-                    Text("Go to Settings")
+                    Text(.goToSettings)
                         .font(.headline)
                         .foregroundStyle(.white)
                         .padding()

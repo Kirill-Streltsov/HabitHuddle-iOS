@@ -14,7 +14,7 @@ struct RequestSentLabel: View {
                 .foregroundStyle(.green)
                 .font(.subheadline)
 
-            Text("Request Sent")
+            Text(.requestSent)
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(.green)
         }

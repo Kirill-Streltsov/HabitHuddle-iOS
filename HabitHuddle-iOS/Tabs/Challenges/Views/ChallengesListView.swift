@@ -89,7 +89,7 @@ struct ChallengesListView: View {
     
     private var pendingChallenges: some View {
         VStack {
-            Text("Pending")
+            Text(.pending)
                 .font(.title2)
                 .fontWeight(.semibold)
             ForEach(viewModel.pendingChallengesReceived) { challenge in
@@ -115,7 +115,7 @@ struct ChallengesListView: View {
     
     private var ongoingChallenges: some View {
         VStack {
-            Text("Ongoing")
+            Text(.ongoing)
                 .font(.title2)
                 .fontWeight(.semibold)
             ForEach(viewModel.acceptedChallenges) { challenge in
@@ -134,7 +134,7 @@ struct ChallengesListView: View {
     
     private var declinedChallenges: some View {
         VStack {
-            Text("Declined")
+            Text(.declined)
                 .font(.title2)
                 .fontWeight(.semibold)
             ForEach(viewModel.declinedChallenges) { challenge in
