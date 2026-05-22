@@ -15,7 +15,7 @@ extension RegistrationView {
         @AppStorage("deviceToken") private var deviceToken: String = ""
 
         @Published var errorMessage: String = ""
-        @Published var loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
+        @Published var registeredUser: UserDTO? = nil
 
         private let network: any NetworkManagerProtocol
 
@@ -23,17 +23,18 @@ extension RegistrationView {
             self.network = network
         }
 
-        func registerUser(userID: UUID, username: String, name: String, password: String) async throws {
+        func registerUser(userID: UUID, username: String, name: String, email: String, password: String) async throws {
             let payload = UserPayload(
                 id: userID,
                 username: username,
                 name: name,
+                email: email,
                 password: password,
                 deviceToken: deviceToken
             )
 
             do {
-                let registrationResponse = try await network.request(
+                let response = try await network.request(
                     endpoint: .register(),
                     method: .post,
                     body: payload,
@@ -41,8 +42,8 @@ extension RegistrationView {
                     isLoggingIn: true
                 )
 
-                loadedUser = registrationResponse.user
-                TokenManager.token = registrationResponse.token
+                TokenManager.token = response.token
+                registeredUser = response.user
 
             } catch {
                 if let apiError = error as? HHError {

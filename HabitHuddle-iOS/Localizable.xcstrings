@@ -1577,6 +1577,42 @@
         }
       }
     },
+    "Check Your Email": {
+      "comment": "Alert title shown after successful registration",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-Mail bestätigen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirma tu correo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifiez vos e-mails"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Controlla la tua email"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверьте почту"
+          }
+        }
+      }
+    },
     "Check in %lld more times to unlock your streak data and discover your usual check-in time!": {
       "comment": "Prompt shown when fewer than 2 check-ins exist; %lld is the remaining count",
       "extractionState": "manual",
@@ -2672,6 +2708,42 @@
         }
       }
     },
+    "Email": {
+      "comment": "Label for the email input field",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-Mail"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correo electrónico"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Email"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Электронная почта"
+          }
+        }
+      }
+    },
     "Enable Reminders": {
       "comment": "Toggle label for daily reminders",
       "extractionState": "manual",
@@ -2704,6 +2776,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Включить напоминания"
+          }
+        }
+      }
+    },
+    "Enter your email...": {
+      "comment": "Placeholder for the email input field",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine E-Mail eingeben..."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ingresa tu correo..."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrez votre e-mail..."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inserisci la tua email..."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Введи адрес почты..."
           }
         }
       }
@@ -2956,6 +3064,48 @@
           "stringUnit": {
             "state": "translated",
             "value": "Финансы и бюджет"
+          }
+        }
+      }
+    },
+    "Finished! Keep the streak alive!": {
+      "comment": "Habit card label when the habit duration goal has been met",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 Fertig! Halte die Serie am Leben!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 Finished! Keep the streak alive!"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 ¡Listo! ¡Mantén la racha viva!"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 Terminé ! Garde la série vivante !"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 Fatto! Tieni viva la serie!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 Готово! Держи серию!"
           }
         }
       }
@@ -3284,6 +3434,42 @@
         }
       }
     },
+    "Got it": {
+      "comment": "Confirmation button on the email verification alert",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verstanden"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entendido"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compris"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capito"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Понятно"
+          }
+        }
+      }
+    },
     "Grouped": {
       "comment": "Sort mode: grouped by category",
       "extractionState": "manual",
@@ -3352,6 +3538,48 @@
           "stringUnit": {
             "state": "translated",
             "value": "Гость"
+          }
+        }
+      }
+    },
+    "Habit finished!": {
+      "comment": "Friend habit card label when the habit is completed",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 Gewohnheit abgeschlossen!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 Habit finished!"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 ¡Hábito completado!"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 Habitude terminée !"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 Abitudine completata!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉 Привычка завершена!"
           }
         }
       }
@@ -5220,6 +5448,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ожидает ответа"
+          }
+        }
+      }
+    },
+    "Please enter a valid email address": {
+      "comment": "Validation error for invalid email",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bitte gib eine gültige E-Mail-Adresse ein"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Por favor, ingresa una dirección de correo válida"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veuillez saisir une adresse e-mail valide"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inserisci un indirizzo email valido"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Введи действительный адрес электронной почты"
           }
         }
       }
@@ -7382,6 +7646,42 @@
         }
       }
     },
+    "We sent a confirmation link to %@. You can start using HabitHuddle right away and verify later.": {
+      "comment": "Alert message shown after registration, %@ is the user's email address",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir haben einen Bestätigungslink an %@ geschickt. Du kannst HabitHuddle sofort nutzen und die E-Mail später bestätigen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviamos un enlace de confirmación a %@. Puedes usar HabitHuddle ahora y verificar más tarde."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous avons envoyé un lien de confirmation à %@. Tu peux utiliser HabitHuddle dès maintenant et vérifier plus tard."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abbiamo inviato un link di conferma a %@. Puoi iniziare a usare HabitHuddle subito e verificare in seguito."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы отправили ссылку подтверждения на %@. Ты можешь пользоваться HabitHuddle прямо сейчас и подтвердить адрес позже."
+          }
+        }
+      }
+    },
     "Welcome to\nHabit Huddle": {
       "comment": "Onboarding page 1 title",
       "extractionState": "manual",
@@ -8170,90 +8470,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "📈 Маленькие привычки. Большие результаты."
-          }
-        }
-      }
-    },
-    "Finished! Keep the streak alive!": {
-      "comment": "Habit card label when the habit duration goal has been met",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 Fertig! Halte die Serie am Leben!"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 ¡Listo! ¡Mantén la racha viva!"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 Terminé ! Garde la série vivante !"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 Fatto! Tieni viva la serie!"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 Готово! Держи серию!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 Finished! Keep the streak alive!"
-          }
-        }
-      }
-    },
-    "Habit finished!": {
-      "comment": "Friend habit card label when the habit is completed",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 Gewohnheit abgeschlossen!"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 ¡Hábito completado!"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 Habitude terminée !"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 Abitudine completata!"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 Привычка завершена!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🎉 Habit finished!"
           }
         }
       }

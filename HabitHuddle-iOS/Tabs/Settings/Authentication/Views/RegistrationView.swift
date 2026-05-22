@@ -12,6 +12,7 @@ struct RegistrationView: View {
     enum Field {
         case username
         case name
+        case email
         case password
         case confirmPassword
     }
@@ -29,23 +30,27 @@ struct RegistrationView: View {
 
     @State private var username = ""
     @State private var name = ""
+    @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
     @State private var registerButtonPressed = false
+    @State private var showEmailSentAlert = false
 
     @FocusState private var focusedField: Field?
 
     private var inputFieldsAreEmpty: Bool {
-        username.isEmpty || name.isEmpty || password.isEmpty || confirmPassword.isEmpty
+        username.isEmpty || name.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty
     }
 
     private var inputFieldsAreValid: Bool {
-        return username.count >= 3 && password == confirmPassword && password.count >= 5 && viewModel.errorMessage.isEmpty
+        username.count >= 3 && email.contains("@") && password == confirmPassword && password.count >= 5 && viewModel.errorMessage.isEmpty
     }
 
     private var errorText: String {
         if username.count < 3 {
             return String(localized: .usernameShouldHaveAtLeast3Symbols)
+        } else if email.isEmpty || !email.contains("@") {
+            return String(localized: .pleaseEnterAValidEmailAddress)
         } else if password != confirmPassword {
             return String(localized: .makeSureBothPasswordFieldsAreTheSame)
         } else if password.count < 5 {
@@ -77,6 +82,12 @@ struct RegistrationView: View {
                     .focused($focusedField, equals: .name)
                     .submitLabel(.next)
 
+                InputView(text: $email, title: .email, placeholder: .enterYourEmail)
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.emailAddress)
+                    .focused($focusedField, equals: .email)
+                    .submitLabel(.next)
+
                 InputView(text: $password, title: .password, placeholder: .enterYourPassword, isSecureField: false)
                     .focused($focusedField, equals: .password)
                     .submitLabel(.next)
@@ -90,13 +101,15 @@ struct RegistrationView: View {
                 case .username:
                     focusedField = .name
                 case .name:
+                    focusedField = .email
+                case .email:
                     focusedField = .password
                 case .password:
                     focusedField = .confirmPassword
                 case .confirmPassword:
                     registerUser()
                 default:
-                    print("❌ Error: Some unknown focus state in registration")
+                    break
                 }
             }
             .padding(.horizontal)
@@ -116,16 +129,32 @@ struct RegistrationView: View {
             .padding(.horizontal, 16)
             Spacer()
         }
-        .onChange(of: viewModel.loadedUser) { _, newValue in
-            if newValue.createdAt != nil {
+        .onChange(of: viewModel.registeredUser) { _, newValue in
+            guard newValue != nil else { return }
+            showEmailSentAlert = true
+        }
+        .alert(Text(.checkYourEmail), isPresented: $showEmailSentAlert) {
+            Button(action: {
+                guard let user = viewModel.registeredUser else { return }
                 habits.forEach { $0.isSyncable = true }
                 HapticManager.trigger(.success)
+                userManager.profile = LocalUser(
+                    id: user.id,
+                    username: user.username,
+                    name: user.name,
+                    email: user.email,
+                    isSignedInToServer: true,
+                    isEmailVerified: user.isEmailVerified
+                )
                 appState.isAuthenticated = true
-                userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
-                dismiss()
-                context.insert(newValue.toSwiftData())
+                context.insert(user.toSwiftData())
                 context.saveOrLog()
+                dismiss()
+            }) {
+                Text(.gotIt)
             }
+        } message: {
+            Text(.weSentAConfirmationLinkToYouCanStartUsingHabitHuddleRightAwayAndVerifyLater(email))
         }
         .navigationTitle(String(localized: .registration))
         .navigationBarTitleDisplayMode(.inline)
@@ -136,7 +165,7 @@ struct RegistrationView: View {
         registerButtonPressed = true
         if inputFieldsAreValid {
             Task {
-                try await viewModel.registerUser(userID: userManager.profile.id, username: username, name: name, password: password)
+                try await viewModel.registerUser(userID: userManager.profile.id, username: username, name: name, email: email, password: password)
             }
         }
     }
