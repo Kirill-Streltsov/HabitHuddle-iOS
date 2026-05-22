@@ -172,15 +172,15 @@ struct SettingsView: View {
     
     private var informationSection: some View {
         Section(header: Text(.information)) {
-            NavigationLink(destination: Text(.termsOfService)) {
+            NavigationLink(destination: TermsOfServiceView()) {
                 Label(String(localized: .termsOfService), systemImage: "doc.text")
             }
 
-            NavigationLink(destination: Text(.privacyPolicy)) {
+            NavigationLink(destination: PrivacyPolicyView()) {
                 Label(String(localized: .privacyPolicy), systemImage: "lock.shield")
             }
 
-            NavigationLink(destination: Text(.about)) {
+            NavigationLink(destination: AboutView()) {
                 Label(String(localized: .about), systemImage: "info.circle")
             }
         }

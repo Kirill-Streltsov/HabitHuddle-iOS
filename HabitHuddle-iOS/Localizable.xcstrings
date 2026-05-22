@@ -2,6 +2,7 @@
   "sourceLanguage": "en",
   "strings": {
     "": {},
+    "@%@": {},
     "%@": {},
     "%@ (You) vs %@": {
       "comment": "Competitive challenge title when the current user is the initiator",
@@ -532,7 +533,154 @@
         }
       }
     },
+    "%lld.": {},
     "%lld%%": {},
+    "•": {},
+    "© 2025 HabitHuddle. All rights reserved.": {},
+    "⏰ It's Habit O'Clock!": {
+      "comment": "Push notification title variant 4",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰ Zeit für deine Gewohnheit!"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰ ¡Es hora de tu hábito!"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰ C'est l'heure de ton habitude !"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰ È l'ora delle abitudini!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰ Время привычек!"
+          }
+        }
+      }
+    },
+    "✅ Stay on Track!": {
+      "comment": "Push notification title variant 1",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "✅ Bleib auf Kurs!"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "✅ ¡Sigue así!"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "✅ Reste dans la course !"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "✅ Resta in carreggiata!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "✅ Держись курса!"
+          }
+        }
+      }
+    },
+    "🌅 New Day, New Win!": {
+      "comment": "Push notification title variant 2",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🌅 Neuer Tag, neuer Erfolg!"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🌅 ¡Nuevo día, nueva victoria!"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🌅 Nouveau jour, nouvelle victoire !"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🌅 Nuovo giorno, nuova vittoria!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🌅 Новый день, новая победа!"
+          }
+        }
+      }
+    },
+    "📈 Tiny Habits. Big Results.": {
+      "comment": "Push notification title variant 3",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📈 Kleine Gewohnheiten. Große Ergebnisse."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📈 Pequeños hábitos. Grandes resultados."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📈 Petites habitudes. Grands résultats."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📈 Piccole abitudini. Grandi risultati."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📈 Маленькие привычки. Большие результаты."
+          }
+        }
+      }
+    },
     "1 Month": {
       "comment": "Habit duration option",
       "extractionState": "manual",
@@ -605,42 +753,6 @@
         }
       }
     },
-    "100% consistency!": {
-      "comment": "Label shown when zero days are missed",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "100 % Konstanz!"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "¡100 % de constancia!"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "100 % de régularité !"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "100% di costanza!"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "100% постоянства!"
-          }
-        }
-      }
-    },
     "2 Weeks": {
       "comment": "Habit duration option",
       "extractionState": "manual",
@@ -677,7 +789,42 @@
         }
       }
     },
-    "@%@": {},
+    "100% consistency!": {
+      "comment": "Label shown when zero days are missed",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 % Konstanz!"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡100 % de constancia!"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 % de régularité !"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100% di costanza!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100% постоянства!"
+          }
+        }
+      }
+    },
     "A network error occurred: %@": {
       "comment": "Error description for a network failure; %@ is the underlying error message",
       "extractionState": "manual",
@@ -710,42 +857,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ошибка сети: %@"
-          }
-        }
-      }
-    },
-    "AI is not available at this moment. Try again later...": {
-      "comment": "Error shown when AI request fails",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "KI ist gerade nicht verfügbar. Versuch es später nochmal..."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La IA no está disponible en este momento. Inténtalo de nuevo más tarde..."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "L'IA n'est pas disponible pour l'instant. Réessaie plus tard..."
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "L'IA non è disponibile in questo momento. Riprova più tardi..."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ИИ сейчас недоступен. Попробуй позже..."
           }
         }
       }
@@ -822,6 +933,78 @@
         }
       }
     },
+    "Acceptable Use": {
+      "comment": "Section header in Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zulässige Nutzung"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uso aceptable"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilisation acceptable"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilizzo accettabile"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Допустимое использование"
+          }
+        }
+      }
+    },
+    "Acceptance of Terms": {
+      "comment": "Section header in Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annahme der Bedingungen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aceptación de los términos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acceptation des conditions"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accettazione dei termini"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Принятие условий"
+          }
+        }
+      }
+    },
     "Account": {
       "comment": "Settings section header",
       "extractionState": "manual",
@@ -858,38 +1041,74 @@
         }
       }
     },
-    "Add Friend": {
-      "comment": "Button to send a friend request to a found user",
+    "Account data: username, name, and email address": {
+      "comment": "Bullet in Information We Collect section of Privacy Policy",
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Freund hinzufügen"
+            "value": "Kontodaten: Benutzername, Name und E-Mail-Adresse"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Añadir amigo"
+            "value": "Datos de cuenta: nombre de usuario, nombre y correo electrónico"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajouter un ami"
+            "value": "Données de compte : nom d'utilisateur, nom et adresse e-mail"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aggiungi amico"
+            "value": "Dati dell'account: nome utente, nome e indirizzo e-mail"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Добавить в друзья"
+            "value": "Данные аккаунта: имя пользователя, имя и адрес электронной почты"
+          }
+        }
+      }
+    },
+    "Account Termination": {
+      "comment": "Section header in Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontokündigung"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rescisión de cuenta"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Résiliation du compte"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Risoluzione dell'account"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прекращение использования аккаунта"
           }
         }
       }
@@ -930,6 +1149,42 @@
         }
       }
     },
+    "Add Friend": {
+      "comment": "Button to send a friend request to a found user",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Freund hinzufügen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añadir amigo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter un ami"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi amico"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить в друзья"
+          }
+        }
+      }
+    },
     "Add your first habit": {
       "comment": "Empty state call-to-action button",
       "extractionState": "manual",
@@ -962,6 +1217,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Добавить первую привычку"
+          }
+        }
+      }
+    },
+    "AI is not available at this moment. Try again later...": {
+      "comment": "Error shown when AI request fails",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KI ist gerade nicht verfügbar. Versuch es später nochmal..."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La IA no está disponible en este momento. Inténtalo de nuevo más tarde..."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'IA n'est pas disponible pour l'instant. Réessaie plus tard..."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'IA non è disponibile in questo momento. Riprova più tardi..."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ИИ сейчас недоступен. Попробуй позже..."
           }
         }
       }
@@ -1034,6 +1325,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Произошла неизвестная ошибка."
+          }
+        }
+      }
+    },
+    "Anonymous usage analytics to improve the app": {
+      "comment": "Bullet in Information We Collect section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anonyme Nutzungsanalysen zur Verbesserung der App"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Análisis de uso anónimos para mejorar la aplicación"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analyses d'utilisation anonymes pour améliorer l'application"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analisi anonime sull'utilizzo per migliorare l'app"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анонимная аналитика использования для улучшения приложения"
           }
         }
       }
@@ -1182,6 +1509,78 @@
         }
       }
     },
+    "Build meaningful routines, track your progress, and stay motivated every day.": {
+      "comment": "Second description line in About screen",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufbau sinnvoller Routinen, Fortschritte verfolgen und jeden Tag motiviert bleiben."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crea rutinas significativas, sigue tu progreso y mantente motivado cada día."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créez des routines significatives, suivez vos progrès et restez motivé chaque jour."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crea routine significative, monitora i tuoi progressi e rimani motivato ogni giorno."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Создавайте значимые привычки, отслеживайте прогресс и оставайтесь мотивированными каждый день."
+          }
+        }
+      }
+    },
+    "By using HabitHuddle, you agree to these Terms of Service.": {
+      "comment": "Intro sentence in Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Durch die Nutzung von HabitHuddle stimmst du diesen Nutzungsbedingungen zu."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Al usar HabitHuddle, aceptas estos Términos de servicio."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En utilisant HabitHuddle, vous acceptez ces Conditions d'utilisation."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usando HabitHuddle, accetti questi Termini di servizio."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Используя HabitHuddle, вы соглашаетесь с настоящими Условиями использования."
+          }
+        }
+      }
+    },
     "Cancel Challenge": {
       "comment": "Button to withdraw a sent challenge",
       "extractionState": "manual",
@@ -1325,42 +1724,6 @@
         }
       }
     },
-    "Challenge Timeline": {
-      "comment": "Title on the challenge day-by-day timeline screen",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Herausforderungs-Verlauf"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cronología del reto"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Chronologie du défi"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cronologia della sfida"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Хронология вызова"
-          }
-        }
-      }
-    },
     "Challenge accepted!": {
       "comment": "Toast message after accepting a challenge",
       "extractionState": "manual",
@@ -1465,6 +1828,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Вызов отклонён!"
+          }
+        }
+      }
+    },
+    "Challenge Timeline": {
+      "comment": "Title on the challenge day-by-day timeline screen",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herausforderungs-Verlauf"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cronología del reto"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chronologie du défi"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cronologia della sfida"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хронология вызова"
           }
         }
       }
@@ -1577,38 +1976,74 @@
         }
       }
     },
-    "Check Your Email": {
-      "comment": "Alert title shown after successful registration",
+    "Changes to These Terms": {
+      "comment": "Section header in Terms of Service",
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "E-Mail bestätigen"
+            "value": "Änderungen dieser Bedingungen"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Confirma tu correo"
+            "value": "Cambios en estos Términos"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vérifiez vos e-mails"
+            "value": "Modifications de ces Conditions"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Controlla la tua email"
+            "value": "Modifiche a questi Termini"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Проверьте почту"
+            "value": "Изменения настоящих Условий"
+          }
+        }
+      }
+    },
+    "Changes to This Policy": {
+      "comment": "Section header in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Änderungen dieser Richtlinie"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cambios en esta Política"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifications de cette Politique"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifiche a questa Politica"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Изменения настоящей Политики"
           }
         }
       }
@@ -1775,6 +2210,42 @@
         }
       }
     },
+    "Check Your Email": {
+      "comment": "Alert title shown after successful registration",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-Mail bestätigen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirma tu correo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifiez vos e-mails"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Controlla la tua email"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверьте почту"
+          }
+        }
+      }
+    },
     "Checked In": {
       "extractionState": "manual",
       "localizations": {
@@ -1806,6 +2277,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Отмечено"
+          }
+        }
+      }
+    },
+    "Children's Privacy": {
+      "comment": "Section header in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datenschutz für Kinder"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacidad de los menores"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confidentialité des enfants"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy dei minori"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Конфиденциальность детей"
           }
         }
       }
@@ -2062,6 +2569,78 @@
         }
       }
     },
+    "Content & Data": {
+      "comment": "Section header in Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inhalte & Daten"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contenido y datos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contenu et données"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contenuto e dati"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Контент и данные"
+          }
+        }
+      }
+    },
+    "Continued use of the app means you accept the updated Terms.": {
+      "comment": "Body text in Changes section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die weitere Nutzung der App bedeutet, dass du den aktualisierten Bedingungen zustimmst."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El uso continuado de la aplicación implica la aceptación de los Términos actualizados."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'utilisation continue de l'application signifie que vous acceptez les Conditions mises à jour."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'uso continuato dell'app significa che accetti i Termini aggiornati."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжение использования приложения означает принятие обновлённых Условий."
+          }
+        }
+      }
+    },
     "Count": {
       "extractionState": "manual",
       "localizations": {
@@ -2273,6 +2852,78 @@
           "stringUnit": {
             "state": "translated",
             "value": "Тёмная тема"
+          }
+        }
+      }
+    },
+    "Data Security": {
+      "comment": "Section header in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datensicherheit"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seguridad de datos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sécurité des données"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sicurezza dei dati"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Безопасность данных"
+          }
+        }
+      }
+    },
+    "Data Sharing": {
+      "comment": "Section header in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datenweitergabe"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compartición de datos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partage de données"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Condivisione dei dati"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Передача данных"
           }
         }
       }
@@ -2528,6 +3179,42 @@
         }
       }
     },
+    "Device token for sending push notifications": {
+      "comment": "Bullet in Information We Collect section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gerätetoken für Push-Benachrichtigungen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Token del dispositivo para notificaciones push"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeton d'appareil pour les notifications push"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Token del dispositivo per le notifiche push"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Токен устройства для push-уведомлений"
+          }
+        }
+      }
+    },
     "Digital Detox": {
       "comment": "Default onboarding habit name",
       "extractionState": "manual",
@@ -2560,6 +3247,186 @@
           "stringUnit": {
             "state": "translated",
             "value": "Цифровой детокс"
+          }
+        }
+      }
+    },
+    "Disclaimer": {
+      "comment": "Section header in Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haftungsausschluss"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Descargo de responsabilidad"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clause de non-responsabilité"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dichiarazione di non responsabilità"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отказ от ответственности"
+          }
+        }
+      }
+    },
+    "Do not attempt to access other users' data.": {
+      "comment": "Bullet in Acceptable Use section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versuche nicht, auf die Daten anderer Nutzer zuzugreifen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No intentes acceder a los datos de otros usuarios."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "N'essayez pas d'accéder aux données d'autres utilisateurs."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non cercare di accedere ai dati di altri utenti."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не пытайтесь получить доступ к данным других пользователей."
+          }
+        }
+      }
+    },
+    "Do not interfere with the app's functionality or security.": {
+      "comment": "Bullet in Acceptable Use section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beeinträchtige nicht die Funktionalität oder Sicherheit der App."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No interfieras con la funcionalidad o seguridad de la aplicación."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "N'interférez pas avec le fonctionnement ou la sécurité de l'application."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non interferire con la funzionalità o la sicurezza dell'app."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не нарушайте работу или безопасность приложения."
+          }
+        }
+      }
+    },
+    "Do not reverse engineer or copy any part of the app.": {
+      "comment": "Bullet in Acceptable Use section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versuche nicht, die App zu dekompilieren oder zu kopieren."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No realices ingeniería inversa ni copies ninguna parte de la aplicación."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ne rétro-concevez pas et ne copiez aucune partie de l'application."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non decompilare o copiare nessuna parte dell'app."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не декомпилируйте и не копируйте какую-либо часть приложения."
+          }
+        }
+      }
+    },
+    "Do not use the app for any unlawful purpose.": {
+      "comment": "Bullet in Acceptable Use section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nutze die App nicht für rechtswidrige Zwecke."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No uses la aplicación con fines ilegales."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "N'utilisez pas l'application à des fins illicites."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non utilizzare l'app per scopi illegali."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не используйте приложение в незаконных целях."
           }
         }
       }
@@ -2672,6 +3539,42 @@
         }
       }
     },
+    "Each third-party service has its own privacy policy.": {
+      "comment": "Body text in Third-Party Services section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeder Drittanbieter hat seine eigene Datenschutzerklärung."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada servicio de terceros tiene su propia política de privacidad."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque service tiers a sa propre politique de confidentialité."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ogni servizio di terze parti ha la propria informativa sulla privacy."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Каждый сторонний сервис имеет собственную политику конфиденциальности."
+          }
+        }
+      }
+    },
     "Edit": {
       "comment": "Toolbar button to edit a habit",
       "extractionState": "manual",
@@ -2704,6 +3607,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Редактировать"
+          }
+        }
+      }
+    },
+    "Effective January 1, 2025": {
+      "comment": "Effective date shown on Terms of Service and Privacy Policy screens",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gültig ab 1. Januar 2025"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vigente desde el 1 de enero de 2025"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En vigueur depuis le 1er janvier 2025"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In vigore dal 1° gennaio 2025"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Действует с 1 января 2025 года"
           }
         }
       }
@@ -3032,6 +3971,78 @@
         }
       }
     },
+    "Features": {
+      "comment": "Section header in About screen listing app features",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Funktionen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Características"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fonctionnalités"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Funzionalità"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Возможности"
+          }
+        }
+      }
+    },
+    "Features may change or be discontinued with reasonable notice.": {
+      "comment": "Body text in Service Availability section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Funktionen können mit angemessener Vorankündigung geändert oder eingestellt werden."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las funciones pueden cambiar o suspenderse con aviso previo razonable."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les fonctionnalités peuvent être modifiées ou supprimées avec un préavis raisonnable."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le funzionalità possono cambiare o essere sospese con un ragionevole preavviso."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Функции могут изменяться или прекращаться с разумным уведомлением."
+          }
+        }
+      }
+    },
     "Finance & Budgeting": {
       "comment": "Icon picker category name",
       "extractionState": "manual",
@@ -3182,42 +4193,6 @@
         }
       }
     },
-    "Friend Requests": {
-      "comment": "Section header for incoming friend requests",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Freundschaftsanfragen"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Solicitudes de amistad"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Demandes d'ami"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Richieste di amicizia"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Заявки в друзья"
-          }
-        }
-      }
-    },
     "Friend request accepted": {
       "comment": "Toast message after accepting a friend request",
       "extractionState": "manual",
@@ -3322,6 +4297,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Заявка отправлена"
+          }
+        }
+      }
+    },
+    "Friend Requests": {
+      "comment": "Section header for incoming friend requests",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Freundschaftsanfragen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solicitudes de amistad"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demandes d'ami"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Richieste di amicizia"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заявки в друзья"
           }
         }
       }
@@ -3542,6 +4553,42 @@
         }
       }
     },
+    "Habit data: your habits, check-ins, and streaks": {
+      "comment": "Bullet in Information We Collect section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gewohnheitsdaten: deine Gewohnheiten, Check-ins und Streaks"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datos de hábitos: tus hábitos, registros y rachas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Données d'habitudes : vos habitudes, check-ins et séries"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dati sulle abitudini: abitudini, check-in e serie"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Данные привычек: ваши привычки, отметки и серии"
+          }
+        }
+      }
+    },
     "Habit finished!": {
       "comment": "Friend habit card label when the habit is completed",
       "extractionState": "manual",
@@ -3616,6 +4663,115 @@
           "stringUnit": {
             "state": "translated",
             "value": "Название привычки"
+          }
+        }
+      }
+    },
+    "HabitHuddle": {},
+    "HabitHuddle is not intended for users under 13 years of age.": {
+      "comment": "Body text in Children's Privacy section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle ist nicht für Nutzer unter 13 Jahren gedacht."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle no está destinado a usuarios menores de 13 años."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle n'est pas destiné aux utilisateurs de moins de 13 ans."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle non è destinato agli utenti sotto i 13 anni."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle не предназначен для пользователей моложе 13 лет."
+          }
+        }
+      }
+    },
+    "HabitHuddle is provided as-is, without warranties of any kind.": {
+      "comment": "Body text in Disclaimer section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle wird ohne jegliche Garantien bereitgestellt."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle se proporciona tal cual, sin garantías de ningún tipo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle est fourni tel quel, sans garanties d'aucune sorte."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle è fornito così com'è, senza garanzie di alcun tipo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle предоставляется «как есть», без каких-либо гарантий."
+          }
+        }
+      }
+    },
+    "HabitHuddle is your personal habit companion.": {
+      "comment": "Short description of the app in About screen",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle ist dein persönlicher Gewohnheitsbegleiter."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle es tu compañero personal de hábitos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle est votre compagnon personnel de bonnes habitudes."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle è il tuo compagno personale per le abitudini."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HabitHuddle — ваш личный помощник в формировании привычек."
           }
         }
       }
@@ -3728,6 +4884,42 @@
         }
       }
     },
+    "Have questions or feedback? We'd love to hear from you.": {
+      "comment": "Contact description in About screen",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hast du Fragen oder Feedback? Wir freuen uns von dir zu hören."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Tienes preguntas o comentarios? Nos encantaría saber de ti."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Des questions ou des retours ? Nous serions ravis de vous entendre."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hai domande o feedback? Ci farebbe piacere sentirti."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Есть вопросы или отзывы? Мы будем рады услышать вас."
+          }
+        }
+      }
+    },
     "Health": {
       "comment": "Default habit category",
       "extractionState": "manual",
@@ -3796,6 +4988,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Здоровье и фитнес"
+          }
+        }
+      }
+    },
+    "Help & Feedback": {
+      "comment": "Contact section header in About screen",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hilfe & Feedback"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayuda y comentarios"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aide et retours"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aiuto e feedback"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помощь и отзывы"
           }
         }
       }
@@ -3943,6 +5171,78 @@
         }
       }
     },
+    "How We Use Your Data": {
+      "comment": "Section header in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wie wir deine Daten verwenden"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cómo usamos tus datos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comment nous utilisons vos données"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Come utilizziamo i tuoi dati"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как мы используем ваши данные"
+          }
+        }
+      }
+    },
+    "If you do not agree, please do not use the app.": {
+      "comment": "Second intro sentence in Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wenn du nicht zustimmst, nutze die App bitte nicht."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si no estás de acuerdo, no uses la aplicación."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si vous n'acceptez pas, veuillez ne pas utiliser l'application."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se non sei d'accordo, ti preghiamo di non utilizzare l'app."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Если вы не согласны, пожалуйста, не используйте приложение."
+          }
+        }
+      }
+    },
     "Ignore": {
       "comment": "Button to ignore a friend request",
       "extractionState": "manual",
@@ -4011,6 +5311,78 @@
           "stringUnit": {
             "state": "translated",
             "value": "Информация"
+          }
+        }
+      }
+    },
+    "Information We Collect": {
+      "comment": "Section header in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informationen, die wir sammeln"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Información que recopilamos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informations que nous collectons"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informazioni che raccogliamo"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Собираемые данные"
+          }
+        }
+      }
+    },
+    "Intelligent suggestions tailored to your goals": {
+      "comment": "Feature bullet in About screen",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intelligente Vorschläge, abgestimmt auf deine Ziele"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sugerencias inteligentes adaptadas a tus objetivos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggestions intelligentes adaptées à vos objectifs"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggerimenti intelligenti adattati ai tuoi obiettivi"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Умные подсказки, адаптированные к вашим целям"
           }
         }
       }
@@ -4087,6 +5459,42 @@
         }
       }
     },
+    "Keep your login credentials secure and do not share them.": {
+      "comment": "Bullet in User Accounts section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Halte deine Anmeldedaten sicher und teile sie nicht."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantén seguras tus credenciales de inicio de sesión y no las compartas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gardez vos identifiants de connexion sécurisés et ne les partagez pas."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantieni sicure le tue credenziali di accesso e non condividerle."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Храните свои учётные данные в безопасности и не сообщайте их другим."
+          }
+        }
+      }
+    },
     "Learning": {
       "comment": "Default habit category",
       "extractionState": "manual",
@@ -4123,6 +5531,43 @@
         }
       }
     },
+    "Legal Contact": {
+      "comment": "Contact section header in Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechtlicher Kontakt"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contacto legal"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contact juridique"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contatto legale"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Юридический контакт"
+          }
+        }
+      }
+    },
+    "legal@habithuddle.app": {},
     "Let's Start Small": {
       "comment": "Onboarding page 4 title",
       "extractionState": "manual",
@@ -4266,42 +5711,6 @@
         }
       }
     },
-    "Log Out": {
-      "comment": "Settings button to sign out",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Abmelden"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cerrar sesión"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Se déconnecter"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Esci"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Выйти"
-          }
-        }
-      }
-    },
     "Log in to view and take part in challenges with friends.": {
       "comment": "Unauthenticated state description on the challenges screen",
       "extractionState": "manual",
@@ -4334,6 +5743,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Войди, чтобы участвовать в вызовах с друзьями."
+          }
+        }
+      }
+    },
+    "Log Out": {
+      "comment": "Settings button to sign out",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abmelden"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cerrar sesión"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se déconnecter"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esci"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выйти"
           }
         }
       }
@@ -4948,78 +6393,6 @@
         }
       }
     },
-    "No Friends Yet": {
-      "comment": "Empty state title for the friends list",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Noch keine Freunde"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aún no tienes amigos"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pas encore d'amis"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ancora nessun amico"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пока нет друзей"
-          }
-        }
-      }
-    },
-    "No Internet Connection": {
-      "comment": "Title for the no-connection error view",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Keine Internetverbindung"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sin conexión a internet"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pas de connexion internet"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nessuna connessione internet"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нет подключения к интернету"
-          }
-        }
-      }
-    },
     "No data was received from the server.": {
       "comment": "Error description when the server returns no data",
       "extractionState": "manual",
@@ -5052,6 +6425,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сервер не вернул данные."
+          }
+        }
+      }
+    },
+    "No Friends Yet": {
+      "comment": "Empty state title for the friends list",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch keine Freunde"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no tienes amigos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas encore d'amis"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ancora nessun amico"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет друзей"
           }
         }
       }
@@ -5092,6 +6501,42 @@
         }
       }
     },
+    "No Internet Connection": {
+      "comment": "Title for the no-connection error view",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Internetverbindung"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin conexión a internet"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas de connexion internet"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nessuna connessione internet"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет подключения к интернету"
+          }
+        }
+      }
+    },
     "No social media after 8 PM": {
       "comment": "Default onboarding habit description",
       "extractionState": "manual",
@@ -5124,6 +6569,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Не пользоваться соцсетями после 20:00"
+          }
+        }
+      }
+    },
+    "No system is completely secure, but we take every precaution.": {
+      "comment": "Body text in Data Security section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kein System ist vollständig sicher, aber wir treffen alle Vorsichtsmaßnahmen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ningún sistema es completamente seguro, pero tomamos todas las precauciones."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun système n'est totalement sécurisé, mais nous prenons toutes les précautions."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nessun sistema è completamente sicuro, ma prendiamo ogni precauzione."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ни одна система не является абсолютно защищённой, но мы принимаем все меры."
           }
         }
       }
@@ -5560,6 +7041,42 @@
         }
       }
     },
+    "Privacy Contact": {
+      "comment": "Contact section header in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datenschutzkontakt"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contacto de privacidad"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contact confidentialité"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contatto privacy"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Контакт по вопросам конфиденциальности"
+          }
+        }
+      }
+    },
     "Privacy Options": {
       "comment": "Section header for sync and visibility settings",
       "extractionState": "manual",
@@ -5632,6 +7149,7 @@
         }
       }
     },
+    "privacy@habithuddle.app": {},
     "Productivity": {
       "comment": "Default habit category",
       "extractionState": "manual",
@@ -5664,6 +7182,150 @@
           "stringUnit": {
             "state": "translated",
             "value": "Продуктивность"
+          }
+        }
+      }
+    },
+    "Public content you share may be visible to other users.": {
+      "comment": "Bullet in Content & Data section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffentliche Inhalte, die du teilst, können für andere Nutzer sichtbar sein."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El contenido público que compartas puede ser visible para otros usuarios."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le contenu public que vous partagez peut être visible par d'autres utilisateurs."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I contenuti pubblici che condividi possono essere visibili ad altri utenti."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Публичный контент, которым вы делитесь, может быть виден другим пользователям."
+          }
+        }
+      }
+    },
+    "Push Notifications": {
+      "comment": "Section header in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Push-Benachrichtigungen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notificaciones push"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications push"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifiche push"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Push-уведомления"
+          }
+        }
+      }
+    },
+    "Questions about privacy? Contact us at:": {
+      "comment": "Contact intro text in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fragen zum Datenschutz? Kontaktiere uns unter:"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Preguntas sobre privacidad? Contáctanos en:"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Questions sur la confidentialité ? Contactez-nous à :"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Domande sulla privacy? Contattaci a:"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вопросы о конфиденциальности? Свяжитесь с нами:"
+          }
+        }
+      }
+    },
+    "Questions about these Terms? Reach us at:": {
+      "comment": "Contact intro text in Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fragen zu diesen Bedingungen? Kontaktiere uns unter:"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Preguntas sobre estos Términos? Contáctanos en:"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Questions sur ces Conditions ? Contactez-nous à :"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Domande su questi Termini? Contattaci a:"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вопросы по Условиям? Свяжитесь с нами:"
           }
         }
       }
@@ -5812,42 +7474,6 @@
         }
       }
     },
-    "Request Sent": {
-      "comment": "Label shown after a friend request has been sent",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Anfrage gesendet"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Solicitud enviada"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Demande envoyée"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Richiesta inviata"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Заявка отправлена"
-          }
-        }
-      }
-    },
     "Request failed with status code %lld.": {
       "comment": "Error description for a failed HTTP request; %lld is the status code",
       "extractionState": "manual",
@@ -5884,110 +7510,38 @@
         }
       }
     },
-    "SIGN IN": {
-      "comment": "Login button label",
+    "Request Sent": {
+      "comment": "Label shown after a friend request has been sent",
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "ANMELDEN"
+            "value": "Anfrage gesendet"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "INICIAR SESIÓN"
+            "value": "Solicitud enviada"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "SE CONNECTER"
+            "value": "Demande envoyée"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "ACCEDI"
+            "value": "Richiesta inviata"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "ВОЙТИ"
-          }
-        }
-      }
-    },
-    "SIGN UP": {
-      "comment": "Registration button label",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "REGISTRIEREN"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "REGISTRARSE"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "S'INSCRIRE"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "REGISTRATI"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ЗАРЕГИСТРИРОВАТЬСЯ"
-          }
-        }
-      }
-    },
-    "SUBSCRIPTIONS": {
-      "comment": "Placeholder content for the subscription screen",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ABONNEMENTS"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "SUSCRIPCIONES"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ABONNEMENTS"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ABBONAMENTI"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ПОДПИСКИ"
+            "value": "Заявка отправлена"
           }
         }
       }
@@ -6244,6 +7798,78 @@
         }
       }
     },
+    "Service Availability": {
+      "comment": "Section header in Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dienstverfügbarkeit"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disponibilidad del servicio"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disponibilité du service"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disponibilità del servizio"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступность сервиса"
+          }
+        }
+      }
+    },
+    "Set reminders so you never miss a check-in": {
+      "comment": "Feature bullet in About screen",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erinnerungen setzen, damit du keinen Check-in verpasst"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configura recordatorios para no perderte ningún registro"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Définissez des rappels pour ne jamais manquer un enregistrement"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imposta promemoria per non perdere mai un check-in"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Устанавливайте напоминания, чтобы не пропускать отметки"
+          }
+        }
+      }
+    },
     "Settings": {
       "comment": "Tab bar and navigation title for the settings screen",
       "extractionState": "manual",
@@ -6280,6 +7906,42 @@
         }
       }
     },
+    "SIGN IN": {
+      "comment": "Login button label",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ANMELDEN"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "INICIAR SESIÓN"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SE CONNECTER"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ACCEDI"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ВОЙТИ"
+          }
+        }
+      }
+    },
     "Sign in with Google": {
       "comment": "Google sign-in button label",
       "extractionState": "manual",
@@ -6312,6 +7974,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Войти через Google"
+          }
+        }
+      }
+    },
+    "SIGN UP": {
+      "comment": "Registration button label",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REGISTRIEREN"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REGISTRARSE"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S'INSCRIRE"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REGISTRATI"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ЗАРЕГИСТРИРОВАТЬСЯ"
           }
         }
       }
@@ -6675,6 +8373,42 @@
         }
       }
     },
+    "SUBSCRIPTIONS": {
+      "comment": "Placeholder content for the subscription screen",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ABONNEMENTS"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SUSCRIPCIONES"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ABONNEMENTS"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ABBONAMENTI"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ПОДПИСКИ"
+          }
+        }
+      }
+    },
     "Support": {
       "comment": "Button to send a supportive challenge to a friend",
       "extractionState": "manual",
@@ -6711,6 +8445,7 @@
         }
       }
     },
+    "support@habithuddle.app": {},
     "Supportive": {
       "comment": "Challenge type label",
       "extractionState": "manual",
@@ -6743,6 +8478,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Поддержка"
+          }
+        }
+      }
+    },
+    "Sync habits across all your devices": {
+      "comment": "Feature bullet in About screen",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gewohnheiten auf allen Geräten synchronisieren"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sincroniza hábitos en todos tus dispositivos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronisez vos habitudes sur tous vos appareils"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sincronizza le abitudini su tutti i tuoi dispositivi"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Синхронизируйте привычки на всех устройствах"
           }
         }
       }
@@ -6783,42 +8554,6 @@
         }
       }
     },
-    "Tap to Check In": {
-      "comment": "Check-in card call-to-action when not yet checked in",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zum Einchecken tippen"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Toca para registrar"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Appuie pour valider"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tocca per il check-in"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нажми для отметки"
-          }
-        }
-      }
-    },
     "Tap to boost!": {
       "comment": "Caption below the boost button on a friend's habit card",
       "extractionState": "manual",
@@ -6855,6 +8590,42 @@
         }
       }
     },
+    "Tap to Check In": {
+      "comment": "Check-in card call-to-action when not yet checked in",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zum Einchecken tippen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca para registrar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appuie pour valider"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tocca per il check-in"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми для отметки"
+          }
+        }
+      }
+    },
     "Terms of Service": {
       "comment": "Settings link to terms of service",
       "extractionState": "manual",
@@ -6887,42 +8658,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Условия использования"
-          }
-        }
-      }
-    },
-    "The URL is invalid.": {
-      "comment": "Error description for invalid URL",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Die URL ist ungültig."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La URL no es válida."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "L'URL n'est pas valide."
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "L'URL non è valido."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Неверный URL."
           }
         }
       }
@@ -6999,6 +8734,42 @@
         }
       }
     },
+    "The URL is invalid.": {
+      "comment": "Error description for invalid URL",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die URL ist ungültig."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La URL no es válida."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'URL n'est pas valide."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'URL non è valido."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неверный URL."
+          }
+        }
+      }
+    },
     "There's a conflict with the current state of the resource.": {
       "comment": "Error description for 409 conflict",
       "extractionState": "manual",
@@ -7067,6 +8838,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Думаю..."
+          }
+        }
+      }
+    },
+    "Third-Party Services": {
+      "comment": "Section header in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drittanbieterdienste"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Servicios de terceros"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Services tiers"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Servizi di terze parti"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сторонние сервисы"
           }
         }
       }
@@ -7215,6 +9022,78 @@
         }
       }
     },
+    "To enable social features like challenges and friends": {
+      "comment": "Bullet in How We Use Your Data section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um soziale Funktionen wie Herausforderungen und Freunde zu ermöglichen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Para habilitar funciones sociales como desafíos y amigos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pour activer les fonctionnalités sociales comme les défis et les amis"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Per abilitare le funzionalità sociali come sfide e amici"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для поддержки социальных функций: вызовов и друзей"
+          }
+        }
+      }
+    },
+    "To provide and improve HabitHuddle's features": {
+      "comment": "Bullet in How We Use Your Data section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um die Funktionen von HabitHuddle bereitzustellen und zu verbessern"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Para proporcionar y mejorar las funciones de HabitHuddle"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pour fournir et améliorer les fonctionnalités de HabitHuddle"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Per fornire e migliorare le funzionalità di HabitHuddle"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для предоставления и улучшения функций HabitHuddle"
+          }
+        }
+      }
+    },
     "To receive reminders, enable notifications in ": {
       "extractionState": "manual",
       "localizations": {
@@ -7286,6 +9165,42 @@
         }
       }
     },
+    "To send habit reminders and social notifications": {
+      "comment": "Bullet in How We Use Your Data section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um Gewohnheitserinnerungen und soziale Benachrichtigungen zu senden"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Para enviar recordatorios de hábitos y notificaciones sociales"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pour envoyer des rappels d'habitudes et des notifications sociales"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Per inviare promemoria sulle abitudini e notifiche sociali"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для отправки напоминаний о привычках и социальных уведомлений"
+          }
+        }
+      }
+    },
     "Total Check-Ins": {
       "comment": "Stat label – total number of check-ins",
       "extractionState": "manual",
@@ -7318,6 +9233,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Всего отметок"
+          }
+        }
+      }
+    },
+    "Track daily habits with beautiful streak visualizations": {
+      "comment": "Feature bullet in About screen",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tägliche Gewohnheiten mit anschaulichen Streak-Visualisierungen verfolgen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Realiza un seguimiento de los hábitos diarios con bellas visualizaciones de racha"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suivez vos habitudes quotidiennes avec de belles visualisations de séries"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monitora le abitudini quotidiane con splendide visualizzazioni delle serie"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отслеживайте ежедневные привычки с красивой визуализацией серий"
           }
         }
       }
@@ -7466,6 +9417,42 @@
         }
       }
     },
+    "User Accounts": {
+      "comment": "Section header in Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nutzerkonten"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuentas de usuario"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comptes utilisateurs"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account utente"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Учётные записи пользователей"
+          }
+        }
+      }
+    },
     "Username": {
       "comment": "Label for the username input field",
       "extractionState": "manual",
@@ -7534,6 +9521,78 @@
           "stringUnit": {
             "state": "translated",
             "value": "Логин должен содержать минимум 3 символа"
+          }
+        }
+      }
+    },
+    "Uses trusted third-party providers for authentication.": {
+      "comment": "Bullet in Third-Party Services section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verwendet vertrauenswürdige Drittanbieter zur Authentifizierung."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usa proveedores de terceros de confianza para la autenticación."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilise des fournisseurs tiers de confiance pour l'authentification."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilizza provider di terze parti affidabili per l'autenticazione."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Использует надёжных сторонних провайдеров для аутентификации."
+          }
+        }
+      }
+    },
+    "Version": {
+      "comment": "Version label in About screen",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versión"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versione"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Версия"
           }
         }
       }
@@ -7610,6 +9669,42 @@
         }
       }
     },
+    "We do not sell your personal data to third parties.": {
+      "comment": "Body text in Data Sharing section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir verkaufen deine persönlichen Daten nicht an Dritte."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No vendemos tus datos personales a terceros."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous ne vendons pas vos données personnelles à des tiers."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non vendiamo i tuoi dati personali a terze parti."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы не продаём ваши персональные данные третьим лицам."
+          }
+        }
+      }
+    },
     "We found the following habits on the server that you previously created:\n\n%@\n\nWould you like to save them locally or delete them from the server?": {
       "comment": "Alert message; %@ is a bullet-list of habit names",
       "extractionState": "manual",
@@ -7646,6 +9741,186 @@
         }
       }
     },
+    "We may disclose data when required by law.": {
+      "comment": "Body text in Data Sharing section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir können Daten offenlegen, wenn dies gesetzlich vorgeschrieben ist."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podemos divulgar datos cuando lo exija la ley."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous pouvons divulguer des données lorsque la loi l'exige."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Possiamo divulgare i dati quando richiesto dalla legge."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы можем раскрывать данные, когда это требуется по закону."
+          }
+        }
+      }
+    },
+    "We may remove content that violates these Terms.": {
+      "comment": "Bullet in Content & Data section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir können Inhalte entfernen, die gegen diese Bedingungen verstoßen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podemos eliminar contenido que infrinja estos Términos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous pouvons supprimer le contenu qui viole ces Conditions."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Possiamo rimuovere i contenuti che violano questi Termini."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы можем удалять контент, нарушающий настоящие Условия."
+          }
+        }
+      }
+    },
+    "We may suspend your account if you violate these Terms.": {
+      "comment": "Body text in Termination section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir können dein Konto sperren, wenn du gegen diese Bedingungen verstößt."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podemos suspender tu cuenta si incumples estos Términos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous pouvons suspendre votre compte en cas de violation de ces Conditions."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Possiamo sospendere il tuo account se violi questi Termini."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы можем приостановить вашу учётную запись в случае нарушения Условий."
+          }
+        }
+      }
+    },
+    "We may update these Terms periodically.": {
+      "comment": "Body text in Changes section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir können diese Bedingungen von Zeit zu Zeit aktualisieren."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podemos actualizar estos Términos periódicamente."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous pouvons mettre à jour ces Conditions périodiquement."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Potremmo aggiornare questi Termini periodicamente."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы можем периодически обновлять настоящие Условия."
+          }
+        }
+      }
+    },
+    "We may update this Privacy Policy from time to time.": {
+      "comment": "Body text in Changes section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir können diese Datenschutzrichtlinie von Zeit zu Zeit aktualisieren."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podemos actualizar esta Política de privacidad de vez en cuando."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous pouvons mettre à jour cette Politique de confidentialité de temps en temps."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Potremmo aggiornare questa Informativa sulla privacy di tanto in tanto."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы можем периодически обновлять настоящую Политику конфиденциальности."
+          }
+        }
+      }
+    },
     "We sent a confirmation link to %@. You can start using HabitHuddle right away and verify later.": {
       "comment": "Alert message shown after registration, %@ is the user's email address",
       "extractionState": "manual",
@@ -7678,6 +9953,222 @@
           "stringUnit": {
             "state": "translated",
             "value": "Мы отправили ссылку подтверждения на %@. Ты можешь пользоваться HabitHuddle прямо сейчас и подтвердить адрес позже."
+          }
+        }
+      }
+    },
+    "We share data only with service providers that help us operate the app.": {
+      "comment": "Body text in Data Sharing section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir teilen Daten nur mit Dienstleistern, die uns beim Betrieb der App helfen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo compartimos datos con proveedores de servicios que nos ayudan a operar la aplicación."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous partageons des données uniquement avec des prestataires qui nous aident à exploiter l'application."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Condividiamo i dati solo con fornitori di servizi che ci aiutano a gestire l'app."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы передаём данные только поставщикам услуг, помогающим нам работать."
+          }
+        }
+      }
+    },
+    "We strive to keep HabitHuddle running smoothly and reliably.": {
+      "comment": "Body text in Service Availability section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir bemühen uns, HabitHuddle reibungslos und zuverlässig zu betreiben."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nos esforzamos por mantener HabitHuddle funcionando sin problemas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous nous efforçons de maintenir HabitHuddle fonctionnel et fiable."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ci impegniamo a mantenere HabitHuddle sempre funzionante e affidabile."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы стремимся обеспечить бесперебойную и надёжную работу HabitHuddle."
+          }
+        }
+      }
+    },
+    "We use encrypted connections and secure storage to protect your data.": {
+      "comment": "Body text in Data Security section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir verwenden verschlüsselte Verbindungen und sicheren Speicher, um deine Daten zu schützen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usamos conexiones cifradas y almacenamiento seguro para proteger tus datos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous utilisons des connexions chiffrées et un stockage sécurisé pour protéger vos données."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usiamo connessioni crittografate e archiviazione sicura per proteggere i tuoi dati."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы используем зашифрованные соединения и защищённое хранение для защиты ваших данных."
+          }
+        }
+      }
+    },
+    "We use your device token to send reminders and social alerts.": {
+      "comment": "Body text in Push Notifications section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir verwenden deinen Gerätetoken, um Erinnerungen und soziale Benachrichtigungen zu senden."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usamos el token de tu dispositivo para enviar recordatorios y alertas sociales."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous utilisons votre jeton d'appareil pour envoyer des rappels et des alertes sociales."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usiamo il token del tuo dispositivo per inviare promemoria e avvisi sociali."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы используем токен устройства для отправки напоминаний и социальных уведомлений."
+          }
+        }
+      }
+    },
+    "We value your privacy and are committed to protecting it.": {
+      "comment": "Intro sentence in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir schätzen deine Privatsphäre und verpflichten uns, sie zu schützen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Valoramos tu privacidad y nos comprometemos a protegerla."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous respectons votre vie privée et nous nous engageons à la protéger."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rispettiamo la tua privacy e ci impegniamo a proteggerla."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы ценим вашу конфиденциальность и обязуемся её защищать."
+          }
+        }
+      }
+    },
+    "We will notify you of significant changes through the app.": {
+      "comment": "Body text in Changes section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wir werden dich über wesentliche Änderungen über die App informieren."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Te notificaremos los cambios significativos a través de la aplicación."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nous vous informerons des changements importants via l'application."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ti informeremo dei cambiamenti significativi tramite l'app."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы уведомим вас о существенных изменениях через приложение."
           }
         }
       }
@@ -7826,6 +10317,186 @@
         }
       }
     },
+    "You are responsible for all activity under your account.": {
+      "comment": "Bullet in User Accounts section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du bist für alle Aktivitäten unter deinem Konto verantwortlich."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eres responsable de toda la actividad bajo tu cuenta."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous êtes responsable de toutes les activités sous votre compte."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sei responsabile di tutta l'attività svolta con il tuo account."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вы несёте ответственность за все действия в вашей учётной записи."
+          }
+        }
+      }
+    },
+    "You can access and export your data at any time.": {
+      "comment": "Bullet in Your Rights section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kannst jederzeit auf deine Daten zugreifen und sie exportieren."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puedes acceder y exportar tus datos en cualquier momento."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous pouvez accéder à vos données et les exporter à tout moment."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puoi accedere ed esportare i tuoi dati in qualsiasi momento."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вы можете получить доступ к своим данным и экспортировать их в любое время."
+          }
+        }
+      }
+    },
+    "You can delete your account and all data from Settings.": {
+      "comment": "Bullet in Your Rights section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kannst dein Konto und alle Daten in den Einstellungen löschen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puedes eliminar tu cuenta y todos los datos desde Configuración."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous pouvez supprimer votre compte et toutes vos données depuis les Paramètres."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puoi eliminare il tuo account e tutti i dati dalle Impostazioni."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вы можете удалить учётную запись и все данные в Настройках."
+          }
+        }
+      }
+    },
+    "You can disable notifications in your device's notification settings.": {
+      "comment": "Body text in Push Notifications section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kannst Benachrichtigungen in den Benachrichtigungseinstellungen deines Geräts deaktivieren."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puedes desactivar las notificaciones en la configuración de notificaciones de tu dispositivo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous pouvez désactiver les notifications dans les paramètres de notification de votre appareil."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puoi disabilitare le notifiche nelle impostazioni di notifica del dispositivo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вы можете отключить уведомления в настройках уведомлений устройства."
+          }
+        }
+      }
+    },
+    "You can opt out of marketing communications at any time.": {
+      "comment": "Bullet in Your Rights section of Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kannst dich jederzeit von Marketing-Kommunikation abmelden."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puedes darte de baja de las comunicaciones de marketing en cualquier momento."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous pouvez vous désabonner des communications marketing à tout moment."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puoi rinunciare alle comunicazioni di marketing in qualsiasi momento."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вы можете отказаться от маркетинговых коммуникаций в любое время."
+          }
+        }
+      }
+    },
     "You don't have permission to access this resource.": {
       "comment": "Error description for 403 forbidden",
       "extractionState": "manual",
@@ -7898,6 +10569,78 @@
         }
       }
     },
+    "You may delete your account at any time from Settings.": {
+      "comment": "Bullet in User Accounts section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kannst dein Konto jederzeit in den Einstellungen löschen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puedes eliminar tu cuenta en cualquier momento desde Configuración."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous pouvez supprimer votre compte à tout moment depuis les Paramètres."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puoi eliminare il tuo account in qualsiasi momento dalle Impostazioni."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вы можете удалить свою учётную запись в любое время в Настройках."
+          }
+        }
+      }
+    },
+    "You must be 13 or older to use HabitHuddle.": {
+      "comment": "Bullet in User Accounts section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du musst mindestens 13 Jahre alt sein, um HabitHuddle zu nutzen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Debes tener 13 años o más para usar HabitHuddle."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous devez avoir 13 ans ou plus pour utiliser HabitHuddle."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Devi avere 13 anni o più per usare HabitHuddle."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для использования HabitHuddle вам должно быть 13 лет или больше."
+          }
+        }
+      }
+    },
     "You need to log in to add friends.": {
       "comment": "Unauthenticated state description on the friends tab",
       "extractionState": "manual",
@@ -7930,6 +10673,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Войди, чтобы добавлять друзей."
+          }
+        }
+      }
+    },
+    "You own the habit data you create in HabitHuddle.": {
+      "comment": "Bullet in Content & Data section of Terms of Service",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du behältst das Eigentum an den Gewohnheitsdaten, die du in HabitHuddle erstellst."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eres propietario de los datos de hábitos que creas en HabitHuddle."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous êtes propriétaire des données d'habitudes que vous créez dans HabitHuddle."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sei proprietario dei dati sulle abitudini che crei in HabitHuddle."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вы сохраняете право собственности на данные о привычках, созданные в HabitHuddle."
           }
         }
       }
@@ -8114,42 +10893,6 @@
         }
       }
     },
-    "Your Username": {
-      "comment": "Settings row label showing the signed-in username",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dein Nutzername"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tu usuario"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ton nom d'utilisateur"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Il tuo nome utente"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Твой логин"
-          }
-        }
-      }
-    },
     "Your activity in the last 2 months": {
       "comment": "Onboarding heatmap section title",
       "extractionState": "manual",
@@ -8294,6 +11037,42 @@
         }
       }
     },
+    "Your Rights": {
+      "comment": "Section header in Privacy Policy",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Rechte"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus derechos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos droits"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I tuoi diritti"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ваши права"
+          }
+        }
+      }
+    },
     "Your streaks over time": {
       "comment": "Statistics chart subtitle",
       "extractionState": "manual",
@@ -8330,146 +11109,110 @@
         }
       }
     },
-    "⏰ It's Habit O'Clock!": {
-      "comment": "Push notification title variant 4",
+    "Your Username": {
+      "comment": "Settings row label showing the signed-in username",
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "⏰ Zeit für deine Gewohnheit!"
+            "value": "Dein Nutzername"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "⏰ ¡Es hora de tu hábito!"
+            "value": "Tu usuario"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "⏰ C'est l'heure de ton habitude !"
+            "value": "Ton nom d'utilisateur"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "⏰ È l'ora delle abitudini!"
+            "value": "Il tuo nome utente"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "⏰ Время привычек!"
+            "value": "Твой логин"
           }
         }
       }
     },
-    "✅ Stay on Track!": {
-      "comment": "Push notification title variant 1",
+    "Habit sync is enabled by default when signed in. You can disable it per habit or by signing out.": {
+      "comment": "Bullet in Information We Collect section of Privacy Policy",
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "✅ Bleib auf Kurs!"
+            "value": "Die Gewohnheitssynchronisierung ist standardmäßig aktiviert, wenn du angemeldet bist. Du kannst sie pro Gewohnheit oder durch Abmelden deaktivieren."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "✅ ¡Sigue así!"
+            "value": "La sincronización de hábitos está activada por defecto al iniciar sesión. Puedes desactivarla por hábito o cerrando sesión."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "✅ Reste dans la course !"
+            "value": "La synchronisation des habitudes est activée par défaut lorsque vous êtes connecté. Vous pouvez la désactiver par habitude ou en vous déconnectant."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "✅ Resta in carreggiata!"
+            "value": "La sincronizzazione delle abitudini è attiva per impostazione predefinita quando sei connesso. Puoi disattivarla per singola abitudine o disconnettendoti."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "✅ Держись курса!"
+            "value": "Синхронизация привычек включена по умолчанию при входе в систему. Вы можете отключить её для каждой привычки или выйдя из аккаунта."
           }
         }
       }
     },
-    "🌅 New Day, New Win!": {
-      "comment": "Push notification title variant 2",
+    "We store your habit data solely to sync it across your devices and never use it for any other purpose.": {
+      "comment": "Bullet in Information We Collect section of Privacy Policy",
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "🌅 Neuer Tag, neuer Erfolg!"
+            "value": "Wir speichern deine Gewohnheitsdaten ausschließlich zur Synchronisierung auf deinen Geräten und verwenden sie für keinen anderen Zweck."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "🌅 ¡Nuevo día, nueva victoria!"
+            "value": "Almacenamos tus datos de hábitos únicamente para sincronizarlos entre tus dispositivos y nunca los usamos para ningún otro fin."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "🌅 Nouveau jour, nouvelle victoire !"
+            "value": "Nous stockons vos données d'habitudes uniquement pour les synchroniser sur vos appareils et ne les utilisons à aucune autre fin."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "🌅 Nuovo giorno, nuova vittoria!"
+            "value": "Conserviamo i dati sulle tue abitudini esclusivamente per sincronizzarli tra i tuoi dispositivi e non li utilizziamo per nessun altro scopo."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "🌅 Новый день, новая победа!"
-          }
-        }
-      }
-    },
-    "📈 Tiny Habits. Big Results.": {
-      "comment": "Push notification title variant 3",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "📈 Kleine Gewohnheiten. Große Ergebnisse."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "📈 Pequeños hábitos. Grandes resultados."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "📈 Petites habitudes. Grands résultats."
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "📈 Piccole abitudini. Grandi risultati."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "📈 Маленькие привычки. Большие результаты."
+            "value": "Мы храним данные о ваших привычках исключительно для синхронизации между устройствами и никогда не используем их в других целях."
           }
         }
       }
