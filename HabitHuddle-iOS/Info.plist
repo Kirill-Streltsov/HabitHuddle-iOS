@@ -16,6 +16,8 @@
 		</dict>
 	</array>
 <key>CFBundleDisplayName</key>
-    <string>Habit Huddle</string>
+	<string>Habit Huddle</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
