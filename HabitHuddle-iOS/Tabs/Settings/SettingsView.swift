@@ -98,46 +98,53 @@ struct SettingsView: View {
                 context.saveOrLog()
             }
         } message: {
-            Text("""
-            We found the following habits on the server that you previously created:\n
-            \(newServerHabits.map { "• \($0.name)" }.joined(separator: "\n"))
-            
-            Would you like to save them locally or delete them from the server?
-            """)
+            let list = newServerHabits.map { "• \($0.name)" }.joined(separator: "\n")
+            Text("We found the following habits on the server that you previously created:\n\n\(list)\n\nWould you like to save them locally or delete them from the server?")
         }
     }
     
     private var accountSection: some View {
         Section(header: Text(.account)) {
             HStack {
-                Label(String(localized: .status), systemImage: "person.circle")
+                settingsIcon("person.circle", color: .blue)
+                Text(.status)
                 Spacer()
                 appState.isAuthenticated ? Text(.signedIn) : Text(.guest)
                     .foregroundStyle(.secondary)
             }
-            
+
             if appState.isAuthenticated {
                 HStack {
-                    Label(String(localized: .yourUsername), systemImage: "person")
+                    settingsIcon("person", color: .blue)
+                    Text(.yourUsername)
                     Spacer()
                     Text(userManager.profile.username)
                         .foregroundStyle(.secondary)
                 }
-                
+
                 Button(role: .destructive) {
                     handleLogout()
                 } label: {
-                    Label(String(localized: .logOut), systemImage: "arrow.backward.square")
+                    HStack(spacing: 12) {
+                        settingsIcon("arrow.backward.square", color: .red)
+                        Text(.logOut)
+                    }
                 }
             } else {
                 NavigationLink(destination: LoginView()) {
-                    Label(String(localized: .logIn), systemImage: "person.fill")
+                    HStack(spacing: 12) {
+                        settingsIcon("person.crop.circle", color: .accentColor)
+                        Text(.logIn)
+                    }
                 }
-                
+
                 NavigationLink(destination: RegistrationView()) {
-                    Label(String(localized: .register), systemImage: "person.badge.plus")
+                    HStack(spacing: 12) {
+                        settingsIcon("person.crop.circle.badge.plus", color: .accentColor)
+                        Text(.register)
+                    }
                 }
-                
+
                 Button {
                     Task {
                         await viewModel.handleGoogleSignIn()
@@ -146,7 +153,7 @@ struct SettingsView: View {
                     googleButtonLabel
                 }
                 .buttonStyle(.plain)
-                
+
                 SignInWithAppleButton(.signIn) { request in
                     request.requestedScopes = [.fullName, .email]
                 } onCompletion: { result in
@@ -157,33 +164,57 @@ struct SettingsView: View {
             }
         }
     }
-    
+
     private var preferencesSection: some View {
         Section(header: Text(.preferences)) {
             Toggle(isOn: $isDarkMode) {
-                Label(String(localized: .darkMode), systemImage: "moon.fill")
+                HStack(spacing: 12) {
+                    settingsIcon("moon.fill", color: .indigo)
+                    Text(.darkMode)
+                }
             }
 
             NavigationLink(destination: Text("SUBSCRIPTIONS")) {
-                Label(String(localized: .manageSubscription), systemImage: "star.fill")
+                HStack(spacing: 12) {
+                    settingsIcon("star.fill", color: .orange)
+                    Text(.manageSubscription)
+                }
             }
         }
     }
-    
+
     private var informationSection: some View {
         Section(header: Text(.information)) {
             NavigationLink(destination: TermsOfServiceView()) {
-                Label(String(localized: .termsOfService), systemImage: "doc.text")
+                HStack(spacing: 12) {
+                    settingsIcon("doc.text", color: .gray)
+                    Text(.termsOfService)
+                }
             }
 
             NavigationLink(destination: PrivacyPolicyView()) {
-                Label(String(localized: .privacyPolicy), systemImage: "lock.shield")
+                HStack(spacing: 12) {
+                    settingsIcon("lock.shield", color: .green)
+                    Text(.privacyPolicy)
+                }
             }
 
             NavigationLink(destination: AboutView()) {
-                Label(String(localized: .about), systemImage: "info.circle")
+                HStack(spacing: 12) {
+                    settingsIcon("info.circle", color: .blue)
+                    Text(.about)
+                }
             }
         }
+    }
+
+    private func settingsIcon(_ systemName: String, color: Color) -> some View {
+        Image(systemName: systemName)
+            .font(.system(size: 14, weight: .medium))
+            .frame(width: 28, height: 28)
+            .foregroundStyle(.white)
+            .background(color.gradient)
+            .clipShape(.rect(cornerRadius: 7))
     }
     
     private var googleButtonLabel: some View {

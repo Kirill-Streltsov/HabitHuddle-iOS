@@ -586,7 +586,7 @@
     "•" : {
 
     },
-    "© 2025 HabitHuddle. All rights reserved." : {
+    "© 2025 Habit Huddle. All rights reserved." : {
 
     },
     "+ %lld more" : {
@@ -1669,38 +1669,38 @@
         }
       }
     },
-    "By using HabitHuddle, you agree to these Terms of Service." : {
+    "By using Habit Huddle, you agree to these Terms of Service." : {
       "comment" : "Intro sentence in Terms of Service",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Durch die Nutzung von HabitHuddle stimmst du diesen Nutzungsbedingungen zu."
+            "value" : "Durch die Nutzung von Habit Huddle stimmst du diesen Nutzungsbedingungen zu."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Al usar HabitHuddle, aceptas estos Términos de servicio."
+            "value" : "Al usar Habit Huddle, aceptas estos Términos de servicio."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En utilisant HabitHuddle, vous acceptez ces Conditions d'utilisation."
+            "value" : "En utilisant Habit Huddle, vous acceptez ces Conditions d'utilisation."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usando HabitHuddle, accetti questi Termini di servizio."
+            "value" : "Usando Habit Huddle, accetti questi Termini di servizio."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Используя HabitHuddle, вы соглашаетесь с настоящими Условиями использования."
+            "value" : "Используя Habit Huddle, вы соглашаетесь с настоящими Условиями использования."
           }
         }
       }
@@ -2909,7 +2909,7 @@
       }
     },
     "Create Account" : {
-
+      "extractionState" : "manual"
     },
     "Create one now." : {
       "comment" : "Empty state subtitle prompting habit creation",
@@ -4206,6 +4206,10 @@
         }
       }
     },
+    "Fair" : {
+      "comment" : "Password strength label - medium strength",
+      "extractionState" : "manual"
+    },
     "Features" : {
       "comment" : "Section header in About screen listing app features",
       "extractionState" : "manual",
@@ -5046,113 +5050,113 @@
         }
       }
     },
-    "HabitHuddle" : {
+    "Habit Huddle" : {
 
     },
-    "HabitHuddle is not intended for users under 13 years of age." : {
+    "Habit Huddle is not intended for users under 13 years of age." : {
       "comment" : "Body text in Children's Privacy section of Privacy Policy",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle ist nicht für Nutzer unter 13 Jahren gedacht."
+            "value" : "Habit Huddle ist nicht für Nutzer unter 13 Jahren gedacht."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle no está destinado a usuarios menores de 13 años."
+            "value" : "Habit Huddle no está destinado a usuarios menores de 13 años."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle n'est pas destiné aux utilisateurs de moins de 13 ans."
+            "value" : "Habit Huddle n'est pas destiné aux utilisateurs de moins de 13 ans."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle non è destinato agli utenti sotto i 13 anni."
+            "value" : "Habit Huddle non è destinato agli utenti sotto i 13 anni."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle не предназначен для пользователей моложе 13 лет."
+            "value" : "Habit Huddle не предназначен для пользователей моложе 13 лет."
           }
         }
       }
     },
-    "HabitHuddle is provided as-is, without warranties of any kind." : {
+    "Habit Huddle is provided as-is, without warranties of any kind." : {
       "comment" : "Body text in Disclaimer section of Terms of Service",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle wird ohne jegliche Garantien bereitgestellt."
+            "value" : "Habit Huddle wird ohne jegliche Garantien bereitgestellt."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle se proporciona tal cual, sin garantías de ningún tipo."
+            "value" : "Habit Huddle se proporciona tal cual, sin garantías de ningún tipo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle est fourni tel quel, sans garanties d'aucune sorte."
+            "value" : "Habit Huddle est fourni tel quel, sans garanties d'aucune sorte."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle è fornito così com'è, senza garanzie di alcun tipo."
+            "value" : "Habit Huddle è fornito così com'è, senza garanzie di alcun tipo."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle предоставляется «как есть», без каких-либо гарантий."
+            "value" : "Habit Huddle предоставляется «как есть», без каких-либо гарантий."
           }
         }
       }
     },
-    "HabitHuddle is your personal habit companion." : {
+    "Habit Huddle is your personal habit companion." : {
       "comment" : "Short description of the app in About screen",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle ist dein persönlicher Gewohnheitsbegleiter."
+            "value" : "Habit Huddle ist dein persönlicher Gewohnheitsbegleiter."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle es tu compañero personal de hábitos."
+            "value" : "Habit Huddle es tu compañero personal de hábitos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle est votre compagnon personnel de bonnes habitudes."
+            "value" : "Habit Huddle est votre compagnon personnel de bonnes habitudes."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle è il tuo compagno personale per le abitudini."
+            "value" : "Habit Huddle è il tuo compagno personale per le abitudini."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HabitHuddle — ваш личный помощник в формировании привычек."
+            "value" : "Habit Huddle — ваш личный помощник в формировании привычек."
           }
         }
       }
@@ -8472,7 +8476,7 @@
       }
     },
     "Sign in to sync your habits" : {
-
+      "extractionState" : "manual"
     },
     "Sign in with Google" : {
       "comment" : "Google sign-in button label",
@@ -8905,6 +8909,10 @@
         }
       }
     },
+    "Strong" : {
+      "comment" : "Password strength label - high strength",
+      "extractionState" : "manual"
+    },
     "SUBSCRIPTIONS" : {
       "comment" : "Placeholder content for the subscription screen",
       "extractionState" : "manual",
@@ -9089,7 +9097,7 @@
       }
     },
     "Sync your habits and connect with friends" : {
-
+      "extractionState" : "manual"
     },
     "Tap to boost!" : {
       "comment" : "Caption below the boost button on a friend's habit card",
@@ -9595,38 +9603,38 @@
         }
       }
     },
-    "To provide and improve HabitHuddle's features" : {
+    "To provide and improve Habit Huddle's features" : {
       "comment" : "Bullet in How We Use Your Data section of Privacy Policy",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Um die Funktionen von HabitHuddle bereitzustellen und zu verbessern"
+            "value" : "Um die Funktionen von Habit Huddle bereitzustellen und zu verbessern"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para proporcionar y mejorar las funciones de HabitHuddle"
+            "value" : "Para proporcionar y mejorar las funciones de Habit Huddle"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pour fournir et améliorer les fonctionnalités de HabitHuddle"
+            "value" : "Pour fournir et améliorer les fonctionnalités de Habit Huddle"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Per fornire e migliorare le funzionalità di HabitHuddle"
+            "value" : "Per fornire e migliorare le funzionalità di Habit Huddle"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Для предоставления и улучшения функций HabitHuddle"
+            "value" : "Для предоставления и улучшения функций Habit Huddle"
           }
         }
       }
@@ -10278,6 +10286,10 @@
         }
       }
     },
+    "Weak" : {
+      "comment" : "Password strength label - low strength",
+      "extractionState" : "manual"
+    },
     "We do not sell your personal data to third parties." : {
       "comment" : "Body text in Data Sharing section of Privacy Policy",
       "extractionState" : "manual",
@@ -10530,38 +10542,38 @@
         }
       }
     },
-    "We sent a confirmation link to %@. You can start using HabitHuddle right away and verify later." : {
+    "We sent a confirmation link to %@. You can start using Habit Huddle right away and verify later." : {
       "comment" : "Alert message shown after registration, %@ is the user's email address",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wir haben einen Bestätigungslink an %@ geschickt. Du kannst HabitHuddle sofort nutzen und die E-Mail später bestätigen."
+            "value" : "Wir haben einen Bestätigungslink an %@ geschickt. Du kannst Habit Huddle sofort nutzen und die E-Mail später bestätigen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enviamos un enlace de confirmación a %@. Puedes usar HabitHuddle ahora y verificar más tarde."
+            "value" : "Enviamos un enlace de confirmación a %@. Puedes usar Habit Huddle ahora y verificar más tarde."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nous avons envoyé un lien de confirmation à %@. Tu peux utiliser HabitHuddle dès maintenant et vérifier plus tard."
+            "value" : "Nous avons envoyé un lien de confirmation à %@. Tu peux utiliser Habit Huddle dès maintenant et vérifier plus tard."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abbiamo inviato un link di conferma a %@. Puoi iniziare a usare HabitHuddle subito e verificare in seguito."
+            "value" : "Abbiamo inviato un link di conferma a %@. Puoi iniziare a usare Habit Huddle subito e verificare in seguito."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Мы отправили ссылку подтверждения на %@. Ты можешь пользоваться HabitHuddle прямо сейчас и подтвердить адрес позже."
+            "value" : "Мы отправили ссылку подтверждения на %@. Ты можешь пользоваться Habit Huddle прямо сейчас и подтвердить адрес позже."
           }
         }
       }
@@ -10638,38 +10650,38 @@
         }
       }
     },
-    "We strive to keep HabitHuddle running smoothly and reliably." : {
+    "We strive to keep Habit Huddle running smoothly and reliably." : {
       "comment" : "Body text in Service Availability section of Terms of Service",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wir bemühen uns, HabitHuddle reibungslos und zuverlässig zu betreiben."
+            "value" : "Wir bemühen uns, Habit Huddle reibungslos und zuverlässig zu betreiben."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nos esforzamos por mantener HabitHuddle funcionando sin problemas."
+            "value" : "Nos esforzamos por mantener Habit Huddle funcionando sin problemas."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nous nous efforçons de maintenir HabitHuddle fonctionnel et fiable."
+            "value" : "Nous nous efforçons de maintenir Habit Huddle fonctionnel et fiable."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ci impegniamo a mantenere HabitHuddle sempre funzionante e affidabile."
+            "value" : "Ci impegniamo a mantenere Habit Huddle sempre funzionante e affidabile."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Мы стремимся обеспечить бесперебойную и надёжную работу HabitHuddle."
+            "value" : "Мы стремимся обеспечить бесперебойную и надёжную работу Habit Huddle."
           }
         }
       }
@@ -10819,7 +10831,7 @@
       }
     },
     "Welcome Back" : {
-
+      "extractionState" : "manual"
     },
     "Welcome to\nHabit Huddle" : {
       "comment" : "Onboarding page 1 title",
@@ -11253,38 +11265,38 @@
         }
       }
     },
-    "You must be 13 or older to use HabitHuddle." : {
+    "You must be 13 or older to use Habit Huddle." : {
       "comment" : "Bullet in User Accounts section of Terms of Service",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Du musst mindestens 13 Jahre alt sein, um HabitHuddle zu nutzen."
+            "value" : "Du musst mindestens 13 Jahre alt sein, um Habit Huddle zu nutzen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Debes tener 13 años o más para usar HabitHuddle."
+            "value" : "Debes tener 13 años o más para usar Habit Huddle."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vous devez avoir 13 ans ou plus pour utiliser HabitHuddle."
+            "value" : "Vous devez avoir 13 ans ou plus pour utiliser Habit Huddle."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Devi avere 13 anni o più per usare HabitHuddle."
+            "value" : "Devi avere 13 anni o più per usare Habit Huddle."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Для использования HabitHuddle вам должно быть 13 лет или больше."
+            "value" : "Для использования Habit Huddle вам должно быть 13 лет или больше."
           }
         }
       }
@@ -11325,38 +11337,38 @@
         }
       }
     },
-    "You own the habit data you create in HabitHuddle." : {
+    "You own the habit data you create in Habit Huddle." : {
       "comment" : "Bullet in Content & Data section of Terms of Service",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Du behältst das Eigentum an den Gewohnheitsdaten, die du in HabitHuddle erstellst."
+            "value" : "Du behältst das Eigentum an den Gewohnheitsdaten, die du in Habit Huddle erstellst."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eres propietario de los datos de hábitos que creas en HabitHuddle."
+            "value" : "Eres propietario de los datos de hábitos que creas en Habit Huddle."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vous êtes propriétaire des données d'habitudes que vous créez dans HabitHuddle."
+            "value" : "Vous êtes propriétaire des données d'habitudes que vous créez dans Habit Huddle."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sei proprietario dei dati sulle abitudini che crei in HabitHuddle."
+            "value" : "Sei proprietario dei dati sulle abitudini che crei in Habit Huddle."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Вы сохраняете право собственности на данные о привычках, созданные в HabitHuddle."
+            "value" : "Вы сохраняете право собственности на данные о привычках, созданные в Habit Huddle."
           }
         }
       }

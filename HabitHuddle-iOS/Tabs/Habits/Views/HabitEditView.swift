@@ -13,24 +13,24 @@ struct HabitEditView: View {
 
     @Query
     var habits: [Habit]
-    
+
     @State private var categories = [String]()
-    
+
     @ObservedObject var viewModel: HabitDetailView.ViewModel
     @State private var isCheckedIn = false
     @State private var notificationsAllowed = false
     @State private var notificationsDisabled = false
     @State private var wasSyncedAtTheBeginning = false
-    
+
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-    
+
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var userManager: LocalUserManager
-    
+
     @AppStorage("deviceToken") private var deviceToken: String = ""
     @AppStorage("hasSentDeviceToken") private var hasSentDeviceToken = false
-    
+
     var isPartOfChallenge: Bool {
         if let habit = viewModel.habit, !habit.challenges.isEmpty {
             return true
@@ -38,24 +38,26 @@ struct HabitEditView: View {
             return false
         }
     }
-    
+
     init(viewModel: HabitDetailView.ViewModel) {
         self.viewModel = viewModel
     }
-    
+
     var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
-                    VStack(spacing: 32) {
-                        textFieldsView
-                        iconPickerView
-                        categoryView
-                        durationView
-                        privacyView
-                        remindersView
-                    }
-                
-                SubmitButton(title: .save, color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor, iconName: nil) {
+            VStack(spacing: 24) {
+                nameSection
+                iconSection
+                categorySection
+                durationSection
+                privacySection
+                remindersSection
+
+                SubmitButton(
+                    title: .save,
+                    color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor,
+                    iconName: nil
+                ) {
                     HapticManager.trigger(.success)
                     Task {
                         guard let habit = viewModel.habit else {
@@ -73,7 +75,9 @@ struct HabitEditView: View {
                     dismiss()
                 }
                 .allowsHitTesting(!viewModel.name.isEmpty)
+                .padding(.horizontal)
             }
+            .padding(.vertical, 16)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     if let icon = viewModel.icon {
@@ -81,35 +85,249 @@ struct HabitEditView: View {
                     }
                 }
             }
-            .padding()
             .onAppear {
                 wasSyncedAtTheBeginning = viewModel.isSynced
                 if appState.isAuthenticated && viewModel.habit == nil {
                     viewModel.isSynced = true
                 }
                 fillCategories()
-                Task {
-                    await checkNotifications()
-                }
+                Task { await checkNotifications() }
             }
             .onChange(of: viewModel.isSynced) { _, newValue in
-                if !newValue {
-                    viewModel.isPublic = false
-                }
+                if !newValue { viewModel.isPublic = false }
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                Task {
-                    await checkNotifications()
-                }
+                Task { await checkNotifications() }
             }
             .onDisappear {
-                Task {
-                    await checkNotifications()
+                Task { await checkNotifications() }
+            }
+        }
+        .background(Color(.systemGroupedBackground))
+    }
+
+    // MARK: - Sections
+
+    private var nameSection: some View {
+        formCard {
+            fieldRow(icon: "character.cursor.ibeam", color: .blue) {
+                TextField(String(localized: .habitName), text: $viewModel.name)
+            }
+            cardDivider
+            fieldRow(icon: "text.alignleft", color: .gray) {
+                TextField(String(localized: .descriptionOptional), text: $viewModel.description)
+            }
+        }
+    }
+
+    private var iconSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            sectionHeader(.chooseAnIcon)
+            formCard {
+                IconPickerView(selectedIcon: $viewModel.icon)
+                    .frame(maxHeight: 300)
+                    .padding(8)
+            }
+        }
+    }
+
+    private var categorySection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 4) {
+                sectionHeader(.category)
+                InfoView(text: .categoriesHelpYouOrganizeYourHabitsIntoMeaningfulGroups)
+            }
+            formCard {
+                if !categories.isEmpty {
+                    fieldRow(icon: "list.bullet", color: .purple) {
+                        Menu {
+                            ForEach(categories, id: \.self) { category in
+                                Button(LocalizedStringKey(category)) {
+                                    viewModel.category = category
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Text(viewModel.category.isEmpty ? String(localized: .selectAnExistingCategory) : viewModel.category)
+                                    .foregroundStyle(viewModel.category.isEmpty ? .secondary : .primary)
+                                Spacer()
+                                Image(systemName: "chevron.up.chevron.down")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    cardDivider
+                }
+                fieldRow(icon: "plus", color: .green) {
+                    TextField(
+                        categories.isEmpty ? String(localized: .addANewOne) : String(localized: .orAddANewOne),
+                        text: $viewModel.category
+                    )
                 }
             }
         }
     }
-    
+
+    private var durationSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 4) {
+                sectionHeader(.desiredDuration)
+                if isPartOfChallenge {
+                    Text(.thisHabitIsCurrentlyPartOfAChallengeSoYouCantChangeItsDurationRightNow)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            formCard {
+                Picker(String(localized: .duration), selection: $viewModel.duration) {
+                    ForEach(HabitDuration.allCases) { option in
+                        Text(option.displayName).tag(option)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(12)
+                .disabled(isPartOfChallenge)
+            }
+        }
+    }
+
+    private var privacySection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            sectionHeader(.privacyOptions)
+            formCard {
+                toggleRow(
+                    icon: "arrow.triangle.2.circlepath",
+                    color: .green,
+                    title: Text(.syncWithServer),
+                    info: .turnOnToSyncHabitsWithOurServerAndAccessThemOnAllYourDevicesYouMustBeSignedInTurningOffKeepsHabitsOnlyOnThisDeviceAndDeletesThemFromTheServer,
+                    isOn: $viewModel.isSynced,
+                    disabled: !appState.isAuthenticated
+                )
+                cardDivider
+                toggleRow(
+                    icon: "person.2.fill",
+                    color: .blue,
+                    title: Text(.openToFriends),
+                    info: .makeAHabitOpenToFriendsToLetThemSeeItAndChallengeYouOnlySyncedHabitsCanBeShared,
+                    isOn: $viewModel.isPublic,
+                    disabled: !viewModel.isSynced || !appState.isAuthenticated
+                )
+            }
+        }
+    }
+
+    private var remindersSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            sectionHeader(.enableReminders)
+            if notificationsDisabled {
+                (
+                    Text(.toReceiveRemindersEnableNotificationsIn)
+                    + Text(.settings).foregroundColor(.blue).underline()
+                )
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 4)
+                .onTapGesture { openAppSettings() }
+            }
+            formCard {
+                toggleRow(
+                    icon: "bell.fill",
+                    color: .orange,
+                    title: Text(.enableReminders),
+                    info: nil,
+                    isOn: $viewModel.hasReminder,
+                    disabled: notificationsDisabled
+                )
+                .opacity(notificationsDisabled ? 0.5 : 1)
+                .onChange(of: viewModel.hasReminder) { _, newValue in
+                    if newValue { requestNotificationPermission() }
+                }
+                cardDivider
+                HStack(spacing: 12) {
+                    settingsIcon("clock.fill", color: .purple)
+                    DatePicker(
+                        selection: $viewModel.reminderTime,
+                        displayedComponents: .hourAndMinute
+                    ) {
+                        Text(.reminderTime).foregroundStyle(.primary)
+                    }
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .opacity(viewModel.hasReminder ? 1 : 0.4)
+                .disabled(!viewModel.hasReminder)
+                .animation(.easeInOut(duration: 0.2), value: viewModel.hasReminder)
+            }
+        }
+    }
+
+    // MARK: - Helpers
+
+    @ViewBuilder
+    private func formCard<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        VStack(spacing: 0) {
+            content()
+        }
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(.rect(cornerRadius: 12))
+        .padding(.horizontal)
+    }
+
+    @ViewBuilder
+    private func fieldRow<Content: View>(icon: String, color: Color, @ViewBuilder content: () -> Content) -> some View {
+        HStack(spacing: 12) {
+            settingsIcon(icon, color: color)
+            content()
+        }
+        .frame(minHeight: 44)
+        .padding(.vertical, 2)
+        .padding(.horizontal, 12)
+        .padding(.trailing, 4)
+    }
+
+    @ViewBuilder
+    private func toggleRow(icon: String, color: Color, title: some View, info: LocalizedStringResource?, isOn: Binding<Bool>, disabled: Bool) -> some View {
+        HStack(spacing: 12) {
+            settingsIcon(icon, color: color)
+            title
+            if let info {
+                InfoView(text: info)
+            }
+            Spacer()
+            Toggle("", isOn: isOn)
+                .labelsHidden()
+                .disabled(disabled)
+        }
+        .frame(minHeight: 44)
+        .padding(.vertical, 2)
+        .padding(.horizontal, 12)
+    }
+
+    private func settingsIcon(_ systemName: String, color: Color) -> some View {
+        Image(systemName: systemName)
+            .font(.system(size: 14, weight: .medium))
+            .frame(width: 28, height: 28)
+            .foregroundStyle(.white)
+            .background(color.gradient)
+            .clipShape(.rect(cornerRadius: 7))
+    }
+
+    private var cardDivider: some View {
+        Divider().padding(.leading, 52)
+    }
+
+    private func sectionHeader(_ key: LocalizedStringResource) -> some View {
+        Text(key)
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .textCase(.uppercase)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, 20)
+    }
+
+    // MARK: - Data
+
     private func fillCategories() {
         categories = [
             String(localized: .health),
@@ -119,169 +337,14 @@ struct HabitEditView: View {
             String(localized: .fitness)
         ]
         for habit in habits {
-            if !habit.category.isEmpty {
-                if !categories.contains(habit.category) {
-                    categories.append(habit.category)
-                }
+            if !habit.category.isEmpty && !categories.contains(habit.category) {
+                categories.append(habit.category)
             }
         }
     }
-    
-    private var textFieldsView: some View {
-        VStack(spacing: 16) {
-            CustomStyledTextField(
-                placeholder: String(localized: .habitName),
-                text: $viewModel.name
-            )
 
-            CustomStyledTextField(
-                placeholder: String(localized: .descriptionOptional),
-                text: $viewModel.description
-            )
-        }
-    }
-    
-    private var iconPickerView: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(.chooseAnIcon)
-                .fontWeight(.semibold)
-            IconPickerView(selectedIcon: $viewModel.icon)
-                .frame(maxHeight: 300)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(.gray, lineWidth: 0.5)
-                )
-        }
-    }
-    
-    private var categoryView: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text(.category)
-                    .fontWeight(.semibold)
-                InfoView(text: .categoriesHelpYouOrganizeYourHabitsIntoMeaningfulGroups)
-            }
-            
-            if !categories.isEmpty {
-                Menu {
-                    ForEach(categories, id: \.self) { category in
-                        Button(LocalizedStringKey(category)) {
-                            viewModel.category = category
-                        }
-                    }
-                } label: {
-                    HStack {
-                        Image(systemName: "list.bullet")
-                        Text(.selectAnExistingCategory)
-                            .foregroundColor(.accentColor)
-                    }
-                    .padding(8)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
-                }
-            }
-                        
-            CustomStyledTextField(placeholder: categories.count == 0 ? String(localized: .addANewOne) : String(localized: .orAddANewOne), text: $viewModel.category)
-        }
-    }
-    
-    private var durationView: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            
-            VStack(alignment: .leading, spacing: 12) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(.desiredDuration)
-                        .fontWeight(.semibold)
-                    
-                    if isPartOfChallenge {
-                        Text(.thisHabitIsCurrentlyPartOfAChallengeSoYouCantChangeItsDurationRightNow)
-                            .font(.footnote)
-                            .foregroundColor(.gray)
-                    }
-                }
-                
-                Picker(String(localized: .duration), selection: $viewModel.duration) {
-                    ForEach(HabitDuration.allCases) { option in
-                        Text(option.displayName)
-                            .tag(option)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .disabled(isPartOfChallenge)
-            }
-        }
-    }
-    
-    private var privacyView: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text(.privacyOptions)
-                    .fontWeight(.semibold)
-            }
-            HStack {
-                Text(.syncWithServer)
-                InfoView(text: .turnOnToSyncHabitsWithOurServerAndAccessThemOnAllYourDevicesYouMustBeSignedInTurningOffKeepsHabitsOnlyOnThisDeviceAndDeletesThemFromTheServer)
-                Spacer()
-                Toggle("", isOn: $viewModel.isSynced)
-                    .labelsHidden()
-                    .disabled(!appState.isAuthenticated)
-            }
-            HStack {
-                Text(.openToFriends)
-                InfoView(text: .makeAHabitOpenToFriendsToLetThemSeeItAndChallengeYouOnlySyncedHabitsCanBeShared)
-                Spacer()
-                Toggle("", isOn: $viewModel.isPublic)
-                    .labelsHidden()
-                    .disabled(!viewModel.isSynced || !appState.isAuthenticated)
-            }
-        }
-    }
-    
-    private var remindersView: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            if notificationsDisabled {
-                VStack(alignment: .leading, spacing: 8) {
-                            (
-                                Text(.toReceiveRemindersEnableNotificationsIn)
-                                +
-                                Text(.settings)
-                                    .foregroundColor(.blue)
-                                    .underline()
-                                    
-                            )
-                            .font(.footnote)
-                            .foregroundColor(.secondary)
-                            .onTapGesture {
-                                openAppSettings()
-                            }
-                        }
-            }
-            
-            Toggle(isOn: $viewModel.hasReminder) {
-                Text(.enableReminders)
-                    .fontWeight(.medium)
-            }
-                .disabled(notificationsDisabled)
-                .opacity(notificationsDisabled ? 0.5 : 1)
-                .onChange(of: viewModel.hasReminder) { _, newValue in
-                    if newValue {
-                        requestNotificationPermission()
-                    }
-                }
-            
-            DatePicker(selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute) {
-                Text(.reminderTime)
-                    .fontWeight(.medium)
-            }
-                .opacity(viewModel.hasReminder ? 1 : 0.5)
-                .disabled(!viewModel.hasReminder)
-                .animation(.easeInOut(duration: 0.3), value: viewModel.hasReminder)
-        }
-    }
-    
-    // MARK: Saving/Updating functionality
-    
+    // MARK: - Saving/Updating
+
     private func saveChanges() async {
         guard let habit = viewModel.habit else { return }
         await MainActor.run {
@@ -297,13 +360,11 @@ struct HabitEditView: View {
             context.saveOrLog()
             setNotificationBehaviour(for: habit)
             if viewModel.isSynced {
-                Task {
-                    await saveChangesOnTheServer(for: habit)
-                }
+                Task { await saveChangesOnTheServer(for: habit) }
             }
         }
     }
-    
+
     private func saveChangesOnTheServer(for habit: Habit) async {
         if userManager.profile.isSignedInToServer && viewModel.isSynced {
             let result = await viewModel.updateHabit(with: habit.id)
@@ -314,7 +375,7 @@ struct HabitEditView: View {
             }
         }
     }
-            
+
     private func addHabit() async {
         let habitID = UUID()
         await MainActor.run {
@@ -335,13 +396,11 @@ struct HabitEditView: View {
             context.insert(habit)
             setNotificationBehaviour(for: habit)
             if viewModel.isSynced {
-                Task {
-                    await addHabitToTheServer(with: habitID)
-                }
+                Task { await addHabitToTheServer(with: habitID) }
             }
         }
     }
-    
+
     private func addHabitToTheServer(with habitID: UUID) async {
         if userManager.profile.isSignedInToServer {
             let result = await viewModel.createHabit(with: habitID)
@@ -352,9 +411,9 @@ struct HabitEditView: View {
             }
         }
     }
-    
-    // MARK: Notification functionality
-    
+
+    // MARK: - Notifications
+
     private func checkNotifications() async {
         let settings = await UNUserNotificationCenter.current().notificationSettings()
         if settings.authorizationStatus == .authorized {
@@ -362,9 +421,7 @@ struct HabitEditView: View {
                 print("DEVICE TOKEN: \(deviceToken)")
                 UIApplication.shared.registerForRemoteNotifications()
                 if appState.isAuthenticated && !hasSentDeviceToken {
-                    Task {
-                        await viewModel.updateUser(user: userManager.profile)
-                    }
+                    Task { await viewModel.updateUser(user: userManager.profile) }
                 }
             }
         }
@@ -373,14 +430,14 @@ struct HabitEditView: View {
             notificationsDisabled = settings.authorizationStatus == .denied
         }
     }
-    
+
     private func openAppSettings() {
         guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
         if UIApplication.shared.canOpenURL(settingsURL) {
             UIApplication.shared.open(settingsURL)
         }
     }
-    
+
     private func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if let error = error {
@@ -393,7 +450,7 @@ struct HabitEditView: View {
             }
         }
     }
-    
+
     private func setNotificationBehaviour(for habit: Habit) {
         if habit.reminderTime != nil {
             scheduleHabitNotification(for: habit)
@@ -401,7 +458,7 @@ struct HabitEditView: View {
             habit.cancelHabitNotification()
         }
     }
-    
+
     private func scheduleHabitNotification(for habit: Habit) {
         let content = UNMutableNotificationContent()
         let notification = NotificationGenerator.randomNotification(for: habit.name)
@@ -415,7 +472,6 @@ struct HabitEditView: View {
         dateComponents.minute = habit.reminderTime?.minute
 
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-
         let identifier = "habit_\(habit.id)"
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         let habitName = habit.name

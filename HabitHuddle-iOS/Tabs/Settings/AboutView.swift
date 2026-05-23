@@ -24,7 +24,7 @@ struct AboutView: View {
                 Divider()
                     .padding(.top, 8)
 
-                Text("© 2025 HabitHuddle. All rights reserved.")
+                Text("© 2025 Habit Huddle. All rights reserved.")
                     .font(.caption)
                     .foregroundStyle(.tertiary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -52,7 +52,7 @@ struct AboutView: View {
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
             .shadow(color: .black.opacity(0.12), radius: 6, y: 3)
 
-            Text("HabitHuddle")
+            Text("Habit Huddle")
                 .font(.title2)
                 .fontWeight(.bold)
 

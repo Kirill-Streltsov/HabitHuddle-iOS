@@ -225,18 +225,26 @@ struct HabitStatisticsView: View {
     private var streaksSection: some View {
         VStack(spacing: 24) {
             Chart(streakData) { data in
-                AreaMark(
+                BarMark(
                     x: .value(String(localized: .date), data.date, unit: .day),
                     y: .value(String(localized: .streak), data.streakLength)
                 )
-                .foregroundStyle(Color.orange.gradient.opacity(0.3))
-
-                LineMark(
-                    x: .value(String(localized: .date), data.date, unit: .day),
-                    y: .value(String(localized: .streak), data.streakLength)
-                )
-                .foregroundStyle(Color.orange)
-                .lineStyle(StrokeStyle(lineWidth: 2))
+                .foregroundStyle(Color.orange.gradient)
+                .cornerRadius(4)
+            }
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day, count: 1)) { _ in
+                    AxisGridLine()
+                    AxisTick()
+                    AxisValueLabel(format: .dateTime.month(.abbreviated).day(), centered: true)
+                }
+            }
+            .chartYAxis {
+                AxisMarks(values: .stride(by: 1)) { _ in
+                    AxisGridLine()
+                    AxisTick()
+                    AxisValueLabel()
+                }
             }
             .frame(height: 150)
 
@@ -247,10 +255,14 @@ struct HabitStatisticsView: View {
             }
 
             HStack(alignment: .top, spacing: 40) {
-                VStack {
-                    Text(.currentStreak)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                VStack(spacing: 4) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "flame.fill")
+                            .foregroundStyle(.orange)
+                        Text(.currentStreak)
+                            .foregroundStyle(.secondary)
+                    }
+                    .font(.subheadline)
                     Text(.days(currentStreak.length))
                         .font(.title2.bold())
                         .foregroundStyle(.green)
@@ -261,10 +273,14 @@ struct HabitStatisticsView: View {
                         .frame(maxWidth: 120)
                 }
 
-                VStack {
-                    Text(.longestStreak)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                VStack(spacing: 4) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "trophy.fill")
+                            .foregroundStyle(.yellow)
+                        Text(.longestStreak)
+                            .foregroundStyle(.secondary)
+                    }
+                    .font(.subheadline)
                     Text(.days(longestStreak.length))
                         .font(.title2.bold())
                         .foregroundStyle(.blue)

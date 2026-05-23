@@ -54,7 +54,7 @@ struct RegistrationView: View {
         }
     }
 
-    private var passwordStrengthLabel: String {
+    private var passwordStrengthLabel: LocalizedStringKey {
         switch passwordStrength {
         case 1: return "Weak"
         case 2: return "Fair"
@@ -144,9 +144,9 @@ struct RegistrationView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(Color.accentColor)
                 .padding(.top, 16)
-            Text("Create Account")
+            Text(.createAccount)
                 .font(.title2.bold())
-            Text("Sync your habits and connect with friends")
+            Text(.syncYourHabitsAndConnectWithFriends)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -169,7 +169,7 @@ struct RegistrationView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.red.gradient)
+            .background(Color.red)
             .clipShape(.rect(cornerRadius: 12))
             .padding(.horizontal)
             .transition(.move(edge: .top).combined(with: .opacity))

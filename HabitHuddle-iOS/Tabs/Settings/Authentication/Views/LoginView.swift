@@ -79,12 +79,8 @@ struct LoginView: View {
                     context.saveOrLog()
                 }
             } message: {
-                Text("""
-                We found the following habits on the server that you previously created:\n
-                \(newServerHabits.map { "• \($0.name)" }.joined(separator: "\n"))
-
-                Would you like to save them locally or delete them from the server?
-                """)
+                let list = newServerHabits.map { "• \($0.name)" }.joined(separator: "\n")
+                Text("We found the following habits on the server that you previously created:\n\n\(list)\n\nWould you like to save them locally or delete them from the server?")
             }
             .navigationTitle(String(localized: .login))
             .navigationBarTitleDisplayMode(.inline)
@@ -100,9 +96,9 @@ struct LoginView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(Color.accentColor)
                 .padding(.top, 16)
-            Text("Welcome Back")
+            Text(.welcomeBack)
                 .font(.title2.bold())
-            Text("Sign in to sync your habits")
+            Text(.signInToSyncYourHabits)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }
@@ -123,7 +119,7 @@ struct LoginView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.red.gradient)
+            .background(Color.red)
             .clipShape(.rect(cornerRadius: 12))
             .padding(.horizontal)
             .transition(.move(edge: .top).combined(with: .opacity))
