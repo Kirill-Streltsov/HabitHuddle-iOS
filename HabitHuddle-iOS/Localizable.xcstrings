@@ -2908,6 +2908,9 @@
         }
       }
     },
+    "Create Account" : {
+
+    },
     "Create one now." : {
       "comment" : "Empty state subtitle prompting habit creation",
       "extractionState" : "manual",
@@ -8468,6 +8471,9 @@
         }
       }
     },
+    "Sign in to sync your habits" : {
+
+    },
     "Sign in with Google" : {
       "comment" : "Google sign-in button label",
       "extractionState" : "manual",
@@ -9081,6 +9087,9 @@
           }
         }
       }
+    },
+    "Sync your habits and connect with friends" : {
+
     },
     "Tap to boost!" : {
       "comment" : "Caption below the boost button on a friend's habit card",
@@ -10808,6 +10817,9 @@
           }
         }
       }
+    },
+    "Welcome Back" : {
+
     },
     "Welcome to\nHabit Huddle" : {
       "comment" : "Onboarding page 1 title",

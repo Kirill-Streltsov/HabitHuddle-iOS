@@ -11,21 +11,18 @@ import SwiftUI
 struct LoginView: View {
 
     enum Field {
-        case username
-        case password
+        case username, password
     }
 
-    @Query
-    var habits: [Habit]
-
-    @Query
-    var users: [User]
+    @Query var habits: [Habit]
+    @Query var users: [User]
 
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
     @State private var username = ""
     @State private var password = ""
+    @State private var showPassword = false
 
     @FocusState private var focusedField: Field?
 
@@ -43,52 +40,13 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                Image(systemName: "person.fill")
-                    .font(.system(size: 75))
-                    .foregroundStyle(Color.accentColor)
-
-                VStack(alignment: .leading, spacing: 12) {
-                    ErrorText(text: viewModel.errorMessage)
-                        .frame(height: 20)
-
-                    InputView(text: $username,
-                              title: .username,
-                              placeholder: .enterYourUsername)
-                        .textInputAutocapitalization(.never)
-                        .focused($focusedField, equals: .username)
-                        .submitLabel(.next)
-
-                    InputView(text: $password, title: .password, placeholder: .enterYourPassword, isSecureField: true)
-                        .focused($focusedField, equals: .password)
-                        .submitLabel(.done)
+                VStack(spacing: 24) {
+                    headerSection
+                    errorBanner
+                    credentialsSection
+                    signInButton
                 }
-                .onSubmit {
-                    switch focusedField {
-                    case .username:
-                        focusedField = .password
-                    case .password:
-                        loginUser()
-                    default:
-                        print("❌ Error: Some unknown focus state in registration")
-                    }
-                }
-                .padding(.horizontal)
-                .padding(12)
-
-                Button {
-                    loginUser()
-                } label: {
-                    Text(.signIn)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity, minHeight: 48)
-                }
-                .disabled(inputFieldIsEmpty)
-                .background(inputFieldIsEmpty ? Color.accentColor.opacity(0.5) : Color.accentColor)
-                .clipShape(.rect(cornerRadius: 10))
-                .padding(.horizontal, 16)
-
-                Spacer()
+                .padding(.bottom, 32)
             }
             .onChange(of: viewModel.loadedUser) { _, newValue in
                 if newValue.createdAt != nil {
@@ -134,11 +92,140 @@ struct LoginView: View {
         }
     }
 
+    // MARK: - Sections
+
+    private var headerSection: some View {
+        VStack(spacing: 6) {
+            Image(systemName: "person.crop.circle")
+                .font(.system(size: 60))
+                .foregroundStyle(Color.accentColor)
+                .padding(.top, 16)
+            Text("Welcome Back")
+                .font(.title2.bold())
+            Text("Sign in to sync your habits")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    @ViewBuilder
+    private var errorBanner: some View {
+        if !viewModel.errorMessage.isEmpty {
+            HStack(spacing: 10) {
+                Image(systemName: "exclamationmark.circle.fill")
+                    .font(.subheadline)
+                Text(viewModel.errorMessage)
+                    .font(.subheadline)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .foregroundStyle(.white)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.red.gradient)
+            .clipShape(.rect(cornerRadius: 12))
+            .padding(.horizontal)
+            .transition(.move(edge: .top).combined(with: .opacity))
+        }
+    }
+
+    private var credentialsSection: some View {
+        formCard {
+            fieldRow(icon: "at", color: .blue) {
+                TextField(String(localized: .enterYourUsername), text: $username)
+                    .textInputAutocapitalization(.never)
+                    .textContentType(.username)
+                    .autocorrectionDisabled()
+                    .focused($focusedField, equals: .username)
+                    .submitLabel(.next)
+                    .onSubmit { focusedField = .password }
+            }
+            cardDivider
+            fieldRow(icon: "lock.fill", color: .purple) {
+                Group {
+                    if showPassword {
+                        TextField(String(localized: .enterYourPassword), text: $password)
+                            .textContentType(.password)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
+                    } else {
+                        SecureField(String(localized: .enterYourPassword), text: $password)
+                            .textContentType(.password)
+                    }
+                }
+                .focused($focusedField, equals: .password)
+                .submitLabel(.done)
+                .onSubmit { loginUser() }
+
+                Button {
+                    showPassword.toggle()
+                } label: {
+                    Image(systemName: showPassword ? "eye.slash.fill" : "eye.fill")
+                        .foregroundStyle(.secondary)
+                        .frame(width: 24)
+                }
+            }
+        }
+    }
+
+    private var signInButton: some View {
+        Button {
+            loginUser()
+        } label: {
+            Text(.signIn)
+                .fontWeight(.semibold)
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity, minHeight: 50)
+        }
+        .background(inputFieldIsEmpty ? Color.accentColor.opacity(0.4) : Color.accentColor)
+        .clipShape(.rect(cornerRadius: 14))
+        .padding(.horizontal)
+        .disabled(inputFieldIsEmpty)
+        .animation(.easeInOut(duration: 0.15), value: inputFieldIsEmpty)
+    }
+
+    // MARK: - Helpers
+
+    @ViewBuilder
+    private func formCard<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        VStack(spacing: 0) {
+            content()
+        }
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(.rect(cornerRadius: 12))
+        .padding(.horizontal)
+    }
+
+    @ViewBuilder
+    private func fieldRow<Content: View>(icon: String, color: Color, @ViewBuilder content: () -> Content) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .font(.system(size: 14, weight: .medium))
+                .frame(width: 28, height: 28)
+                .foregroundStyle(.white)
+                .background(color.gradient)
+                .clipShape(.rect(cornerRadius: 7))
+                .padding(.leading, 12)
+
+            content()
+        }
+        .frame(minHeight: 48)
+        .padding(.vertical, 2)
+        .padding(.trailing, 12)
+    }
+
+    private var cardDivider: some View {
+        Divider().padding(.leading, 52)
+    }
+
+    // MARK: - Actions
+
     private func loginUser() {
         Task {
             await viewModel.loginUser(username: username, password: password)
         }
-    }    
+    }
 }
 
 #Preview {
