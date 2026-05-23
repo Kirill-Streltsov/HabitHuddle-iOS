@@ -45,7 +45,7 @@ enum WidgetDataStore {
     }
 
     static func loadBaseURL() -> String {
-        defaults?.string(forKey: "widgetBaseURL") ?? "https://habithuddle-backend.fly.dev/api/"
+        defaults?.string(forKey: "widgetBaseURL") ?? "https://habithuddle-backend.onrender.com/api/"
     }
 
     // MARK: Optimistic updates from widget intent
