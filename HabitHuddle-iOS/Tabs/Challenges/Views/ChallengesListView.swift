@@ -227,13 +227,14 @@ struct ChallengesListView: View {
     }
     
     private func saveChallengeLocally(from challengeDTO: ChallengeDTO, for habit: Habit) {
-        guard let initiator = users.filter({ $0.id == challengeDTO.initiator.user.id }).first else { return }
-        guard let receiver = users.filter({ $0.id == challengeDTO.receiver.user.id }).first else { return }
+        let initiator = users.first(where: { $0.id == challengeDTO.initiator.user.id })
+            ?? challengeDTO.initiator.user.toSwiftData()
+        let receiver = users.first(where: { $0.id == challengeDTO.receiver.user.id })
+            ?? challengeDTO.receiver.user.toSwiftData()
         let challenge = challengeDTO.toSwiftData(initiator: initiator, receiver: receiver, habit: habit)
         do {
             context.insert(challenge)
             try context.save()
-            print("✅ Saved challenge locally")
         } catch {
             print("❌ Error: Couldn't save challenge locally: \(error)")
         }
