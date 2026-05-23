@@ -14,21 +14,13 @@ struct CheckInSmallView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: 6) {
-                if let icon = habit.icon {
-                    Image(systemName: icon)
-                        .font(.callout)
-                        .frame(width: 28, height: 28)
-                        .background(Color(.secondarySystemBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 6))
-                }
+            VStack(alignment: .leading, spacing: 4) {
                 Text(habit.name)
-                    .font(.headline)
+                    .font(.subheadline)
                     .fontWeight(.semibold)
                     .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-                    .multilineTextAlignment(.center)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
 
             Spacer()
 
@@ -68,14 +60,14 @@ struct CheckInSmallView: View {
 
 // MARK: - Preview
 
-#Preview("Pending") {
-    CheckInSmallView(habit: .placeholder)
-        .containerBackground(Color(.systemBackground), for: .widget)
-        .frame(width: 165, height: 165)
+#Preview("Pending", as: .systemSmall) {
+    CheckInWidget()
+} timeline: {
+    HabitEntry(date: .now, habit: .placeholder)
 }
 
-#Preview("Checked in") {
-    CheckInSmallView(habit: WidgetHabit.placeholders[0])
-        .containerBackground(Color(.systemBackground), for: .widget)
-        .frame(width: 165, height: 165)
+#Preview("Checked in", as: .systemSmall) {
+    CheckInWidget()
+} timeline: {
+    HabitEntry(date: .now, habit: WidgetHabit.placeholders[0])
 }

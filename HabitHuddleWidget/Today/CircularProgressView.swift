@@ -6,20 +6,7 @@
 //
 
 import SwiftUI
-
-// MARK: - Preview
-
-#Preview("0%") {
-    CircularProgressView(progress: 0).frame(width: 60, height: 60).padding()
-}
-
-#Preview("50%") {
-    CircularProgressView(progress: 0.5).frame(width: 60, height: 60).padding()
-}
-
-#Preview("100%") {
-    CircularProgressView(progress: 1).frame(width: 60, height: 60).padding()
-}
+import WidgetKit
 
 struct CircularProgressView: View {
     let progress: Double
@@ -39,4 +26,24 @@ struct CircularProgressView: View {
                 .foregroundStyle(progress == 1 ? .green : .primary)
         }
     }
+}
+
+// MARK: - Preview
+
+#Preview("0%", as: .systemMedium) {
+    TodayWidget()
+} timeline: {
+    TodayEntry(date: .now, habits: WidgetHabit.placeholders.map { var h = $0; h.isCheckedInToday = false; return h })
+}
+
+#Preview("Partial", as: .systemMedium) {
+    TodayWidget()
+} timeline: {
+    TodayEntry(date: .now, habits: WidgetHabit.placeholders)
+}
+
+#Preview("100%", as: .systemMedium) {
+    TodayWidget()
+} timeline: {
+    TodayEntry(date: .now, habits: WidgetHabit.placeholders.map { var h = $0; h.isCheckedInToday = true; return h })
 }

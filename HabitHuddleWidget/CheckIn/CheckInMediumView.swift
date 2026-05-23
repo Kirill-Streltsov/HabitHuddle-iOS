@@ -87,14 +87,14 @@ struct CheckInMediumView: View {
 
 // MARK: - Preview
 
-#Preview("Pending") {
-    CheckInMediumView(habit: .placeholder)
-        .containerBackground(Color(.systemBackground), for: .widget)
-        .frame(width: 360, height: 170)
+#Preview("Pending", as: .systemMedium) {
+    CheckInWidget()
+} timeline: {
+    HabitEntry(date: .now, habit: .placeholder)
 }
 
-#Preview("Checked in") {
-    CheckInMediumView(habit: WidgetHabit.placeholders[0])
-        .containerBackground(Color(.systemBackground), for: .widget)
-        .frame(width: 360, height: 170)
+#Preview("Checked in", as: .systemMedium) {
+    CheckInWidget()
+} timeline: {
+    HabitEntry(date: .now, habit: WidgetHabit.placeholders[0])
 }

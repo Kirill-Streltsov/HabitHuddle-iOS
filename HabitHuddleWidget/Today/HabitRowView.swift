@@ -5,31 +5,29 @@
 //  Created by Kirill on 23.05.26.
 //
 
+import AppIntents
 import SwiftUI
-
-// MARK: - Preview
-
-#Preview("Pending") {
-    HabitRowView(habit: .placeholder)
-        .padding()
-        .frame(width: 360)
-}
-
-#Preview("Checked in") {
-    HabitRowView(habit: WidgetHabit.placeholders[0])
-        .padding()
-        .frame(width: 360)
-}
+import WidgetKit
 
 struct HabitRowView: View {
     let habit: WidgetHabit
 
     var body: some View {
         HStack(spacing: 10) {
-            Image(systemName: habit.isCheckedInToday ? "checkmark.circle.fill" : "circle")
-                .foregroundStyle(habit.isCheckedInToday ? .green : Color(.tertiaryLabel))
-                .font(.body)
-                .frame(width: 18)
+            if habit.isCheckedInToday {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundStyle(.green)
+                    .font(.body)
+                    .frame(width: 18)
+            } else {
+                Button(intent: CheckInHabitIntent(habitID: habit.id)) {
+                    Image(systemName: "circle")
+                        .foregroundStyle(Color(.tertiaryLabel))
+                        .font(.body)
+                        .frame(width: 18)
+                }
+                .buttonStyle(.plain)
+            }
 
             if let icon = habit.icon {
                 Image(systemName: icon)
@@ -54,4 +52,18 @@ struct HabitRowView: View {
             }
         }
     }
+}
+
+// MARK: - Preview
+
+#Preview("Pending", as: .systemMedium) {
+    TodayWidget()
+} timeline: {
+    TodayEntry(date: .now, habits: WidgetHabit.placeholders)
+}
+
+#Preview("Checked in", as: .systemMedium) {
+    TodayWidget()
+} timeline: {
+    TodayEntry(date: .now, habits: WidgetHabit.placeholders.map { var h = $0; h.isCheckedInToday = true; return h })
 }
