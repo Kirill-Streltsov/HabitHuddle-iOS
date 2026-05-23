@@ -51,11 +51,18 @@ enum WidgetDataStore {
     // MARK: Optimistic updates from widget intent
 
     static func markCheckedIn(habitID: UUID) {
+        // 1=Sun, 2=Mon … 7=Sat → convert to Mon-first index (Mon=0, …, Sun=6)
+        let weekday = Calendar.current.component(.weekday, from: Date())
+        let todayIndex = (weekday + 5) % 7
+
         var habits = loadHabits()
         for i in habits.indices where habits[i].id == habitID {
             guard !habits[i].isCheckedInToday else { return }
             habits[i].isCheckedInToday = true
             habits[i].currentStreak += 1
+            if todayIndex < habits[i].last7Days.count {
+                habits[i].last7Days[todayIndex] = true
+            }
         }
         saveHabits(habits)
     }

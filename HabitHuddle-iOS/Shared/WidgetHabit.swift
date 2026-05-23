@@ -18,12 +18,13 @@ struct WidgetHabit: Codable, Identifiable {
     let completionPercentage: Int
     let totalDays: Int
     let checkedInDays: Int
-    // index 0 = 6 days ago, index 6 = today
-    let last7Days: [Bool]
+    // index 0 = Monday, index 6 = Sunday of the current week
+    var last7Days: [Bool]
 }
 
 extension WidgetHabit {
     static var placeholder: WidgetHabit {
+        // last7Days: Mon=0 … Sun=6 of current week
         WidgetHabit(
             id: UUID(),
             name: "Morning Run",
@@ -35,7 +36,7 @@ extension WidgetHabit {
             completionPercentage: 71,
             totalDays: 14,
             checkedInDays: 10,
-            last7Days: [true, true, false, true, true, true, false]
+            last7Days: [true, true, false, true, true, false, false]
         )
     }
 
@@ -44,11 +45,11 @@ extension WidgetHabit {
             WidgetHabit(id: UUID(), name: "Morning Run", icon: "figure.run", category: "Fitness",
                         currentStreak: 5, isCheckedInToday: true, isSyncable: true,
                         completionPercentage: 71, totalDays: 14, checkedInDays: 10,
-                        last7Days: [true, true, false, true, true, true, true]),
+                        last7Days: [true, true, false, true, true, true, false]),
             WidgetHabit(id: UUID(), name: "Meditate", icon: "brain.head.profile", category: "Mindfulness",
                         currentStreak: 3, isCheckedInToday: false, isSyncable: true,
                         completionPercentage: 57, totalDays: 7, checkedInDays: 4,
-                        last7Days: [false, true, true, false, true, true, false]),
+                        last7Days: [false, true, true, false, true, false, false]),
             WidgetHabit(id: UUID(), name: "Drink Water", icon: "drop.fill", category: "Health",
                         currentStreak: 0, isCheckedInToday: false, isSyncable: false,
                         completionPercentage: 30, totalDays: 30, checkedInDays: 9,

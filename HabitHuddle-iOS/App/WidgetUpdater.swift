@@ -13,10 +13,15 @@ enum WidgetUpdater {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
 
+        // Monday of the current week (index 0 = Mon, index 6 = Sun)
+        var mondayCalendar = calendar
+        mondayCalendar.firstWeekday = 2
+        let weekStart = mondayCalendar.dateInterval(of: .weekOfYear, for: today)?.start ?? today
+
         let widgetHabits: [WidgetHabit] = habits.map { habit in
-            // oldest (index 0) to newest (index 6 = today)
-            let last7 = (0 ..< 7).reversed().map { offset -> Bool in
-                guard let day = calendar.date(byAdding: .day, value: -offset, to: today) else { return false }
+            let last7 = (0 ..< 7).map { offset -> Bool in
+                guard let day = calendar.date(byAdding: .day, value: offset, to: weekStart),
+                      day <= today else { return false }
                 return habit.checkIns.contains { calendar.isDate($0.date, inSameDayAs: day) }
             }
             return WidgetHabit(

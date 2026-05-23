@@ -41,7 +41,7 @@ struct CheckInMediumView: View {
                             .overlay(
                                 Circle().stroke(Color.green.opacity(0.35), lineWidth: habit.last7Days[i] ? 0 : 1)
                             )
-                        Text(dayLabel(daysAgo: 6 - i))
+                        Text(weekdayLabel(index: i))
                             .font(.system(size: 8))
                             .foregroundStyle(.secondary)
                     }
@@ -77,11 +77,9 @@ struct CheckInMediumView: View {
         }
     }
 
-    private func dayLabel(daysAgo: Int) -> String {
-        let day = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date()) ?? Date()
-        let f = DateFormatter()
-        f.dateFormat = "EEE"
-        return String(f.string(from: day).prefix(1))
+    private func weekdayLabel(index: Int) -> String {
+        // index 0=Mon, 1=Tue, 2=Wed, 3=Thu, 4=Fri, 5=Sat, 6=Sun
+        ["M", "T", "W", "T", "F", "S", "S"][index]
     }
 }
 
