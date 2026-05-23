@@ -96,6 +96,7 @@ struct LoginView: View {
                     HapticManager.trigger(.success)
                     appState.isAuthenticated = true
                     userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
+                    dismiss()
                     if !users.contains(where: { $0.id == newValue.id }) {
                         context.insert(newValue.toSwiftData())
                         context.saveOrLog()
