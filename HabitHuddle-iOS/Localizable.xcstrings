@@ -1489,6 +1489,42 @@
         }
       }
     },
+    "AI Insights" : {
+      "comment" : "Section header for the AI section in habit detail",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KI-Einblicke"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perspectivas IA"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insights IA"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approfondimenti IA"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ИИ-инсайты"
+          }
+        }
+      }
+    },
     "Ask AI about benefits" : {
       "comment" : "Button to ask AI about habit benefits",
       "extractionState" : "manual",
@@ -2438,6 +2474,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Проверьте почту"
+          }
+        }
+      }
+    },
+    "Check-in History" : {
+      "comment" : "Section header for the check-in history list in habit detail",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check-in-Verlauf"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historial de registros"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historique des validations"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cronologia check-in"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "История отметок"
           }
         }
       }

@@ -28,16 +28,15 @@ struct HabitDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var userManager: LocalUserManager
 
-    // MARK: Date work
     private var dateFormatter: DateFormatter = {
         let df = DateFormatter()
-        df.dateFormat = "EEEE, d. MMMM yyyy" // e.g. "Monday, 29. June 2025"
+        df.dateFormat = "EEEE, d. MMMM yyyy"
         return df
     }()
 
     private var timeFormatter: DateFormatter = {
         let tf = DateFormatter()
-        tf.dateFormat = "H:mm" // e.g. "3:43"
+        tf.dateFormat = "H:mm"
         return tf
     }()
 
@@ -50,52 +49,31 @@ struct HabitDetailView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(spacing: 16) {
-                    VStack(spacing: 12) {
+                    CheckInCardView(habit: habit)
 
-                        habitDescription
-
-                        SubmitButton(
-                            title: viewModel.isLoadingAIResponse ? .thinking : .askAiAboutBenefits,
-                            color: Color.orange,
-                            iconName: "sparkles")
-                        {
-                            HapticManager.trigger(.impact(.medium))
-                            Task {
-                                askOpenAITapped = true
-                                typewriterTextID = UUID()
-                                await viewModel.askAI(about: habit)
-                            }
-                        }
-                        .padding(.horizontal)
-                        
-                        CheckInCardView(habit: habit)
-                                                
-                        HabitStatisticsView(habit: habit)
-                            .frame(maxWidth: .infinity)
-
-                        checkIns
-                            .padding(.top, -16)
-
-                        if !viewModel.openAIAnswer.isEmpty {
-                            CardView {
-                                TypewriterText(text: viewModel.openAIAnswer, typingInterval: askOpenAITapped ? 0.02 : 0)
-                                    .id(typewriterTextID)
-                            }
-                            .id(aiTextID)
-                        }
-                        
-                        SubmitButton(title: .deleteHabit, color: .red, iconName: "trash") {
-                            HapticManager.trigger(.error)
-                            deleteButtonPressed = true
-                            Task {
-                                await deleteHabit()
-                            }
-                            dismiss()
-                        }
-                        .padding(.horizontal)
+                    if !habit.habitDescription.isEmpty {
+                        descriptionSection
                     }
-                    .padding(.bottom)
+
+                    HabitStatisticsView(habit: habit)
+                        .frame(maxWidth: .infinity)
+
+                    if !habit.checkIns.isEmpty {
+                        checkInsSection
+                    }
+
+                    aiSection
+                        .id(aiTextID)
+
+                    SubmitButton(title: .deleteHabit, color: .red, iconName: "trash") {
+                        HapticManager.trigger(.error)
+                        deleteButtonPressed = true
+                        Task { await deleteHabit() }
+                        dismiss()
+                    }
+                    .padding(.horizontal)
                 }
+                .padding(.vertical, 16)
             }
             .background(Color(.systemGroupedBackground))
             .sheet(isPresented: $showEditSheet) {
@@ -116,11 +94,7 @@ struct HabitDetailView: View {
                 }
             }
             .toolbar {
-                Button {
-                    showEditSheet = true
-                } label: {
-                    Text(.edit)
-                }
+                Button { showEditSheet = true } label: { Text(.edit) }
             }
             .onAppear {
                 populateFields(with: habit)
@@ -154,69 +128,147 @@ struct HabitDetailView: View {
         }
     }
 
-    private var checkIns: some View {
-        Group {
-            if !habit.checkIns.isEmpty {
-                CardView {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Button {
-                            withAnimation {
-                                showCheckIns.toggle()
-                            }
-                        } label: {
-                            HStack {
-                                showCheckIns ? Text(.hideCheckInHistory) : Text(.viewCheckInHistory)
-                                    .font(.headline)
-                                    .fontWeight(.semibold)
-                                Spacer()
-                                Image(systemName: showCheckIns ? "chevron.up" : "chevron.down")
-                            }
-                            .foregroundStyle(Color(.label))
-                            .contentShape(Rectangle())
-                        }
+    // MARK: - Sections
 
-                        if showCheckIns {
-                            LazyVStack(alignment: .leading, spacing: 8) {
-                                ForEach(habit.checkIns.sorted(by: { $0.date < $1.date }).map({ $0.date }), id: \.self) { date in
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        HStack(alignment: .bottom) {
-                                            Text(dateFormatter.string(from: date))
-                                                .font(.callout)
-                                                .fontWeight(.regular)
-                                                .foregroundColor(.secondary)
-                                                .padding(.leading)
-                                            
-                                            Spacer()
-                                            
-                                            Text(timeFormatter.string(from: date))
-                                                .font(.body)
-                                                .fontWeight(.semibold)
-                                                .foregroundColor(.primary)
-                                                .padding(.trailing)
-                                        }
-                                        .padding(.vertical)
-                                        Divider()
-                                    }
-                                }
-                            }
-                            .transition(.opacity.combined(with: .move(edge: .top)))
+    private var descriptionSection: some View {
+        detailCard {
+            Text(habit.habitDescription)
+                .font(.body)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 12)
+        }
+    }
+
+    private var checkInsSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            sectionHeader(.checkInHistory)
+            detailCard {
+                VStack(spacing: 0) {
+                    Button {
+                        withAnimation { showCheckIns.toggle() }
+                    } label: {
+                        HStack {
+                            settingsIcon("checkmark.circle.fill", color: .mint)
+                            Text(showCheckIns ? .hideCheckInHistory : .viewCheckInHistory)
+                                .foregroundStyle(.primary)
+                            Spacer()
+                            Image(systemName: showCheckIns ? "chevron.up" : "chevron.down")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                         }
+                        .frame(minHeight: 44)
+                        .padding(.horizontal, 12)
+                        .contentShape(Rectangle())
                     }
-                    .background(Color(.systemBackground))
+                    .buttonStyle(.plain)
+
+                    if showCheckIns {
+                        cardDivider
+                        LazyVStack(alignment: .leading, spacing: 0) {
+                            ForEach(habit.checkIns.sorted(by: { $0.date < $1.date }).map({ $0.date }), id: \.self) { date in
+                                HStack(alignment: .center) {
+                                    Text(dateFormatter.string(from: date))
+                                        .font(.callout)
+                                        .foregroundStyle(.secondary)
+                                    Spacer()
+                                    Text(timeFormatter.string(from: date))
+                                        .font(.callout)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(.primary)
+                                }
+                                .padding(.horizontal, 12)
+                                .frame(minHeight: 44)
+                                Divider().padding(.leading, 12)
+                            }
+                        }
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
                 }
-                .frame(maxWidth: .infinity)
             }
         }
     }
 
-    private var habitDescription: some View {
-        Text(habit.habitDescription)
-            .font(.title2)
-            .fontWeight(.bold)
-            .foregroundStyle(.secondary)
-            .multilineTextAlignment(.leading)
-            .padding(.horizontal)
+    private var aiSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            sectionHeader(.aiInsights)
+            detailCard {
+                VStack(spacing: 0) {
+                    Button {
+                        HapticManager.trigger(.impact(.medium))
+                        Task {
+                            askOpenAITapped = true
+                            typewriterTextID = UUID()
+                            await viewModel.askAI(about: habit)
+                        }
+                    } label: {
+                        HStack {
+                            settingsIcon("sparkles", color: .orange)
+                            Text(viewModel.isLoadingAIResponse ? .thinking : .askAiAboutBenefits)
+                                .foregroundStyle(.primary)
+                            Spacer()
+                            if viewModel.isLoadingAIResponse {
+                                ProgressView()
+                                    .scaleEffect(0.8)
+                            }
+                        }
+                        .frame(minHeight: 44)
+                        .padding(.horizontal, 12)
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+
+                    if !viewModel.openAIAnswer.isEmpty {
+                        cardDivider
+                        TypewriterText(
+                            text: viewModel.openAIAnswer,
+                            typingInterval: askOpenAITapped ? 0.02 : 0
+                        )
+                        .id(typewriterTextID)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 12)
+                    }
+                }
+            }
+        }
     }
+
+    // MARK: - Helpers
+
+    @ViewBuilder
+    private func detailCard<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        VStack(spacing: 0) {
+            content()
+        }
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(.rect(cornerRadius: 12))
+        .padding(.horizontal)
+    }
+
+    private func sectionHeader(_ key: LocalizedStringResource) -> some View {
+        Text(key)
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .textCase(.uppercase)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, 20)
+    }
+
+    private func settingsIcon(_ systemName: String, color: Color) -> some View {
+        Image(systemName: systemName)
+            .font(.system(size: 14, weight: .medium))
+            .frame(width: 28, height: 28)
+            .foregroundStyle(.white)
+            .background(color.gradient)
+            .clipShape(.rect(cornerRadius: 7))
+    }
+
+    private var cardDivider: some View {
+        Divider().padding(.leading, 52)
+    }
+
+    // MARK: - Data
 
     private func populateFields(with habit: Habit) {
         viewModel.name = habit.name

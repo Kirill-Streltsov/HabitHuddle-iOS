@@ -134,8 +134,13 @@ struct HabitEditView: View {
     private var categorySection: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 4) {
-                sectionHeader(.category)
+                Text(.category)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .textCase(.uppercase)
+                    .padding(.leading, 20)
                 InfoView(text: .categoriesHelpYouOrganizeYourHabitsIntoMeaningfulGroups)
+                Spacer()
             }
             formCard {
                 if !categories.isEmpty {
