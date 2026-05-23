@@ -18,7 +18,7 @@ extension ChallengesListView {
         @Published var acceptedChallenges: [ChallengeDTO] = []
         @Published var declinedChallenges: [ChallengeDTO] = []
 
-        let userID: UUID
+        var userID: UUID
         private let network: any NetworkManagerProtocol
 
         init(userID: UUID, network: any NetworkManagerProtocol = NetworkManager.shared) {
@@ -27,6 +27,7 @@ extension ChallengesListView {
         }
 
         func getChallenges(for userID: UUID) async {
+            self.userID = userID
             do {
                 let fetchedChallenges = try await network.request(
                     endpoint: .getChallenges(for: userID),
