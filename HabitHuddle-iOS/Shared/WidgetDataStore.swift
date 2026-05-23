@@ -68,6 +68,10 @@ enum WidgetDataStore {
     }
 
     static func updateCheckInState(habitID: UUID, isCheckedIn: Bool) {
+        // 1=Sun, 2=Mon … 7=Sat → convert to Mon-first index (Mon=0, …, Sun=6)
+        let weekday = Calendar.current.component(.weekday, from: Date())
+        let todayIndex = (weekday + 5) % 7
+
         var habits = loadHabits()
         for i in habits.indices where habits[i].id == habitID {
             if isCheckedIn && !habits[i].isCheckedInToday {
@@ -76,6 +80,9 @@ enum WidgetDataStore {
             } else if !isCheckedIn && habits[i].isCheckedInToday {
                 habits[i].isCheckedInToday = false
                 habits[i].currentStreak = max(0, habits[i].currentStreak - 1)
+            }
+            if todayIndex < habits[i].last7Days.count {
+                habits[i].last7Days[todayIndex] = isCheckedIn
             }
         }
         saveHabits(habits)

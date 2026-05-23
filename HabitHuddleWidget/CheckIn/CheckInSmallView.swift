@@ -14,7 +14,7 @@ struct CheckInSmallView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .center, spacing: 4) {
                 Text(habit.name)
                     .font(.subheadline)
                     .fontWeight(.semibold)
