@@ -58,6 +58,7 @@ struct RootView: View {
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {
                 Task {
+                    await SyncManager.shared.flushPendingCheckIns()
                     await SyncManager.shared.performFullSync(localHabits: habits, in: context)
                 }
                 WidgetUpdater.update(with: habits)

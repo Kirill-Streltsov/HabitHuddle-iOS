@@ -159,6 +159,30 @@ final class SyncManager {
         }
     }
 
+    func flushPendingCheckIns() async {
+        let pendingIDs = WidgetDataStore.loadPendingCheckInIDs()
+        guard !pendingIDs.isEmpty else { return }
+
+        let base = WidgetDataStore.loadBaseURL()
+        guard let token = WidgetDataStore.loadToken() else { return }
+
+        await withTaskGroup(of: Void.self) { group in
+            for idString in pendingIDs {
+                guard let id = UUID(uuidString: idString) else { continue }
+                group.addTask {
+                    guard let url = URL(string: "\(base)habits/\(id.uuidString)/toggle-checkin") else { return }
+                    var request = URLRequest(url: url)
+                    request.httpMethod = "POST"
+                    request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+                    if let (_, response) = try? await URLSession.shared.data(for: request),
+                       (response as? HTTPURLResponse)?.statusCode == 200 {
+                        WidgetDataStore.removePendingCheckIn(habitID: id)
+                    }
+                }
+            }
+        }
+    }
+
     func performFullSync(localHabits: [Habit], in modelContext: ModelContext) async {
         let serverResult = await getHabitsFromServer()
         guard case let .success(serverHabits) = serverResult else { return }

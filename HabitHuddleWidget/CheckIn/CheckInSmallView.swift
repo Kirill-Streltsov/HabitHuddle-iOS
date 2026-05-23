@@ -23,7 +23,7 @@ struct CheckInSmallView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                 }
                 Text(habit.name)
-                    .font(.subheadline)
+                    .font(.headline)
                     .fontWeight(.semibold)
                     .lineLimit(2)
                     .minimumScaleFactor(0.8)
@@ -48,17 +48,20 @@ struct CheckInSmallView: View {
     private var checkmarkView: some View {
         if habit.isCheckedInToday {
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 52))
+                .font(.system(size: 64))
                 .foregroundStyle(.green)
                 .frame(maxWidth: .infinity)
+                .symbolEffect(.bounce, options: .nonRepeating)
+                .transition(.scale(scale: 0.4).combined(with: .opacity))
         } else {
             Button(intent: CheckInHabitIntent(habitID: habit.id)) {
                 Image(systemName: "checkmark.circle")
-                    .font(.system(size: 52))
+                    .font(.system(size: 64))
                     .foregroundStyle(Color(.tertiaryLabel))
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.plain)
+            .transition(.scale(scale: 0.4).combined(with: .opacity))
         }
     }
 }

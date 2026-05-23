@@ -73,4 +73,23 @@ enum WidgetDataStore {
         }
         saveHabits(habits)
     }
+
+    // MARK: Pending check-ins (widget → server sync)
+
+    static func addPendingCheckIn(habitID: UUID) {
+        var ids = loadPendingCheckInIDs()
+        ids.insert(habitID.uuidString)
+        defaults?.set(Array(ids), forKey: "pendingCheckInIDs")
+    }
+
+    static func removePendingCheckIn(habitID: UUID) {
+        var ids = loadPendingCheckInIDs()
+        ids.remove(habitID.uuidString)
+        defaults?.set(Array(ids), forKey: "pendingCheckInIDs")
+    }
+
+    static func loadPendingCheckInIDs() -> Set<String> {
+        let array = defaults?.stringArray(forKey: "pendingCheckInIDs") ?? []
+        return Set(array)
+    }
 }

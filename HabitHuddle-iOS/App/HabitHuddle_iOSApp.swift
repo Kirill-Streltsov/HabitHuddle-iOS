@@ -46,19 +46,10 @@ struct HabitHuddle_iOSApp: App {
     }
     
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            User.self,
-            Habit.self,
-            Challenge.self,
-            HabitCheckIn.self
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+        guard let container = SharedModelContainer.make() else {
+            fatalError("Could not create ModelContainer")
         }
+        return container
     }()
 }
 

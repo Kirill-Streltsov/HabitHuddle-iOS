@@ -81,6 +81,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Localizable.xcstrings,
+				Shared/SharedModelContainer.swift,
 				Shared/WidgetDataStore.swift,
 				Shared/WidgetHabit.swift,
 			);
@@ -693,7 +694,7 @@
 				INFOPLIST_FILE = HabitHuddleWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = HabitHuddleWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -726,7 +727,7 @@
 				INFOPLIST_FILE = HabitHuddleWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = HabitHuddleWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -60,17 +60,20 @@ struct CheckInMediumView: View {
     private var checkmarkView: some View {
         if habit.isCheckedInToday {
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 44))
+                .font(.system(size: 56))
                 .foregroundStyle(.green)
                 .frame(maxWidth: .infinity)
+                .symbolEffect(.bounce, options: .nonRepeating)
+                .transition(.scale(scale: 0.4).combined(with: .opacity))
         } else {
             Button(intent: CheckInHabitIntent(habitID: habit.id)) {
                 Image(systemName: "checkmark.circle")
-                    .font(.system(size: 44))
+                    .font(.system(size: 56))
                     .foregroundStyle(Color(.tertiaryLabel))
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.plain)
+            .transition(.scale(scale: 0.4).combined(with: .opacity))
         }
     }
 
