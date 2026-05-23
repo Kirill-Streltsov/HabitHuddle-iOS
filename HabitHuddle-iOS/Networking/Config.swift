@@ -10,7 +10,7 @@ enum Config {
         #if DEBUG
         URL(string: "http://localhost:8080/api/")!
         #else
-        URL(string: "https://habithuddle-backend.fly.dev/api/")!
+        URL(string: "https://5dbf-45-86-202-141.ngrok-free.app/api/")!
         #endif
     }()
 }

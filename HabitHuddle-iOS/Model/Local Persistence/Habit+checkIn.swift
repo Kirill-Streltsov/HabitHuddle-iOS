@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import WidgetKit
 @preconcurrency import UserNotifications
 
 // MARK: Checking in for today
@@ -33,6 +34,8 @@ extension Habit {
         updatedAt = .now
         context.saveOrLog()
         toggleCheckInRemotely()
+        WidgetDataStore.updateCheckInState(habitID: id, isCheckedIn: isCheckedInToday)
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     func toggleCheckInRemotely() {

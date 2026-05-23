@@ -60,7 +60,11 @@ struct RootView: View {
                 Task {
                     await SyncManager.shared.performFullSync(localHabits: habits, in: context)
                 }
+                WidgetUpdater.update(with: habits)
             }
+        }
+        .onChange(of: habits) { _, newHabits in
+            WidgetUpdater.update(with: newHabits)
         }
         .alert(String(localized: .youveBeenLoggedOut), isPresented: $showLoggedOut) {} message: {
             Text(.thisCanHappenIfYourSessionExpiresLogBackInToContinueSyncingYourHabitsAndUsingAllSocialFeatures)
