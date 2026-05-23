@@ -225,6 +225,8 @@ struct RegistrationView: View {
                     } else {
                         SecureField(String(localized: .enterYourPassword), text: $password)
                             .textContentType(.newPassword)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
                     }
                 }
                 .focused($focusedField, equals: .password)
@@ -256,6 +258,8 @@ struct RegistrationView: View {
                     } else {
                         SecureField(String(localized: .confirmYourPassword), text: $confirmPassword)
                             .textContentType(.newPassword)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
                     }
                 }
                 .focused($focusedField, equals: .confirmPassword)
@@ -290,7 +294,8 @@ struct RegistrationView: View {
             Text(passwordStrengthLabel)
                 .font(.caption2.weight(.medium))
                 .foregroundStyle(passwordStrengthColor)
-                .frame(width: 36, alignment: .trailing)
+                .lineLimit(1)
+                .fixedSize(horizontal: true, vertical: false)
                 .animation(.easeInOut(duration: 0.2), value: passwordStrength)
         }
         .padding(.leading, 52)

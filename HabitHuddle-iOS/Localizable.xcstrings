@@ -1309,6 +1309,42 @@
         }
       }
     },
+    "AI Insights" : {
+      "comment" : "Section header for the AI section in habit detail",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KI-Einblicke"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perspectivas IA"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insights IA"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approfondimenti IA"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ИИ-инсайты"
+          }
+        }
+      }
+    },
     "AI is not available at this moment. Try again later..." : {
       "comment" : "Error shown when AI request fails",
       "extractionState" : "manual",
@@ -1485,42 +1521,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Анонимная аналитика использования для улучшения приложения"
-          }
-        }
-      }
-    },
-    "AI Insights" : {
-      "comment" : "Section header for the AI section in habit detail",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "KI-Einblicke"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Perspectivas IA"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Insights IA"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Approfondimenti IA"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ИИ-инсайты"
           }
         }
       }
@@ -2653,6 +2653,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выберите, какую привычку показать."
+          }
+        }
+      }
+    },
+    "Choose which habits to display." : {
+      "comment" : "AppIntent description for the Select Habits intent",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle aus, welche Gewohnheiten angezeigt werden sollen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige qué hábitos mostrar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisissez quelles habitudes afficher."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli quali abitudini visualizzare."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите, какие привычки показать."
           }
         }
       }
@@ -5014,114 +5050,6 @@
         }
       }
     },
-    "Habit ID" : {
-      "comment" : "AppIntent parameter title for the habit identifier",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gewohnheits-ID"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ID de hábito"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ID d'habitude"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ID abitudine"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ID привычки"
-          }
-        }
-      }
-    },
-    "Habit name" : {
-      "comment" : "Placeholder for the habit name text field",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name der Gewohnheit"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nombre del hábito"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nom de l'habitude"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nome dell'abitudine"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Название привычки"
-          }
-        }
-      }
-    },
-    "Habit sync is enabled by default when signed in. You can disable it per habit or by signing out." : {
-      "comment" : "Bullet in Information We Collect section of Privacy Policy",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die Gewohnheitssynchronisierung ist standardmäßig aktiviert, wenn du angemeldet bist. Du kannst sie pro Gewohnheit oder durch Abmelden deaktivieren."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La sincronización de hábitos está activada por defecto al iniciar sesión. Puedes desactivarla por hábito o cerrando sesión."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La synchronisation des habitudes est activée par défaut lorsque vous êtes connecté. Vous pouvez la désactiver par habitude ou en vous déconnectant."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La sincronizzazione delle abitudini è attiva per impostazione predefinita quando sei connesso. Puoi disattivarla per singola abitudine o disconnettendoti."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Синхронизация привычек включена по умолчанию при входе в систему. Вы можете отключить её для каждой привычки или выйдя из аккаунта."
-          }
-        }
-      }
-    },
     "Habit Huddle" : {
 
     },
@@ -5229,6 +5157,114 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Habit Huddle — ваш личный помощник в формировании привычек."
+          }
+        }
+      }
+    },
+    "Habit ID" : {
+      "comment" : "AppIntent parameter title for the habit identifier",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewohnheits-ID"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID de hábito"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID d'habitude"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID abitudine"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID привычки"
+          }
+        }
+      }
+    },
+    "Habit name" : {
+      "comment" : "Placeholder for the habit name text field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name der Gewohnheit"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre del hábito"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nom de l'habitude"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome dell'abitudine"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название привычки"
+          }
+        }
+      }
+    },
+    "Habit sync is enabled by default when signed in. You can disable it per habit or by signing out." : {
+      "comment" : "Bullet in Information We Collect section of Privacy Policy",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Gewohnheitssynchronisierung ist standardmäßig aktiviert, wenn du angemeldet bist. Du kannst sie pro Gewohnheit oder durch Abmelden deaktivieren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sincronización de hábitos está activada por defecto al iniciar sesión. Puedes desactivarla por hábito o cerrando sesión."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La synchronisation des habitudes est activée par défaut lorsque vous êtes connecté. Vous pouvez la désactiver par habitude ou en vous déconnectant."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sincronizzazione delle abitudini è attiva per impostazione predefinita quando sei connesso. Puoi disattivarla per singola abitudine o disconnettendoti."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Синхронизация привычек включена по умолчанию при входе в систему. Вы можете отключить её для каждой привычки или выйдя из аккаунта."
           }
         }
       }
@@ -8331,6 +8367,42 @@
         }
       }
     },
+    "Select Habits" : {
+      "comment" : "AppIntent title for selecting habits in the Today widget",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewohnheiten auswählen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccionar hábitos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisir des habitudes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleziona abitudini"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать привычки"
+          }
+        }
+      }
+    },
     "Self-Care & Lifestyle" : {
       "comment" : "Icon picker category name",
       "extractionState" : "manual",
@@ -10358,10 +10430,6 @@
         }
       }
     },
-    "Weak" : {
-      "comment" : "Password strength label - low strength",
-      "extractionState" : "manual"
-    },
     "We do not sell your personal data to third parties." : {
       "comment" : "Body text in Data Sharing section of Privacy Policy",
       "extractionState" : "manual",
@@ -10901,6 +10969,10 @@
           }
         }
       }
+    },
+    "Weak" : {
+      "comment" : "Password strength label - low strength",
+      "extractionState" : "manual"
     },
     "Welcome Back" : {
       "extractionState" : "manual"

@@ -26,6 +26,7 @@ struct CheckInHabitIntent: AppIntent {
         insertCheckIn(habitID: id)
         WidgetDataStore.markCheckedIn(habitID: id)
         WidgetDataStore.addPendingCheckIn(habitID: id)
+        WidgetCenter.shared.reloadAllTimelines()
 
         if let token = WidgetDataStore.loadToken() {
             let base = WidgetDataStore.loadBaseURL()
@@ -40,7 +41,6 @@ struct CheckInHabitIntent: AppIntent {
             }
         }
 
-        WidgetCenter.shared.reloadAllTimelines()
         return .result()
     }
 

@@ -7,19 +7,28 @@
 
 import WidgetKit
 
-struct TodayWidgetProvider: TimelineProvider {
+struct TodayWidgetProvider: AppIntentTimelineProvider {
+    typealias Entry = TodayEntry
+    typealias Intent = SelectHabitsIntent
+
     func placeholder(in context: Context) -> TodayEntry {
         TodayEntry(date: .now, habits: WidgetHabit.placeholders)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (TodayEntry) -> Void) {
-        completion(TodayEntry(date: .now, habits: WidgetDataStore.loadHabits()))
+    func snapshot(for configuration: SelectHabitsIntent, in context: Context) async -> TodayEntry {
+        TodayEntry(date: .now, habits: resolvedHabits(from: configuration))
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<TodayEntry>) -> Void) {
-        let habits = WidgetDataStore.loadHabits()
-        let entry = TodayEntry(date: .now, habits: habits)
+    func timeline(for configuration: SelectHabitsIntent, in context: Context) async -> Timeline<TodayEntry> {
+        let entry = TodayEntry(date: .now, habits: resolvedHabits(from: configuration))
         let nextMidnight = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)
-        completion(Timeline(entries: [entry], policy: .after(nextMidnight)))
+        return Timeline(entries: [entry], policy: .after(nextMidnight))
+    }
+
+    private func resolvedHabits(from configuration: SelectHabitsIntent) -> [WidgetHabit] {
+        let all = WidgetDataStore.loadHabits()
+        guard let selected = configuration.habits, !selected.isEmpty else { return all }
+        let selectedIDs = Set(selected.map { $0.id })
+        return all.filter { selectedIDs.contains($0.id.uuidString) }
     }
 }

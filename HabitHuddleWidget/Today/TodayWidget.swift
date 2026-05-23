@@ -40,7 +40,7 @@ struct TodayWidget: Widget {
     let kind = "TodayWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: TodayWidgetProvider()) { entry in
+        AppIntentConfiguration(kind: kind, intent: SelectHabitsIntent.self, provider: TodayWidgetProvider()) { entry in
             TodayWidgetView(entry: entry)
                 .containerBackground(Color(.systemBackground), for: .widget)
         }
