@@ -19,21 +19,23 @@ extension ChallengeCheckInsListView {
             self.network = network
         }
 
-        func getCheckInDates(for initiatorHabitID: UUID, and receiverHabitID: UUID) async {
+        func getCheckInDates(forInitiator initiatorHabitID: UUID?, forReceiver receiverHabitID: UUID?) async {
+            async let initiatorFetch = fetchDates(for: initiatorHabitID)
+            async let receiverFetch = fetchDates(for: receiverHabitID)
+            (initiatorDates, receiverDates) = await (initiatorFetch, receiverFetch)
+        }
+
+        private func fetchDates(for habitID: UUID?) async -> [Date] {
+            guard let habitID else { return [] }
             do {
-                async let initiatorCheckInDates = try network.request(
-                    endpoint: .getHabitCheckIns(for: initiatorHabitID),
+                let checkIns = try await network.request(
+                    endpoint: .getHabitCheckIns(for: habitID),
                     method: .get,
                     responseType: [HabitCheckInDTO].self)
-
-                async let receiverCheckInDates = try network.request(
-                    endpoint: .getHabitCheckIns(for: receiverHabitID),
-                    method: .get,
-                    responseType: [HabitCheckInDTO].self)
-
-                (initiatorDates, receiverDates) = try await (initiatorCheckInDates.map { $0.date }, receiverCheckInDates.map { $0.date })
+                return checkIns.map(\.date)
             } catch {
-                print("❌ Error: Couldn't load the habit check ins for the challenge")
+                print("❌ Error: Couldn't load check-ins for habit \(habitID): \(error)")
+                return []
             }
         }
     }

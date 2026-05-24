@@ -23,7 +23,7 @@ struct ChallengesListView: View {
     
     @State private var showToast = false
     @State private var message = ""
-    @State private var showChallengeDetail = false
+    @State private var selectedChallenge: ChallengeDTO? = nil
     @State private var ongoingChallengeID = UUID()
         
     @Environment(\.modelContext) private var context
@@ -123,12 +123,12 @@ struct ChallengesListView: View {
                     .id(ongoingChallengeID)
                     .onTapGesture {
                         HapticManager.trigger(.selection)
-                        showChallengeDetail = true
-                    }
-                    .sheet(isPresented: $showChallengeDetail) {
-                        ChallengeCheckInsListView(challenge: challenge)
+                        selectedChallenge = challenge
                     }
             }
+        }
+        .sheet(item: $selectedChallenge) { challenge in
+            ChallengeCheckInsListView(challenge: challenge)
         }
     }
     
@@ -145,14 +145,12 @@ struct ChallengesListView: View {
     
     private func updateLocalStorage(from challenge: ChallengeDTO) {
         guard let habit = habits.filter({ $0.id == challenge.initiatorHabitID || $0.id == challenge.receiverHabitID }).first else {
-            if challenge.receiver.user.id == userID {
-                getHabit(from: challenge)
-            }
+            getHabit(from: challenge)
             return
         }
         saveChallengeLocally(from: challenge, for: habit)
     }
-        
+
     private func challengeCard(with challenge: ChallengeDTO) -> some View {
         ChallengeCardView(challenge: challenge) {
             let acceptedResult = await viewModel.acceptChallenge(with: challenge.id)
@@ -188,21 +186,25 @@ struct ChallengesListView: View {
     }
     
     private func getHabit(from challenge: ChallengeDTO) {
+        // If current user is the initiator, use receiver's habit as template (and vice versa)
+        let templateHabitID: UUID?
+        if challenge.initiator.user.id == userID {
+            templateHabitID = challenge.receiverHabitID
+        } else {
+            templateHabitID = challenge.initiatorHabitID
+        }
+        guard let habitID = templateHabitID else {
+            print("❌ Error: No template habit ID for challenge \(challenge.id)")
+            return
+        }
         Task {
-            var existingHabitID = UUID()
-            if let habitID = challenge.initiatorHabitID {
-                existingHabitID = habitID
-            } else if let habitID = challenge.receiverHabitID {
-                existingHabitID = habitID
-            }
-            let receivedHabitResult = await viewModel.getHabitFromChallenge(with: existingHabitID)
-            
-            Helpers.handleResult(receivedHabitResult) { habitDTO in
+            let result = await viewModel.getHabitFromChallenge(with: habitID)
+            Helpers.handleResult(result) { habitDTO in
                 var habitToSend = habitDTO
                 habitToSend.id = UUID()
                 createHabitAfterAcceptingChallenge(habitDTO: habitToSend, challengeDTO: challenge)
             } onFailure: { error in
-                print("❌ Error: Something went wrong fetching habit: \(error)")
+                print("❌ Error: Fetching template habit for challenge \(challenge.id): \(error)")
             }
         }
     }

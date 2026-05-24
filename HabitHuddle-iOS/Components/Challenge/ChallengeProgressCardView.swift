@@ -24,14 +24,20 @@ struct ChallengeProgressCardView: View {
                 }
                 
                 Spacer()
-                
-                Label("Challenge", systemImage: "flag.pattern.checkered.2.crossed")
-                    .font(.footnote)
-                    .fontWeight(.semibold)
-                    .padding(8)
-                    .background(Color.accentColor.opacity(0.1))
-                    .foregroundStyle(Color.accentColor)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                HStack(spacing: 6) {
+                    Label("Challenge", systemImage: "flag.pattern.checkered.2.crossed")
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                        .padding(8)
+                        .background(Color.accentColor.opacity(0.1))
+                        .foregroundStyle(Color.accentColor)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                    Image(systemName: "chevron.right")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                }
             }
             
             // Dates

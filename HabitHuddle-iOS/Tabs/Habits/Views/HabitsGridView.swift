@@ -96,7 +96,7 @@ struct HabitsGridView: View {
                 NavigationLink(value: habit) {
                     HabitCard(habit: habit)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(CardPressButtonStyle())
             }
         }
         .padding(.horizontal)
@@ -115,7 +115,7 @@ struct HabitsGridView: View {
                             NavigationLink(value: habit) {
                                 HabitCard(habit: habit)
                             }
-                            .buttonStyle(.plain)
+                            .buttonStyle(CardPressButtonStyle())
                         }
                     }
                     .padding(.horizontal)
@@ -137,13 +137,21 @@ struct HabitsGridView: View {
                             NavigationLink(value: habit) {
                                 HabitCard(habit: habit)
                             }
-                            .buttonStyle(.plain)
+                            .buttonStyle(CardPressButtonStyle())
                         }
                     }
                     .padding(.horizontal)
                 }
             }
         }
+    }
+}
+
+private struct CardPressButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .opacity(configuration.isPressed ? 0.8 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
     }
 }
 

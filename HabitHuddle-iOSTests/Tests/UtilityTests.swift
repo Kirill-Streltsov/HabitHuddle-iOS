@@ -170,41 +170,106 @@ struct HabitDurationTests {
 @Suite("ChallengeDetailViewModel")
 struct ChallengeDetailViewModelTests {
 
-    private func makeCheckInDTO(daysAgo: Int) -> HabitCheckInDTO {
+    private func makeCheckInDTO(daysAgo: Int = 0) -> HabitCheckInDTO {
         let date = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date())!
         return HabitCheckInDTO(date: date, habit: LightweightHabit(id: UUID()))
     }
 
-    @Test("getCheckInDates populates initiator and receiver dates")
+    @Test("both IDs nil — both date arrays stay empty")
     @MainActor
-    func getCheckInDatesSuccess() async {
+    func bothIDsNil() async {
         let mock = MockNetworkManager()
-        // Same-size arrays: order the two async lets acquire the actor is non-deterministic,
-        // so we can only assert total count safely.
-        let checkIns1 = [makeCheckInDTO(daysAgo: 1), makeCheckInDTO(daysAgo: 2)]
-        let checkIns2 = [makeCheckInDTO(daysAgo: 0), makeCheckInDTO(daysAgo: 3)]
-        await mock.enqueue(checkIns1)
-        await mock.enqueue(checkIns2)
-
         let vm = ChallengeCheckInsListView.ViewModel(network: mock)
-        await vm.getCheckInDates(for: UUID(), and: UUID())
 
-        // Each side gets one of the two same-size arrays regardless of scheduling order.
-        #expect(vm.initiatorDates.count == 2)
-        #expect(vm.receiverDates.count == 2)
-    }
-
-    @Test("getCheckInDates leaves dates empty on network error")
-    @MainActor
-    func getCheckInDatesFailure() async {
-        let mock = MockNetworkManager()
-        await mock.enqueueError(HHError.serverError)
-        await mock.enqueueError(HHError.serverError)
-
-        let vm = ChallengeCheckInsListView.ViewModel(network: mock)
-        await vm.getCheckInDates(for: UUID(), and: UUID())
+        await vm.getCheckInDates(forInitiator: nil, forReceiver: nil)
 
         #expect(vm.initiatorDates.isEmpty)
+        #expect(vm.receiverDates.isEmpty)
+    }
+
+    @Test("initiator ID nil — only receiver dates are fetched")
+    @MainActor
+    func initiatorIDNil() async {
+        let mock = MockNetworkManager()
+        await mock.enqueue([makeCheckInDTO()])
+
+        let vm = ChallengeCheckInsListView.ViewModel(network: mock)
+        await vm.getCheckInDates(forInitiator: nil, forReceiver: UUID())
+
+        #expect(vm.initiatorDates.isEmpty)
+        #expect(vm.receiverDates.count == 1)
+    }
+
+    @Test("receiver ID nil — only initiator dates are fetched")
+    @MainActor
+    func receiverIDNil() async {
+        let mock = MockNetworkManager()
+        await mock.enqueue([makeCheckInDTO()])
+
+        let vm = ChallengeCheckInsListView.ViewModel(network: mock)
+        await vm.getCheckInDates(forInitiator: UUID(), forReceiver: nil)
+
+        #expect(vm.initiatorDates.count == 1)
+        #expect(vm.receiverDates.isEmpty)
+    }
+
+    @Test("both IDs provided — both arrays are populated")
+    @MainActor
+    func bothIDsProvided() async {
+        let mock = MockNetworkManager()
+        // Two equal-size responses: order-independent, we just verify both arrays are non-empty
+        await mock.enqueue([makeCheckInDTO()])
+        await mock.enqueue([makeCheckInDTO()])
+
+        let vm = ChallengeCheckInsListView.ViewModel(network: mock)
+        await vm.getCheckInDates(forInitiator: UUID(), forReceiver: UUID())
+
+        #expect(!vm.initiatorDates.isEmpty)
+        #expect(!vm.receiverDates.isEmpty)
+    }
+
+    @Test("one fetch fails — the other array still populates")
+    @MainActor
+    func oneFetchFails() async {
+        let mock = MockNetworkManager()
+        // One error + one success; concurrent tasks dequeue in non-deterministic order,
+        // so we only assert the aggregate: exactly one array ends up with data.
+        await mock.enqueueError(HHError.notFound)
+        await mock.enqueue([makeCheckInDTO()])
+
+        let vm = ChallengeCheckInsListView.ViewModel(network: mock)
+        await vm.getCheckInDates(forInitiator: UUID(), forReceiver: UUID())
+
+        let total = vm.initiatorDates.count + vm.receiverDates.count
+        #expect(total == 1)
+    }
+
+    @Test("both fetches fail — both arrays stay empty")
+    @MainActor
+    func bothFetchFail() async {
+        let mock = MockNetworkManager()
+        await mock.enqueueError(HHError.serverError)
+        await mock.enqueueError(HHError.serverError)
+
+        let vm = ChallengeCheckInsListView.ViewModel(network: mock)
+        await vm.getCheckInDates(forInitiator: UUID(), forReceiver: UUID())
+
+        #expect(vm.initiatorDates.isEmpty)
+        #expect(vm.receiverDates.isEmpty)
+    }
+
+    @Test("dates are mapped correctly from check-in DTOs")
+    @MainActor
+    func dateMappingIsCorrect() async {
+        let mock = MockNetworkManager()
+        let expectedDate = Date(timeIntervalSince1970: 1_700_000_000)
+        // Pass forReceiver: nil so only one network call is made — no ordering ambiguity
+        await mock.enqueue([HabitCheckInDTO(date: expectedDate, habit: LightweightHabit(id: UUID()))])
+
+        let vm = ChallengeCheckInsListView.ViewModel(network: mock)
+        await vm.getCheckInDates(forInitiator: UUID(), forReceiver: nil)
+
+        #expect(vm.initiatorDates.first == expectedDate)
         #expect(vm.receiverDates.isEmpty)
     }
 }

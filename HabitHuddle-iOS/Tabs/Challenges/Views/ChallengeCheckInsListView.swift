@@ -44,10 +44,10 @@ struct ChallengeCheckInsListView: View {
         }
         .task {
             isLoading = true
-            if let initiatorHabitID = challenge.initiatorHabitID,
-               let receiverHabitID = challenge.receiverHabitID {
-                await viewModel.getCheckInDates(for: initiatorHabitID, and: receiverHabitID)
-            }
+            await viewModel.getCheckInDates(
+                forInitiator: challenge.initiatorHabitID,
+                forReceiver: challenge.receiverHabitID
+            )
             isLoading = false
         }
         .background(Color(.systemGroupedBackground).ignoresSafeArea())
