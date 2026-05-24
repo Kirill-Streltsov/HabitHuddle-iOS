@@ -31,12 +31,11 @@ extension MyFriendsList {
             }
         }
 
-        func sendChallenge(to userID: UUID, for habitID: UUID, ofType type: ChallengeType) async {
+        func sendChallenge(to userID: UUID, for habitID: UUID) async {
             let payload = ChallengeRequest(
                 receiverID: userID,
                 initiatorHabitID: habitID,
-                receiverHabitID: nil,
-                type: type)
+                receiverHabitID: nil)
             do {
                 let status = try await network.requestStatusCode(
                     endpoint: .sendChallenge(),

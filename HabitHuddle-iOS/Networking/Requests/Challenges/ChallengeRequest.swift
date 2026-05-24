@@ -10,5 +10,4 @@ struct ChallengeRequest: Codable {
     let receiverID: UUID
     let initiatorHabitID: UUID?
     let receiverHabitID: UUID?
-    let type: ChallengeType
 }

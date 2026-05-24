@@ -263,7 +263,6 @@ struct ChallengesListViewModelTests {
             initiatorHabitID: nil,
             receiverHabitID: nil,
             habitName: "Test",
-            type: .competitive,
             startDate: Date(),
             endDate: Date(),
             status: status,

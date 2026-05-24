@@ -25,12 +25,12 @@ struct ChallengeProgressCardView: View {
                 
                 Spacer()
                 
-                Label(challenge.type.displayName, systemImage: challenge.type == .competitive ? "flame.fill" : "heart.fill")
+                Label("Challenge", systemImage: "flag.pattern.checkered.2.crossed")
                     .font(.footnote)
                     .fontWeight(.semibold)
                     .padding(8)
-                    .background(challenge.type == .competitive ? Color.red.opacity(0.1) : Color.green.opacity(0.1))
-                    .foregroundStyle(challenge.type == .competitive ? .red : .green)
+                    .background(Color.accentColor.opacity(0.1))
+                    .foregroundStyle(Color.accentColor)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             
@@ -59,19 +59,10 @@ struct ChallengeProgressCardView: View {
     private func challengeTitleText() -> String {
         let i = challenge.initiator.user.name
         let r = challenge.receiver.user.name
-        switch challenge.type {
-        case .competitive:
-            if userManager.profile.id == challenge.initiator.user.id {
-                return String(localized: .youVs(i, r))
-            } else {
-                return String(localized: .vsYou(i, r))
-            }
-        case .supportive:
-            if userManager.profile.id == challenge.initiator.user.id {
-                return String(localized: .youWith(i, r))
-            } else {
-                return String(localized: .withYou(i, r))
-            }
+        if userManager.profile.id == challenge.initiator.user.id {
+            return String(localized: .youVs(i, r))
+        } else {
+            return String(localized: .vsYou(i, r))
         }
     }
     
@@ -121,7 +112,6 @@ struct ProgressRow: View {
             initiatorHabitID: UUID(),
             receiverHabitID: UUID(),
             habitName: "",
-            type: .competitive,
             startDate: .now,
             endDate: .now,
             status: .accepted,

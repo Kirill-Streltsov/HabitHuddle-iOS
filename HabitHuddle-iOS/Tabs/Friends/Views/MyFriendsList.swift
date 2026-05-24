@@ -48,9 +48,7 @@ struct MyFriendsList: View {
                             if !isInFriendsTab {
                                 if let habit = habit {
                                     FriendCardView(friend: friend, showChallengeButton: true) {
-                                        await viewModel.sendChallenge(to: friend.id, for: habit.id, ofType: .competitive)
-                                    } onSupport: {
-                                        await viewModel.sendChallenge(to: friend.id, for: habit.id, ofType: .supportive)
+                                        await viewModel.sendChallenge(to: friend.id, for: habit.id)
                                     }
                                 }
                             } else {

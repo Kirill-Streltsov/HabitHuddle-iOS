@@ -113,12 +113,9 @@ struct HabitCard: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.blue)
-                } else if habit.challenges[0].type == .competitive {
+                } else {
                     Image(systemName: "flag.pattern.checkered.2.crossed")
-                        .foregroundStyle(.pink)
-                } else if habit.challenges[0].type == .supportive {
-                    Image(systemName: "flag.pattern.checkered.2.crossed")
-                        .foregroundStyle(.green)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
             .padding(.bottom, 4)

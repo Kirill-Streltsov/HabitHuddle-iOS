@@ -13,14 +13,12 @@ struct FriendCardView: View {
     
     let friend: UserDTO
     let showChallengeButton: Bool
-    var onCompete: @MainActor () async -> Void
-    var onSupport: @MainActor () async -> Void
-    
-    init(friend: UserDTO, showChallengeButton: Bool, onCompete: @escaping () async -> Void = {}, onSupport: @escaping () async -> Void = {}) {
+    var onChallenge: @MainActor () async -> Void
+
+    init(friend: UserDTO, showChallengeButton: Bool, onChallenge: @escaping () async -> Void = {}) {
         self.friend = friend
         self.showChallengeButton = showChallengeButton
-        self.onCompete = onCompete
-        self.onSupport = onSupport
+        self.onChallenge = onChallenge
     }
 
     var body: some View {
@@ -60,44 +58,23 @@ struct FriendCardView: View {
             }
 
             if showChallengeButton {
-                HStack(spacing: 10) {
-                    Button {
-                        Task {
-                            await onCompete()
-                            dismiss()
-                        }
-                    } label: {
-                        HStack(spacing: 6) {
-                            Image(systemName: "flame.fill")
-                            Text(.compete)
-                        }
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(Color.pink)
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                Button {
+                    Task {
+                        await onChallenge()
+                        dismiss()
                     }
-
-                    Button {
-                        Task {
-                            await onSupport()
-                            dismiss()
-                        }
-                    } label: {
-                        HStack(spacing: 6) {
-                            Image(systemName: "hands.clap.fill")
-                            Text(.support)
-                        }
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(Color.green)
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "flag.pattern.checkered.2.crossed")
+                        Text("Challenge")
                     }
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Color.accentColor)
+                    .foregroundStyle(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
             }
         }
@@ -118,12 +95,11 @@ struct FriendCardView: View {
     .background(Color(.systemGroupedBackground))
 }
 
-#Preview("Challenge mode — with buttons") {
+#Preview("Challenge mode — with button") {
     FriendCardView(
         friend: UserDTO(id: UUID(), username: "jdoe", name: "John Doe", createdAt: .now, updatedAt: .now),
         showChallengeButton: true,
-        onCompete: {},
-        onSupport: {}
+        onChallenge: {}
     )
     .padding()
     .background(Color(.systemGroupedBackground))

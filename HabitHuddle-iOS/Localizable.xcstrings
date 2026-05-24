@@ -1849,6 +1849,9 @@
         }
       }
     },
+    "Challenge" : {
+
+    },
     "Challenge %@" : {
       "extractionState" : "manual",
       "localizations" : {

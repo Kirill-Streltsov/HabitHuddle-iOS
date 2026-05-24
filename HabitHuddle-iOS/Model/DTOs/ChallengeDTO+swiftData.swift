@@ -13,7 +13,6 @@ extension ChallengeDTO {
             initiator: initiator,
             receiver: receiver,
             habit: habit,
-            type: self.type,
             status: self.status,
             startDate: self.startDate,
             endDate: self.endDate,

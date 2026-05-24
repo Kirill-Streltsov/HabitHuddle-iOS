@@ -28,12 +28,12 @@ struct SentChallengeCardView: View {
 
                 Spacer()
 
-                Label(challenge.type.displayName, systemImage: challenge.type == .competitive ? "flame.fill" : "heart.fill")
+                Label("Challenge", systemImage: "flag.pattern.checkered.2.crossed")
                     .font(.footnote)
                     .fontWeight(.semibold)
                     .padding(8)
-                    .background(challenge.type == .competitive ? Color.red.opacity(0.1) : Color.green.opacity(0.1))
-                    .foregroundStyle(challenge.type == .competitive ? .red : .green)
+                    .background(Color.accentColor.opacity(0.1))
+                    .foregroundStyle(Color.accentColor)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
 
@@ -82,7 +82,6 @@ struct SentChallengeCardView: View {
             initiatorHabitID: UUID(),
             receiverHabitID: UUID(),
             habitName: "",
-            type: .competitive,
             startDate: .now,
             endDate: .now,
             status: .accepted,

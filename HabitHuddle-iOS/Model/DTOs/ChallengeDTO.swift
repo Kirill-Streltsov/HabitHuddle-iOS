@@ -12,7 +12,6 @@ struct ChallengeDTO: Identifiable, Codable, Equatable {
     let initiatorHabitID: UUID?
     let receiverHabitID: UUID?
     let habitName: String
-    let type: ChallengeType
     let startDate: Date
     let endDate: Date
     let status: ChallengeStatus

@@ -161,7 +161,6 @@ struct ChallengeDetailView_Previews: PreviewProvider {
                     initiatorHabitID: UUID(),
                     receiverHabitID: UUID(),
                     habitName: "",
-                    type: .competitive,
                     startDate: .now,
                     endDate: .now,
                     status: .accepted,
