@@ -245,9 +245,6 @@ struct HabitEditView: View {
                     disabled: notificationsDisabled
                 )
                 .opacity(notificationsDisabled ? 0.5 : 1)
-                .onChange(of: viewModel.hasReminder) { _, newValue in
-                    if newValue { requestNotificationPermission() }
-                }
                 cardDivider
                 HStack(spacing: 12) {
                     settingsIcon("clock.fill", color: .purple)
@@ -440,19 +437,6 @@ struct HabitEditView: View {
         guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
         if UIApplication.shared.canOpenURL(settingsURL) {
             UIApplication.shared.open(settingsURL)
-        }
-    }
-
-    private func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if let error = error {
-                print("Permission error: \(error)")
-            } else {
-                DispatchQueue.main.async {
-                    UIApplication.shared.registerForRemoteNotifications()
-                }
-                print("Permission granted: \(granted)")
-            }
         }
     }
 

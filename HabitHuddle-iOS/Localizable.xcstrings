@@ -3205,6 +3205,42 @@
         }
       }
     },
+    "Daily reminders" : {
+      "comment" : "Onboarding notifications page, feature chip label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tägliche Erinnerungen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordatorios diarios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rappels quotidiens"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Promemoria giornalieri"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ежедневные напоминания"
+          }
+        }
+      }
+    },
     "Daily Walks" : {
       "comment" : "Default onboarding habit name",
       "extractionState" : "manual",
@@ -4834,6 +4870,42 @@
         }
       }
     },
+    "Get reminders to check in and keep your streak alive." : {
+      "comment" : "Onboarding notifications page subtitle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erhalte Erinnerungen zum Einchecken und halte deine Serie am Leben."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recibe recordatorios para hacer check-in y mantener tu racha."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reçois des rappels pour te connecter et maintenir ta série."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricevi promemoria per fare il check-in e mantenere la tua serie."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Получай напоминания о чекинах и поддерживай свою серию."
+          }
+        }
+      }
+    },
     "Go to Settings" : {
       "comment" : "Button to navigate to the Settings tab",
       "extractionState" : "manual",
@@ -6026,6 +6098,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "С нами с %@"
+          }
+        }
+      }
+    },
+    "Just now" : {
+      "comment" : "Onboarding notifications page, time label on mock notification",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerade eben"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahora mismo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À l'instant"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appena ora"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Только что"
           }
         }
       }
@@ -9096,6 +9204,42 @@
         }
       }
     },
+    "Never Miss a Check-In" : {
+      "comment" : "Onboarding notifications page title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Check-in verpassen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No te pierdas ni un check-in"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ne manque aucun check-in"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non perdere mai un check-in"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не пропусти ни одного чекина"
+          }
+        }
+      }
+    },
     "Streak" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9127,6 +9271,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Серия"
+          }
+        }
+      }
+    },
+    "Friend boosts" : {
+      "comment" : "Onboarding notifications page, feature chip label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boosts von Freunden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boosts de amigos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boosts d'amis"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boost degli amici"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Бусты от друзей"
           }
         }
       }
@@ -9821,6 +10001,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Время набирать обороты."
+          }
+        }
+      }
+    },
+    "Time to check in!" : {
+      "comment" : "Onboarding notifications page, mock notification title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeit zum Einchecken!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Es hora de hacer check-in!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C'est l'heure de te connecter !"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "È ora di fare il check-in!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Время отметиться!"
           }
         }
       }
@@ -12023,6 +12239,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ваши права"
+          }
+        }
+      }
+    },
+    "Your streak is waiting. Don't let it slip." : {
+      "comment" : "Onboarding notifications page, mock notification body",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Serie wartet. Lass sie nicht abreißen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu racha te está esperando. No la dejes escapar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta série t'attend. Ne la laisse pas tomber."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La tua serie ti aspetta. Non lasciarla andare."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Твоя серия ждёт. Не упусти её."
           }
         }
       }

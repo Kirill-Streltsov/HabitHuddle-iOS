@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct OnboardingView: View {
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding = false
@@ -117,6 +118,15 @@ struct OnboardingView: View {
                 )
             ),
             OnboardingPageData(
+                symbol: "bell.badge.fill",
+                title: String(localized: .neverMissACheckIn),
+                text: String(localized: .getRemindersToCheckInAndKeepYourStreakAlive),
+                customView: AnyView(
+                    OnboardingNotificationsCard()
+                ),
+                requestsNotificationPermission: true
+            ),
+            OnboardingPageData(
                 symbol: "sparkles",
                 title: String(localized: .letsStartSmall),
                 text: String(localized: .createSpaceForGrowthBeginWithAFewPopularHabits),
@@ -164,6 +174,12 @@ struct OnboardingView: View {
                     Button {
                         withAnimation {
                             if pageIndex < pages.count - 1 {
+                                if pages[pageIndex].requestsNotificationPermission {
+                                    Task {
+                                        try? await UNUserNotificationCenter.current()
+                                            .requestAuthorization(options: [.alert, .sound, .badge])
+                                    }
+                                }
                                 pageIndex += 1
                                 HapticManager.trigger(.impact(.light))
                             } else {

@@ -13,4 +13,5 @@ struct OnboardingPageData: Identifiable {
     var title: String
     var text: String
     var customView: AnyView
+    var requestsNotificationPermission: Bool = false
 }
