@@ -3205,38 +3205,38 @@
         }
       }
     },
-    "Daily reminders" : {
+    "Reminders" : {
       "comment" : "Onboarding notifications page, feature chip label",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tägliche Erinnerungen"
+            "value" : "Erinnerungen"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recordatorios diarios"
+            "value" : "Recordatorios"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rappels quotidiens"
+            "value" : "Rappels"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Promemoria giornalieri"
+            "value" : "Promemoria"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ежедневные напоминания"
+            "value" : "Напоминания"
           }
         }
       }

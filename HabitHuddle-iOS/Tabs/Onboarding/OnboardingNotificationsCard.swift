@@ -46,9 +46,9 @@ struct OnboardingNotificationsCard: View {
             CardView {
                 HStack(spacing: 16) {
                     NotificationFeatureRow(
-                        symbol: "clock.fill",
+                        symbol: "bell.fill",
                         color: .blue,
-                        label: .dailyReminders
+                        label: .reminders
                     )
 
                     Divider()
