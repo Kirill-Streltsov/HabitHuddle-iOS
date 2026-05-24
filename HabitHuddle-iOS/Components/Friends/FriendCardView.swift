@@ -24,56 +24,81 @@ struct FriendCardView: View {
     }
 
     var body: some View {
-        HStack(spacing: 16) {
-            // Profile icon
-            ZStack {
-                Circle()
-                    .fill(Color.accentColor)
-                    .frame(width: 50, height: 50)
-                Text(String(friend.name.prefix(1)).uppercased())
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-            }
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 12) {
+                // Profile icon
+                ZStack {
+                    Circle()
+                        .fill(Color.accentColor)
+                        .frame(width: 46, height: 46)
+                    Text(String(friend.name.prefix(1)).uppercased())
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                }
 
-            // User info
-            VStack(alignment: .leading, spacing: 4) {
-                Text(friend.name)
-                    .font(.headline)
+                // User info
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(friend.name)
+                        .font(.headline)
+                    Text("@\(friend.username)")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    if let joinDate = friend.createdAt {
+                        Text(.memberSince(joinDate.formattedAsMonthYear()))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
 
-                Text("@\(friend.username)")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                Spacer()
 
-                if let joinDate = friend.createdAt {
-                    Text(.memberSince(joinDate.formattedAsMonthYear()))
-                        .font(.caption)
+                if !showChallengeButton {
+                    Image(systemName: "chevron.right")
                         .foregroundStyle(.secondary)
                 }
             }
 
-            Spacer()
-
-            // Challenge button
             if showChallengeButton {
-                VStack {
-                    SlimButton(title: .compete, color: .pink) {
+                HStack(spacing: 10) {
+                    Button {
                         Task {
                             await onCompete()
                             dismiss()
                         }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "flame.fill")
+                            Text(.compete)
+                        }
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(Color.pink)
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
-                    SlimButton(title: .support, color: .green) {
+
+                    Button {
                         Task {
                             await onSupport()
                             dismiss()
                         }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "hands.clap.fill")
+                            Text(.support)
+                        }
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(Color.green)
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                 }
-                
-            } else {
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(.secondary)
             }
         }
         .padding()
@@ -84,6 +109,22 @@ struct FriendCardView: View {
     }
 }
 
-#Preview {
-    FriendCardView(friend: UserDTO(id: UUID(), username: "username", name: "Username", createdAt: .now, updatedAt: .now), showChallengeButton: false, onCompete: {}, onSupport: {})
+#Preview("Friends tab — no buttons") {
+    FriendCardView(
+        friend: UserDTO(id: UUID(), username: "username", name: "Username", createdAt: .now, updatedAt: .now),
+        showChallengeButton: false
+    )
+    .padding()
+    .background(Color(.systemGroupedBackground))
+}
+
+#Preview("Challenge mode — with buttons") {
+    FriendCardView(
+        friend: UserDTO(id: UUID(), username: "jdoe", name: "John Doe", createdAt: .now, updatedAt: .now),
+        showChallengeButton: true,
+        onCompete: {},
+        onSupport: {}
+    )
+    .padding()
+    .background(Color(.systemGroupedBackground))
 }

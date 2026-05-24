@@ -133,20 +133,48 @@ struct HabitCard: View {
         .frame(maxWidth: .infinity)
         .animation(.easeInOut(duration: 0.3), value: scale)
         .sheet(isPresented: $challengeButtonPressed) {
-            ZStack {
-                Color(.secondarySystemGroupedBackground).ignoresSafeArea()
-                MyFriendsList(isInFriendsTab: false, habit: habit)
-                    .presentationDetents([detent])
-            }
+            MyFriendsList(isInFriendsTab: false, habit: habit)
+                .presentationDetents([detent])
+                .presentationDragIndicator(.visible)
         }
     }
 }
 
-#Preview {
+#Preview("Habit card") {
     let habit = Habit(id: UUID(), user: LightweightUser(id: UUID()), name: "Demo Habit", description: "This is some description", duration: .oneWeek)
     VStack {
-        HStack(spacing: 16) {
-            HabitCard(habit: habit)
-        }
+        HabitCard(habit: habit)
     }
+    .padding()
+    .modelContainer(for: User.self, inMemory: true)
+    .environmentObject(MyFriendsList.ViewModel())
+    .environmentObject(AppState())
+}
+
+#Preview("Challenge sheet") {
+    let vm = MyFriendsList.ViewModel()
+    vm.friends = [
+        UserDTO(id: UUID(), username: "jdoe", name: "John Doe", createdAt: .now, updatedAt: .now),
+        UserDTO(id: UUID(), username: "jsmith", name: "Jane Smith", createdAt: .now, updatedAt: .now),
+        UserDTO(id: UUID(), username: "agarcia", name: "Ana Garcia", createdAt: .now, updatedAt: .now),
+    ]
+    let appState = AppState()
+    appState.isAuthenticated = true
+    let habit = Habit(
+        id: UUID(),
+        user: LightweightUser(id: UUID()),
+        name: "Morning Run",
+        description: "Track your daily progress",
+        duration: .oneWeek
+    )
+    return Color(.systemGroupedBackground)
+        .ignoresSafeArea()
+        .sheet(isPresented: .constant(true)) {
+            MyFriendsList(isInFriendsTab: false, habit: habit)
+                .presentationDetents([.fraction(0.6)])
+                .presentationDragIndicator(.visible)
+                .environmentObject(vm)
+                .environmentObject(appState)
+                .modelContainer(for: User.self, inMemory: true)
+        }
 }
