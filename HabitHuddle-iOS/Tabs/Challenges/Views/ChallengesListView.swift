@@ -145,7 +145,9 @@ struct ChallengesListView: View {
     
     private func updateLocalStorage(from challenge: ChallengeDTO) {
         guard let habit = habits.filter({ $0.id == challenge.initiatorHabitID || $0.id == challenge.receiverHabitID }).first else {
-            getHabit(from: challenge)
+            if challenge.receiver.user.id == userID {
+                getHabit(from: challenge)
+            }
             return
         }
         saveChallengeLocally(from: challenge, for: habit)

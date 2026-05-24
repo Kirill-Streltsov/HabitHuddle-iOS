@@ -10,56 +10,36 @@ import SwiftUI
 import SwiftData
 
 struct FriendHabitCard: View {
-    
+
     @State private var scale: Double = 1
-    @State private var didSendBoost = false
-    @Binding var showBoostSent: Bool
-    var onSendBoost: @MainActor () async -> Void
-    
+    @State private var didSendBoost: Bool
+    @State private var showChallengeConfirmation = false
+
     @Environment(\.modelContext) private var context
-    
+
     let habitDTO: HabitDTO
-    
-    init(didShowBoostSent: Binding<Bool>, habitDTO: HabitDTO, onSendBoost: @escaping () async -> Void) {
-        self._showBoostSent = didShowBoostSent
+    let isChallengePending: Bool
+    var onSendBoost: @MainActor () async -> Void
+    var onChallenge: @MainActor () async -> Void
+
+    init(
+        habitDTO: HabitDTO,
+        isBoosted: Bool,
+        isChallengePending: Bool,
+        onSendBoost: @escaping @MainActor () async -> Void,
+        onChallenge: @escaping @MainActor () async -> Void
+    ) {
         self.habitDTO = habitDTO
+        self.isChallengePending = isChallengePending
+        self._didSendBoost = State(initialValue: isBoosted)
         self.onSendBoost = onSendBoost
+        self.onChallenge = onChallenge
     }
-    
-    @State private var showActionSheet = false
-    @State private var selectedOption = ""
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .top) {
-                if let icon = habitDTO.icon {
-                    Image(systemName: icon)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 32, height: 32)
-                        .padding(4)
-                        .background(Color(.secondarySystemBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                }
-                VStack(alignment: .leading) {
-                    HStack(spacing: 8) {
-                        Text(habitDTO.name)
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .lineLimit(2)
-                    }
-                    if !habitDTO.description.isEmpty {
-                        Text(habitDTO.description)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                            .lineLimit(nil)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
-            
+            headerSection
+
             ZStack {
                 VStack {
                     if habitDTO.isCheckedInToday {
@@ -79,17 +59,14 @@ struct FriendHabitCard: View {
                         .allowsHitTesting(!didSendBoost)
                         .onTapGesture {
                             HapticManager.trigger(.success)
-                            showBoostSent = true
                             didSendBoost = true
-                            Task {
-                                await onSendBoost()
-                            }
+                            Task { await onSendBoost() }
                             scale += 0.15
                             Task { scale -= 0.15 }
                         }
                         .animation(.easeInOut(duration: 0.3), value: scale)
                     }
-                    
+
                     Text(.tapToBoost)
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -104,8 +81,8 @@ struct FriendHabitCard: View {
             }
             .offset(y: 15)
             .frame(maxWidth: .infinity)
-            
-            HStack {
+
+            HStack(alignment: .bottom) {
                 if habitDTO.isCompleted {
                     Text(.habitFinished)
                         .font(.subheadline)
@@ -119,9 +96,31 @@ struct FriendHabitCard: View {
                     }
                 }
                 Spacer()
+                if !habitDTO.isCompleted {
+                    if isChallengePending {
+                        Image(systemName: "flag.pattern.checkered.2.crossed")
+                            .foregroundStyle(Color.accentColor)
+                    } else {
+                        Button {
+                            showChallengeConfirmation = true
+                        } label: {
+                            Image(systemName: "flag.pattern.checkered.2.crossed")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.blue)
+                        .alert("Challenge", isPresented: $showChallengeConfirmation) {
+                            Button(String(localized: .sendChallenge)) {
+                                Task { await onChallenge() }
+                            }
+                            Button("Cancel", role: .cancel) {}
+                        } message: {
+                            Text(.yourFriendWillReceiveAChallengeInvite)
+                        }
+                    }
+                }
             }
             .padding(.bottom, 4)
-            
+
             HabitDTOProgressView(habit: habitDTO, height: 8)
         }
         .padding()
@@ -130,8 +129,60 @@ struct FriendHabitCard: View {
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .frame(maxWidth: .infinity)
     }
+
+    // MARK: - Header
+
+    @ViewBuilder
+    private var headerSection: some View {
+        HStack(alignment: .top) {
+            if let icon = habitDTO.icon {
+                Image(systemName: icon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 32, height: 32)
+                    .padding(4)
+                    .background(Color(.secondarySystemBackground))
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
+            }
+            VStack(alignment: .leading) {
+                HStack(alignment: .top, spacing: 8) {
+                    Text(habitDTO.name)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .lineLimit(2)
+                    Spacer()
+                }
+                if !habitDTO.description.isEmpty {
+                    Text(habitDTO.description)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+    }
 }
 
 #Preview {
-    FriendHabitCard(didShowBoostSent: .constant(true), habitDTO: HabitDTO(id: UUID(), user: LightweightUser(id: UUID()), name: "Drink water", description: "Drink 2 liters a day", category: "", duration: .oneWeek, reminderTime: .now, createdAt: .now, updatedAt: .now, checkIns: [], challenges: [], icon: "brain"), onSendBoost: {})
+    FriendHabitCard(
+        habitDTO: HabitDTO(
+            id: UUID(),
+            user: LightweightUser(id: UUID()),
+            name: "Drink water",
+            description: "Drink 2 liters a day",
+            category: "",
+            duration: .oneWeek,
+            reminderTime: .now,
+            createdAt: .now,
+            updatedAt: .now,
+            checkIns: [],
+            challenges: nil,
+            icon: "brain"),
+        isBoosted: false,
+        isChallengePending: false,
+        onSendBoost: {},
+        onChallenge: {}
+    )
 }

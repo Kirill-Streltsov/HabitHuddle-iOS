@@ -82,11 +82,25 @@ struct FriendDetailView: View {
                     .fontWeight(.semibold)
                 VStack(alignment: .center) {
                     ForEach(viewModel.habits) { habitDTO in
-                        FriendHabitCard(didShowBoostSent: $didShowBoostSent, habitDTO: habitDTO) {
-                            await viewModel.sendBoost(to: friend.id, about: habitDTO.id)
-                        }
+                        FriendHabitCard(
+                            habitDTO: habitDTO,
+                            isBoosted: viewModel.isBoosted(habitDTO.id),
+                            isChallengePending: habitDTO.challenges?.isEmpty == false,
+                            onSendBoost: {
+                                didShowBoostSent = true
+                                await viewModel.sendBoost(to: friend.id, about: habitDTO.id)
+                            },
+                            onChallenge: {
+                                let success = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id)
+                                showToast = true
+                                message = success
+                                    ? String(localized: .challengeSent)
+                                    : String(localized: .challengeAlreadySent)
+                            }
+                        )
                     }
                 }
+                .padding(.horizontal)
             } else {
                 EmptyFriendHabitsView(name: friend.name)
             }

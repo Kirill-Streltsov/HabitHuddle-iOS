@@ -25,6 +25,6 @@ struct LightweightCheckIn: Codable {
     let date: Date
 }
 
-struct LightweightChallenge: Codable {
+struct LightweightChallenge: Codable, Identifiable, Equatable {
     let id: UUID
 }

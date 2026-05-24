@@ -13,11 +13,13 @@ extension FriendDetailView {
 
         @Published var habits: [HabitDTO] = []
         @Published var challenges: [ChallengeDTO] = []
+        @Published private(set) var boostedHabitIDs: Set<UUID> = []
 
         private let network: any NetworkManagerProtocol
 
         init(network: any NetworkManagerProtocol = NetworkManager.shared) {
             self.network = network
+            loadBoostedHabitIDs()
         }
 
         func getUserHabits(for id: UUID) async {
@@ -59,11 +61,56 @@ extension FriendDetailView {
 
         func sendBoost(to friendID: UUID, about habitID: UUID) async {
             do {
-                let status = try await network.requestStatusCode(endpoint: .boostFriend(friendID, about: habitID), method: .post)
+                let status = try await network.requestStatusCode(
+                    endpoint: .boostFriend(friendID, about: habitID),
+                    method: .post)
+                markBoosted(habitID)
                 print("✅ Sent a boost to friend \(friendID): \(status)")
             } catch {
                 print("❌ Error: Couldn't send a boost to friend \(friendID): \(error)")
             }
+        }
+
+        func sendChallenge(to receiverID: UUID, for receiverHabitID: UUID) async -> Bool {
+            let payload = ChallengeRequest(
+                receiverID: receiverID,
+                initiatorHabitID: nil,
+                receiverHabitID: receiverHabitID)
+            do {
+                _ = try await network.requestStatusCode(
+                    endpoint: .sendChallenge(),
+                    method: .post,
+                    body: payload)
+                await getUserHabits(for: receiverID)
+                return true
+            } catch {
+                print("❌ Error: Couldn't send challenge for habit \(receiverHabitID): \(error)")
+                return false
+            }
+        }
+
+        func isBoosted(_ habitID: UUID) -> Bool {
+            boostedHabitIDs.contains(habitID)
+        }
+
+        // MARK: - Boost persistence (resets daily)
+
+        private func boostedHabitsKey() -> String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            return "boostedHabits_\(formatter.string(from: .now))"
+        }
+
+        private func loadBoostedHabitIDs() {
+            let ids = UserDefaults.standard.stringArray(forKey: boostedHabitsKey()) ?? []
+            boostedHabitIDs = Set(ids.compactMap(UUID.init))
+        }
+
+        private func markBoosted(_ id: UUID) {
+            var ids = UserDefaults.standard.stringArray(forKey: boostedHabitsKey()) ?? []
+            ids.append(id.uuidString)
+            UserDefaults.standard.set(ids, forKey: boostedHabitsKey())
+            boostedHabitIDs.insert(id)
         }
     }
 }

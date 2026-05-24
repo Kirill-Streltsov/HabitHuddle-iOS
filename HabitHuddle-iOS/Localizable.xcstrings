@@ -1741,6 +1741,9 @@
         }
       }
     },
+    "Cancel" : {
+
+    },
     "Cancel Challenge" : {
       "comment" : "Button to withdraw a sent challenge",
       "extractionState" : "manual",
@@ -1923,6 +1926,42 @@
         }
       }
     },
+    "Challenge already sent" : {
+      "comment" : "Toast message when a duplicate challenge is blocked by the server",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausforderung bereits gesendet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desafío ya enviado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défi déjà envoyé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sfida già inviata"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вызов уже отправлен"
+          }
+        }
+      }
+    },
     "Challenge friends and grow together." : {
       "comment" : "Onboarding page 3 subtitle",
       "extractionState" : "manual",
@@ -1991,6 +2030,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вызов отклонён!"
+          }
+        }
+      }
+    },
+    "Challenge sent!" : {
+      "comment" : "Toast message after sending a challenge from a friend's habit card",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausforderung gesendet!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Desafío enviado!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défi envoyé !"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sfida inviata!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вызов отправлен!"
           }
         }
       }
@@ -8442,6 +8517,42 @@
         }
       }
     },
+    "Send Challenge" : {
+      "comment" : "Alert confirm button to send a challenge invite to a friend",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausforderung senden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviar desafío"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envoyer le défi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invia sfida"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправить вызов"
+          }
+        }
+      }
+    },
     "Server error occurred." : {
       "comment" : "Error description for 500 server error",
       "extractionState" : "manual",
@@ -11732,6 +11843,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Твоя активность за последние 2 месяца"
+          }
+        }
+      }
+    },
+    "Your friend will receive a challenge invite." : {
+      "comment" : "Alert message shown before confirming a challenge invite",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Freund erhält eine Herausforderungseinladung."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu amigo recibirá una invitación de desafío."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ton ami recevra une invitation de défi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo amico riceverà un invito alla sfida."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш друг получит приглашение к вызову."
           }
         }
       }

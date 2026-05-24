@@ -136,17 +136,17 @@ struct LoginViewModelTests {
 @Suite("RegistrationViewModel")
 struct RegistrationViewModelTests {
 
-    @Test("registerUser sets loadedUser on success")
+    @Test("registerUser sets registeredUser on success")
     @MainActor
     func registerSuccess() async throws {
         let mock = MockNetworkManager()
         await mock.enqueue(makeLoginResponse())
 
         let vm = RegistrationView.ViewModel(network: mock)
-        try await vm.registerUser(userID: UUID(), username: "alice", name: "Alice", password: "pass123")
+        try await vm.registerUser(userID: UUID(), username: "alice", name: "Alice", email: "alice@example.com", password: "pass123")
 
         #expect(vm.errorMessage == "")
-        #expect(vm.loadedUser.username == "alice")
+        #expect(vm.registeredUser?.username == "alice")
     }
 
     @Test("registerUser sets errorMessage on conflict")
@@ -156,7 +156,7 @@ struct RegistrationViewModelTests {
         await mock.enqueueError(HHError.conflict)
 
         let vm = RegistrationView.ViewModel(network: mock)
-        try await vm.registerUser(userID: UUID(), username: "alice", name: "Alice", password: "pass123")
+        try await vm.registerUser(userID: UUID(), username: "alice", name: "Alice", email: "alice@example.com", password: "pass123")
 
         #expect(!vm.errorMessage.isEmpty)
     }
@@ -341,6 +341,101 @@ struct ChallengesListViewModelTests {
         }
         #expect(status == .ok)
     }
+
+    @Test("cancelChallenge returns success status")
+    @MainActor
+    func cancelChallengeSuccess() async {
+        let mock = MockNetworkManager()
+        await mock.enqueue(HTTPStatus.ok)
+
+        let vm = ChallengesListView.ViewModel(userID: UUID(), network: mock)
+        let result = await vm.cancelChallenge(with: UUID())
+
+        guard case let .success(status) = result else {
+            Issue.record("Expected success")
+            return
+        }
+        #expect(status == .ok)
+    }
+
+    @Test("cancelChallenge returns failure on error")
+    @MainActor
+    func cancelChallengeFailure() async {
+        let mock = MockNetworkManager()
+        await mock.enqueueError(HHError.notFound)
+
+        let vm = ChallengesListView.ViewModel(userID: UUID(), network: mock)
+        let result = await vm.cancelChallenge(with: UUID())
+
+        guard case .failure = result else {
+            Issue.record("Expected failure")
+            return
+        }
+    }
+
+    @Test("getHabitFromChallenge returns habit on success")
+    @MainActor
+    func getHabitFromChallengeSuccess() async {
+        let mock = MockNetworkManager()
+        let dto = makeHabitDTO()
+        await mock.enqueue(dto)
+
+        let vm = ChallengesListView.ViewModel(userID: UUID(), network: mock)
+        let result = await vm.getHabitFromChallenge(with: dto.id)
+
+        guard case let .success(habit) = result else {
+            Issue.record("Expected success")
+            return
+        }
+        #expect(habit.id == dto.id)
+    }
+
+    @Test("getHabitFromChallenge returns failure on error")
+    @MainActor
+    func getHabitFromChallengeFailure() async {
+        let mock = MockNetworkManager()
+        await mock.enqueueError(HHError.notFound)
+
+        let vm = ChallengesListView.ViewModel(userID: UUID(), network: mock)
+        let result = await vm.getHabitFromChallenge(with: UUID())
+
+        guard case .failure = result else {
+            Issue.record("Expected failure")
+            return
+        }
+    }
+
+    @Test("createHabitAfterAcceptingChallenge returns created habit on success")
+    @MainActor
+    func createHabitAfterAcceptingChallengeSuccess() async {
+        let mock = MockNetworkManager()
+        let dto = makeHabitDTO()
+        await mock.enqueue(dto)
+
+        let vm = ChallengesListView.ViewModel(userID: UUID(), network: mock)
+        let result = await vm.createHabitAfterAcceptingChallenge(habitDTO: dto, for: UUID())
+
+        guard case let .success(created) = result else {
+            Issue.record("Expected success")
+            return
+        }
+        #expect(created.id == dto.id)
+    }
+
+    @Test("createHabitAfterAcceptingChallenge returns failure on error")
+    @MainActor
+    func createHabitAfterAcceptingChallengeFailure() async {
+        let mock = MockNetworkManager()
+        await mock.enqueueError(HHError.serverError)
+
+        let vm = ChallengesListView.ViewModel(userID: UUID(), network: mock)
+        let result = await vm.createHabitAfterAcceptingChallenge(habitDTO: makeHabitDTO(), for: UUID())
+
+        guard case .failure = result else {
+            Issue.record("Expected failure")
+            return
+        }
+    }
 }
 
 // MARK: - FriendsListViewModel (MyFriendsView.ViewModel)
@@ -453,6 +548,71 @@ struct FriendDetailViewModelTests {
             Issue.record("Expected failure")
             return
         }
+    }
+
+    @Test("sendBoost marks habit as boosted in memory on success")
+    @MainActor
+    func sendBoostMarksBoosted() async {
+        let mock = MockNetworkManager()
+        await mock.enqueue(HTTPStatus.ok)
+
+        let vm = FriendDetailView.ViewModel(network: mock)
+        let habitID = UUID()
+        await vm.sendBoost(to: UUID(), about: habitID)
+
+        #expect(vm.isBoosted(habitID))
+    }
+
+    @Test("sendBoost does not mark habit as boosted on failure")
+    @MainActor
+    func sendBoostFailureDoesNotMarkBoosted() async {
+        let mock = MockNetworkManager()
+        await mock.enqueueError(HHError.serverError)
+
+        let vm = FriendDetailView.ViewModel(network: mock)
+        let habitID = UUID()
+        await vm.sendBoost(to: UUID(), about: habitID)
+
+        #expect(!vm.isBoosted(habitID))
+    }
+
+    @Test("sendChallenge returns true and reloads habits on success")
+    @MainActor
+    func sendChallengeSuccess() async {
+        let mock = MockNetworkManager()
+        let receiverID = UUID()
+        await mock.enqueue(HTTPStatus.ok)
+        await mock.enqueue([HabitDTO]())  // getUserHabits reload
+
+        let vm = FriendDetailView.ViewModel(network: mock)
+        let success = await vm.sendChallenge(to: receiverID, for: UUID())
+
+        #expect(success)
+        #expect(vm.habits.isEmpty)
+    }
+
+    @Test("sendChallenge returns false on network error")
+    @MainActor
+    func sendChallengeFailure() async {
+        let mock = MockNetworkManager()
+        await mock.enqueueError(HHError.serverError)
+
+        let vm = FriendDetailView.ViewModel(network: mock)
+        let success = await vm.sendChallenge(to: UUID(), for: UUID())
+
+        #expect(!success)
+    }
+
+    @Test("sendChallenge returns false on conflict (already sent)")
+    @MainActor
+    func sendChallengeConflict() async {
+        let mock = MockNetworkManager()
+        await mock.enqueueError(HHError.conflict)
+
+        let vm = FriendDetailView.ViewModel(network: mock)
+        let success = await vm.sendChallenge(to: UUID(), for: UUID())
+
+        #expect(!success)
     }
 }
 

@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct FriendCardView: View {
-    
+
     @Environment(\.dismiss) private var dismiss
-    
+
+    @State private var showChallengeConfirmation = false
+
     let friend: UserDTO
     let showChallengeButton: Bool
     var onChallenge: @MainActor () async -> Void
@@ -59,10 +61,7 @@ struct FriendCardView: View {
 
             if showChallengeButton {
                 Button {
-                    Task {
-                        await onChallenge()
-                        dismiss()
-                    }
+                    showChallengeConfirmation = true
                 } label: {
                     HStack(spacing: 6) {
                         Image(systemName: "flag.pattern.checkered.2.crossed")
@@ -75,6 +74,17 @@ struct FriendCardView: View {
                     .background(Color.accentColor)
                     .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+                .alert("Challenge", isPresented: $showChallengeConfirmation) {
+                    Button(String(localized: .sendChallenge)) {
+                        Task {
+                            await onChallenge()
+                            dismiss()
+                        }
+                    }
+                    Button("Cancel", role: .cancel) {}
+                } message: {
+                    Text(.yourFriendWillReceiveAChallengeInvite)
                 }
             }
         }

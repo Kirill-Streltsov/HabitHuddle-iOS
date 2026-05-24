@@ -19,10 +19,10 @@ struct HabitDTO: Codable, Identifiable, Equatable {
     let createdAt: Date?
     let updatedAt: Date?
     let checkIns: [HabitCheckInDTO]?
-    let challenges: [ChallengeDTO]?
+    let challenges: [LightweightChallenge]?
     let icon: String?
-    
-    init(id: UUID, user: LightweightUser, name: String, description: String, isPublic: Bool = false, category: String, duration: HabitDuration, reminderTime: Date?, createdAt: Date?, updatedAt: Date?, checkIns: [HabitCheckInDTO]?, challenges: [ChallengeDTO]?, icon: String?) {
+
+    init(id: UUID, user: LightweightUser, name: String, description: String, isPublic: Bool = false, category: String, duration: HabitDuration, reminderTime: Date?, createdAt: Date?, updatedAt: Date?, checkIns: [HabitCheckInDTO]?, challenges: [LightweightChallenge]?, icon: String?) {
         self.id = id
         self.user = user
         self.name = name

@@ -33,6 +33,7 @@ struct SyncManagerTests {
     // MARK: - getHabitsFromServer
 
     @Test("getHabitsFromServer returns success when network succeeds")
+    @MainActor
     func getHabitsFromServerSuccess() async {
         let mock = MockNetworkManager()
         let expected = [makeHabitDTO(), makeHabitDTO()]
@@ -50,6 +51,7 @@ struct SyncManagerTests {
     }
 
     @Test("getHabitsFromServer returns failure when network throws")
+    @MainActor
     func getHabitsFromServerFailure() async {
         let mock = MockNetworkManager()
         await mock.enqueueError(HHError.serverError)
@@ -66,6 +68,7 @@ struct SyncManagerTests {
     // MARK: - createHabitsOnTheServer
 
     @Test("createHabitsOnTheServer returns empty success for empty input")
+    @MainActor
     func createHabitsEmptyInput() async {
         let mock = MockNetworkManager()
         let sut = SyncManager(network: mock)
@@ -81,6 +84,7 @@ struct SyncManagerTests {
     }
 
     @Test("createHabitsOnTheServer succeeds when network returns created habits")
+    @MainActor
     func createHabitsSuccess() async {
         let mock = MockNetworkManager()
         let habitID = UUID()
@@ -111,6 +115,7 @@ struct SyncManagerTests {
     }
 
     @Test("createHabitsOnTheServer reports partialFailure when one habit fails")
+    @MainActor
     func createHabitsPartialFailure() async {
         let mock = MockNetworkManager()
         let dto1 = makeHabitDTO()
@@ -139,6 +144,7 @@ struct SyncManagerTests {
     // MARK: - deleteHabitsOnTheServer
 
     @Test("deleteHabitsOnTheServer returns empty success for empty input")
+    @MainActor
     func deleteHabitsEmptyInput() async {
         let mock = MockNetworkManager()
         let sut = SyncManager(network: mock)
