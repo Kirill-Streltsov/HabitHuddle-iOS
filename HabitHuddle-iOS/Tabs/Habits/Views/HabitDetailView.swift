@@ -16,6 +16,7 @@ struct HabitDetailView: View {
 
     @State private var typewriterTextID = UUID()
     @State private var isCheckedIn = false
+    @State private var trophyScale = 1.0
     @State private var deleteButtonPressed = false
     @State private var showEditSheet = false
     @State private var askOpenAITapped = false
@@ -49,7 +50,11 @@ struct HabitDetailView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(spacing: 16) {
-                    CheckInCardView(habit: habit)
+                    if habit.isCompleted {
+                        completedBanner
+                    } else {
+                        CheckInCardView(habit: habit)
+                    }
 
                     if !habit.habitDescription.isEmpty {
                         descriptionSection
@@ -129,6 +134,51 @@ struct HabitDetailView: View {
     }
 
     // MARK: - Sections
+
+    @ViewBuilder
+    private var completedBanner: some View {
+        Button {
+            HapticManager.trigger(.success)
+            habit.toggleCheckIn(in: context)
+            trophyScale += 0.3
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                trophyScale -= 0.3
+            }
+        } label: {
+            VStack(spacing: 16) {
+                ZStack {
+                    Circle()
+                        .stroke(Color.gray.opacity(0.2), lineWidth: 20)
+                    Circle()
+                        .stroke(
+                            habit.isCheckedInToday ? Color.yellow : Color.clear,
+                            style: StrokeStyle(lineWidth: 20, lineCap: .round)
+                        )
+                    Image(systemName: "trophy.fill")
+                        .font(.system(size: 68))
+                        .foregroundStyle(habit.isCheckedInToday ? Color.yellow : Color.gray.opacity(0.4))
+                }
+                .frame(width: 175, height: 175)
+                .scaleEffect(trophyScale)
+                .animation(.easeInOut(duration: 0.3), value: trophyScale)
+                .animation(.easeInOut(duration: 0.4), value: habit.isCheckedInToday)
+
+                Text(habit.isCheckedInToday ? .finishedKeepTheStreakAlive : .tapToCheckIn)
+                    .font(.headline)
+                    .foregroundStyle(habit.isCheckedInToday ? Color.green : Color.primary)
+                    .animation(.easeInOut(duration: 0.3), value: habit.isCheckedInToday)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color(.systemBackground))
+                    .shadow(color: Color(.label).opacity(0.1), radius: 8, x: 0, y: 4)
+            )
+            .padding(.horizontal)
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
 
     private var descriptionSection: some View {
         detailCard {
@@ -308,7 +358,19 @@ struct HabitDetailView: View {
 }
 
 #if DEBUG
-#Preview {
-    HabitDetailView(habit: Habit.demoHabitWith13Of14CheckIns())
+#Preview("Active habit") {
+    NavigationStack {
+        HabitDetailView(habit: Habit.demoHabitWithRecentCheckIns())
+    }
+    .modelContainer(for: [Habit.self, HabitCheckIn.self], inMemory: true)
+    .environmentObject(LocalUserManager())
+}
+
+#Preview("Completed habit") {
+    NavigationStack {
+        HabitDetailView(habit: Habit.demoHabitWithFullCheckIns())
+    }
+    .modelContainer(for: [Habit.self, HabitCheckIn.self], inMemory: true)
+    .environmentObject(LocalUserManager())
 }
 #endif

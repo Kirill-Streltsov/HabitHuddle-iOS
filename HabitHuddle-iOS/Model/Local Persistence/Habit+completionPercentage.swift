@@ -9,6 +9,6 @@ import Foundation
 extension Habit {
     var completionPercentage: Int {
         let completionPercentageDouble = Double(checkIns.count) / Double(duration.numberOfDays)
-        return Int(completionPercentageDouble * 100)
+        return min(100, Int(completionPercentageDouble * 100))
     }
 }
