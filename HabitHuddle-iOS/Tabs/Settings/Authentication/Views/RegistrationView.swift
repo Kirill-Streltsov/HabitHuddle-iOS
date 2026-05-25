@@ -305,19 +305,12 @@ struct RegistrationView: View {
     }
 
     private var signUpButton: some View {
-        Button {
-            registerUser()
-        } label: {
-            Text(.signUp)
-                .fontWeight(.semibold)
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity, minHeight: 50)
-        }
-        .background(inputFieldsAreEmpty ? Color.accentColor.opacity(0.4) : Color.accentColor)
-        .clipShape(.rect(cornerRadius: 14))
-        .padding(.horizontal)
-        .disabled(inputFieldsAreEmpty)
-        .animation(.easeInOut(duration: 0.15), value: inputFieldsAreEmpty)
+        FormPrimaryButton(
+            title: .signUp,
+            isLoading: viewModel.isSubmitting,
+            disabled: inputFieldsAreEmpty,
+            action: registerUser
+        )
     }
 
     // MARK: - Helpers

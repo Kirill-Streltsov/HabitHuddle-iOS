@@ -60,20 +60,15 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UNUserNotificationCenter.current().delegate = self
-
-        if let activityDictionary = launchOptions?[.userActivityDictionary] as? [AnyHashable: Any] {
-            for case let activity as NSUserActivity in activityDictionary.values {
-                if DeepLinkState.shared.handle(activity) { break }
-            }
-        }
-
         return true
     }
 
     func application(_ application: UIApplication,
-                     continue userActivity: NSUserActivity,
-                     restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        DeepLinkState.shared.handle(userActivity)
+                     configurationForConnecting connectingSceneSession: UISceneSession,
+                     options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        let config = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+        config.delegateClass = SceneDelegate.self
+        return config
     }
 
     func application(_ application: UIApplication,

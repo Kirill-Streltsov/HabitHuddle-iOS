@@ -80,9 +80,6 @@ struct RootView: View {
                 ResetPasswordView(token: route.token)
             }
         }
-        .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
-            _ = deepLinkState.handle(activity)
-        }
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {
             verifyToken()

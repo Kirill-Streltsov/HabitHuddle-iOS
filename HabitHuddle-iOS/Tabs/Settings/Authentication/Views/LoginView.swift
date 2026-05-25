@@ -175,19 +175,12 @@ struct LoginView: View {
     }
 
     private var signInButton: some View {
-        Button {
-            loginUser()
-        } label: {
-            Text(.signIn)
-                .fontWeight(.semibold)
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity, minHeight: 50)
-        }
-        .background(inputFieldIsEmpty ? Color.accentColor.opacity(0.4) : Color.accentColor)
-        .clipShape(.rect(cornerRadius: 14))
-        .padding(.horizontal)
-        .disabled(inputFieldIsEmpty)
-        .animation(.easeInOut(duration: 0.15), value: inputFieldIsEmpty)
+        FormPrimaryButton(
+            title: .signIn,
+            isLoading: viewModel.isSubmitting,
+            disabled: inputFieldIsEmpty,
+            action: loginUser
+        )
     }
 
     private var forgotPasswordLink: some View {

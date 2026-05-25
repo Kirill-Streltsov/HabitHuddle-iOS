@@ -16,6 +16,7 @@ extension RegistrationView {
 
         @Published var errorMessage: String = ""
         @Published var registeredUser: UserDTO? = nil
+        @Published var isSubmitting: Bool = false
 
         private let network: any NetworkManagerProtocol
 
@@ -32,6 +33,9 @@ extension RegistrationView {
                 password: password,
                 deviceToken: deviceToken
             )
+
+            isSubmitting = true
+            defer { isSubmitting = false }
 
             do {
                 let response = try await network.request(

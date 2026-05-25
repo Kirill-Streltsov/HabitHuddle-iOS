@@ -16,6 +16,7 @@ final class LoginViewModel: ObservableObject {
     @Published var errorMessage: String = ""
     @Published var loadedHabits = [HabitDTO]()
     @Published var loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
+    @Published var isSubmitting: Bool = false
 
     private let network: any NetworkManagerProtocol
 
@@ -25,6 +26,9 @@ final class LoginViewModel: ObservableObject {
 
     func loginUser(username: String, password: String) async {
         let base64Login = makeBase64Login(username: username, password: password)
+
+        isSubmitting = true
+        defer { isSubmitting = false }
 
         do {
             let headers = ["Authorization": "Basic \(base64Login)"]
