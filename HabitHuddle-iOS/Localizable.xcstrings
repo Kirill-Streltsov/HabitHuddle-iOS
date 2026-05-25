@@ -5306,7 +5306,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Habit Huddle — ваш личный помощник в формировании привычек."
+            "value" : "Habit Huddle, ваш личный помощник в формировании привычек."
           }
         }
       }
@@ -12396,7 +12396,7 @@
       }
     },
     "If an account exists for this email, we've sent instructions to reset your password" : {
-      "comment" : "Alert message after submitting a forgot-password request — intentionally vague to avoid leaking whether the email is registered",
+      "comment" : "Alert message after submitting a forgot-password request - intentionally vague to avoid leaking whether the email is registered",
       "extractionState" : "manual",
       "localizations" : {
         "de" : { "stringUnit" : { "state" : "translated", "value" : "Wenn ein Konto für diese E-Mail existiert, haben wir dir Anweisungen zum Zurücksetzen deines Passworts geschickt" } },
@@ -12492,6 +12492,292 @@
         "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ton mot de passe a été changé. Tu peux maintenant te connecter avec ton nouveau mot de passe." } },
         "it" : { "stringUnit" : { "state" : "translated", "value" : "La tua password è stata cambiata. Ora puoi accedere con la nuova password." } },
         "ru" : { "stringUnit" : { "state" : "translated", "value" : "Пароль изменён. Теперь можно войти с новым паролем." } }
+      }
+    },
+    "Change Email" : {
+      "comment" : "Title for change email screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "E-Mail ändern" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cambiar correo" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Changer l'e-mail" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Cambia e-mail" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Сменить e-mail" } }
+      }
+    },
+    "Change Password" : {
+      "comment" : "Title for change password screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Passwort ändern" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cambiar contraseña" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Changer le mot de passe" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Cambia password" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Сменить пароль" } }
+      }
+    },
+    "Current Password" : {
+      "comment" : "Label for current password field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Aktuelles Passwort" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Contraseña actual" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Mot de passe actuel" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Password attuale" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Текущий пароль" } }
+      }
+    },
+    "Current password is incorrect" : {
+      "comment" : "Error when current password verification fails",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Aktuelles Passwort ist falsch" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "La contraseña actual es incorrecta" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Mot de passe actuel incorrect" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "La password attuale non è corretta" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Текущий пароль неверен" } }
+      }
+    },
+    "Edit Name" : {
+      "comment" : "Title for edit name screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Name bearbeiten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Editar nombre" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Modifier le nom" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Modifica nome" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Изменить имя" } }
+      }
+    },
+    "Edit Profile" : {
+      "comment" : "Settings entry to edit account info",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Profil bearbeiten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Editar perfil" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Modifier le profil" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Modifica profilo" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Изменить профиль" } }
+      }
+    },
+    "Edit Username" : {
+      "comment" : "Title for edit username screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Benutzername bearbeiten" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Editar nombre de usuario" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Modifier le nom d'utilisateur" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Modifica nome utente" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Изменить имя пользователя" } }
+      }
+    },
+    "Email is already in use" : {
+      "comment" : "Error when email taken",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "E-Mail-Adresse ist bereits vergeben" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "El correo ya está en uso" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Cette adresse e-mail est déjà utilisée" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Questa e-mail è già in uso" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "E-mail уже используется" } }
+      }
+    },
+    "Email Sent" : {
+      "comment" : "Verification email sent alert title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "E-Mail gesendet" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Correo enviado" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "E-mail envoyé" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "E-mail inviata" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "E-mail отправлен" } }
+      }
+    },
+    "Enter your current password..." : {
+      "comment" : "Placeholder for current password field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Aktuelles Passwort eingeben..." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Introduce tu contraseña actual..." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Entrez votre mot de passe actuel..." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Inserisci la tua password attuale..." } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Введите текущий пароль..." } }
+      }
+    },
+    "Enter your current password to authorize this change." : {
+      "comment" : "Info text when current password required",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Gib dein aktuelles Passwort ein, um die Änderung zu autorisieren." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Introduce tu contraseña actual para autorizar este cambio." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Entrez votre mot de passe actuel pour autoriser ce changement." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Inserisci la tua password attuale per autorizzare questa modifica." } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Введите текущий пароль, чтобы подтвердить это изменение." } }
+      }
+    },
+    "Enter your new email..." : {
+      "comment" : "Placeholder for new email field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Neue E-Mail-Adresse eingeben..." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Introduce tu nuevo correo..." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Entrez votre nouvelle adresse e-mail..." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Inserisci la tua nuova e-mail..." } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Введите новый e-mail..." } }
+      }
+    },
+    "Enter your new password..." : {
+      "comment" : "Placeholder for new password field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Neues Passwort eingeben..." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Introduce tu nueva contraseña..." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Entrez votre nouveau mot de passe..." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Inserisci la tua nuova password..." } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Введите новый пароль..." } }
+      }
+    },
+    "Name cannot be empty" : {
+      "comment" : "Validation error for empty name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Name darf nicht leer sein" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "El nombre no puede estar vacío" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Le nom ne peut pas être vide" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Il nome non può essere vuoto" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Имя не может быть пустым" } }
+      }
+    },
+    "New email" : {
+      "comment" : "Label for new email field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Neue E-Mail" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Nuevo correo" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Nouvelle adresse e-mail" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Nuova e-mail" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Новый e-mail" } }
+      }
+    },
+    "Not Verified" : {
+      "comment" : "Email verification status label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Nicht bestätigt" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "No verificado" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Non vérifié" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Non verificata" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Не подтверждён" } }
+      }
+    },
+    "Profile Updated" : {
+      "comment" : "Success alert title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Profil aktualisiert" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Perfil actualizado" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Profil mis à jour" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Profilo aggiornato" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Профиль обновлён" } }
+      }
+    },
+    "Save Changes" : {
+      "comment" : "Submit button label for profile edit screens",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Änderungen speichern" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardar cambios" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Enregistrer les modifications" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Salva modifiche" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Сохранить изменения" } }
+      }
+    },
+    "Username is already in use" : {
+      "comment" : "Error when username taken",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Benutzername ist bereits vergeben" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "El nombre de usuario ya está en uso" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ce nom d'utilisateur est déjà pris" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Questo nome utente è già in uso" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Имя пользователя уже занято" } }
+      }
+    },
+    "Verified" : {
+      "comment" : "Email verification status label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Bestätigt" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Verificado" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Vérifié" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Verificata" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Подтверждён" } }
+      }
+    },
+    "We sent a confirmation link to your new email address. Tap it to finish updating your account." : {
+      "comment" : "Confirmation after email change",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wir haben einen Bestätigungslink an deine neue E-Mail-Adresse gesendet. Tippe darauf, um die Änderung abzuschließen." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hemos enviado un enlace de confirmación a tu nueva dirección de correo. Tócalo para finalizar la actualización de tu cuenta." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Nous avons envoyé un lien de confirmation à votre nouvelle adresse e-mail. Touchez-le pour terminer la mise à jour de votre compte." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Abbiamo inviato un link di conferma al tuo nuovo indirizzo e-mail. Toccalo per completare l'aggiornamento del tuo account." } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Мы отправили ссылку для подтверждения на ваш новый адрес электронной почты. Нажмите её, чтобы завершить обновление аккаунта." } }
+      }
+    },
+    "We'll send a confirmation link to verify the change." : {
+      "comment" : "Info text on change email screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wir senden einen Bestätigungslink, um die Änderung zu bestätigen." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Enviaremos un enlace de confirmación para verificar el cambio." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Nous enverrons un lien de confirmation pour vérifier le changement." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Invieremo un link di conferma per verificare la modifica." } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Мы отправим ссылку для подтверждения этого изменения." } }
+      }
+    },
+    "Your new password must be different from the current one." : {
+      "comment" : "Validation error",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Dein neues Passwort muss sich vom aktuellen unterscheiden." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tu nueva contraseña debe ser diferente de la actual." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Votre nouveau mot de passe doit être différent de l'actuel." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "La tua nuova password deve essere diversa dall'attuale." } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Новый пароль должен отличаться от текущего." } }
+      }
+    },
+    "Your profile has been updated." : {
+      "comment" : "Success alert body",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Dein Profil wurde aktualisiert." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tu perfil ha sido actualizado." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Votre profil a été mis à jour." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Il tuo profilo è stato aggiornato." } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Ваш профиль обновлён." } }
+      }
+    },
+    "Profile" : {
+      "comment" : "Section header on edit profile screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Profil" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Perfil" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Profil" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Profilo" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Профиль" } }
+      }
+    },
+    "Security" : {
+      "comment" : "Section header on edit profile screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sicherheit" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Seguridad" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Sécurité" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Sicurezza" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Безопасность" } }
       }
     }
   },

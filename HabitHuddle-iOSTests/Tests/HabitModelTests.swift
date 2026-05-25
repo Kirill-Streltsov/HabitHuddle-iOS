@@ -68,7 +68,7 @@ struct HabitModelTests {
     @Test("currentStreak is 0 when last check-in was 2+ days ago")
     func currentStreakBrokenByGap() {
         let habit = makeHabit()
-        // Most recent check-in was 2 days ago — streak should be dead
+        // Most recent check-in was 2 days ago; streak should be dead
         habit.checkIns = [
             checkIn(daysAgo: 2, habit: habit),
             checkIn(daysAgo: 3, habit: habit),

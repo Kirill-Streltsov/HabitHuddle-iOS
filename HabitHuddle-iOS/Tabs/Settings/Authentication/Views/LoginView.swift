@@ -54,7 +54,14 @@ struct LoginView: View {
                     habits.forEach { $0.isSyncable = true }
                     HapticManager.trigger(.success)
                     appState.isAuthenticated = true
-                    userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
+                    userManager.profile = LocalUser(
+                        id: newValue.id,
+                        username: newValue.username,
+                        name: newValue.name,
+                        email: newValue.email,
+                        isSignedInToServer: true,
+                        isEmailVerified: newValue.isEmailVerified
+                    )
                     dismiss()
                     if !users.contains(where: { $0.id == newValue.id }) {
                         context.insert(newValue.toSwiftData())

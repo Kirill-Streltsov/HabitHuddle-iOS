@@ -96,7 +96,7 @@ struct FriendCardView: View {
     }
 }
 
-#Preview("Friends tab — no buttons") {
+#Preview("Friends tab: no buttons") {
     FriendCardView(
         friend: UserDTO(id: UUID(), username: "username", name: "Username", createdAt: .now, updatedAt: .now),
         showChallengeButton: false
@@ -105,7 +105,7 @@ struct FriendCardView: View {
     .background(Color(.systemGroupedBackground))
 }
 
-#Preview("Challenge mode — with button") {
+#Preview("Challenge mode: with button") {
     FriendCardView(
         friend: UserDTO(id: UUID(), username: "jdoe", name: "John Doe", createdAt: .now, updatedAt: .now),
         showChallengeButton: true,

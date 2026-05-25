@@ -162,7 +162,7 @@ struct ChallengesListView: View {
             return
         }
 
-        // The server already has this user's habit for this challenge — don't POST a new one.
+        // The server already has this user's habit for this challenge; don't POST a new one.
         // Wait for SyncManager.performFullSync to pull it down; updateLocalStorage will be called
         // again on the next refresh and the habits @Query will then match.
         let myHabitIDOnServer = challenge.initiator.user.id == userID

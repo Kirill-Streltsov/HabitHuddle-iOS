@@ -187,7 +187,7 @@ final class SyncManager {
         let serverResult = await getHabitsFromServer()
         guard case let .success(serverHabits) = serverResult else { return }
 
-        // When local is empty, populate from server and stop — don't diff against empty set
+        // When local is empty, populate from server and stop; don't diff against empty set
         // (which would immediately re-delete everything we just saved).
         if localHabits.isEmpty && !serverHabits.isEmpty {
             saveHabits(serverHabits, in: modelContext)

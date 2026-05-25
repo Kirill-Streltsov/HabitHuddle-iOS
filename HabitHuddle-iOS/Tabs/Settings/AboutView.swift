@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AboutView: View {
     private var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "—"
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "N/A"
     }
 
     var body: some View {

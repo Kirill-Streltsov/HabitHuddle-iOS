@@ -44,7 +44,7 @@ struct HTTPStatusTests {
 
     @Test("unknown code falls back to .serverError")
     func statusUnknown() {
-        // 204 No Content is not in the enum — should fall back to .serverError
+        // 204 No Content is not in the enum; should fall back to .serverError
         #expect(HTTPStatus(statusCode: 204) == .serverError)
     }
 }
@@ -175,7 +175,7 @@ struct ChallengeDetailViewModelTests {
         return HabitCheckInDTO(date: date, habit: LightweightHabit(id: UUID()))
     }
 
-    @Test("both IDs nil — both date arrays stay empty")
+    @Test("both IDs nil: both date arrays stay empty")
     @MainActor
     func bothIDsNil() async {
         let mock = MockNetworkManager()
@@ -187,7 +187,7 @@ struct ChallengeDetailViewModelTests {
         #expect(vm.receiverDates.isEmpty)
     }
 
-    @Test("initiator ID nil — only receiver dates are fetched")
+    @Test("initiator ID nil: only receiver dates are fetched")
     @MainActor
     func initiatorIDNil() async {
         let mock = MockNetworkManager()
@@ -200,7 +200,7 @@ struct ChallengeDetailViewModelTests {
         #expect(vm.receiverDates.count == 1)
     }
 
-    @Test("receiver ID nil — only initiator dates are fetched")
+    @Test("receiver ID nil: only initiator dates are fetched")
     @MainActor
     func receiverIDNil() async {
         let mock = MockNetworkManager()
@@ -213,7 +213,7 @@ struct ChallengeDetailViewModelTests {
         #expect(vm.receiverDates.isEmpty)
     }
 
-    @Test("both IDs provided — both arrays are populated")
+    @Test("both IDs provided: both arrays are populated")
     @MainActor
     func bothIDsProvided() async {
         let mock = MockNetworkManager()
@@ -228,7 +228,7 @@ struct ChallengeDetailViewModelTests {
         #expect(!vm.receiverDates.isEmpty)
     }
 
-    @Test("one fetch fails — the other array still populates")
+    @Test("one fetch fails: the other array still populates")
     @MainActor
     func oneFetchFails() async {
         let mock = MockNetworkManager()
@@ -244,7 +244,7 @@ struct ChallengeDetailViewModelTests {
         #expect(total == 1)
     }
 
-    @Test("both fetches fail — both arrays stay empty")
+    @Test("both fetches fail: both arrays stay empty")
     @MainActor
     func bothFetchFail() async {
         let mock = MockNetworkManager()
@@ -263,7 +263,7 @@ struct ChallengeDetailViewModelTests {
     func dateMappingIsCorrect() async {
         let mock = MockNetworkManager()
         let expectedDate = Date(timeIntervalSince1970: 1_700_000_000)
-        // Pass forReceiver: nil so only one network call is made — no ordering ambiguity
+        // Pass forReceiver: nil so only one network call is made; no ordering ambiguity
         await mock.enqueue([HabitCheckInDTO(date: expectedDate, habit: LightweightHabit(id: UUID()))])
 
         let vm = ChallengeCheckInsListView.ViewModel(network: mock)

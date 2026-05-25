@@ -72,7 +72,14 @@ struct SettingsView: View {
                 habits.forEach { $0.isSyncable = true }
                 HapticManager.trigger(.success)
                 appState.isAuthenticated = true
-                userManager.profile = LocalUser(id: newValue.id, username: newValue.username, name: newValue.name, isSignedInToServer: true)
+                userManager.profile = LocalUser(
+                    id: newValue.id,
+                    username: newValue.username,
+                    name: newValue.name,
+                    email: newValue.email,
+                    isSignedInToServer: true,
+                    isEmailVerified: newValue.isEmailVerified
+                )
                 if !users.contains(where: { $0.id == newValue.id }) {
                     context.insert(newValue.toSwiftData())
                     context.saveOrLog()
@@ -120,6 +127,13 @@ struct SettingsView: View {
                     Spacer()
                     Text(userManager.profile.username)
                         .foregroundStyle(.secondary)
+                }
+
+                NavigationLink(destination: AccountSettingsView()) {
+                    HStack(spacing: 12) {
+                        settingsIcon("person.crop.circle.badge.pencil", color: .blue)
+                        Text(.editProfile)
+                    }
                 }
 
                 Button(role: .destructive) {
