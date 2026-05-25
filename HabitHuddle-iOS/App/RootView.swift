@@ -21,6 +21,7 @@ struct RootView: View {
     @EnvironmentObject private var userManager: LocalUserManager
 
     @State private var showLoggedOut = false
+    @State private var resetPasswordToken: String?
 
     @Query
     var habits: [Habit]
@@ -70,10 +71,30 @@ struct RootView: View {
         .alert(String(localized: .youveBeenLoggedOut), isPresented: $showLoggedOut) {} message: {
             Text(.thisCanHappenIfYourSessionExpiresLogBackInToContinueSyncingYourHabitsAndUsingAllSocialFeatures)
         }
+        .sheet(item: Binding(
+            get: { resetPasswordToken.map(ResetPasswordRoute.init) },
+            set: { resetPasswordToken = $0?.token }
+        )) { route in
+            NavigationStack {
+                ResetPasswordView(token: route.token)
+            }
+        }
+        .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
+            handleUniversalLink(activity)
+        }
         .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         .onAppear {
             verifyToken()
             //print("TOKEN: \(TokenManager.token)")
+        }
+    }
+
+    // MARK: - Universal Link Handling
+
+    private func handleUniversalLink(_ activity: NSUserActivity) {
+        guard let url = activity.webpageURL else { return }
+        if let token = DeepLinkRouter.parseResetPasswordToken(from: url) {
+            resetPasswordToken = token
         }
     }
 
@@ -104,6 +125,11 @@ struct RootView: View {
             appState.logout(userManager: userManager)
         }
     }
+}
+
+private struct ResetPasswordRoute: Identifiable {
+    let token: String
+    var id: String { token }
 }
 
 #Preview {

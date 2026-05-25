@@ -42,6 +42,14 @@ struct Endpoint {
         Endpoint(path: "auth/me")
     }
 
+    static func forgotPassword() -> Endpoint {
+        Endpoint(path: "auth/forgot-password")
+    }
+
+    static func resetPassword() -> Endpoint {
+        Endpoint(path: "auth/reset-password")
+    }
+
     // MARK: Habits
     
     static func createHabit() -> Endpoint {

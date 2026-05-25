@@ -12350,6 +12350,149 @@
           }
         }
       }
+    },
+    "Choose a New Password" : {
+      "comment" : "Headline on the reset password screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wähle ein neues Passwort" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Elige una nueva contraseña" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Choisis un nouveau mot de passe" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Scegli una nuova password" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Выберите новый пароль" } }
+      }
+    },
+    "Enter and confirm your new password" : {
+      "comment" : "Subtitle under the reset password headline",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Gib dein neues Passwort ein und bestätige es" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Introduce y confirma tu nueva contraseña" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Saisis et confirme ton nouveau mot de passe" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Inserisci e conferma la tua nuova password" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Введите и подтвердите новый пароль" } }
+      }
+    },
+    "Enter your email and we'll send you a link to reset your password" : {
+      "comment" : "Subtitle on the forgot password screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Gib deine E-Mail ein und wir senden dir einen Link zum Zurücksetzen deines Passworts" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Introduce tu correo y te enviaremos un enlace para restablecer tu contraseña" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Saisis ton e-mail et nous t'enverrons un lien pour réinitialiser ton mot de passe" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Inserisci la tua email e ti invieremo un link per reimpostare la password" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Введите вашу почту, и мы отправим ссылку для сброса пароля" } }
+      }
+    },
+    "Forgot Password?" : {
+      "comment" : "Link on the login screen that opens the forgot password flow",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Passwort vergessen?" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¿Olvidaste tu contraseña?" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Mot de passe oublié ?" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Password dimenticata?" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Забыли пароль?" } }
+      }
+    },
+    "If an account exists for this email, we've sent instructions to reset your password" : {
+      "comment" : "Alert message after submitting a forgot-password request — intentionally vague to avoid leaking whether the email is registered",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wenn ein Konto für diese E-Mail existiert, haben wir dir Anweisungen zum Zurücksetzen deines Passworts geschickt" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Si existe una cuenta con este correo, te hemos enviado instrucciones para restablecer tu contraseña" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Si un compte existe pour cet e-mail, nous t'avons envoyé les instructions pour réinitialiser ton mot de passe" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Se esiste un account per questa email, ti abbiamo inviato le istruzioni per reimpostare la password" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Если для этой почты есть аккаунт, мы отправили инструкции по сбросу пароля" } }
+      }
+    },
+    "Invalid or expired reset link" : {
+      "comment" : "Error shown when the reset token is unknown",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Ungültiger oder abgelaufener Link" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Enlace no válido o caducado" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Lien invalide ou expiré" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Link non valido o scaduto" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Недействительная или просроченная ссылка" } }
+      }
+    },
+    "New Password" : {
+      "comment" : "Navigation title on the reset password screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Neues Passwort" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Nueva contraseña" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Nouveau mot de passe" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Nuova password" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Новый пароль" } }
+      }
+    },
+    "Password Updated" : {
+      "comment" : "Alert title after a successful password reset",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Passwort aktualisiert" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Contraseña actualizada" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Mot de passe mis à jour" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Password aggiornata" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Пароль обновлён" } }
+      }
+    },
+    "Reset Your Password" : {
+      "comment" : "Headline on the forgot password screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Passwort zurücksetzen" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Restablece tu contraseña" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Réinitialise ton mot de passe" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Reimposta la tua password" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Сбросьте пароль" } }
+      }
+    },
+    "Send Reset Link" : {
+      "comment" : "Primary button on the forgot password screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Link senden" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Enviar enlace" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Envoyer le lien" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Invia link" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Отправить ссылку" } }
+      }
+    },
+    "This reset link has expired. Please request a new one." : {
+      "comment" : "Error shown when the reset token has expired",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Dieser Link ist abgelaufen. Bitte fordere einen neuen an." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Este enlace ha caducado. Solicita uno nuevo." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ce lien a expiré. Demande-en un nouveau." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Questo link è scaduto. Richiedine uno nuovo." } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Ссылка просрочена. Запросите новую." } }
+      }
+    },
+    "Update Password" : {
+      "comment" : "Primary button on the reset password screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Passwort aktualisieren" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Actualizar contraseña" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Mettre à jour" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Aggiorna password" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Обновить пароль" } }
+      }
+    },
+    "Your password has been changed. You can now sign in with your new password." : {
+      "comment" : "Alert message after a successful password reset",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Dein Passwort wurde geändert. Du kannst dich jetzt mit dem neuen Passwort anmelden." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tu contraseña se ha cambiado. Ahora puedes iniciar sesión con tu nueva contraseña." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ton mot de passe a été changé. Tu peux maintenant te connecter avec ton nouveau mot de passe." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "La tua password è stata cambiata. Ora puoi accedere con la nuova password." } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Пароль изменён. Теперь можно войти с новым паролем." } }
+      }
     }
   },
   "version" : "1.0"

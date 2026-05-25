@@ -45,6 +45,7 @@ struct LoginView: View {
                     errorBanner
                     credentialsSection
                     signInButton
+                    forgotPasswordLink
                 }
                 .padding(.bottom, 32)
             }
@@ -179,6 +180,17 @@ struct LoginView: View {
         .padding(.horizontal)
         .disabled(inputFieldIsEmpty)
         .animation(.easeInOut(duration: 0.15), value: inputFieldIsEmpty)
+    }
+
+    private var forgotPasswordLink: some View {
+        NavigationLink {
+            ForgotPasswordView()
+        } label: {
+            Text(.forgotPassword)
+                .font(.subheadline)
+                .foregroundStyle(Color.accentColor)
+        }
+        .padding(.top, 4)
     }
 
     // MARK: - Helpers
