@@ -25,6 +25,7 @@ struct ChallengesListView: View {
     @State private var message = ""
     @State private var selectedChallenge: ChallengeDTO? = nil
     @State private var ongoingChallengeID = UUID()
+    @State private var processingChallengeIDs: Set<UUID> = []
         
     @Environment(\.modelContext) private var context
     @EnvironmentObject var appState: AppState
@@ -80,6 +81,15 @@ struct ChallengesListView: View {
                             if !challenges.contains(where: { $0.id == newChallenge.id }) {
                                 updateLocalStorage(from: newChallenge)
                             }
+                        }
+                    }
+                }
+                .onChange(of: habits) { _, _ in
+                    // When SyncManager pulls habits down (e.g. challenge accepted on another device),
+                    // re-attempt local-storage updates so the Challenge gets linked to the new habit.
+                    for newChallenge in viewModel.acceptedChallenges {
+                        if !challenges.contains(where: { $0.id == newChallenge.id }) {
+                            updateLocalStorage(from: newChallenge)
                         }
                     }
                 }
@@ -144,11 +154,24 @@ struct ChallengesListView: View {
     }
     
     private func updateLocalStorage(from challenge: ChallengeDTO) {
-        guard let habit = habits.filter({ $0.id == challenge.initiatorHabitID || $0.id == challenge.receiverHabitID }).first else {
-            getHabit(from: challenge)
+        if challenges.contains(where: { $0.id == challenge.id }) { return }
+        if processingChallengeIDs.contains(challenge.id) { return }
+
+        if let habit = habits.first(where: { $0.id == challenge.initiatorHabitID || $0.id == challenge.receiverHabitID }) {
+            saveChallengeLocally(from: challenge, for: habit)
             return
         }
-        saveChallengeLocally(from: challenge, for: habit)
+
+        // The server already has this user's habit for this challenge — don't POST a new one.
+        // Wait for SyncManager.performFullSync to pull it down; updateLocalStorage will be called
+        // again on the next refresh and the habits @Query will then match.
+        let myHabitIDOnServer = challenge.initiator.user.id == userID
+            ? challenge.initiatorHabitID
+            : challenge.receiverHabitID
+        if myHabitIDOnServer != nil { return }
+
+        processingChallengeIDs.insert(challenge.id)
+        getHabit(from: challenge)
     }
 
     private func challengeCard(with challenge: ChallengeDTO) -> some View {
@@ -195,6 +218,7 @@ struct ChallengesListView: View {
         }
         guard let habitID = templateHabitID else {
             print("❌ Error: No template habit ID for challenge \(challenge.id)")
+            processingChallengeIDs.remove(challenge.id)
             return
         }
         Task {
@@ -205,12 +229,14 @@ struct ChallengesListView: View {
                 createHabitAfterAcceptingChallenge(habitDTO: habitToSend, challengeDTO: challenge)
             } onFailure: { error in
                 print("❌ Error: Fetching template habit for challenge \(challenge.id): \(error)")
+                processingChallengeIDs.remove(challenge.id)
             }
         }
     }
-    
+
     private func createHabitAfterAcceptingChallenge(habitDTO: HabitDTO, challengeDTO: ChallengeDTO) {
         Task {
+            defer { processingChallengeIDs.remove(challengeDTO.id) }
             let sentHabitResult = await viewModel.createHabitAfterAcceptingChallenge(habitDTO: habitDTO, for: challengeDTO.id)
             Helpers.handleResult(sentHabitResult) { createdHabit in
                 if !habits.contains(where: { $0.id == createdHabit.id }) {
