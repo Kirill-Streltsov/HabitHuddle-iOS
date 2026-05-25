@@ -55,20 +55,33 @@ struct HabitHuddle_iOSApp: App {
 
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
-    
+
     @AppStorage("deviceToken") private var token: String = ""
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UNUserNotificationCenter.current().delegate = self
+
+        if let activityDictionary = launchOptions?[.userActivityDictionary] as? [AnyHashable: Any] {
+            for case let activity as NSUserActivity in activityDictionary.values {
+                if DeepLinkState.shared.handle(activity) { break }
+            }
+        }
+
         return true
     }
-    
+
+    func application(_ application: UIApplication,
+                     continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        DeepLinkState.shared.handle(userActivity)
+    }
+
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
         token = tokenString
     }
-    
+
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("❌ Failed to register for push notifications: \(error)")

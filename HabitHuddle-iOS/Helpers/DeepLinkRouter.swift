@@ -16,3 +16,30 @@ enum DeepLinkRouter {
         return token
     }
 }
+
+/// Shared deep-link state observed by `RootView` and written to by `AppDelegate`.
+/// `AppDelegate` ownership is required to catch universal links delivered via
+/// `launchOptions[.userActivityDictionary]` on cold-start, which SwiftUI's
+/// `.onContinueUserActivity` modifier does not reliably receive.
+final class DeepLinkState: ObservableObject {
+
+    static let shared = DeepLinkState()
+
+    @Published var resetPasswordToken: String?
+
+    private init() {}
+
+    @discardableResult
+    func handle(_ url: URL) -> Bool {
+        guard let token = DeepLinkRouter.parseResetPasswordToken(from: url) else { return false }
+        resetPasswordToken = token
+        return true
+    }
+
+    @discardableResult
+    func handle(_ activity: NSUserActivity) -> Bool {
+        guard activity.activityType == NSUserActivityTypeBrowsingWeb,
+              let url = activity.webpageURL else { return false }
+        return handle(url)
+    }
+}
