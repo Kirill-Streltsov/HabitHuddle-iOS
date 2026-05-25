@@ -28,12 +28,8 @@ struct AccountSettingsView: View {
                     row(icon: "person.text.rectangle", color: .blue, label: Text(.name), value: userManager.profile.name)
                 }
 
-                if isSSOUser {
-                    usernameRow
-                } else {
-                    NavigationLink(destination: EditUsernameView()) {
-                        row(icon: "at", color: .blue, label: Text(.username), value: userManager.profile.username)
-                    }
+                NavigationLink(destination: EditUsernameView()) {
+                    row(icon: "at", color: .blue, label: Text(.username), value: userManager.profile.username)
                 }
 
                 if isSSOUser {
@@ -72,25 +68,6 @@ struct AccountSettingsView: View {
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
                 .truncationMode(.middle)
-        }
-    }
-
-    private var usernameRow: some View {
-        HStack(spacing: 12) {
-            rowIcon("at", color: .blue)
-            Text(.username)
-            Spacer()
-            VStack(alignment: .trailing, spacing: 2) {
-                Text(userManager.profile.username)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-                if let providerCaption {
-                    Text(providerCaption)
-                        .font(.caption2.weight(.medium))
-                        .foregroundStyle(.secondary)
-                }
-            }
         }
     }
 

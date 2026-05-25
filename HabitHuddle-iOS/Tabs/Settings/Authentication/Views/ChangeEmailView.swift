@@ -30,7 +30,7 @@ struct ChangeEmailView: View {
 
     private var disabled: Bool {
         viewModel.isSubmitting
-            || !trimmedEmail.contains("@")
+            || !trimmedEmail.isValidEmail
             || trimmedEmail == (userManager.profile.email ?? "").lowercased()
             || currentPassword.isEmpty
     }

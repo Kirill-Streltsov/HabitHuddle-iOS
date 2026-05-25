@@ -21,7 +21,7 @@ extension ForgotPasswordView {
 
         func requestReset(email: String) async {
             let trimmed = email.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard trimmed.contains("@") else {
+            guard trimmed.isValidEmail else {
                 errorMessage = String(localized: .pleaseEnterAValidEmailAddress)
                 scheduleErrorClear()
                 return

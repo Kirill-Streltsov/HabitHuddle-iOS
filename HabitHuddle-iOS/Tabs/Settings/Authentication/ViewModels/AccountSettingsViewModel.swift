@@ -54,14 +54,21 @@ final class AccountSettingsViewModel: ObservableObject {
             email: nil,
             newPassword: nil,
             currentPassword: nil
-        ))
+        ), errorMapper: { error in
+            // Only conflict the server can return when we're just changing the username
+            // is "Username already in use" — surface a meaningful message.
+            if error == .conflict {
+                return String(localized: .usernameIsAlreadyInUse)
+            }
+            return nil
+        })
     }
 
     // MARK: - Email
 
     func updateEmail(newEmail: String, currentEmail: String?, currentPassword: String) async {
         let trimmed = newEmail.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        guard trimmed.contains("@"), trimmed.count >= 3 else {
+        guard trimmed.isValidEmail else {
             setError(String(localized: .pleaseEnterAValidEmailAddress))
             return
         }
@@ -114,7 +121,11 @@ final class AccountSettingsViewModel: ObservableObject {
 
     // MARK: - Shared submit
 
-    private func submit(_ request: UpdateProfileRequest, onSuccess: ((UserDTO) -> Void)? = nil) async {
+    private func submit(
+        _ request: UpdateProfileRequest,
+        onSuccess: ((UserDTO) -> Void)? = nil,
+        errorMapper: ((HHError) -> String?)? = nil
+    ) async {
         errorMessage = ""
         isSubmitting = true
         defer { isSubmitting = false }
@@ -131,7 +142,7 @@ final class AccountSettingsViewModel: ObservableObject {
             lastUpdatedUser = updated
             onSuccess?(updated)
         } catch let apiError as HHError {
-            setError(apiError.localizedDescription)
+            setError(errorMapper?(apiError) ?? apiError.localizedDescription)
         } catch {
             setError(String(localized: .somethingWentWrongPleaseTryAgain))
         }

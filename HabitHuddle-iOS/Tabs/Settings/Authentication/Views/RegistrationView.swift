@@ -70,7 +70,7 @@ struct RegistrationView: View {
 
     private var inputFieldsAreValid: Bool {
         username.count >= 3 &&
-        email.contains("@") &&
+        email.isValidEmail &&
         passwordsMatch &&
         password.count >= 5 &&
         viewModel.errorMessage.isEmpty
@@ -79,7 +79,7 @@ struct RegistrationView: View {
     private var errorText: String {
         if username.count < 3 {
             return String(localized: .usernameShouldHaveAtLeast3Symbols)
-        } else if email.isEmpty || !email.contains("@") {
+        } else if !email.isValidEmail {
             return String(localized: .pleaseEnterAValidEmailAddress)
         } else if !passwordsMatch {
             return String(localized: .makeSureBothPasswordFieldsAreTheSame)
