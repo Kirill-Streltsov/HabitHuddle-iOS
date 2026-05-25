@@ -21,6 +21,7 @@ enum DeepLinkRouter {
 /// `AppDelegate` ownership is required to catch universal links delivered via
 /// `launchOptions[.userActivityDictionary]` on cold-start, which SwiftUI's
 /// `.onContinueUserActivity` modifier does not reliably receive.
+@MainActor
 final class DeepLinkState: ObservableObject {
 
     static let shared = DeepLinkState()
