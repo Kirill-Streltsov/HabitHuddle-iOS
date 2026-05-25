@@ -7,9 +7,10 @@
 
 import SwiftUI
 
+@MainActor
 final class AppState: ObservableObject {
     @Published var isAuthenticated: Bool = TokenManager.token != nil
-    
+
     func logout(userManager: LocalUserManager) {
         isAuthenticated = false
         userManager.profile = LocalUser(id: UUID(), username: "", name: "", isSignedInToServer: false)

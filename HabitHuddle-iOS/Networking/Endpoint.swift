@@ -50,6 +50,13 @@ struct Endpoint {
         Endpoint(path: "auth/reset-password")
     }
 
+    static func verifyEmail(token: String) -> Endpoint {
+        Endpoint(
+            path: "auth/verify-email",
+            queryItems: [URLQueryItem(name: "token", value: token)]
+        )
+    }
+
     // MARK: Habits
     
     static func createHabit() -> Endpoint {

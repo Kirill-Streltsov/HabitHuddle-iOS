@@ -10,8 +10,18 @@ enum DeepLinkRouter {
     /// Parses an incoming Universal Link URL for a password reset token.
     /// Returns the token string if the URL matches the reset path and carries a non-empty token query item.
     static func parseResetPasswordToken(from url: URL) -> String? {
+        parseToken(from: url, expectedPath: "/reset-password")
+    }
+
+    /// Parses an incoming Universal Link URL for an email verification token.
+    /// Returns the token string if the URL matches the verification path and carries a non-empty token query item.
+    static func parseEmailVerificationToken(from url: URL) -> String? {
+        parseToken(from: url, expectedPath: "/verify-email")
+    }
+
+    private static func parseToken(from url: URL, expectedPath: String) -> String? {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
-        guard components.path == "/reset-password" else { return nil }
+        guard components.path == expectedPath else { return nil }
         guard let token = components.queryItems?.first(where: { $0.name == "token" })?.value, !token.isEmpty else { return nil }
         return token
     }
@@ -27,19 +37,28 @@ final class DeepLinkState: ObservableObject {
     static let shared = DeepLinkState()
 
     @Published var resetPasswordToken: String?
+    @Published var emailVerificationToken: String?
 
     private init() {}
 
     @discardableResult
     func handle(_ url: URL) -> Bool {
-        guard let token = DeepLinkRouter.parseResetPasswordToken(from: url) else { return false }
-        // Defer to the next runloop so the assignment is observed by SwiftUI's
-        // sheet binding even when the link arrives during cold-start scene
+        // Defer assignments to the next runloop so they're observed by SwiftUI's
+        // bindings even when the link arrives during cold-start scene
         // connection, before `RootView` has mounted.
-        DispatchQueue.main.async { [weak self] in
-            self?.resetPasswordToken = token
+        if let token = DeepLinkRouter.parseResetPasswordToken(from: url) {
+            DispatchQueue.main.async { [weak self] in
+                self?.resetPasswordToken = token
+            }
+            return true
         }
-        return true
+        if let token = DeepLinkRouter.parseEmailVerificationToken(from: url) {
+            DispatchQueue.main.async { [weak self] in
+                self?.emailVerificationToken = token
+            }
+            return true
+        }
+        return false
     }
 
     @discardableResult

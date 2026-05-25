@@ -55,6 +55,11 @@ struct AccountSettingsView: View {
         .listStyle(InsetGroupedListStyle())
         .navigationTitle(String(localized: .editProfile))
         .navigationBarTitleDisplayMode(.inline)
+        .refreshable {
+            // Manual override for the case where the verification webhook didn't
+            // round-trip — pulls fresh state from /me and rewrites the local profile.
+            _ = try? await userManager.refreshFromServer()
+        }
     }
 
     // MARK: - Rows
