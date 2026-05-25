@@ -111,7 +111,8 @@ struct ChangeEmailView: View {
                 name: newValue.name,
                 email: newValue.email ?? userManager.profile.email,
                 isSignedInToServer: true,
-                isEmailVerified: newValue.isEmailVerified
+                isEmailVerified: newValue.isEmailVerified,
+                authProvider: newValue.authProvider
             )
         }
         .onChange(of: viewModel.didSendEmailVerification) { _, sent in

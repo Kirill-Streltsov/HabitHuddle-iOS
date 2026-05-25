@@ -80,7 +80,8 @@ struct EditNameView: View {
             name: user.name,
             email: user.email ?? userManager.profile.email,
             isSignedInToServer: true,
-            isEmailVerified: user.isEmailVerified
+            isEmailVerified: user.isEmailVerified,
+            authProvider: user.authProvider
         )
     }
 }

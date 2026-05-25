@@ -9,6 +9,18 @@ struct AccountSettingsView: View {
 
     @EnvironmentObject private var userManager: LocalUserManager
 
+    private var isSSOUser: Bool {
+        userManager.profile.isSSOUser
+    }
+
+    private var providerCaption: String? {
+        switch userManager.profile.authProvider {
+        case .apple: return String(localized: .managedByApple)
+        case .google: return String(localized: .managedByGoogle)
+        case .password: return nil
+        }
+    }
+
     var body: some View {
         List {
             Section(header: Text(.profile)) {
@@ -16,20 +28,30 @@ struct AccountSettingsView: View {
                     row(icon: "person.text.rectangle", color: .blue, label: Text(.name), value: userManager.profile.name)
                 }
 
-                NavigationLink(destination: EditUsernameView()) {
-                    row(icon: "at", color: .blue, label: Text(.username), value: userManager.profile.username)
+                if isSSOUser {
+                    usernameRow
+                } else {
+                    NavigationLink(destination: EditUsernameView()) {
+                        row(icon: "at", color: .blue, label: Text(.username), value: userManager.profile.username)
+                    }
                 }
 
-                NavigationLink(destination: ChangeEmailView()) {
+                if isSSOUser {
                     emailRow
+                } else {
+                    NavigationLink(destination: ChangeEmailView()) {
+                        emailRow
+                    }
                 }
             }
 
-            Section(header: Text(.security)) {
-                NavigationLink(destination: ChangePasswordView()) {
-                    HStack(spacing: 12) {
-                        rowIcon("lock.fill", color: .purple)
-                        Text(.changePassword)
+            if !isSSOUser {
+                Section(header: Text(.security)) {
+                    NavigationLink(destination: ChangePasswordView()) {
+                        HStack(spacing: 12) {
+                            rowIcon("lock.fill", color: .purple)
+                            Text(.changePassword)
+                        }
                     }
                 }
             }
@@ -53,6 +75,25 @@ struct AccountSettingsView: View {
         }
     }
 
+    private var usernameRow: some View {
+        HStack(spacing: 12) {
+            rowIcon("at", color: .blue)
+            Text(.username)
+            Spacer()
+            VStack(alignment: .trailing, spacing: 2) {
+                Text(userManager.profile.username)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                if let providerCaption {
+                    Text(providerCaption)
+                        .font(.caption2.weight(.medium))
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+
     private var emailRow: some View {
         HStack(spacing: 12) {
             rowIcon("envelope.fill", color: .green)
@@ -63,7 +104,11 @@ struct AccountSettingsView: View {
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
                     .truncationMode(.middle)
-                if userManager.profile.email != nil {
+                if let providerCaption {
+                    Text(providerCaption)
+                        .font(.caption2.weight(.medium))
+                        .foregroundStyle(.secondary)
+                } else if userManager.profile.email != nil {
                     Text(userManager.profile.isEmailVerified ? String(localized: .verified) : String(localized: .notVerified))
                         .font(.caption2.weight(.medium))
                         .foregroundStyle(userManager.profile.isEmailVerified ? .green : .orange)

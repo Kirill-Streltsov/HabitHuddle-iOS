@@ -119,7 +119,8 @@ struct RegistrationView: View {
                     name: user.name,
                     email: user.email,
                     isSignedInToServer: true,
-                    isEmailVerified: user.isEmailVerified
+                    isEmailVerified: user.isEmailVerified,
+                    authProvider: user.authProvider
                 )
                 appState.isAuthenticated = true
                 context.insert(user.toSwiftData())

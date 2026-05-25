@@ -78,7 +78,8 @@ struct SettingsView: View {
                     name: newValue.name,
                     email: newValue.email,
                     isSignedInToServer: true,
-                    isEmailVerified: newValue.isEmailVerified
+                    isEmailVerified: newValue.isEmailVerified,
+                    authProvider: newValue.authProvider
                 )
                 if !users.contains(where: { $0.id == newValue.id }) {
                     context.insert(newValue.toSwiftData())
