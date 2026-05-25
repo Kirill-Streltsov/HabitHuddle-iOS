@@ -83,7 +83,7 @@ struct ChangePasswordView: View {
                         show: $showCurrent,
                         field: .current,
                         next: .new,
-                        icon: "lock.fill",
+                        icon: "key.fill",
                         textContentType: .password
                     )
                 }
@@ -95,7 +95,7 @@ struct ChangePasswordView: View {
                         show: $showNew,
                         field: .new,
                         next: .confirm,
-                        icon: "key.fill",
+                        icon: "lock.fill",
                         textContentType: .newPassword
                     )
 
@@ -111,7 +111,7 @@ struct ChangePasswordView: View {
                         show: $showConfirm,
                         field: .confirm,
                         next: nil,
-                        icon: "checkmark.shield.fill",
+                        icon: "lock.rotation",
                         textContentType: .newPassword,
                         trailing: AnyView(matchIndicator)
                     )

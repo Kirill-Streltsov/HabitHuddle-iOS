@@ -131,7 +131,7 @@ struct SettingsView: View {
 
                 NavigationLink(destination: AccountSettingsView()) {
                     HStack(spacing: 12) {
-                        settingsIcon("person.crop.circle.badge.pencil", color: .blue)
+                        settingsIcon("person.text.rectangle", color: .blue)
                         Text(.editProfile)
                     }
                 }
