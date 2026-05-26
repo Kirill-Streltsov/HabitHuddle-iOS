@@ -121,6 +121,11 @@ struct ProgressRow: View {
                         }
                     }
                 }
+                .onChange(of: calculatedProgress) { _, newValue in
+                    withAnimation(.easeOut(duration: 0.4)) {
+                        progress = newValue
+                    }
+                }
         }
     }
 }

@@ -28,7 +28,6 @@ struct ChallengesListView: View {
     @State private var showToast = false
     @State private var message = ""
     @State private var selectedChallenge: ChallengeDTO? = nil
-    @State private var ongoingChallengeID = UUID()
     @State private var processingChallengeIDs: Set<UUID> = []
     @State private var selectedSegment: Segment = .active
     @State private var didAutoSelectSegment = false
@@ -61,7 +60,6 @@ struct ChallengesListView: View {
                 }
                 .refreshable {
                     await viewModel.getChallenges(for: userID)
-                    ongoingChallengeID = UUID()
                 }
             }
             .toast(
@@ -155,7 +153,6 @@ struct ChallengesListView: View {
             LazyVStack(spacing: 12) {
                 ForEach(viewModel.acceptedChallenges) { challenge in
                     ChallengeProgressCardView(challenge: challenge)
-                        .id(ongoingChallengeID)
                         .onTapGesture {
                             HapticManager.trigger(.selection)
                             selectedChallenge = challenge
