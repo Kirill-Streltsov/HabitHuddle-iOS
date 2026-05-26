@@ -118,6 +118,42 @@
         }
       }
     },
+    "%@ checked into %@" : {
+      "comment" : "Push notification subtitle when a friend in a shared challenge checks in; first %@ is the friend's name, second %@ is the habit name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ hat sich bei „%@“ eingecheckt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ha registrado «%@»"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ a coché «%@»"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ha segnato «%@»"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ отметил(а) «%@»"
+          }
+        }
+      }
+    },
     "%@ has no habits" : {
       "comment" : "Empty state title on a friend's profile; %@ is the friend's name",
       "extractionState" : "manual",
@@ -4031,6 +4067,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не используйте приложение в незаконных целях."
+          }
+        }
+      }
+    },
+    "Don't fall behind — log your check-in too!" : {
+      "comment" : "Push notification body when a friend in a shared challenge checks into their habit",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bleib dran – trag deinen Check-in auch ein!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡No te quedes atrás: registra tu check-in también!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ne reste pas à la traîne — coche aussi le tien !"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non restare indietro — segna anche tu il tuo check-in!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не отставай — отметься тоже!"
           }
         }
       }
@@ -13841,6 +13913,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Твой логин"
+          }
+        }
+      }
+    },
+    "🎯 Check-in!" : {
+      "comment" : "Push notification title when a friend in a shared challenge checks into their habit",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 Check-in!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 ¡Check-in!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 Check-in !"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 Check-in!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 Отметка!"
           }
         }
       }
