@@ -4071,7 +4071,7 @@
         }
       }
     },
-    "Don't fall behind — log your check-in too!" : {
+    "Don't fall behind, log your check-in too!" : {
       "comment" : "Push notification body when a friend in a shared challenge checks into their habit",
       "extractionState" : "manual",
       "localizations" : {
@@ -4090,19 +4090,19 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ne reste pas à la traîne — coche aussi le tien !"
+            "value" : "Ne reste pas à la traîne, coche aussi le tien !"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Non restare indietro — segna anche tu il tuo check-in!"
+            "value" : "Non restare indietro, segna anche tu il tuo check-in!"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не отставай — отметься тоже!"
+            "value" : "Не отставай, отметься тоже!"
           }
         }
       }
