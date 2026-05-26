@@ -9,4 +9,5 @@ enum ChallengeStatus: String, Codable {
     case pending
     case accepted
     case declined
+    case completed
 }

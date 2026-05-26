@@ -38,7 +38,7 @@ struct ChallengeCardView: View {
 
             HStack {
                 Image(systemName: "calendar")
-                Text(.fromTo(formattedDate(challenge.startDate), formattedDate(challenge.endDate)))
+                Text(.dayChallenge(challenge.durationDays))
                     .font(.caption)
             }
             .foregroundStyle(.secondary)
@@ -80,45 +80,28 @@ struct ChallengeCardView: View {
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .padding(.horizontal)
     }
-
-    private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter.string(from: date)
-    }
 }
 
-#Preview {
+#Preview("Pending received") {
     ChallengeCardView(
         challenge: ChallengeDTO(
             id: UUID(),
             initiatorHabitID: UUID(),
             receiverHabitID: UUID(),
-            habitName: "",
+            habitName: "Morning Run",
             startDate: .now,
-            endDate: .now,
-            status: .accepted,
+            endDate: .now.addingTimeInterval(86_400 * 30),
+            status: .pending,
             initiator: .init(
-                user: .init(
-                    id: UUID(),
-                    username: "",
-                    name: "",
-                    createdAt: .now,
-                    updatedAt: .now),
-                progress: 0,
-                checkInCount: 0,
-                plannedDays: 0),
+                user: .init(id: UUID(), username: "alex", name: "Alex", createdAt: .now, updatedAt: .now),
+                progress: 0, checkInCount: 0, plannedDays: 30),
             receiver: .init(
-                user: .init(
-                    id: UUID(),
-                    username: "",
-                    name: "",
-                    createdAt: .now,
-                    updatedAt: .now),
-                progress: 0,
-                checkInCount: 0,
-                plannedDays: 0)),
+                user: .init(id: UUID(), username: "you", name: "You", createdAt: .now, updatedAt: .now),
+                progress: 0, checkInCount: 0, plannedDays: 30)
+        ),
         onAccept: {},
         onReject: {}
     )
+    .padding(.vertical)
+    .background(Color(.systemGroupedBackground))
 }

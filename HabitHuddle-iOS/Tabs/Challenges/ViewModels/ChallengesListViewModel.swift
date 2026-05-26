@@ -17,6 +17,13 @@ extension ChallengesListView {
         @Published var pendingChallengesReceived: [ChallengeDTO] = []
         @Published var acceptedChallenges: [ChallengeDTO] = []
         @Published var declinedChallenges: [ChallengeDTO] = []
+        @Published var completedChallenges: [ChallengeDTO] = []
+
+        var invitesCount: Int { pendingChallengesReceived.count }
+        var pastChallenges: [ChallengeDTO] {
+            (completedChallenges + declinedChallenges)
+                .sorted { $0.endDate > $1.endDate }
+        }
 
         var userID: UUID
         private let network: any NetworkManagerProtocol
@@ -122,6 +129,7 @@ extension ChallengesListView {
             pendingChallengesReceived = challenges.filter({ $0.status == .pending && $0.receiver.user.id == userID })
             acceptedChallenges = challenges.filter({ $0.status == .accepted })
             declinedChallenges = challenges.filter({ $0.status == .declined })
+            completedChallenges = challenges.filter({ $0.status == .completed })
         }
     }
 }

@@ -48,10 +48,10 @@ struct ChallengeProgressCardView: View {
                     .foregroundStyle(.secondary)
             }
             
-            // Progress bars
+            // Progress bars — current user on top in green, opponent below in pink
             VStack(alignment: .leading) {
-                ProgressRow(name: challenge.receiver.user.username, calculatedProgress: challenge.receiver.progress, color: .green)
-                ProgressRow(name: challenge.initiator.user.username, calculatedProgress: challenge.initiator.progress, color: .pink)
+                ProgressRow(name: meRow.name, calculatedProgress: meRow.progress, color: .green)
+                ProgressRow(name: themRow.name, calculatedProgress: themRow.progress, color: .pink)
             }
             
         }
@@ -62,6 +62,20 @@ struct ChallengeProgressCardView: View {
         .padding(.horizontal)
     }
     
+    private var meRow: (name: String, progress: Double) {
+        if userManager.profile.id == challenge.initiator.user.id {
+            return (challenge.initiator.user.username, challenge.initiator.clampedProgress)
+        }
+        return (challenge.receiver.user.username, challenge.receiver.clampedProgress)
+    }
+
+    private var themRow: (name: String, progress: Double) {
+        if userManager.profile.id == challenge.initiator.user.id {
+            return (challenge.receiver.user.username, challenge.receiver.clampedProgress)
+        }
+        return (challenge.initiator.user.username, challenge.initiator.clampedProgress)
+    }
+
     private func challengeTitleText() -> String {
         let i = challenge.initiator.user.name
         let r = challenge.receiver.user.name
