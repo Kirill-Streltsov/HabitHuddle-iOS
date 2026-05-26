@@ -84,6 +84,11 @@ struct ChallengesListView: View {
                 }
                 autoSelectSegmentIfNeeded()
             }
+            .onChange(of: viewModel.invitesCount) { oldValue, newValue in
+                if oldValue > 0 && newValue == 0 && selectedSegment == .invites {
+                    selectedSegment = .active
+                }
+            }
             .onChange(of: habits) { _, _ in
                 for newChallenge in viewModel.acceptedChallenges {
                     if !challenges.contains(where: { $0.id == newChallenge.id }) {

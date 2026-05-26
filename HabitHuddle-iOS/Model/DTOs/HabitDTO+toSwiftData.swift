@@ -15,6 +15,7 @@ extension HabitDTO {
             user: LightweightUser(id: user.id),
             name: self.name,
             description: self.description,
+            isPublic: self.isPublic,
             isSyncable: true,
             category: self.category,
             icon: self.icon,
