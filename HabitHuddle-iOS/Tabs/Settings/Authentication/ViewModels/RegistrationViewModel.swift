@@ -54,7 +54,9 @@ extension RegistrationView {
 
             } catch {
                 if let apiError = error as? HHError {
-                    errorMessage = apiError.localizedDescription
+                    errorMessage = apiError == .conflict
+                        ? String(localized: .emailIsAlreadyInUse)
+                        : apiError.localizedDescription
                 } else {
                     errorMessage = String(localized: .somethingWentWrongPleaseTryAgain)
                 }
