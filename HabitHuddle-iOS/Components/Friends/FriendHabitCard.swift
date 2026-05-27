@@ -13,21 +13,23 @@ struct FriendHabitCard: View {
 
     @State private var scale: Double = 1
     @State private var didSendBoost: Bool
-    @State private var showChallengeConfirmation = false
+    @State private var showDurationPicker = false
+    @State private var challengeDays: Int = 14
+    @State private var durationPickerValid: Bool = true
 
     @Environment(\.modelContext) private var context
 
     let habitDTO: HabitDTO
     let isChallengePending: Bool
     var onSendBoost: @MainActor () async -> Void
-    var onChallenge: @MainActor () async -> Void
+    var onChallenge: @MainActor (Int) async -> Void
 
     init(
         habitDTO: HabitDTO,
         isBoosted: Bool,
         isChallengePending: Bool,
         onSendBoost: @escaping @MainActor () async -> Void,
-        onChallenge: @escaping @MainActor () async -> Void
+        onChallenge: @escaping @MainActor (Int) async -> Void
     ) {
         self.habitDTO = habitDTO
         self.isChallengePending = isChallengePending
@@ -96,27 +98,17 @@ struct FriendHabitCard: View {
                     }
                 }
                 Spacer()
-                if !habitDTO.isCompleted {
-                    if isChallengePending {
+                if isChallengePending {
+                    Image(systemName: "flag.pattern.checkered.2.crossed")
+                        .foregroundStyle(Color.accentColor)
+                } else {
+                    Button {
+                        showDurationPicker = true
+                    } label: {
                         Image(systemName: "flag.pattern.checkered.2.crossed")
-                            .foregroundStyle(Color.accentColor)
-                    } else {
-                        Button {
-                            showChallengeConfirmation = true
-                        } label: {
-                            Image(systemName: "flag.pattern.checkered.2.crossed")
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.blue)
-                        .alert("Challenge", isPresented: $showChallengeConfirmation) {
-                            Button(String(localized: .sendChallenge)) {
-                                Task { await onChallenge() }
-                            }
-                            Button("Cancel", role: .cancel) {}
-                        } message: {
-                            Text(.yourFriendWillReceiveAChallengeInvite)
-                        }
                     }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.blue)
                 }
             }
             .padding(.bottom, 4)
@@ -128,6 +120,42 @@ struct FriendHabitCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .frame(maxWidth: .infinity)
+        .sheet(isPresented: $showDurationPicker) {
+            challengeSheet
+        }
+    }
+
+    @ViewBuilder
+    private var challengeSheet: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(.challengeDuration)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                Text(habitDTO.name)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
+
+            ChallengeDurationPickerView(days: $challengeDays, isValid: $durationPickerValid)
+
+            Text(.pickADurationForTheChallenge)
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+
+            SubmitButton(
+                title: .sendChallenge,
+                color: durationPickerValid ? .accentColor : .gray,
+                iconName: "flag.pattern.checkered.2.crossed"
+            ) {
+                showDurationPicker = false
+                Task { await onChallenge(challengeDays) }
+            }
+            .disabled(!durationPickerValid)
+        }
+        .padding()
+        .presentationDetents([.fraction(0.42)])
+        .presentationDragIndicator(.visible)
     }
 
     // MARK: - Header
@@ -183,6 +211,6 @@ struct FriendHabitCard: View {
         isBoosted: false,
         isChallengePending: false,
         onSendBoost: {},
-        onChallenge: {}
+        onChallenge: { _ in }
     )
 }

@@ -71,11 +71,12 @@ extension FriendDetailView {
             }
         }
 
-        func sendChallenge(to receiverID: UUID, for receiverHabitID: UUID) async -> Bool {
+        func sendChallenge(to receiverID: UUID, for receiverHabitID: UUID, durationDays: Int) async -> Bool {
             let payload = ChallengeRequest(
                 receiverID: receiverID,
                 initiatorHabitID: nil,
-                receiverHabitID: receiverHabitID)
+                receiverHabitID: receiverHabitID,
+                durationDays: durationDays)
             do {
                 _ = try await network.requestStatusCode(
                     endpoint: .sendChallenge(),

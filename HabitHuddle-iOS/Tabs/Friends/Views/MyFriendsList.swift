@@ -20,22 +20,30 @@ struct MyFriendsList: View {
     
     let isInFriendsTab: Bool
     var habit: Habit?
-    
+
+    @State private var challengeDays: Int = 14
+
     var body: some View {
         ZStack {
             Color(.systemGroupedBackground)
                 .ignoresSafeArea()
             ScrollView {
                 if !isInFriendsTab, let habit = habit {
-                    VStack(spacing: 4) {
-                        Text(.challengeYourFriends)
-                            .font(.title3)
-                            .fontWeight(.bold)
-                        Text(habit.name)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                    VStack(alignment: .leading, spacing: 12) {
+                        VStack(spacing: 4) {
+                            Text(.challengeYourFriends)
+                                .font(.title3)
+                                .fontWeight(.bold)
+                            Text(habit.name)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                        .frame(maxWidth: .infinity)
+
+                        ChallengeDurationPickerView(days: $challengeDays)
+                            .padding(.horizontal, 4)
                     }
-                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal)
                     .padding(.top, 20)
                     .padding(.bottom, 8)
                 }
@@ -48,7 +56,7 @@ struct MyFriendsList: View {
                             if !isInFriendsTab {
                                 if let habit = habit {
                                     FriendCardView(friend: friend, showChallengeButton: true) {
-                                        await viewModel.sendChallenge(to: friend.id, for: habit.id)
+                                        await viewModel.sendChallenge(to: friend.id, for: habit.id, durationDays: challengeDays)
                                     }
                                 }
                             } else {

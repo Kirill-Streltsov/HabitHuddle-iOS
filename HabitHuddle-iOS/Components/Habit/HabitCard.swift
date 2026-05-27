@@ -142,6 +142,22 @@ struct HabitCard: View {
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.top, 4)
+
+            HStack {
+                Spacer()
+                if habit.challenges.isEmpty {
+                    Button {
+                        challengeButtonPressed = true
+                    } label: {
+                        Image(systemName: "flag.pattern.checkered.2.crossed")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.blue)
+                } else {
+                    Image(systemName: "flag.pattern.checkered.2.crossed")
+                        .foregroundStyle(Color.accentColor)
+                }
+            }
         }
         .padding(.top, 16)
     }

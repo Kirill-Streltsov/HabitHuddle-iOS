@@ -90,8 +90,8 @@ struct FriendDetailView: View {
                                 didShowBoostSent = true
                                 await viewModel.sendBoost(to: friend.id, about: habitDTO.id)
                             },
-                            onChallenge: {
-                                let success = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id)
+                            onChallenge: { days in
+                                let success = await viewModel.sendChallenge(to: friend.id, for: habitDTO.id, durationDays: days)
                                 showToast = true
                                 message = success
                                     ? String(localized: .challengeSent)
