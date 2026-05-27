@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChallengeCardView: View {
     let challenge: ChallengeDTO
+    var isProcessing: Bool = false
     var onAccept: @MainActor () async -> Void
     var onReject: @MainActor () async -> Void
 
@@ -44,32 +45,39 @@ struct ChallengeCardView: View {
             .foregroundStyle(.secondary)
 
             HStack {
-                Button {
-                    Task {
-                        await onReject()
-                    }
-                } label: {
-                    Text(.reject)
-                        .fontWeight(.semibold)
-                        .frame(minWidth: 80)
+                if isProcessing {
+                    Spacer()
+                    ProgressView()
                         .padding(.vertical, 8)
-                        .background(Color.red.opacity(0.9))
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                }
-                Spacer()
-                Button {
-                    Task {
-                        await onAccept()
+                    Spacer()
+                } else {
+                    Button {
+                        Task {
+                            await onReject()
+                        }
+                    } label: {
+                        Text(.reject)
+                            .fontWeight(.semibold)
+                            .frame(minWidth: 80)
+                            .padding(.vertical, 8)
+                            .background(Color.red.opacity(0.9))
+                            .foregroundStyle(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
-                } label: {
-                    Text(.accept)
-                        .fontWeight(.semibold)
-                        .frame(minWidth: 80)
-                        .padding(.vertical, 8)
-                        .background(Color.green.opacity(0.9))
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    Spacer()
+                    Button {
+                        Task {
+                            await onAccept()
+                        }
+                    } label: {
+                        Text(.accept)
+                            .fontWeight(.semibold)
+                            .frame(minWidth: 80)
+                            .padding(.vertical, 8)
+                            .background(Color.green.opacity(0.9))
+                            .foregroundStyle(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
                 }
             }
             .padding(.top, 4)

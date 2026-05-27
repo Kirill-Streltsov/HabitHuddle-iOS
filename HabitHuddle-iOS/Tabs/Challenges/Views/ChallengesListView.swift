@@ -260,108 +260,164 @@ struct ChallengesListView: View {
         return order.map { ($0, groups[$0] ?? []) }
     }
 
-    // MARK: - Local persistence helpers (unchanged behavior)
+    // MARK: - Accept / reject
 
-    private func updateLocalStorage(from challenge: ChallengeDTO) {
-        if challenges.contains(where: { $0.id == challenge.id }) { return }
-        if processingChallengeIDs.contains(challenge.id) { return }
+    /// Accepts a challenge end-to-end: confirms with the server, makes sure the habit is
+    /// stored locally, and only then surfaces success and lets the challenge move into the
+    /// Active segment. The card shows a spinner for the duration via `processingChallengeIDs`.
+    @MainActor
+    private func accept(_ challenge: ChallengeDTO) async {
+        guard !processingChallengeIDs.contains(challenge.id) else { return }
+        processingChallengeIDs.insert(challenge.id)
+        defer { processingChallengeIDs.remove(challenge.id) }
 
-        if let habit = habits.first(where: { $0.id == challenge.initiatorHabitID || $0.id == challenge.receiverHabitID }) {
-            saveChallengeLocally(from: challenge, for: habit)
+        // 1. Accept on the server.
+        let acceptResult = await viewModel.acceptChallenge(with: challenge.id)
+        guard case .success(let status) = acceptResult, status == .ok else {
+            HapticManager.trigger(.error)
+            message = String(localized: .somethingWentWrongPleaseTryAgain)
+            showToast = true
             return
         }
 
-        let myHabitIDOnServer = challenge.initiator.user.id == userID
-            ? challenge.initiatorHabitID
-            : challenge.receiverHabitID
-        if myHabitIDOnServer != nil { return }
+        // 2. Make sure the habit exists locally BEFORE we flip the UI to "active".
+        do {
+            let habit = try await ensureHabitLocally(for: challenge)
+            // 3. Refresh so the accepted challenge (now linked to our habit) comes back, then persist it.
+            await viewModel.getChallenges(for: userID)
+            let acceptedChallenge = viewModel.challenges.first(where: { $0.id == challenge.id }) ?? challenge
+            saveChallengeLocally(from: acceptedChallenge, for: habit)
 
+            // 4. Success is only surfaced once the habit is safely in local storage.
+            HapticManager.trigger(.success)
+            message = String(localized: .challengeAccepted)
+            showToast = true
+        } catch {
+            // The challenge is accepted on the server; the reconcile path will retry the local
+            // save on the next refresh. Surface the failure instead of a false success.
+            print("❌ Error: Couldn't load the habit for challenge \(challenge.id): \(error)")
+            HapticManager.trigger(.error)
+            message = String(localized: .somethingWentWrongPleaseTryAgain)
+            showToast = true
+        }
+    }
+
+    @MainActor
+    private func reject(_ challenge: ChallengeDTO) async {
+        guard !processingChallengeIDs.contains(challenge.id) else { return }
         processingChallengeIDs.insert(challenge.id)
-        getHabit(from: challenge)
+        defer { processingChallengeIDs.remove(challenge.id) }
+
+        let result = await viewModel.rejectChallenge(with: challenge.id)
+        switch result {
+        case .success(let status):
+            if status == .ok {
+                HapticManager.trigger(.success)
+                message = String(localized: .challengeRejected)
+                showToast = true
+            }
+            await viewModel.getChallenges(for: userID)
+        case .failure(let error):
+            print("❌ Error: Failed to reject the challenge: \(error.localizedDescription)")
+            HapticManager.trigger(.error)
+            message = String(localized: .somethingWentWrongPleaseTryAgain)
+            showToast = true
+        }
+    }
+
+    // MARK: - Local persistence helpers
+
+    /// Background reconciliation used on launch / refresh: makes sure every accepted challenge
+    /// has its habit and the challenge itself saved locally. Safe to call repeatedly.
+    @MainActor
+    private func updateLocalStorage(from challenge: ChallengeDTO) {
+        guard !challengeExistsLocally(challenge.id) else { return }
+        guard !processingChallengeIDs.contains(challenge.id) else { return }
+        processingChallengeIDs.insert(challenge.id)
+        Task {
+            defer { processingChallengeIDs.remove(challenge.id) }
+            do {
+                let habit = try await ensureHabitLocally(for: challenge)
+                saveChallengeLocally(from: challenge, for: habit)
+            } catch {
+                print("❌ Error: Couldn't reconcile challenge \(challenge.id) locally: \(error)")
+            }
+        }
     }
 
     private func challengeCard(with challenge: ChallengeDTO) -> some View {
-        ChallengeCardView(challenge: challenge) {
-            let acceptedResult = await viewModel.acceptChallenge(with: challenge.id)
-            Helpers.handleResult(acceptedResult) { status in
-                if status == .ok {
-                    HapticManager.trigger(.success)
-                    message = String(localized: .challengeAccepted)
-                    showToast = true
-                    Task {
-                        await viewModel.getChallenges(for: userID)
-                    }
-                    updateLocalStorage(from: challenge)
-                }
-            } onFailure: { error in
-                print("❌ Error: Failed to accept the challenge: \(error.localizedDescription)")
-            }
+        ChallengeCardView(
+            challenge: challenge,
+            isProcessing: processingChallengeIDs.contains(challenge.id)
+        ) {
+            await accept(challenge)
         } onReject: {
-            let rejectedResult = await viewModel.rejectChallenge(with: challenge.id)
-            Helpers.handleResult(rejectedResult) { status in
-                if status == .ok {
-                    HapticManager.trigger(.success)
-                    message = String(localized: .challengeRejected)
-                    showToast = true
-                }
-                Task {
-                    await viewModel.getChallenges(for: userID)
-                }
-                print("✅ Successfully rejected the challenge with id: \(challenge.id)")
-            } onFailure: { error in
-                print("❌ Error: Failed to reject the challenge: \(error.localizedDescription)")
-            }
+            await reject(challenge)
         }
     }
 
-    private func getHabit(from challenge: ChallengeDTO) {
-        let templateHabitID: UUID?
-        if challenge.initiator.user.id == userID {
-            templateHabitID = challenge.receiverHabitID
-        } else {
-            templateHabitID = challenge.initiatorHabitID
+    /// Returns the local `Habit` that represents the current user's side of this challenge,
+    /// fetching and persisting it from the server when it isn't on this device yet.
+    ///
+    /// Cases handled:
+    /// - We already own the habit locally (e.g. we were challenged on our own habit).
+    /// - Our habit exists on the server but not locally (e.g. accepted on another device) -> fetch it.
+    /// - We have no habit for this challenge yet -> copy the other participant's habit into our own.
+    @MainActor
+    private func ensureHabitLocally(for challenge: ChallengeDTO) async throws -> Habit {
+        let isInitiator = challenge.initiator.user.id == userID
+        let myHabitID = isInitiator ? challenge.initiatorHabitID : challenge.receiverHabitID
+        let theirHabitID = isInitiator ? challenge.receiverHabitID : challenge.initiatorHabitID
+
+        // 1. Already saved on this device.
+        if let myHabitID, let local = existingHabit(myHabitID) { return local }
+        if let theirHabitID, let local = existingHabit(theirHabitID) { return local }
+
+        // 2. Our habit already exists on the server but hasn't synced locally yet -> fetch it as-is.
+        if let myHabitID {
+            return try persistHabitLocally(try await fetchHabit(myHabitID))
         }
-        guard let habitID = templateHabitID else {
-            print("❌ Error: No template habit ID for challenge \(challenge.id)")
-            processingChallengeIDs.remove(challenge.id)
-            return
+
+        // 3. We don't have a habit for this challenge yet -> copy the other participant's habit.
+        guard let theirHabitID else {
+            throw HHError.notFound
         }
-        Task {
-            let result = await viewModel.getHabitFromChallenge(with: habitID)
-            Helpers.handleResult(result) { habitDTO in
-                var habitToSend = habitDTO
-                habitToSend.id = UUID()
-                createHabitAfterAcceptingChallenge(habitDTO: habitToSend, challengeDTO: challenge)
-            } onFailure: { error in
-                print("❌ Error: Fetching template habit for challenge \(challenge.id): \(error)")
-                processingChallengeIDs.remove(challenge.id)
-            }
+        var copy = try await fetchHabit(theirHabitID)
+        copy.id = UUID()
+        let created = try await createOurHabit(from: copy, for: challenge.id)
+        return try persistHabitLocally(created)
+    }
+
+    @MainActor
+    private func fetchHabit(_ id: UUID) async throws -> HabitDTO {
+        switch await viewModel.getHabitFromChallenge(with: id) {
+        case .success(let dto): return dto
+        case .failure(let error): throw error
         }
     }
 
-    private func createHabitAfterAcceptingChallenge(habitDTO: HabitDTO, challengeDTO: ChallengeDTO) {
-        Task {
-            defer { processingChallengeIDs.remove(challengeDTO.id) }
-            let sentHabitResult = await viewModel.createHabitAfterAcceptingChallenge(habitDTO: habitDTO, for: challengeDTO.id)
-            Helpers.handleResult(sentHabitResult) { createdHabit in
-                if !habits.contains(where: { $0.id == createdHabit.id }) {
-                    let habit = createdHabit.saved(in: context)
-                    habit.isPublic = true
-                    do {
-                        try context.save()
-                        saveChallengeLocally(from: challengeDTO, for: habit)
-                        print("✅ Habit created from challenge successfully.")
-                    } catch {
-                        print("❌ Error: Couldn't save habit locally: \(error)")
-                    }
-                }
-            } onFailure: { error in
-                print("❌ Error: Something went wrong creating habit: \(error)")
-            }
+    @MainActor
+    private func createOurHabit(from dto: HabitDTO, for challengeID: UUID) async throws -> HabitDTO {
+        switch await viewModel.createHabitAfterAcceptingChallenge(habitDTO: dto, for: challengeID) {
+        case .success(let dto): return dto
+        case .failure(let error): throw error
         }
     }
 
+    /// Inserts a habit into local storage, skipping if one with the same id is already persisted.
+    @MainActor
+    @discardableResult
+    private func persistHabitLocally(_ dto: HabitDTO) throws -> Habit {
+        if let existing = existingHabit(dto.id) { return existing }
+        let habit = dto.saved(in: context)
+        habit.isPublic = true
+        try context.save()
+        return habit
+    }
+
+    @MainActor
     private func saveChallengeLocally(from challengeDTO: ChallengeDTO, for habit: Habit) {
+        guard !challengeExistsLocally(challengeDTO.id) else { return }
         let initiator = users.first(where: { $0.id == challengeDTO.initiator.user.id })
             ?? challengeDTO.initiator.user.toSwiftData()
         let receiver = users.first(where: { $0.id == challengeDTO.receiver.user.id })
@@ -373,6 +429,21 @@ struct ChallengesListView: View {
         } catch {
             print("❌ Error: Couldn't save challenge locally: \(error)")
         }
+    }
+
+    /// Looks the habit up directly in the store (not the `@Query`, which lags behind writes).
+    @MainActor
+    private func existingHabit(_ id: UUID) -> Habit? {
+        var descriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.id == id })
+        descriptor.fetchLimit = 1
+        return (try? context.fetch(descriptor))?.first
+    }
+
+    @MainActor
+    private func challengeExistsLocally(_ id: UUID) -> Bool {
+        var descriptor = FetchDescriptor<Challenge>(predicate: #Predicate { $0.id == id })
+        descriptor.fetchLimit = 1
+        return ((try? context.fetch(descriptor))?.isEmpty == false)
     }
 }
 

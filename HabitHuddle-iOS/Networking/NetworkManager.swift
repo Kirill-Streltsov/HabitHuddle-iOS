@@ -21,6 +21,23 @@ actor NetworkManager: NetworkManagerProtocol {
         jsonEncoder.dateEncodingStrategy = .iso8601
     }
 
+    // Single source of truth for building the request URL. Every request path must
+    // route through here so query items (e.g. the email-verification token) are never
+    // silently dropped.
+    static func makeURL(baseURL: URL, endpoint: Endpoint) throws -> URL {
+        guard var components = URLComponents(
+            url: baseURL.appendingPathComponent(endpoint.path),
+            resolvingAgainstBaseURL: false
+        ) else {
+            throw HHError.invalidURL
+        }
+        components.queryItems = endpoint.queryItems
+        guard let url = components.url else {
+            throw HHError.invalidURL
+        }
+        return url
+    }
+
     func request<T: Decodable, U: Encodable>(
         endpoint: Endpoint,
         method: HTTPMethod,
@@ -30,23 +47,15 @@ actor NetworkManager: NetworkManagerProtocol {
         isLoggingIn: Bool = false
     ) async throws -> T {
         
-        guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
-            throw HHError.invalidURL
-        }
-        
-        components.queryItems = endpoint.queryItems
-        guard let finalURL = components.url else {
-            throw HHError.invalidURL
-        }
-        var urlRequest = URLRequest(url: finalURL)
-        
+        var urlRequest = URLRequest(url: try Self.makeURL(baseURL: baseURL, endpoint: endpoint))
+
         if !isLoggingIn {
             guard let token = TokenManager.token else { throw HHError.unauthorized }
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-        
+
         urlRequest.httpMethod = method.rawValue
-        
+
         headers?.forEach { key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
@@ -69,21 +78,13 @@ actor NetworkManager: NetworkManagerProtocol {
         isLoggingIn: Bool = false
     ) async throws -> T {
         
-        guard var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
-            throw HHError.invalidURL
-        }
-        components.queryItems = endpoint.queryItems
-        guard let finalURL = components.url else {
-            throw HHError.invalidURL
-        }
-        
-        var urlRequest = URLRequest(url: finalURL)
-        
+        var urlRequest = URLRequest(url: try Self.makeURL(baseURL: baseURL, endpoint: endpoint))
+
         if !isLoggingIn {
             guard let token = TokenManager.token else { throw HHError.unauthorized }
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-        
+
         urlRequest.httpMethod = method.rawValue
         headers?.forEach { key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
@@ -103,7 +104,7 @@ actor NetworkManager: NetworkManagerProtocol {
         isLoggingIn: Bool = false
     ) async throws -> HTTPStatus {
         
-        var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
+        var urlRequest = URLRequest(url: try Self.makeURL(baseURL: baseURL, endpoint: endpoint))
         
         if !isLoggingIn {
             guard let token = TokenManager.token else { throw HHError.unauthorized }
@@ -133,7 +134,7 @@ actor NetworkManager: NetworkManagerProtocol {
         isLoggingIn: Bool = false
     ) async throws -> HTTPStatus {
         
-        var urlRequest = URLRequest(url: baseURL.appendingPathComponent(endpoint.path))
+        var urlRequest = URLRequest(url: try Self.makeURL(baseURL: baseURL, endpoint: endpoint))
         
         if !isLoggingIn {
             guard let token = TokenManager.token else { throw HHError.unauthorized }

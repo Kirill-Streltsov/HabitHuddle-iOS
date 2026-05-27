@@ -66,6 +66,21 @@ struct ForgotPasswordViewModelTests {
 
         #expect(vm.didRequestReset == true)
     }
+
+    @Test("lowercases the email so the backend lookup matches the stored account")
+    @MainActor
+    func lowercasesEmailBeforeSending() async {
+        let mock = MockNetworkManager()
+        await mock.enqueue(HTTPStatus.ok)
+
+        let vm = ForgotPasswordView.ViewModel(network: mock)
+        await vm.requestReset(email: "  Alice@Example.COM ")
+
+        #expect(vm.didRequestReset == true)
+        let bodies = await mock.bodyLog
+        #expect(bodies.first?.contains("alice@example.com") == true)
+        #expect(bodies.first?.contains("Alice") == false)
+    }
 }
 
 // MARK: - ResetPasswordViewModel

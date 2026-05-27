@@ -25,11 +25,14 @@ extension RegistrationView {
         }
 
         func registerUser(userID: UUID, username: String, name: String, email: String, password: String) async throws {
+            // Normalize so the account is stored under the same casing the password-reset
+            // and verification lookups use; otherwise those lookups silently miss.
+            let normalizedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
             let payload = UserPayload(
                 id: userID,
                 username: username,
                 name: name,
-                email: email,
+                email: normalizedEmail,
                 password: password,
                 deviceToken: deviceToken
             )

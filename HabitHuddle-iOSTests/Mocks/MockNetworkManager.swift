@@ -9,6 +9,16 @@ import Foundation
 actor MockNetworkManager: NetworkManagerProtocol {
     private var responseQueue: [Result<Any, Error>] = []
     private(set) var requestLog: [(path: String, method: HTTPMethod)] = []
+    // JSON of each encoded request body, in call order. Lets tests assert what was
+    // actually sent (e.g. that an email was normalized to lowercase before the request).
+    private(set) var bodyLog: [String] = []
+
+    private func recordBody(_ body: some Encodable) {
+        if let data = try? JSONEncoder().encode(body),
+           let json = String(data: data, encoding: .utf8) {
+            bodyLog.append(json)
+        }
+    }
 
     func enqueue<T>(_ value: T) {
         responseQueue.append(.success(value as Any))
@@ -47,6 +57,7 @@ actor MockNetworkManager: NetworkManagerProtocol {
         isLoggingIn: Bool
     ) async throws -> T {
         requestLog.append((endpoint.path, method))
+        recordBody(body)
         return try next()
     }
 
@@ -79,6 +90,7 @@ actor MockNetworkManager: NetworkManagerProtocol {
         isLoggingIn: Bool
     ) async throws -> HTTPStatus {
         requestLog.append((endpoint.path, method))
+        recordBody(body)
         return try next()
     }
 }

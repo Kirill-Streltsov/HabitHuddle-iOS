@@ -90,6 +90,14 @@ struct EndpointTests {
         #expect(Endpoint.register().path == "auth/register")
     }
 
+    @Test("verifyEmail carries the token as a query item")
+    func verifyEmailQueryItem() {
+        let endpoint = Endpoint.verifyEmail(token: "abc123")
+        #expect(endpoint.path == "auth/verify-email")
+        #expect(endpoint.queryItems?.first?.name == "token")
+        #expect(endpoint.queryItems?.first?.value == "abc123")
+    }
+
     // MARK: - Friends
 
     @Test("requestFriend path")
@@ -134,5 +142,36 @@ struct EndpointTests {
         let id = UUID(uuidString: "00000000-0000-0000-0000-000000000009")!
         let path = Endpoint.cancelChallenge(id: id).path
         #expect(path.contains("cancel"))
+    }
+}
+
+// Regression coverage for the bug where requestStatusCode built its URL without the
+// endpoint's query items, dropping the email-verification token and producing a
+// spurious "verification link is no longer valid" alert.
+@Suite("NetworkManager.makeURL")
+struct MakeURLTests {
+
+    private let baseURL = URL(string: "https://example.com/api/")!
+
+    @Test("query items are appended to the final URL")
+    func appendsQueryItems() throws {
+        let url = try NetworkManager.makeURL(baseURL: baseURL, endpoint: .verifyEmail(token: "abc123"))
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        #expect(url.path.hasSuffix("auth/verify-email"))
+        #expect(components?.queryItems?.first(where: { $0.name == "token" })?.value == "abc123")
+    }
+
+    @Test("token with reserved characters is percent-encoded, not lost")
+    func encodesReservedCharacters() throws {
+        let url = try NetworkManager.makeURL(baseURL: baseURL, endpoint: .verifyEmail(token: "a b+c/d"))
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        #expect(components?.queryItems?.first(where: { $0.name == "token" })?.value == "a b+c/d")
+    }
+
+    @Test("path-only endpoint produces no query string")
+    func noQueryItems() throws {
+        let url = try NetworkManager.makeURL(baseURL: baseURL, endpoint: .login())
+        #expect(url.path.hasSuffix("auth/login"))
+        #expect(URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems == nil)
     }
 }
