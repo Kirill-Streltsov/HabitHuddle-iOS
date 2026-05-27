@@ -13,6 +13,8 @@ struct HabitCard: View {
     @Environment(\.modelContext) private var context
     @State private var scale = 1.0
     @State private var challengeButtonPressed = false
+    @State private var completedScale = 1.0
+    @State private var ringProgress = 0.0
 
     let habit: Habit
 
@@ -99,26 +101,46 @@ struct HabitCard: View {
                 Circle()
                     .stroke(Color.gray.opacity(0.2), lineWidth: 12)
                 Circle()
+                    .trim(from: 0, to: ringProgress)
                     .stroke(.yellow, style: StrokeStyle(lineWidth: 12, lineCap: .round))
+                    .rotationEffect(.degrees(-90))
                 Image(systemName: "trophy.fill")
                     .font(.system(size: 38))
-                    .foregroundStyle(.yellow)
+                    .foregroundStyle(habit.isCheckedInToday ? Color.yellow : Color.gray)
+                    .flickering(shouldFlicker: !habit.isCheckedInToday)
             }
             .frame(width: 85, height: 85)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 4)
+            .scaleEffect(completedScale)
+            .animation(.easeInOut(duration: 0.3), value: completedScale)
+            .onAppear {
+                ringProgress = habit.isCheckedInToday ? 1.0 : 0.0
+            }
+            .onTapGesture {
+                HapticManager.trigger(.success)
+                let targetProgress = habit.isCheckedInToday ? 0.0 : 1.0
+                habit.toggleCheckIn(in: context)
+                withAnimation(.easeOut(duration: 0.8)) {
+                    ringProgress = targetProgress
+                }
+                completedScale += 0.15
+                Task { completedScale -= 0.15 }
+            }
 
             HStack {
                 StatItem(title: .longestStreak, value: .days(habit.longestStreak))
                 Spacer()
                 StatItem(title: .done, value: "\(habit.completionPercentage)%")
             }
+            .animation(.easeInOut(duration: 0.3), value: habit.checkIns.count)
 
             Text(.finishedKeepTheStreakAlive)
                 .font(.subheadline)
                 .fontWeight(.semibold)
-                .foregroundStyle(.green)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundStyle(.orange)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.top, 4)
         }
         .padding(.top, 16)

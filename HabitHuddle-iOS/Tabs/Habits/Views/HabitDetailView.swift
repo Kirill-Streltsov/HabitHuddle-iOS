@@ -178,7 +178,7 @@ struct HabitDetailView: View {
 
                 Text(habit.isCheckedInToday ? .finishedKeepTheStreakAlive : .tapToCheckIn)
                     .font(.headline)
-                    .foregroundStyle(habit.isCheckedInToday ? Color.green : Color.primary)
+                    .foregroundStyle(habit.isCheckedInToday ? Color.orange : Color.primary)
                     .animation(.easeInOut(duration: 0.3), value: habit.isCheckedInToday)
             }
             .frame(maxWidth: .infinity)

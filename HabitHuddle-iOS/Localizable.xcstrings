@@ -5201,37 +5201,37 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 Fertig! Halte die Serie am Leben!"
+            "value" : "Fertig! Halte die Serie am Leben!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 Finished! Keep the streak alive!"
+            "value" : "Finished! Keep the streak alive!"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 ¡Listo! ¡Mantén la racha viva!"
+            "value" : "¡Listo! ¡Mantén la racha viva!"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 Terminé ! Garde la série vivante !"
+            "value" : "Terminé ! Garde la série vivante !"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 Fatto! Tieni viva la serie!"
+            "value" : "Fatto! Tieni viva la serie!"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 Готово! Держи серию!"
+            "value" : "Готово! Держи серию!"
           }
         }
       }
@@ -5891,37 +5891,37 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 Gewohnheit abgeschlossen!"
+            "value" : "Gewohnheit abgeschlossen!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 Habit finished!"
+            "value" : "Habit finished!"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 ¡Hábito completado!"
+            "value" : "¡Hábito completado!"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 Habitude terminée !"
+            "value" : "Habitude terminée !"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 Abitudine completata!"
+            "value" : "Abitudine completata!"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎉 Привычка завершена!"
+            "value" : "Привычка завершена!"
           }
         }
       }
