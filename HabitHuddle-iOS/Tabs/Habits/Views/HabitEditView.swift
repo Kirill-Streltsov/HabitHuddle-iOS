@@ -60,27 +60,18 @@ struct HabitEditView: View {
                         Image(systemName: icon)
                     }
                 }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        HapticManager.trigger(.success)
-                        Task {
-                            guard let habit = viewModel.habit else {
-                                await addHabit()
-                                return
-                            }
-                            await saveChanges()
-                            if !viewModel.isSynced {
-                                let _ = await viewModel.deleteHabit(with: habit.id)
-                            }
-                            if !wasSyncedAtTheBeginning && viewModel.isSynced {
-                                await addHabitToTheServer(with: habit.id)
-                            }
+                if viewModel.habit == nil {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button {
+                            HapticManager.trigger(.success)
+                            Task { await addHabit() }
+                            dismiss()
+                        } label: {
+                            Image(systemName: "checkmark")
                         }
-                        dismiss()
-                    } label: {
-                        Image(systemName: "checkmark")
+                        .tint(.blue)
+                        .disabled(viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty)
                     }
-                    .disabled(viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }
             .onAppear {
@@ -98,7 +89,17 @@ struct HabitEditView: View {
                 Task { await checkNotifications() }
             }
             .onDisappear {
-                Task { await checkNotifications() }
+                Task {
+                    await checkNotifications()
+                    guard let habit = viewModel.habit else { return }
+                    await saveChanges()
+                    if !viewModel.isSynced {
+                        let _ = await viewModel.deleteHabit(with: habit.id)
+                    }
+                    if !wasSyncedAtTheBeginning && viewModel.isSynced {
+                        await addHabitToTheServer(with: habit.id)
+                    }
+                }
             }
         }
         .background(Color(.systemGroupedBackground))
