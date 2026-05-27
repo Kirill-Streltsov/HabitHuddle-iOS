@@ -11,12 +11,6 @@ import AuthenticationServices
 
 struct SettingsView: View {
 
-    @Query
-    var habits: [Habit]
-
-    @Query
-    var users: [User]
-
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
 
     @Environment(\.modelContext) private var context
@@ -68,7 +62,7 @@ struct SettingsView: View {
         }
         .onChange(of: viewModel.loadedUser) { _, newValue in
             if newValue.createdAt != nil {
-                habits.forEach { $0.isSyncable = true }
+                fetchHabits().forEach { $0.isSyncable = true }
                 HapticManager.trigger(.success)
                 appState.isAuthenticated = true
                 userManager.profile = LocalUser(
@@ -80,14 +74,14 @@ struct SettingsView: View {
                     isEmailVerified: newValue.isEmailVerified,
                     authProvider: newValue.authProvider
                 )
-                if !users.contains(where: { $0.id == newValue.id }) {
+                if !fetchUsers().contains(where: { $0.id == newValue.id }) {
                     context.insert(newValue.toSwiftData())
                     context.saveOrLog()
                 }
             }
         }
         .onChange(of: viewModel.loadedHabits) { _, _ in
-            let existingHabitIds = Set(habits.map { $0.id })
+            let existingHabitIds = Set(fetchHabits().map { $0.id })
             newServerHabits = viewModel.loadedHabits.filter { !existingHabitIds.contains($0.id) }
             showHabitsFound = !newServerHabits.isEmpty
         }
@@ -113,14 +107,14 @@ struct SettingsView: View {
             let deleteResult = await viewModel.deleteMyAccount()
             Helpers.handleResult(deleteResult) { status in
                 if status == .ok {
-                    habits.forEach {
+                    fetchHabits().forEach {
                         $0.isSyncable = false
                         $0.isPublic = false
                         $0.challenges = []
                     }
                     print("✅ Successfully deleted the account. Status: \(status)")
                     appState.logout(userManager: userManager)
-                    guard let currentUser = users.first(where: { $0.id == userManager.profile.id }) else { return }
+                    guard let currentUser = fetchUsers().first(where: { $0.id == userManager.profile.id }) else { return }
                     context.delete(currentUser)
                     context.saveOrLog()
                 }
@@ -242,6 +236,14 @@ struct SettingsView: View {
         }
     }
 
+    private func fetchHabits() -> [Habit] {
+        (try? context.fetch(FetchDescriptor<Habit>())) ?? []
+    }
+
+    private func fetchUsers() -> [User] {
+        (try? context.fetch(FetchDescriptor<User>())) ?? []
+    }
+
     private func settingsIcon(_ systemName: String, color: Color) -> some View {
         Image(systemName: systemName)
             .font(.system(size: 14, weight: .medium))
@@ -280,12 +282,12 @@ struct SettingsView: View {
                         viewModel.loadedUser = UserDTO(id: UUID(), username: "", name: "", createdAt: nil, updatedAt: nil)
                         viewModel.loadedHabits = []
                         appState.logout(userManager: userManager)
-                        habits.forEach {
+                        fetchHabits().forEach {
                             $0.isSyncable = false
                             $0.isPublic = false
                             $0.challenges = []
                         }
-                        guard let currentUser = users.first(where: { $0.id == userManager.profile.id }) else { return }
+                        guard let currentUser = fetchUsers().first(where: { $0.id == userManager.profile.id }) else { return }
                         context.delete(currentUser)
                         context.saveOrLog()
                     }
