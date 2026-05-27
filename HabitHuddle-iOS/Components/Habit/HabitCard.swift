@@ -47,6 +47,7 @@ struct HabitCard: View {
         .shadow(color: Color(.label).opacity(0.1), radius: 5, x: 0, y: 4)
         .frame(maxWidth: .infinity)
         .animation(.easeInOut(duration: 0.3), value: scale)
+        .animation(.easeInOut(duration: 0.3), value: completedScale)
         .sheet(isPresented: $challengeButtonPressed) {
             MyFriendsList(isInFriendsTab: false, habit: habit)
                 .presentationDetents([detent])
@@ -127,11 +128,10 @@ struct HabitCard: View {
             }
 
             HStack {
-                StatItem(title: .longestStreak, value: .days(habit.longestStreak))
+                StatItem(title: .currentStreak, value: .days(habit.currentStreak))
                 Spacer()
                 StatItem(title: .done, value: "\(habit.completionPercentage)%")
             }
-            .animation(.easeInOut(duration: 0.3), value: habit.checkIns.count)
         }
         .offset(y: 15)
         .frame(maxWidth: .infinity)
@@ -180,7 +180,7 @@ struct HabitCard: View {
                 Task { scale -= 0.15 }
             }
             HStack {
-                StatItem(title: .longestStreak, value: .days(habit.longestStreak))
+                StatItem(title: .currentStreak, value: .days(habit.currentStreak))
                 Spacer()
                 StatItem(title: .done, value: "\(habit.completionPercentage)%")
             }
