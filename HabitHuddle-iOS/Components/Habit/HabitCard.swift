@@ -96,7 +96,7 @@ struct HabitCard: View {
 
     @ViewBuilder
     private var completedSection: some View {
-        VStack(spacing: 12) {
+        ZStack {
             ZStack {
                 Circle()
                     .stroke(Color.gray.opacity(0.2), lineWidth: 12)
@@ -110,8 +110,6 @@ struct HabitCard: View {
                     .flickering(shouldFlicker: !habit.isCheckedInToday)
             }
             .frame(width: 85, height: 85)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 4)
             .scaleEffect(completedScale)
             .animation(.easeInOut(duration: 0.3), value: completedScale)
             .onAppear {
@@ -134,32 +132,32 @@ struct HabitCard: View {
                 StatItem(title: .done, value: "\(habit.completionPercentage)%")
             }
             .animation(.easeInOut(duration: 0.3), value: habit.checkIns.count)
+        }
+        .offset(y: 15)
+        .frame(maxWidth: .infinity)
 
-            Text(.finishedKeepTheStreakAlive)
+        HStack(alignment: .bottom) {
+            (Text(verbatim: "\(min(habit.checkIns.count, habit.duration.numberOfDays)) / ") + Text(.days(habit.duration.numberOfDays)))
                 .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(.orange)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.top, 4)
-
-            HStack {
-                Spacer()
-                if habit.challenges.isEmpty {
-                    Button {
-                        challengeButtonPressed = true
-                    } label: {
-                        Image(systemName: "flag.pattern.checkered.2.crossed")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.blue)
-                } else {
+                .foregroundStyle(.secondary)
+            Spacer()
+            if habit.challenges.isEmpty {
+                Button {
+                    challengeButtonPressed = true
+                } label: {
                     Image(systemName: "flag.pattern.checkered.2.crossed")
-                        .foregroundStyle(Color.accentColor)
                 }
+                .buttonStyle(.borderedProminent)
+                .tint(.blue)
+            } else {
+                Image(systemName: "flag.pattern.checkered.2.crossed")
+                    .foregroundStyle(Color.accentColor)
             }
         }
-        .padding(.top, 16)
+        .padding(.bottom, 4)
+        .frame(maxWidth: .infinity)
+
+        HabitProgressView(habit: habit, height: 8)
     }
 
     @ViewBuilder

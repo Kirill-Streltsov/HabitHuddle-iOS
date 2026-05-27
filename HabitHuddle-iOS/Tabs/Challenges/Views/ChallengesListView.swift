@@ -60,6 +60,7 @@ struct ChallengesListView: View {
                 }
                 .refreshable {
                     await viewModel.getChallenges(for: userID)
+                    pruneStaleLocalChallenges(keeping: viewModel.challenges)
                 }
             }
             .toast(
@@ -70,9 +71,14 @@ struct ChallengesListView: View {
             .background(Color(.systemGroupedBackground))
             .task {
                 await viewModel.getChallenges(for: userID)
+                // Explicit call here covers the edge case where the server returns an
+                // empty list — onChange(of: viewModel.challenges) won't fire if the
+                // value was already [] before the fetch.
+                pruneStaleLocalChallenges(keeping: viewModel.challenges)
                 autoSelectSegmentIfNeeded()
             }
             .onChange(of: viewModel.challenges) { _, newChallenges in
+                pruneStaleLocalChallenges(keeping: newChallenges)
                 if !newChallenges.isEmpty {
                     for newChallenge in viewModel.acceptedChallenges {
                         if !challenges.contains(where: { $0.id == newChallenge.id }) {
@@ -392,6 +398,8 @@ struct ChallengesListView: View {
     /// Cases handled:
     /// - We already own the habit locally (e.g. we were challenged on our own habit).
     /// - Our habit exists on the server but not locally (e.g. accepted on another device) -> fetch it.
+    /// - We have a local habit with the same name (e.g. from a previously cancelled challenge)
+    ///   -> reuse it so we don't end up with duplicate habits after re-accepting.
     /// - We have no habit for this challenge yet -> copy the other participant's habit into our own.
     @MainActor
     private func ensureHabitLocally(for challenge: ChallengeDTO) async throws -> Habit {
@@ -409,11 +417,19 @@ struct ChallengesListView: View {
         }
 
         // 3. We don't have a habit for this challenge yet -> copy the other participant's habit.
+        //    Before creating a brand-new habit, check whether we already have one with the same
+        //    name locally (e.g. from a previously cancelled challenge). Reusing it sends its
+        //    existing ID to the server, which links that habit to the new challenge instead of
+        //    creating a duplicate. The backend handles this case gracefully.
         guard let theirHabitID else {
             throw HHError.notFound
         }
         var copy = try await fetchHabit(theirHabitID)
-        copy.id = UUID()
+        if let existing = existingHabitByName(copy.name) {
+            copy.id = existing.id
+        } else {
+            copy.id = UUID()
+        }
         let created = try await createOurHabit(from: copy, for: challenge.id)
         return try persistHabitLocally(created)
     }
@@ -467,9 +483,28 @@ struct ChallengesListView: View {
         (try? context.fetch(FetchDescriptor<Habit>()))?.first { $0.id == id }
     }
 
+    /// Finds the first local habit whose name matches (used to reuse a habit from a
+    /// previously cancelled challenge instead of creating a duplicate).
+    @MainActor
+    private func existingHabitByName(_ name: String) -> Habit? {
+        (try? context.fetch(FetchDescriptor<Habit>()))?.first { $0.name == name }
+    }
+
     @MainActor
     private func challengeExistsLocally(_ id: UUID) -> Bool {
         ((try? context.fetch(FetchDescriptor<Challenge>()))?.contains { $0.id == id }) == true
+    }
+
+    /// Deletes any local `Challenge` entities whose IDs are no longer in the server
+    /// response. This clears the stale record for the other participant after a
+    /// cancellation so `habit.challenges` empties and the HabitCard resets correctly.
+    @MainActor
+    private func pruneStaleLocalChallenges(keeping serverChallenges: [ChallengeDTO]) {
+        let serverIDs = Set(serverChallenges.map { $0.id })
+        let stale = challenges.filter { !serverIDs.contains($0.id) }
+        guard !stale.isEmpty else { return }
+        stale.forEach { context.delete($0) }
+        try? context.save()
     }
 }
 
