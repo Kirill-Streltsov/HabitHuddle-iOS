@@ -95,7 +95,10 @@ struct ChallengesListView: View {
                 }
             }
             .sheet(item: $selectedChallenge) { challenge in
-                ChallengeCheckInsListView(challenge: challenge)
+                ChallengeCheckInsListView(
+                    challenge: challenge,
+                    onCancel: challenge.status == .accepted ? { await cancelActiveChallenge(challenge) } : nil
+                )
             }
             .navigationTitle(String(localized: .challenges))
         }
@@ -258,6 +261,33 @@ struct ChallengesListView: View {
             groups[key]?.append(challenge)
         }
         return order.map { ($0, groups[$0] ?? []) }
+    }
+
+    // MARK: - Cancel active
+
+    @MainActor
+    private func cancelActiveChallenge(_ challenge: ChallengeDTO) async {
+        let result = await viewModel.cancelChallenge(with: challenge.id)
+        switch result {
+        case .success(let status) where status == .ok:
+            deleteLocalChallenge(challenge.id)
+            selectedChallenge = nil
+            await viewModel.getChallenges(for: userID)
+            HapticManager.trigger(.success)
+            message = String(localized: .challengeWithdrawn)
+            showToast = true
+        default:
+            HapticManager.trigger(.error)
+            message = String(localized: .somethingWentWrongPleaseTryAgain)
+            showToast = true
+        }
+    }
+
+    @MainActor
+    private func deleteLocalChallenge(_ id: UUID) {
+        guard let local = (try? context.fetch(FetchDescriptor<Challenge>()))?.first(where: { $0.id == id }) else { return }
+        context.delete(local)
+        try? context.save()
     }
 
     // MARK: - Accept / reject
@@ -434,16 +464,12 @@ struct ChallengesListView: View {
     /// Looks the habit up directly in the store (not the `@Query`, which lags behind writes).
     @MainActor
     private func existingHabit(_ id: UUID) -> Habit? {
-        var descriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.id == id })
-        descriptor.fetchLimit = 1
-        return (try? context.fetch(descriptor))?.first
+        (try? context.fetch(FetchDescriptor<Habit>()))?.first { $0.id == id }
     }
 
     @MainActor
     private func challengeExistsLocally(_ id: UUID) -> Bool {
-        var descriptor = FetchDescriptor<Challenge>(predicate: #Predicate { $0.id == id })
-        descriptor.fetchLimit = 1
-        return ((try? context.fetch(descriptor))?.isEmpty == false)
+        ((try? context.fetch(FetchDescriptor<Challenge>()))?.contains { $0.id == id }) == true
     }
 }
 

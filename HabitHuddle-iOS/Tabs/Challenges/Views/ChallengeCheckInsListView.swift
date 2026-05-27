@@ -10,13 +10,16 @@ import SwiftUI
 struct ChallengeCheckInsListView: View {
 
     let challenge: ChallengeDTO
+    var onCancel: (() async -> Void)? = nil
+
     @State private var isLoading = true
+    @State private var showCancelAlert = false
     @StateObject private var viewModel = ViewModel()
-    
+
     private var dateRange: [Date] {
         Calendar.current.generateDates(from: challenge.startDate, to: challenge.endDate)
     }
-    
+
     var body: some View {
         ScrollView {
             if isLoading {
@@ -38,8 +41,30 @@ struct ChallengeCheckInsListView: View {
                             receiverDates: viewModel.receiverDates)
                         .padding(.horizontal)
                     }
+
+                    if onCancel != nil {
+                        Button(role: .destructive) {
+                            showCancelAlert = true
+                        } label: {
+                            Text(.cancelChallenge)
+                                .fontWeight(.semibold)
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.red)
+                        .padding(.horizontal)
+                        .padding(.top, 8)
+                    }
                 }
                 .padding(.vertical)
+                .alert(String(localized: .cancelChallenge), isPresented: $showCancelAlert) {
+                    Button(String(localized: .cancelChallenge), role: .destructive) {
+                        Task { await onCancel?() }
+                    }
+                    Button("Cancel", role: .cancel) {}
+                } message: {
+                    Text(.thisWillRemoveTheChallengeForBothParticipants)
+                }
             }
         }
         .task {

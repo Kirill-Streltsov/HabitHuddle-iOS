@@ -28,37 +28,36 @@ struct SettingsView: View {
 
     @State private var showHabitsFound = false
     @State private var newServerHabits = [HabitDTO]()
+    @State private var showLogoutAlert = false
+    @State private var showDeleteAccountAlert = false
 
     var body: some View {
+        settingsContent
+            .alert(String(localized: .areYouSure), isPresented: $showLogoutAlert) {
+                Button(String(localized: .logOut), role: .destructive) { handleLogout() }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text(.youWillBeSignedOutOfYourAccount)
+            }
+            .alert(String(localized: .areYouSure), isPresented: $showDeleteAccountAlert) {
+                Button(String(localized: .deleteMyAccount), role: .destructive) { performDeleteAccount() }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text(.thisWillPermanentlyDeleteYourAccountAndAllAssociatedData)
+            }
+    }
+
+    private var settingsContent: some View {
         NavigationStack {
             List {
                 accountSection
                 preferencesSection
                 informationSection
-                
+
                 if appState.isAuthenticated {
                     Section {
                         SubmitButton(title: .deleteMyAccount, color: .red, iconName: "trash") {
-                            HapticManager.trigger(.error)
-                            Task {
-                                let deleteResult = await viewModel.deleteMyAccount()
-                                Helpers.handleResult(deleteResult) { status in
-                                    if status == .ok {
-                                        habits.forEach {
-                                            $0.isSyncable = false
-                                            $0.isPublic = false
-                                            $0.challenges = []
-                                        }
-                                        print("✅ Successfully deleted the account. Status: \(status)")
-                                        appState.logout(userManager: userManager)
-                                        guard let currentUser = users.first(where: { $0.id == userManager.profile.id }) else { return }
-                                        context.delete(currentUser)
-                                        context.saveOrLog()
-                                    }
-                                } onFailure: { error in
-                                    print("❌ Error: couldn't delete the account: \(error)")
-                                }
-                            }
+                            showDeleteAccountAlert = true
                         }
                     }
                     .listRowBackground(Color.clear)
@@ -87,17 +86,14 @@ struct SettingsView: View {
                 }
             }
         }
-        .onChange(of: viewModel.loadedHabits) { _, newValue in
+        .onChange(of: viewModel.loadedHabits) { _, _ in
             let existingHabitIds = Set(habits.map { $0.id })
             newServerHabits = viewModel.loadedHabits.filter { !existingHabitIds.contains($0.id) }
             showHabitsFound = !newServerHabits.isEmpty
         }
-        .alert(String(localized: .habitsFound),
-               isPresented: $showHabitsFound) {
+        .alert(String(localized: .habitsFound), isPresented: $showHabitsFound) {
             Button(String(localized: .deleteOnServer), role: .destructive) {
-                Task {
-                    await viewModel.deleteHabits(with: newServerHabits.map { $0.id })
-                }
+                Task { await viewModel.deleteHabits(with: newServerHabits.map { $0.id }) }
             }
             Button(String(localized: .saveLocally)) {
                 for loadedHabit in viewModel.loadedHabits {
@@ -108,6 +104,29 @@ struct SettingsView: View {
         } message: {
             let list = newServerHabits.map { "• \($0.name)" }.joined(separator: "\n")
             Text("We found the following habits on the server that you previously created:\n\n\(list)\n\nWould you like to save them locally or delete them from the server?")
+        }
+    }
+
+    private func performDeleteAccount() {
+        HapticManager.trigger(.error)
+        Task {
+            let deleteResult = await viewModel.deleteMyAccount()
+            Helpers.handleResult(deleteResult) { status in
+                if status == .ok {
+                    habits.forEach {
+                        $0.isSyncable = false
+                        $0.isPublic = false
+                        $0.challenges = []
+                    }
+                    print("✅ Successfully deleted the account. Status: \(status)")
+                    appState.logout(userManager: userManager)
+                    guard let currentUser = users.first(where: { $0.id == userManager.profile.id }) else { return }
+                    context.delete(currentUser)
+                    context.saveOrLog()
+                }
+            } onFailure: { error in
+                print("❌ Error: couldn't delete the account: \(error)")
+            }
         }
     }
     
@@ -138,7 +157,7 @@ struct SettingsView: View {
                 }
 
                 Button(role: .destructive) {
-                    handleLogout()
+                    showLogoutAlert = true
                 } label: {
                     HStack(spacing: 12) {
                         settingsIcon("arrow.backward.square", color: .red)

@@ -1561,6 +1561,42 @@
         }
       }
     },
+    "Are you sure?" : {
+      "comment" : "Alert title for destructive confirmation dialogs",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bist du sicher?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Estás seguro?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es-tu sûr ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sei sicuro?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы уверены?"
+          }
+        }
+      }
+    },
     "Ask AI about benefits" : {
       "comment" : "Button to ask AI about habit benefits",
       "extractionState" : "manual",
@@ -11205,6 +11241,114 @@
     "This verification link is no longer valid." : {
 
     },
+    "This habit and all check-in history will be permanently deleted." : {
+      "comment" : "Alert message before deleting a habit",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Gewohnheit und der gesamte Check-in-Verlauf werden dauerhaft gelöscht."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este hábito y todo su historial de registros se eliminarán de forma permanente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette habitude et tout son historique seront supprimés définitivement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questa abitudine e tutta la cronologia dei check-in verranno eliminate definitivamente."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта привычка и вся история отметок будут удалены навсегда."
+          }
+        }
+      }
+    },
+    "This will permanently delete your account and all associated data." : {
+      "comment" : "Alert message before deleting an account",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Konto und alle zugehörigen Daten werden dauerhaft gelöscht."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu cuenta y todos los datos asociados se eliminarán de forma permanente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ton compte et toutes les données associées seront supprimés définitivement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo account e tutti i dati associati verranno eliminati definitivamente."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш аккаунт и все связанные данные будут удалены навсегда."
+          }
+        }
+      }
+    },
+    "This will remove the challenge for both participants." : {
+      "comment" : "Alert message before cancelling an active challenge",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Damit wird die Herausforderung für beide Teilnehmer entfernt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esto eliminará el reto para ambos participantes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cela supprimera le défi pour les deux participants."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo rimuoverà la sfida per entrambi i partecipanti."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это удалит вызов для обоих участников."
+          }
+        }
+      }
+    },
     "Time of Day Pattern" : {
       "comment" : "Statistics chart title",
       "extractionState" : "manual",
@@ -13913,6 +14057,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Твой логин"
+          }
+        }
+      }
+    },
+    "You will be signed out of your account." : {
+      "comment" : "Alert message before logging out",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du wirst von deinem Konto abgemeldet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se cerrará la sesión de tu cuenta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu seras déconnecté de ton compte."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verrai disconnesso dal tuo account."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы будете выйдены из своей учётной записи."
           }
         }
       }

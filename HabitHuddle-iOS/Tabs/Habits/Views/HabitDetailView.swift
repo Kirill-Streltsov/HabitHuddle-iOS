@@ -18,6 +18,7 @@ struct HabitDetailView: View {
     @State private var isCheckedIn = false
     @State private var trophyScale = 1.0
     @State private var deleteButtonPressed = false
+    @State private var showDeleteHabitAlert = false
     @State private var showEditSheet = false
     @State private var askOpenAITapped = false
     @State private var scrollTarget: Int? = nil
@@ -47,6 +48,21 @@ struct HabitDetailView: View {
     }
 
     var body: some View {
+        habitScrollView
+            .alert(String(localized: .areYouSure), isPresented: $showDeleteHabitAlert) {
+                Button(String(localized: .deleteHabit), role: .destructive) {
+                    HapticManager.trigger(.error)
+                    deleteButtonPressed = true
+                    Task { await deleteHabit() }
+                    dismiss()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text(.thisHabitAndAllCheckInHistoryWillBePermanentlyDeleted)
+            }
+    }
+
+    private var habitScrollView: some View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(spacing: 16) {
@@ -71,10 +87,7 @@ struct HabitDetailView: View {
                         .id(aiTextID)
 
                     SubmitButton(title: .deleteHabit, color: .red, iconName: "trash") {
-                        HapticManager.trigger(.error)
-                        deleteButtonPressed = true
-                        Task { await deleteHabit() }
-                        dismiss()
+                        showDeleteHabitAlert = true
                     }
                     .padding(.horizontal)
                 }

@@ -52,30 +52,6 @@ struct HabitEditView: View {
                 durationSection
                 privacySection
                 remindersSection
-
-                SubmitButton(
-                    title: .save,
-                    color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor,
-                    iconName: nil
-                ) {
-                    HapticManager.trigger(.success)
-                    Task {
-                        guard let habit = viewModel.habit else {
-                            await addHabit()
-                            return
-                        }
-                        await saveChanges()
-                        if !viewModel.isSynced {
-                            let _ = await viewModel.deleteHabit(with: habit.id)
-                        }
-                        if !wasSyncedAtTheBeginning && viewModel.isSynced {
-                            await addHabitToTheServer(with: habit.id)
-                        }
-                    }
-                    dismiss()
-                }
-                .allowsHitTesting(!viewModel.name.isEmpty)
-                .padding(.horizontal)
             }
             .padding(.vertical, 16)
             .toolbar {
@@ -83,6 +59,28 @@ struct HabitEditView: View {
                     if let icon = viewModel.icon {
                         Image(systemName: icon)
                     }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        HapticManager.trigger(.success)
+                        Task {
+                            guard let habit = viewModel.habit else {
+                                await addHabit()
+                                return
+                            }
+                            await saveChanges()
+                            if !viewModel.isSynced {
+                                let _ = await viewModel.deleteHabit(with: habit.id)
+                            }
+                            if !wasSyncedAtTheBeginning && viewModel.isSynced {
+                                await addHabitToTheServer(with: habit.id)
+                            }
+                        }
+                        dismiss()
+                    } label: {
+                        Image(systemName: "checkmark")
+                    }
+                    .disabled(viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }
             .onAppear {
