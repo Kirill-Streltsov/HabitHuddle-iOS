@@ -21,6 +21,7 @@ struct ChallengeCheckInsListView: View {
     }
 
     var body: some View {
+        NavigationStack {
         ScrollView {
             if isLoading {
                 ProgressView(String(localized: .loadingCheckIns))
@@ -42,19 +43,6 @@ struct ChallengeCheckInsListView: View {
                         .padding(.horizontal)
                     }
 
-                    if onCancel != nil {
-                        Button(role: .destructive) {
-                            showCancelAlert = true
-                        } label: {
-                            Text(.cancelChallenge)
-                                .fontWeight(.semibold)
-                                .frame(maxWidth: .infinity)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.red)
-                        .padding(.horizontal)
-                        .padding(.top, 8)
-                    }
                 }
                 .padding(.vertical)
                 .alert(String(localized: .cancelChallenge), isPresented: $showCancelAlert) {
@@ -67,6 +55,18 @@ struct ChallengeCheckInsListView: View {
                 }
             }
         }
+        .toolbar {
+            if onCancel != nil {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(role: .destructive) {
+                        showCancelAlert = true
+                    } label: {
+                        Text(.cancelChallenge)
+                    }
+                    .tint(.red)
+                }
+            }
+        }
         .task {
             isLoading = true
             await viewModel.getCheckInDates(
@@ -76,6 +76,7 @@ struct ChallengeCheckInsListView: View {
             isLoading = false
         }
         .background(Color(.systemGroupedBackground).ignoresSafeArea())
+        }
     }
 }
 

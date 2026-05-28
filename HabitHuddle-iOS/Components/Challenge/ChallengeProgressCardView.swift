@@ -26,13 +26,7 @@ struct ChallengeProgressCardView: View {
                 Spacer()
 
                 HStack(spacing: 6) {
-                    Label("Challenge", systemImage: "flag.pattern.checkered.2.crossed")
-                        .font(.footnote)
-                        .fontWeight(.semibold)
-                        .padding(8)
-                        .background(Color.accentColor.opacity(0.1))
-                        .foregroundStyle(Color.accentColor)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    outcomeTag
 
                     Image(systemName: "chevron.right")
                         .font(.caption)
@@ -86,6 +80,30 @@ struct ChallengeProgressCardView: View {
         }
     }
     
+    @ViewBuilder
+    private var outcomeTag: some View {
+        switch challenge.outcome(for: userManager.profile.id) {
+        case .youAhead:
+            tag(text: String(localized: .ahead), icon: "arrow.up.right", color: .green)
+        case .youBehind:
+            tag(text: String(localized: .behind), icon: "arrow.down.right", color: .gray)
+        case .tied:
+            tag(text: String(localized: .tied), icon: "equal", color: .blue)
+        default:
+            EmptyView()
+        }
+    }
+
+    private func tag(text: String, icon: String, color: Color) -> some View {
+        Label(text, systemImage: icon)
+            .font(.footnote)
+            .fontWeight(.semibold)
+            .padding(8)
+            .background(color.opacity(0.15))
+            .foregroundStyle(color)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+
     private func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium

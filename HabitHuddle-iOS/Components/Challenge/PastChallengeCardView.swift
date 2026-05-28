@@ -89,12 +89,10 @@ struct PastChallengeCardView: View {
                 tag(text: String(localized: .youWon), icon: "trophy.fill", color: .yellow)
             case .youLost:
                 tag(text: String(localized: .youLost), icon: "flag", color: .gray)
-            case .youAhead:
-                tag(text: String(localized: .ahead), icon: "arrow.up.right", color: .green)
-            case .youBehind:
-                tag(text: String(localized: .behind), icon: "arrow.down.right", color: .gray)
             case .tied:
                 tag(text: String(localized: .tied), icon: "equal", color: .blue)
+            default:
+                EmptyView()
             }
         case .declined:
             tag(text: String(localized: .declined), icon: "xmark", color: .red)
@@ -173,32 +171,6 @@ private enum PastChallengePreviewFactory {
     .environmentObject(LocalUserManager())
 }
 
-#Preview("Ahead") {
-    PastChallengeCardView(
-        challenge: PastChallengePreviewFactory.challenge(status: .completed, myProgress: 0.7, theirProgress: 0.4)
-    )
-    .padding(.vertical)
-    .background(Color(.systemGroupedBackground))
-    .environmentObject(LocalUserManager())
-}
-
-#Preview("Behind") {
-    PastChallengeCardView(
-        challenge: PastChallengePreviewFactory.challenge(status: .completed, myProgress: 0.3, theirProgress: 0.8)
-    )
-    .padding(.vertical)
-    .background(Color(.systemGroupedBackground))
-    .environmentObject(LocalUserManager())
-}
-
-#Preview("Tied (both 100%)") {
-    PastChallengeCardView(
-        challenge: PastChallengePreviewFactory.challenge(status: .completed, myProgress: 1.0, theirProgress: 1.0)
-    )
-    .padding(.vertical)
-    .background(Color(.systemGroupedBackground))
-    .environmentObject(LocalUserManager())
-}
 
 #Preview("Declined") {
     PastChallengeCardView(

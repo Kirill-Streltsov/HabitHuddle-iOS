@@ -52,6 +52,29 @@ struct HabitEditView: View {
                 durationSection
                 privacySection
                 remindersSection
+
+                if viewModel.habit != nil {
+                    SubmitButton(
+                        title: .save,
+                        color: viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty ? Color.gray.opacity(0.3) : .accentColor,
+                        iconName: nil
+                    ) {
+                        HapticManager.trigger(.success)
+                        Task {
+                            await saveChanges()
+                            guard let habit = viewModel.habit else { return }
+                            if !viewModel.isSynced {
+                                let _ = await viewModel.deleteHabit(with: habit.id)
+                            }
+                            if !wasSyncedAtTheBeginning && viewModel.isSynced {
+                                await addHabitToTheServer(with: habit.id)
+                            }
+                        }
+                        dismiss()
+                    }
+                    .allowsHitTesting(!viewModel.name.isEmpty)
+                    .padding(.horizontal)
+                }
             }
             .padding(.vertical, 16)
             .toolbar {
