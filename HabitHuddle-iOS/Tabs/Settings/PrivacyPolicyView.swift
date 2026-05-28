@@ -10,54 +10,54 @@ struct PrivacyPolicyView: View {
 
                 VStack(alignment: .leading, spacing: 28) {
                     LegalSection(number: 1, title: .informationWeCollect) {
-                        BulletRow(text: .accountDataUsernameNameAndEmailAddress)
-                        BulletRow(text: .habitDataYourHabitsCheckInsAndStreaks)
+                        BulletRow(text: .accountInformationYourUsernameDisplayNameAndEmailAddress)
+                        BulletRow(text: .habitDataYourHabitsDailyCheckInsAndStreakHistory)
                         BulletRow(text: .habitSyncIsEnabledByDefaultWhenSignedInYouCanDisableItPerHabitOrBySigningOut)
                         BulletRow(text: .weStoreYourHabitDataSolelyToSyncItAcrossYourDevicesAndNeverUseItForAnyOtherPurpose)
-                        BulletRow(text: .deviceTokenForSendingPushNotifications)
-                        BulletRow(text: .anonymousUsageAnalyticsToImproveTheApp)
+                        BulletRow(text: .deviceTokenUsedExclusivelyToDeliverPushNotifications)
+                        BulletRow(text: .anonymousAggregatedUsageAnalyticsToImproveTheApp)
                     }
 
                     LegalSection(number: 2, title: .howWeUseYourData) {
-                        BulletRow(text: .toProvideAndImproveHabitHuddlesFeatures)
-                        BulletRow(text: .toSendHabitRemindersAndSocialNotifications)
-                        BulletRow(text: .toEnableSocialFeaturesLikeChallengesAndFriends)
+                        BulletRow(text: .toOperateMaintainAndImproveHabitHuddlesFeatures)
+                        BulletRow(text: .toDeliverHabitRemindersAndSocialNotifications)
+                        BulletRow(text: .toEnableSocialFeaturesSuchAsChallengesAndTheFriendsNetwork)
                     }
 
                     LegalSection(number: 3, title: .dataSharing) {
                         BodyText(text: .weDoNotSellYourPersonalDataToThirdParties)
                         BodyText(text: .weShareDataOnlyWithServiceProvidersThatHelpUsOperateTheApp)
-                        BodyText(text: .weMayDiscloseDataWhenRequiredByLaw)
+                        BodyText(text: .weMayDiscloseDataWhenRequiredByApplicableLawOrLegalProcess)
                     }
 
                     LegalSection(number: 4, title: .dataSecurity) {
-                        BodyText(text: .weUseEncryptedConnectionsAndSecureStorageToProtectYourData)
-                        BodyText(text: .noSystemIsCompletelySecureButWeTakeEveryPrecaution)
+                        BodyText(text: .allDataIsTransmittedOverEncryptedConnectionsAndStoredSecurely)
+                        BodyText(text: .whileWeApplyIndustryStandardSafeguardsNoSystemCanGuaranteeAbsoluteSecurity)
                     }
 
                     LegalSection(number: 5, title: .yourRights) {
-                        BulletRow(text: .youCanAccessAndExportYourDataAtAnyTime)
-                        BulletRow(text: .youCanDeleteYourAccountAndAllDataFromSettings)
-                        BulletRow(text: .youCanOptOutOfMarketingCommunicationsAtAnyTime)
+                        BulletRow(text: .youMayAccessAndExportYourDataAtAnyTimeFromTheApp)
+                        BulletRow(text: .youMayPermanentlyDeleteYourAccountAndAllDataFromSettings)
+                        BulletRow(text: .youMayWithdrawConsentToMarketingCommunicationsAtAnyTime)
                     }
 
                     LegalSection(number: 6, title: .pushNotifications) {
-                        BodyText(text: .weUseYourDeviceTokenToSendRemindersAndSocialAlerts)
-                        BodyText(text: .youCanDisableNotificationsInYourDevicesNotificationSettings)
+                        BodyText(text: .weUseYourDeviceTokenSolelyToSendHabitRemindersAndSocialAlerts)
+                        BodyText(text: .youCanDisableNotificationsAtAnyTimeInYourDevicesSystemSettings)
                     }
 
                     LegalSection(number: 7, title: .thirdPartyServices) {
-                        BodyText(text: .usesTrustedThirdPartyProvidersForAuthentication)
+                        BodyText(text: .weUseTrustedThirdPartyProvidersForAuthenticationAndCloudInfrastructure)
                         BodyText(text: .eachThirdPartyServiceHasItsOwnPrivacyPolicy)
                     }
 
                     LegalSection(number: 8, title: .childrensPrivacy) {
-                        BodyText(text: .habitHuddleIsNotIntendedForUsersUnder13YearsOfAge)
+                        BodyText(text: .habitHuddleIsNotDirectedAtChildrenUnder13WeDoNotKnowinglyCollectDataFromUsersUnder13)
                     }
 
                     LegalSection(number: 9, title: .changesToThisPolicy) {
                         BodyText(text: .weMayUpdateThisPrivacyPolicyFromTimeToTime)
-                        BodyText(text: .weWillNotifyYouOfSignificantChangesThroughTheApp)
+                        BodyText(text: .weWillNotifyYouOfMaterialChangesThroughTheAppBeforeTheyTakeEffect)
                     }
 
                     LegalSection(number: 10, title: .privacyContact) {
@@ -82,7 +82,7 @@ struct PrivacyPolicyView: View {
             Text(.effectiveJanuary12025)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
-            Text(.weValueYourPrivacyAndAreCommittedToProtectingIt)
+            Text(.weAreCommittedToProtectingYourPrivacyAndHandlingYourDataResponsibly)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .padding(.top, 4)

@@ -24,7 +24,7 @@ struct AboutView: View {
                 Divider()
                     .padding(.top, 8)
 
-                Text("© 2025 Habit Huddle. All rights reserved.")
+                Text("© 2026 Habit Huddle. All rights reserved.")
                     .font(.caption)
                     .foregroundStyle(.tertiary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -69,10 +69,10 @@ struct AboutView: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(.habitHuddleIsYourPersonalHabitCompanion)
+            Text(.habitHuddleIsYourPersonalHabitBuildingCompanion)
                 .font(.body)
                 .fontWeight(.medium)
-            Text(.buildMeaningfulRoutinesTrackYourProgressAndStayMotivatedEveryDay)
+            Text(.buildMeaningfulRoutinesTrackYourProgressAndAchieveYourGoals)
                 .font(.body)
                 .foregroundStyle(.secondary)
         }
@@ -83,7 +83,7 @@ struct AboutView: View {
             Text(.features)
                 .font(.headline)
 
-            FeatureRow(icon: "chart.line.uptrend.xyaxis",  text: .trackDailyHabitsWithBeautifulStreakVisualizations)
+            FeatureRow(icon: "chart.line.uptrend.xyaxis",  text: .trackDailyHabitsAndVisualiseYourStreaksOverTime)
             FeatureRow(icon: "icloud.and.arrow.up",        text: .syncHabitsAcrossAllYourDevices)
             FeatureRow(icon: "person.2.fill",              text: .challengeFriendsAndGrowTogether)
             FeatureRow(icon: "sparkles",                   text: .intelligentSuggestionsTailoredToYourGoals)

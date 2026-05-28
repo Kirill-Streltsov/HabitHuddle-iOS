@@ -201,13 +201,6 @@ struct SettingsView: View {
                     Text(.darkMode)
                 }
             }
-
-            NavigationLink(destination: Text("SUBSCRIPTIONS")) {
-                HStack(spacing: 12) {
-                    settingsIcon("star.fill", color: .orange)
-                    Text(.manageSubscription)
-                }
-            }
         }
     }
 

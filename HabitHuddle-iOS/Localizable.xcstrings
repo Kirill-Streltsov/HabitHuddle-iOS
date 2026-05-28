@@ -14894,6 +14894,1482 @@
           }
         }
       }
+    },
+    "Account information: your username, display name, and email address." : {
+      "comment" : "Privacy Policy – Information We Collect section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontoinformationen: Ihr Benutzername, Anzeigename und E-Mail-Adresse."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información de la cuenta: tu nombre de usuario, nombre mostrado y dirección de correo electrónico."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informations du compte : votre nom d'utilisateur, nom d'affichage et adresse e-mail."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informazioni dell'account: il tuo nome utente, nome visualizzato e indirizzo email."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Данные учётной записи: имя пользователя, отображаемое имя и адрес электронной почты."
+          }
+        }
+      }
+    },
+    "All data is transmitted over encrypted connections and stored securely." : {
+      "comment" : "Privacy Policy – Data Security section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Daten werden über verschlüsselte Verbindungen übertragen und sicher gespeichert."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos los datos se transmiten a través de conexiones cifradas y se almacenan de forma segura."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes les données sont transmises via des connexions chiffrées et stockées en sécurité."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutti i dati vengono trasmessi tramite connessioni crittografate e archiviati in modo sicuro."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все данные передаются по зашифрованным соединениям и хранятся в защищённом виде."
+          }
+        }
+      }
+    },
+    "Anonymous, aggregated usage analytics to improve the app." : {
+      "comment" : "Privacy Policy – Information We Collect section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anonyme, aggregierte Nutzungsanalysen zur Verbesserung der App."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Análisis de uso anónimos y agregados para mejorar la aplicación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyses d'utilisation anonymes et agrégées pour améliorer l'application."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analisi d'uso anonime e aggregate per migliorare l'app."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Анонимная агрегированная аналитика использования для улучшения приложения."
+          }
+        }
+      }
+    },
+    "Build meaningful routines, track your progress, and achieve your goals." : {
+      "comment" : "About screen – app description",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bauen Sie bedeutungsvolle Routinen auf, verfolgen Sie Ihren Fortschritt und erreichen Sie Ihre Ziele."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea rutinas significativas, controla tu progreso y alcanza tus objetivos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Construisez des routines significatives, suivez vos progrès et atteignez vos objectifs."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Costruisci routine significative, tieni traccia dei tuoi progressi e raggiungi i tuoi obiettivi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Формируйте полезные привычки, отслеживайте прогресс и достигайте своих целей."
+          }
+        }
+      }
+    },
+    "By accessing or using Habit Huddle, you agree to these Terms of Service and our Privacy Policy." : {
+      "comment" : "Terms of Service – Acceptance section, first sentence",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit dem Zugriff auf oder der Nutzung von Habit Huddle stimmen Sie diesen Nutzungsbedingungen und unserer Datenschutzrichtlinie zu."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al acceder o usar Habit Huddle, aceptas estos Términos de Servicio y nuestra Política de Privacidad."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En accédant à Habit Huddle ou en l'utilisant, vous acceptez ces Conditions d'utilisation et notre Politique de confidentialité."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accedendo o utilizzando Habit Huddle, accetti questi Termini di Servizio e la nostra Informativa sulla Privacy."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Получая доступ к Habit Huddle или используя приложение, вы соглашаетесь с настоящими Условиями обслуживания и нашей Политикой конфиденциальности."
+          }
+        }
+      }
+    },
+    "Continued use of Habit Huddle after changes take effect constitutes acceptance of the revised Terms." : {
+      "comment" : "Terms of Service – Changes to Terms section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die weitere Nutzung von Habit Huddle nach Inkrafttreten der Änderungen gilt als Annahme der überarbeiteten Bedingungen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El uso continuado de Habit Huddle después de que los cambios entren en vigor constituye la aceptación de los Términos revisados."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'utilisation continue de Habit Huddle après l'entrée en vigueur des modifications constitue une acceptation des Conditions révisées."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il continuo utilizzo di Habit Huddle dopo l'entrata in vigore delle modifiche costituisce accettazione dei Termini rivisti."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжение использования Habit Huddle после вступления изменений в силу означает принятие обновлённых Условий."
+          }
+        }
+      }
+    },
+    "Device token: used exclusively to deliver push notifications." : {
+      "comment" : "Privacy Policy – Information We Collect section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geräte-Token: wird ausschließlich zur Zustellung von Push-Benachrichtigungen verwendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token de dispositivo: se usa exclusivamente para enviar notificaciones push."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeton d'appareil : utilisé exclusivement pour envoyer des notifications push."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token dispositivo: usato esclusivamente per inviare notifiche push."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Токен устройства: используется исключительно для отправки push-уведомлений."
+          }
+        }
+      }
+    },
+    "Do not attempt to gain unauthorised access to other accounts or our systems." : {
+      "comment" : "Terms of Service – Acceptable Use section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versuchen Sie nicht, unbefugten Zugriff auf andere Konten oder unsere Systeme zu erlangen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No intentes obtener acceso no autorizado a otras cuentas o a nuestros sistemas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N'essayez pas d'accéder sans autorisation à d'autres comptes ou à nos systèmes."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non tentare di ottenere accesso non autorizzato ad altri account o ai nostri sistemi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не пытайтесь получить несанкционированный доступ к чужим учётным записям или нашим системам."
+          }
+        }
+      }
+    },
+    "Do not interfere with or disrupt the app's operation or security." : {
+      "comment" : "Terms of Service – Acceptable Use section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stören oder beeinträchtigen Sie nicht den Betrieb oder die Sicherheit der App."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No interfieras ni interrumpas el funcionamiento o la seguridad de la aplicación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ne perturbez pas le fonctionnement ou la sécurité de l'application."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non interferire con o interrompere il funzionamento o la sicurezza dell'app."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не вмешивайтесь в работу или безопасность приложения."
+          }
+        }
+      }
+    },
+    "Do not reverse engineer, decompile, or reproduce any part of the app." : {
+      "comment" : "Terms of Service – Acceptable Use section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versuchen Sie nicht, Teile der App zu dekompilieren, zu reproduzieren oder zurückzuentwickeln."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No realices ingeniería inversa, descompiles ni reproduzcas ninguna parte de la aplicación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N'effectuez pas de rétro-ingénierie, de décompilation ou de reproduction de toute partie de l'application."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non eseguire reverse engineering, decompilare o riprodurre nessuna parte dell'app."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрещается осуществлять реверс-инжиниринг, декомпилировать или воспроизводить любую часть приложения."
+          }
+        }
+      }
+    },
+    "Do not use the app for any unlawful or unauthorised purpose." : {
+      "comment" : "Terms of Service – Acceptable Use section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwenden Sie die App nicht für rechtswidrige oder unbefugte Zwecke."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No uses la aplicación para ningún propósito ilegal o no autorizado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N'utilisez pas l'application à des fins illégales ou non autorisées."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non utilizzare l'app per scopi illegali o non autorizzati."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не используйте приложение в незаконных или несанкционированных целях."
+          }
+        }
+      }
+    },
+    "Features may be modified or discontinued with reasonable prior notice." : {
+      "comment" : "Terms of Service – Service Availability section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funktionen können mit angemessener Vorankündigung geändert oder eingestellt werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las funciones pueden modificarse o interrumpirse con un aviso previo razonable."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les fonctionnalités peuvent être modifiées ou supprimées avec un préavis raisonnable."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le funzionalità possono essere modificate o interrotte con ragionevole preavviso."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Функции могут быть изменены или прекращены с разумным предварительным уведомлением."
+          }
+        }
+      }
+    },
+    "Habit Huddle is not directed at children under 13. We do not knowingly collect data from users under 13." : {
+      "comment" : "Privacy Policy – Children's Privacy section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle richtet sich nicht an Kinder unter 13 Jahren. Wir erfassen wissentlich keine Daten von Nutzern unter 13 Jahren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle no está dirigida a menores de 13 años. No recopilamos a sabiendas datos de usuarios menores de 13 años."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle ne s'adresse pas aux enfants de moins de 13 ans. Nous ne collectons pas sciemment de données d'utilisateurs de moins de 13 ans."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle non è destinata a bambini di età inferiore ai 13 anni. Non raccogliamo consapevolmente dati da utenti sotto i 13 anni."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle не предназначен для детей до 13 лет. Мы намеренно не собираем данные пользователей до 13 лет."
+          }
+        }
+      }
+    },
+    "Habit Huddle is provided as-is and as-available, without warranties of any kind." : {
+      "comment" : "Terms of Service – Disclaimer section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle wird ohne jegliche Gewährleistung so bereitgestellt, wie es ist und wie es verfügbar ist."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle se proporciona tal cual y según disponibilidad, sin garantías de ningún tipo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle est fourni tel quel et tel que disponible, sans garanties d'aucune sorte."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle è fornito nello stato in cui si trova e così com'è disponibile, senza garanzie di alcun tipo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle предоставляется «как есть» и «по мере доступности» без каких-либо гарантий."
+          }
+        }
+      }
+    },
+    "Habit Huddle is your personal habit-building companion." : {
+      "comment" : "About screen – app tagline",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle ist Ihr persönlicher Begleiter für den Aufbau von Gewohnheiten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle es tu compañero personal para crear hábitos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle est votre compagnon personnel pour développer de bonnes habitudes."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle è il tuo compagno personale per costruire abitudini."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Huddle — ваш персональный помощник в формировании привычек."
+          }
+        }
+      }
+    },
+    "Habit data: your habits, daily check-ins, and streak history." : {
+      "comment" : "Privacy Policy – Information We Collect section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewohnheitsdaten: Ihre Gewohnheiten, tägliche Check-ins und Streak-Verlauf."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datos de hábitos: tus hábitos, registros diarios y historial de rachas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Données d'habitudes : vos habitudes, enregistrements quotidiens et historique des séries."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dati sulle abitudini: le tue abitudini, check-in giornalieri e cronologia delle serie."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Данные о привычках: ваши привычки, ежедневные отметки и история серий."
+          }
+        }
+      }
+    },
+    "Habits you share with friends may be visible to your connected friends." : {
+      "comment" : "Terms of Service – Content & Data section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewohnheiten, die Sie mit Freunden teilen, können für Ihre verbundenen Freunde sichtbar sein."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los hábitos que compartas con amigos pueden ser visibles para tus amigos conectados."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les habitudes que vous partagez avec des amis peuvent être visibles par vos amis connectés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le abitudini che condividi con gli amici possono essere visibili ai tuoi amici connessi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Привычки, которыми вы делитесь с друзьями, могут быть видны вашим подключённым друзьям."
+          }
+        }
+      }
+    },
+    "If you do not agree, please discontinue use of the app." : {
+      "comment" : "Terms of Service – Acceptance section, second sentence",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn Sie nicht zustimmen, nutzen Sie die App bitte nicht weiter."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si no estás de acuerdo, por favor deja de usar la aplicación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si vous n'êtes pas d'accord, veuillez cesser d'utiliser l'application."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se non sei d'accordo, ti preghiamo di interrompere l'utilizzo dell'app."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если вы не согласны, пожалуйста, прекратите использование приложения."
+          }
+        }
+      }
+    },
+    "To deliver habit reminders and social notifications." : {
+      "comment" : "Privacy Policy – How We Use Your Data section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zur Zustellung von Gewohnheitserinnerungen und sozialen Benachrichtigungen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para enviar recordatorios de hábitos y notificaciones sociales."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour envoyer des rappels d'habitudes et des notifications sociales."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per inviare promemoria sulle abitudini e notifiche sociali."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для отправки напоминаний о привычках и социальных уведомлений."
+          }
+        }
+      }
+    },
+    "To enable social features such as challenges and the friends network." : {
+      "comment" : "Privacy Policy – How We Use Your Data section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um soziale Funktionen wie Herausforderungen und das Freundesnetzwerk zu ermöglichen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para habilitar funciones sociales como retos y la red de amigos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour activer les fonctionnalités sociales telles que les défis et le réseau d'amis."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per abilitare funzionalità social come le sfide e la rete di amici."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для обеспечения социальных функций, таких как челленджи и сеть друзей."
+          }
+        }
+      }
+    },
+    "To operate, maintain, and improve Habit Huddle's features." : {
+      "comment" : "Privacy Policy – How We Use Your Data section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um die Funktionen von Habit Huddle zu betreiben, zu pflegen und zu verbessern."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para operar, mantener y mejorar las funciones de Habit Huddle."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour exploiter, maintenir et améliorer les fonctionnalités de Habit Huddle."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per gestire, mantenere e migliorare le funzionalità di Habit Huddle."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для функционирования, поддержки и улучшения возможностей Habit Huddle."
+          }
+        }
+      }
+    },
+    "Track daily habits and visualise your streaks over time." : {
+      "comment" : "About screen – feature row",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verfolgen Sie tägliche Gewohnheiten und visualisieren Sie Ihre Streaks im Zeitverlauf."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registra tus hábitos diarios y visualiza tus rachas a lo largo del tiempo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suivez vos habitudes quotidiennes et visualisez vos séries au fil du temps."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitora le abitudini quotidiane e visualizza le tue serie nel tempo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отслеживайте ежедневные привычки и следите за своими сериями со временем."
+          }
+        }
+      }
+    },
+    "We are committed to protecting your privacy and handling your data responsibly." : {
+      "comment" : "Privacy Policy – header subtitle",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir verpflichten uns, Ihre Privatsphäre zu schützen und Ihre Daten verantwortungsvoll zu behandeln."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estamos comprometidos con la protección de tu privacidad y el manejo responsable de tus datos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous nous engageons à protéger votre vie privée et à traiter vos données de manière responsable."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ci impegniamo a proteggere la tua privacy e a gestire i tuoi dati in modo responsabile."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы стремимся защищать вашу конфиденциальность и обрабатывать ваши данные ответственно."
+          }
+        }
+      }
+    },
+    "We do not warrant that the app will be uninterrupted, error-free, or secure." : {
+      "comment" : "Terms of Service – Disclaimer section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir garantieren nicht, dass die App unterbrechungsfrei, fehlerfrei oder sicher ist."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No garantizamos que la aplicación sea ininterrumpida, libre de errores o segura."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous ne garantissons pas que l'application sera ininterrompue, exempte d'erreurs ou sécurisée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non garantiamo che l'app sia ininterrotta, priva di errori o sicura."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы не гарантируем, что приложение будет работать без перебоев, ошибок или уязвимостей."
+          }
+        }
+      }
+    },
+    "We may disclose data when required by applicable law or legal process." : {
+      "comment" : "Privacy Policy – Data Sharing section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir können Daten offenlegen, wenn dies durch geltendes Recht oder ein rechtliches Verfahren erforderlich ist."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podemos divulgar datos cuando así lo exija la ley aplicable o un proceso legal."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous pouvons divulguer des données lorsque la loi applicable ou une procédure judiciaire l'exige."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Possiamo divulgare dati quando richiesto dalla legge applicabile o da un procedimento legale."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы можем раскрывать данные, когда это требуется действующим законодательством или судебным процессом."
+          }
+        }
+      }
+    },
+    "We may revise these Terms at any time and will notify you of material changes through the app." : {
+      "comment" : "Terms of Service – Changes to Terms section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir können diese Bedingungen jederzeit überarbeiten und werden Sie über wesentliche Änderungen über die App informieren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podemos revisar estos Términos en cualquier momento e informarte de los cambios importantes a través de la aplicación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous pouvons réviser ces Conditions à tout moment et vous informerons des modifications importantes via l'application."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Possiamo rivedere questi Termini in qualsiasi momento e ti notificheremo le modifiche sostanziali tramite l'app."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы вправе пересматривать настоящие Условия в любое время и будем уведомлять вас о существенных изменениях через приложение."
+          }
+        }
+      }
+    },
+    "We may suspend or terminate your account if you materially breach these Terms." : {
+      "comment" : "Terms of Service – Account Termination section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir können Ihr Konto sperren oder kündigen, wenn Sie wesentlich gegen diese Bedingungen verstoßen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podemos suspender o cancelar tu cuenta si incumples materialmente estos Términos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous pouvons suspendre ou résilier votre compte en cas de violation substantielle de ces Conditions."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Possiamo sospendere o terminare il tuo account in caso di violazione sostanziale di questi Termini."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы вправе приостановить или удалить вашу учётную запись при существенном нарушении настоящих Условий."
+          }
+        }
+      }
+    },
+    "We strive to provide a reliable, continuously available service." : {
+      "comment" : "Terms of Service – Service Availability section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir bemühen uns, einen zuverlässigen, kontinuierlich verfügbaren Dienst bereitzustellen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nos esforzamos por ofrecer un servicio fiable y continuamente disponible."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous nous efforçons de fournir un service fiable et continuellement disponible."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ci sforziamo di fornire un servizio affidabile e continuamente disponibile."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы стремимся обеспечивать надёжный, постоянно доступный сервис."
+          }
+        }
+      }
+    },
+    "We use trusted third-party providers for authentication and cloud infrastructure." : {
+      "comment" : "Privacy Policy – Third-Party Services section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir nutzen vertrauenswürdige Drittanbieter für Authentifizierung und Cloud-Infrastruktur."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usamos proveedores de terceros de confianza para la autenticación y la infraestructura en la nube."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous utilisons des fournisseurs tiers de confiance pour l'authentification et l'infrastructure cloud."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizziamo fornitori terzi affidabili per l'autenticazione e l'infrastruttura cloud."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы используем надёжных сторонних провайдеров для аутентификации и облачной инфраструктуры."
+          }
+        }
+      }
+    },
+    "We use your device token solely to send habit reminders and social alerts." : {
+      "comment" : "Privacy Policy – Push Notifications section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir verwenden Ihren Geräte-Token ausschließlich zum Senden von Gewohnheitserinnerungen und sozialen Benachrichtigungen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usamos tu token de dispositivo únicamente para enviar recordatorios de hábitos y alertas sociales."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous utilisons votre jeton d'appareil uniquement pour envoyer des rappels d'habitudes et des alertes sociales."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizziamo il tuo token dispositivo esclusivamente per inviare promemoria sulle abitudini e avvisi sociali."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы используем токен вашего устройства исключительно для отправки напоминаний о привычках и социальных оповещений."
+          }
+        }
+      }
+    },
+    "We will notify you of material changes through the app before they take effect." : {
+      "comment" : "Privacy Policy – Changes to This Policy section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir werden Sie über wesentliche Änderungen über die App informieren, bevor diese in Kraft treten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te notificaremos sobre los cambios importantes a través de la aplicación antes de que entren en vigor."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous vous informerons des modifications importantes via l'application avant qu'elles entrent en vigueur."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ti notificheremo le modifiche sostanziali tramite l'app prima che entrino in vigore."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы уведомим вас о существенных изменениях через приложение до их вступления в силу."
+          }
+        }
+      }
+    },
+    "While we apply industry-standard safeguards, no system can guarantee absolute security." : {
+      "comment" : "Privacy Policy – Data Security section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auch wenn wir branchenübliche Schutzmaßnahmen anwenden, kann kein System absolute Sicherheit garantieren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aunque aplicamos medidas de seguridad estándar del sector, ningún sistema puede garantizar la seguridad absoluta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bien que nous appliquions des mesures de sécurité conformes aux normes du secteur, aucun système ne peut garantir une sécurité absolue."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pur applicando misure di sicurezza standard del settore, nessun sistema può garantire la sicurezza assoluta."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Несмотря на применение отраслевых стандартов безопасности, ни одна система не может гарантировать абсолютную защиту."
+          }
+        }
+      }
+    },
+    "You are responsible for maintaining the confidentiality of your login credentials." : {
+      "comment" : "Terms of Service – User Accounts section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie sind dafür verantwortlich, die Vertraulichkeit Ihrer Anmeldedaten zu wahren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eres responsable de mantener la confidencialidad de tus credenciales de inicio de sesión."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous êtes responsable de la confidentialité de vos identifiants de connexion."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sei responsabile del mantenimento della riservatezza delle tue credenziali di accesso."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы несёте ответственность за сохранение конфиденциальности ваших учётных данных."
+          }
+        }
+      }
+    },
+    "You are solely responsible for all activity that occurs under your account." : {
+      "comment" : "Terms of Service – User Accounts section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie sind allein verantwortlich für alle Aktivitäten, die unter Ihrem Konto stattfinden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eres el único responsable de toda la actividad que ocurra bajo tu cuenta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous êtes seul(e) responsable de toutes les activités effectuées sous votre compte."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sei l'unico responsabile di tutte le attività che avvengono sotto il tuo account."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы несёте полную ответственность за все действия, совершённые с вашей учётной записи."
+          }
+        }
+      }
+    },
+    "You can disable notifications at any time in your device's system settings." : {
+      "comment" : "Privacy Policy – Push Notifications section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können Benachrichtigungen jederzeit in den Systemeinstellungen Ihres Geräts deaktivieren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puedes desactivar las notificaciones en cualquier momento en la configuración del sistema de tu dispositivo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pouvez désactiver les notifications à tout moment dans les paramètres système de votre appareil."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puoi disabilitare le notifiche in qualsiasi momento nelle impostazioni di sistema del tuo dispositivo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы можете отключить уведомления в любое время в системных настройках вашего устройства."
+          }
+        }
+      }
+    },
+    "You may access and export your data at any time from the app." : {
+      "comment" : "Privacy Policy – Your Rights section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können Ihre Daten jederzeit über die App abrufen und exportieren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puedes acceder y exportar tus datos en cualquier momento desde la aplicación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pouvez accéder à vos données et les exporter à tout moment depuis l'application."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puoi accedere ed esportare i tuoi dati in qualsiasi momento dall'app."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы можете получить доступ к своим данным и экспортировать их в любое время из приложения."
+          }
+        }
+      }
+    },
+    "You may close your account at any time from Settings, permanently deleting all associated data." : {
+      "comment" : "Terms of Service – Account Termination section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können Ihr Konto jederzeit über die Einstellungen schließen und dabei alle zugehörigen Daten dauerhaft löschen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puedes cerrar tu cuenta en cualquier momento desde Ajustes, eliminando permanentemente todos los datos asociados."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pouvez fermer votre compte à tout moment depuis les Paramètres, supprimant définitivement toutes les données associées."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puoi chiudere il tuo account in qualsiasi momento dalle Impostazioni, eliminando definitivamente tutti i dati associati."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы можете удалить учётную запись в любое время из Настроек, что навсегда удалит все связанные данные."
+          }
+        }
+      }
+    },
+    "You may permanently delete your account and all data from Settings." : {
+      "comment" : "Privacy Policy – Your Rights section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können Ihr Konto und alle Daten dauerhaft über die Einstellungen löschen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puedes eliminar permanentemente tu cuenta y todos los datos desde Ajustes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pouvez supprimer définitivement votre compte et toutes vos données depuis les Paramètres."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puoi eliminare definitivamente il tuo account e tutti i dati dalle Impostazioni."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы можете навсегда удалить учётную запись и все данные через Настройки."
+          }
+        }
+      }
+    },
+    "You may withdraw consent to marketing communications at any time." : {
+      "comment" : "Privacy Policy – Your Rights section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können Ihre Einwilligung zu Marketingkommunikation jederzeit widerrufen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puedes retirar tu consentimiento a las comunicaciones de marketing en cualquier momento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pouvez retirer votre consentement aux communications marketing à tout moment."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puoi revocare il consenso alle comunicazioni di marketing in qualsiasi momento."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы можете отозвать согласие на маркетинговые коммуникации в любое время."
+          }
+        }
+      }
+    },
+    "You must be at least 13 years of age to create an account." : {
+      "comment" : "Terms of Service – User Accounts section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie müssen mindestens 13 Jahre alt sein, um ein Konto zu erstellen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debes tener al menos 13 años de edad para crear una cuenta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous devez avoir au moins 13 ans pour créer un compte."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Devi avere almeno 13 anni per creare un account."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вам должно быть не менее 13 лет для создания учётной записи."
+          }
+        }
+      }
+    },
+    "You retain ownership of the habit data you create in Habit Huddle." : {
+      "comment" : "Terms of Service – Content & Data section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie behalten das Eigentum an den Gewohnheitsdaten, die Sie in Habit Huddle erstellen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conservas la propiedad de los datos de hábitos que creas en Habit Huddle."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous conservez la propriété des données d'habitudes que vous créez dans Habit Huddle."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantieni la proprietà dei dati sulle abitudini che crei in Habit Huddle."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы сохраняете права собственности на данные о привычках, созданные вами в Habit Huddle."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

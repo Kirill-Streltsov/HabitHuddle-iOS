@@ -10,47 +10,48 @@ struct TermsOfServiceView: View {
 
                 VStack(alignment: .leading, spacing: 28) {
                     LegalSection(number: 1, title: .acceptanceOfTerms) {
-                        BodyText(text: .byUsingHabitHuddleYouAgreeToTheseTermsOfService)
-                        BodyText(text: .ifYouDoNotAgreePleaseDoNotUseTheApp)
+                        BodyText(text: .byAccessingOrUsingHabitHuddleYouAgreeToTheseTermsOfServiceAndOurPrivacyPolicy)
+                        BodyText(text: .ifYouDoNotAgreePleaseDiscontinueUseOfTheApp)
                     }
 
                     LegalSection(number: 2, title: .userAccounts) {
-                        BulletRow(text: .youMustBe13OrOlderToUseHabitHuddle)
-                        BulletRow(text: .keepYourLoginCredentialsSecureAndDoNotShareThem)
-                        BulletRow(text: .youAreResponsibleForAllActivityUnderYourAccount)
+                        BulletRow(text: .youMustBeAtLeast13YearsOfAgeToCreateAnAccount)
+                        BulletRow(text: .youAreResponsibleForMaintainingTheConfidentialityOfYourLoginCredentials)
+                        BulletRow(text: .youAreSolelyResponsibleForAllActivityThatOccursUnderYourAccount)
                         BulletRow(text: .youMayDeleteYourAccountAtAnyTimeFromSettings)
                     }
 
                     LegalSection(number: 3, title: .acceptableUse) {
-                        BulletRow(text: .doNotUseTheAppForAnyUnlawfulPurpose)
-                        BulletRow(text: .doNotAttemptToAccessOtherUsersData)
-                        BulletRow(text: .doNotInterfereWithTheAppsFunctionalityOrSecurity)
-                        BulletRow(text: .doNotReverseEngineerOrCopyAnyPartOfTheApp)
+                        BulletRow(text: .doNotUseTheAppForAnyUnlawfulOrUnauthorisedPurpose)
+                        BulletRow(text: .doNotAttemptToGainUnauthorisedAccessToOtherAccountsOrOurSystems)
+                        BulletRow(text: .doNotInterfereWithOrDisruptTheAppsOperationOrSecurity)
+                        BulletRow(text: .doNotReverseEngineerDecompileOrReproduceAnyPartOfTheApp)
                     }
 
                     LegalSection(number: 4, title: .contentData) {
-                        BulletRow(text: .youOwnTheHabitDataYouCreateInHabitHuddle)
-                        BulletRow(text: .publicContentYouShareMayBeVisibleToOtherUsers)
+                        BulletRow(text: .youRetainOwnershipOfTheHabitDataYouCreateInHabitHuddle)
+                        BulletRow(text: .habitsYouShareWithFriendsMayBeVisibleToYourConnectedFriends)
                         BulletRow(text: .weMayRemoveContentThatViolatesTheseTerms)
                     }
 
                     LegalSection(number: 5, title: .serviceAvailability) {
-                        BodyText(text: .weStriveToKeepHabitHuddleRunningSmoothlyAndReliably)
-                        BodyText(text: .featuresMayChangeOrBeDiscontinuedWithReasonableNotice)
+                        BodyText(text: .weStriveToProvideAReliableContinuouslyAvailableService)
+                        BodyText(text: .featuresMayBeModifiedOrDiscontinuedWithReasonablePriorNotice)
                     }
 
                     LegalSection(number: 6, title: .accountTermination) {
-                        BodyText(text: .weMaySuspendYourAccountIfYouViolateTheseTerms)
-                        BodyText(text: .youMayDeleteYourAccountAtAnyTimeFromSettings)
+                        BodyText(text: .weMaySuspendOrTerminateYourAccountIfYouMateriallyBreachTheseTerms)
+                        BodyText(text: .youMayCloseYourAccountAtAnyTimeFromSettingsPermanentlyDeletingAllAssociatedData)
                     }
 
                     LegalSection(number: 7, title: .disclaimer) {
-                        BodyText(text: .habitHuddleIsProvidedAsIsWithoutWarrantiesOfAnyKind)
+                        BodyText(text: .habitHuddleIsProvidedAsIsAndAsAvailableWithoutWarrantiesOfAnyKind)
+                        BodyText(text: .weDoNotWarrantThatTheAppWillBeUninterruptedErrorFreeOrSecure)
                     }
 
                     LegalSection(number: 8, title: .changesToTheseTerms) {
-                        BodyText(text: .weMayUpdateTheseTermsPeriodically)
-                        BodyText(text: .continuedUseOfTheAppMeansYouAcceptTheUpdatedTerms)
+                        BodyText(text: .weMayReviseTheseTermsAtAnyTimeAndWillNotifyYouOfMaterialChangesThroughTheApp)
+                        BodyText(text: .continuedUseOfHabitHuddleAfterChangesTakeEffectConstitutesAcceptanceOfTheRevisedTerms)
                     }
 
                     LegalSection(number: 9, title: .legalContact) {
