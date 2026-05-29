@@ -15,7 +15,6 @@ struct PrivacyPolicyView: View {
                         BulletRow(text: .habitSyncIsEnabledByDefaultWhenSignedInYouCanDisableItPerHabitOrBySigningOut)
                         BulletRow(text: .weStoreYourHabitDataSolelyToSyncItAcrossYourDevicesAndNeverUseItForAnyOtherPurpose)
                         BulletRow(text: .deviceTokenUsedExclusivelyToDeliverPushNotifications)
-                        BulletRow(text: .anonymousAggregatedUsageAnalyticsToImproveTheApp)
                     }
 
                     LegalSection(number: 2, title: .howWeUseYourData) {
@@ -28,6 +27,7 @@ struct PrivacyPolicyView: View {
                         BodyText(text: .weDoNotSellYourPersonalDataToThirdParties)
                         BodyText(text: .weShareDataOnlyWithServiceProvidersThatHelpUsOperateTheApp)
                         BodyText(text: .weMayDiscloseDataWhenRequiredByApplicableLawOrLegalProcess)
+                        BodyText(text: .yourUsernameAndProfileAreVisibleToOtherUsersAndCanBeFoundThroughSearchSoTheyCanSendYouFriendRequests)
                     }
 
                     LegalSection(number: 4, title: .dataSecurity) {
@@ -36,9 +36,8 @@ struct PrivacyPolicyView: View {
                     }
 
                     LegalSection(number: 5, title: .yourRights) {
-                        BulletRow(text: .youMayAccessAndExportYourDataAtAnyTimeFromTheApp)
+                        BulletRow(text: .youMayAccessYourHabitDataAtAnyTimeWithinTheApp)
                         BulletRow(text: .youMayPermanentlyDeleteYourAccountAndAllDataFromSettings)
-                        BulletRow(text: .youMayWithdrawConsentToMarketingCommunicationsAtAnyTime)
                     }
 
                     LegalSection(number: 6, title: .pushNotifications) {
@@ -48,6 +47,7 @@ struct PrivacyPolicyView: View {
 
                     LegalSection(number: 7, title: .thirdPartyServices) {
                         BodyText(text: .weUseTrustedThirdPartyProvidersForAuthenticationAndCloudInfrastructure)
+                        BodyText(text: .whenYouUseTheOptionalAiHabitSuggestionFeatureTheHabitsNameDescriptionAndTargetDurationAreSentToOpenAIToGenerateTipsWeDoNotSendYourNameEmailOrAccountIdentifiersOpenAIProcessesThisDataUnderItsOwnPrivacyPolicy)
                         BodyText(text: .eachThirdPartyServiceHasItsOwnPrivacyPolicy)
                     }
 
@@ -79,7 +79,7 @@ struct PrivacyPolicyView: View {
             Text(.privacyPolicy)
                 .font(.largeTitle)
                 .fontWeight(.bold)
-            Text(.effectiveJanuary12025)
+            Text(.effectiveJune12026)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             Text(.weAreCommittedToProtectingYourPrivacyAndHandlingYourDataResponsibly)

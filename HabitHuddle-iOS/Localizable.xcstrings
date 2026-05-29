@@ -5265,38 +5265,38 @@
         }
       }
     },
-    "Effective January 1, 2025" : {
+    "Effective June 1, 2026" : {
       "comment" : "Effective date shown on Terms of Service and Privacy Policy screens",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gültig ab 1. Januar 2025"
+            "value" : "Gültig ab 1. Juni 2026"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vigente desde el 1 de enero de 2025"
+            "value" : "Vigente desde el 1 de junio de 2026"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En vigueur depuis le 1er janvier 2025"
+            "value" : "En vigueur depuis le 1er juin 2026"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In vigore dal 1° gennaio 2025"
+            "value" : "In vigore dal 1° giugno 2026"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Действует с 1 января 2025 года"
+            "value" : "Действует с 1 июня 2026 года"
           }
         }
       }
@@ -14564,6 +14564,42 @@
         }
       }
     },
+    "When you use the optional AI habit-suggestion feature, the habit's name, description, and target duration are sent to OpenAI to generate tips. We do not send your name, email, or account identifiers. OpenAI processes this data under its own privacy policy." : {
+      "comment" : "Privacy Policy – Third-Party Services section; discloses data sent to OpenAI",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du die optionale KI-Funktion für Gewohnheitsvorschläge nutzt, werden Name, Beschreibung und Zieldauer der Gewohnheit an OpenAI gesendet, um Tipps zu generieren. Wir senden weder deinen Namen noch deine E-Mail-Adresse oder Konto-Identifikatoren. OpenAI verarbeitet diese Daten gemäß seiner eigenen Datenschutzrichtlinie."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuando usas la función opcional de sugerencias de hábitos con IA, el nombre, la descripción y la duración objetivo del hábito se envían a OpenAI para generar consejos. No enviamos tu nombre, correo electrónico ni identificadores de cuenta. OpenAI procesa estos datos conforme a su propia política de privacidad."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lorsque vous utilisez la fonctionnalité facultative de suggestions d'habitudes par IA, le nom, la description et la durée cible de l'habitude sont envoyés à OpenAI pour générer des conseils. Nous n'envoyons pas votre nom, votre adresse e-mail ni vos identifiants de compte. OpenAI traite ces données conformément à sa propre politique de confidentialité."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando usi la funzione facoltativa di suggerimenti sulle abitudini basata sull'IA, il nome, la descrizione e la durata prevista dell'abitudine vengono inviati a OpenAI per generare consigli. Non inviamo il tuo nome, la tua email né identificatori dell'account. OpenAI tratta questi dati secondo la propria informativa sulla privacy."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда ты используешь необязательную функцию подсказок по привычкам на базе ИИ, название, описание и целевая длительность привычки отправляются в OpenAI для генерации советов. Мы не отправляем твоё имя, адрес электронной почты или идентификаторы аккаунта. OpenAI обрабатывает эти данные в соответствии со своей политикой конфиденциальности."
+          }
+        }
+      }
+    },
     "We use trusted third-party providers for authentication and cloud infrastructure." : {
       "comment" : "Privacy Policy – Third-Party Services section",
       "extractionState" : "manual",
@@ -15503,6 +15539,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы можете удалить свою учётную запись в любое время в Настройках."
+          }
+        }
+      }
+    },
+    "Your username and profile are visible to other users and can be found through search so they can send you friend requests." : {
+      "comment" : "Privacy Policy – Data Sharing section; discloses profile visibility to other users",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Benutzername und dein Profil sind für andere Nutzer sichtbar und können über die Suche gefunden werden, damit sie dir Freundschaftsanfragen senden können."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu nombre de usuario y tu perfil son visibles para otros usuarios y se pueden encontrar mediante la búsqueda para que puedan enviarte solicitudes de amistad."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre nom d'utilisateur et votre profil sont visibles par les autres utilisateurs et peuvent être trouvés via la recherche afin qu'ils puissent vous envoyer des demandes d'ami."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo nome utente e il tuo profilo sono visibili agli altri utenti e possono essere trovati tramite la ricerca, così possono inviarti richieste di amicizia."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Твоё имя пользователя и профиль видны другим пользователям и могут быть найдены через поиск, чтобы они могли отправить тебе запросы в друзья."
+          }
+        }
+      }
+    },
+    "You may access your habit data at any time within the app." : {
+      "comment" : "Privacy Policy – Your Rights section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kannst jederzeit in der App auf deine Gewohnheitsdaten zugreifen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puedes acceder a los datos de tus hábitos en cualquier momento dentro de la app."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pouvez accéder à vos données d'habitudes à tout moment dans l'application."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puoi accedere ai dati delle tue abitudini in qualsiasi momento nell'app."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ты можешь в любое время получить доступ к данным своих привычек в приложении."
           }
         }
       }

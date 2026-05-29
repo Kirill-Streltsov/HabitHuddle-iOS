@@ -73,7 +73,7 @@ struct TermsOfServiceView: View {
             Text(.termsOfService)
                 .font(.largeTitle)
                 .fontWeight(.bold)
-            Text(.effectiveJanuary12025)
+            Text(.effectiveJune12026)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }
