@@ -20,7 +20,6 @@ struct HabitHuddle_iOSApp: App {
     
     init() {
         AppLaunchChecker.clearKeychainIfFreshInstall()
-        print("TOKEN MANAGER: \(String(describing: TokenManager.token))")
     }
 
     var body: some Scene {
@@ -33,9 +32,7 @@ struct HabitHuddle_iOSApp: App {
                     GIDSignIn.sharedInstance.handle(url)
                 }
                 .onAppear {
-                    GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-                        print("Resorted user from google: \(String(describing: user))")
-                    }
+                    GIDSignIn.sharedInstance.restorePreviousSignIn { _, _ in }
                 }
                 .onAppear {
                     UIApplication.shared.registerForRemoteNotifications()

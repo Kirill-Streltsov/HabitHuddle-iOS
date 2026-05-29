@@ -24,6 +24,8 @@ struct SettingsView: View {
     @State private var newServerHabits = [HabitDTO]()
     @State private var showLogoutAlert = false
     @State private var showDeleteAccountAlert = false
+    @State private var showErrorAlert = false
+    @State private var errorTitle: LocalizedStringResource = .somethingWentWrongPleaseTryAgain
 
     var body: some View {
         settingsContent
@@ -38,6 +40,11 @@ struct SettingsView: View {
                 Button("Cancel", role: .cancel) {}
             } message: {
                 Text(.thisWillPermanentlyDeleteYourAccountAndAllAssociatedData)
+            }
+            .alert(String(localized: errorTitle), isPresented: $showErrorAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(.somethingWentWrongPleaseTryAgain)
             }
     }
 
@@ -118,8 +125,9 @@ struct SettingsView: View {
                     context.delete(currentUser)
                     context.saveOrLog()
                 }
-            } onFailure: { error in
-                print("❌ Error: couldn't delete the account: \(error)")
+            } onFailure: { _ in
+                errorTitle = .couldntDeleteYourAccount
+                showErrorAlert = true
             }
         }
     }
@@ -286,7 +294,8 @@ struct SettingsView: View {
                     }
                 }
             } onFailure: { _ in
-                // TODO: show error alert
+                errorTitle = .couldntLogOut
+                showErrorAlert = true
             }
         }
     }
