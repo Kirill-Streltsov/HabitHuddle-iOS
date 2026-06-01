@@ -353,13 +353,7 @@ struct HabitEditView: View {
     // MARK: - Data
 
     private func fillCategories() {
-        categories = [
-            String(localized: .health),
-            String(localized: .productivity),
-            String(localized: .mindfulness),
-            String(localized: .learning),
-            String(localized: .fitness)
-        ]
+        categories = Habit.defaultCategorySuggestions
         for habit in habits {
             if !habit.category.isEmpty && !categories.contains(habit.category) {
                 categories.append(habit.category)

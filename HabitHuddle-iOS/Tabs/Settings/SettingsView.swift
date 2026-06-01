@@ -209,6 +209,13 @@ struct SettingsView: View {
                     Text(.darkMode)
                 }
             }
+
+            NavigationLink(destination: ManageCategoriesView()) {
+                HStack(spacing: 12) {
+                    settingsIcon("tag.fill", color: .purple)
+                    Text(.manageCategories)
+                }
+            }
         }
     }
 

@@ -585,7 +585,7 @@ struct FriendDetailViewModelTests {
         await mock.enqueue([HabitDTO]())  // getUserHabits reload
 
         let vm = FriendDetailView.ViewModel(network: mock)
-        let success = await vm.sendChallenge(to: receiverID, for: UUID())
+        let success = await vm.sendChallenge(to: receiverID, for: UUID(), durationDays: 14)
 
         #expect(success)
         #expect(vm.habits.isEmpty)
@@ -598,7 +598,7 @@ struct FriendDetailViewModelTests {
         await mock.enqueueError(HHError.serverError)
 
         let vm = FriendDetailView.ViewModel(network: mock)
-        let success = await vm.sendChallenge(to: UUID(), for: UUID())
+        let success = await vm.sendChallenge(to: UUID(), for: UUID(), durationDays: 14)
 
         #expect(!success)
     }
@@ -610,7 +610,7 @@ struct FriendDetailViewModelTests {
         await mock.enqueueError(HHError.conflict)
 
         let vm = FriendDetailView.ViewModel(network: mock)
-        let success = await vm.sendChallenge(to: UUID(), for: UUID())
+        let success = await vm.sendChallenge(to: UUID(), for: UUID(), durationDays: 14)
 
         #expect(!success)
     }
