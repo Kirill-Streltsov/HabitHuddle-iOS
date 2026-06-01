@@ -12,6 +12,7 @@ struct FriendDetailView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
+    @EnvironmentObject private var userManager: LocalUserManager
 
     @StateObject private var viewModel = ViewModel()
     let friend: UserDTO
@@ -43,7 +44,7 @@ struct FriendDetailView: View {
             }
             .task {
                 await viewModel.getUserHabits(for: friend.id)
-                await viewModel.getUserChallenges(for: friend.id)
+                await viewModel.getChallenges(currentUserID: userManager.profile.id, friendID: friend.id)
             }
         }
         .onChange(of: viewModel.habits.count) { _, newValue in
@@ -131,4 +132,5 @@ struct FriendDetailView: View {
 
 #Preview {
     FriendDetailView(friend: UserDTO(id: UUID(), username: "username", name: "Jack", createdAt: .now, updatedAt: .now))
+        .environmentObject(LocalUserManager())
 }

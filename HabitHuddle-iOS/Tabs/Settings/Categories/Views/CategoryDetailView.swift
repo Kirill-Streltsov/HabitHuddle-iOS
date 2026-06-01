@@ -88,7 +88,7 @@ struct CategoryDetailView: View {
     }
 
     private func habitRow(_ habit: Habit) -> some View {
-        HStack(spacing: 12) {
+        HStack(alignment: .top, spacing: 12) {
             rowIcon(habit.icon ?? "checkmark.seal.fill", color: .accentColor)
             VStack(alignment: .leading, spacing: 2) {
                 Text(habit.name)

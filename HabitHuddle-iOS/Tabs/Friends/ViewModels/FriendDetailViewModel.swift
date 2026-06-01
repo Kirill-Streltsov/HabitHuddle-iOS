@@ -34,13 +34,22 @@ extension FriendDetailView {
             }
         }
 
-        func getUserChallenges(for id: UUID) async {
+        /// Loads the challenges shared between the current user and this friend.
+        ///
+        /// The backend's `challenges/:userID` route only returns the *authenticated*
+        /// user's own challenges — it 403s for any other userID — so we can't query
+        /// the friend's ID directly. Instead we fetch our own list (which already
+        /// includes every challenge we're a participant in) and keep the ones this
+        /// friend is the other party to.
+        func getChallenges(currentUserID: UUID, friendID: UUID) async {
             do {
                 let fetchedChallenges = try await network.request(
-                    endpoint: .getChallenges(for: id),
+                    endpoint: .getChallenges(for: currentUserID),
                     method: .get,
                     responseType: [ChallengeDTO].self)
-                challenges = fetchedChallenges
+                challenges = fetchedChallenges.filter {
+                    $0.initiator.user.id == friendID || $0.receiver.user.id == friendID
+                }
             } catch {
                 print("❌ Error: Could not decode user challenges: \(error.localizedDescription)")
             }
