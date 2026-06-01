@@ -21,6 +21,7 @@ struct FriendDetailView: View {
     @State private var message = ""
     @State private var heatmapID = UUID()
     @State private var didShowBoostSent = false
+    @State private var selectedChallenge: ChallengeDTO? = nil
 
     @Query
     var users: [User]
@@ -42,6 +43,7 @@ struct FriendDetailView: View {
                 Divider()
                 friendChallenges
             }
+            .padding(.bottom, 32)
             .task {
                 await viewModel.getUserHabits(for: friend.id)
                 await viewModel.getChallenges(currentUserID: userManager.profile.id, friendID: friend.id)
@@ -59,6 +61,12 @@ struct FriendDetailView: View {
         )
         .toast(isPresented: $showToast, message: message)
         .background(Color(.systemGroupedBackground))
+        .sheet(item: $selectedChallenge) { challenge in
+            ChallengeCheckInsListView(
+                challenge: challenge,
+                onCancel: challenge.status == .accepted ? { await cancelChallenge(challenge) } : nil
+            )
+        }
         .toolbar {
             Button {
                 Task {
@@ -117,12 +125,41 @@ struct FriendDetailView: View {
                         .fontWeight(.semibold)
                     ForEach(viewModel.challenges) { challenge in
                         ChallengeProgressCardView(challenge: challenge)
+                            .onTapGesture {
+                                HapticManager.trigger(.selection)
+                                selectedChallenge = challenge
+                            }
                     }
                 }
             }
         }
     }
     
+    @MainActor
+    private func cancelChallenge(_ challenge: ChallengeDTO) async {
+        let result = await viewModel.cancelChallenge(with: challenge.id)
+        switch result {
+        case .success(let status) where status == .ok:
+            deleteLocalChallenge(challenge.id)
+            selectedChallenge = nil
+            await viewModel.getChallenges(currentUserID: userManager.profile.id, friendID: friend.id)
+            HapticManager.trigger(.success)
+            message = String(localized: .challengeWithdrawn)
+            showToast = true
+        default:
+            HapticManager.trigger(.error)
+            message = String(localized: .somethingWentWrongPleaseTryAgain)
+            showToast = true
+        }
+    }
+
+    @MainActor
+    private func deleteLocalChallenge(_ id: UUID) {
+        guard let local = (try? context.fetch(FetchDescriptor<Challenge>()))?.first(where: { $0.id == id }) else { return }
+        context.delete(local)
+        context.saveOrLog()
+    }
+
     private func deleteFriendLocally() {
         guard let friend = users.filter({ $0.id == friend.id }).first else { return }
         context.delete(friend)

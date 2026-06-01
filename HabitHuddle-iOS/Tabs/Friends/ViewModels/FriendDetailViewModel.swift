@@ -55,6 +55,18 @@ extension FriendDetailView {
             }
         }
 
+        func cancelChallenge(with id: UUID) async -> Result<HTTPStatus, HHError> {
+            do {
+                let status = try await network.requestStatusCode(
+                    endpoint: .cancelChallenge(id: id),
+                    method: .delete)
+                return .success(status)
+            } catch {
+                print("❌ Error: Couldn't cancel challenge with id: \(id)")
+                return .failure(.networkError(error))
+            }
+        }
+
         func deleteFriend(with id: UUID) async -> Result<HTTPStatus, HHError> {
             do {
                 let statusCode = try await network.requestStatusCode(
