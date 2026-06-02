@@ -34,13 +34,18 @@ extension FriendDetailView {
             }
         }
 
-        /// Loads the challenges shared between the current user and this friend.
+        /// Loads the active challenges shared between the current user and this friend.
         ///
         /// The backend's `challenges/:userID` route only returns the *authenticated*
         /// user's own challenges — it 403s for any other userID — so we can't query
         /// the friend's ID directly. Instead we fetch our own list (which already
         /// includes every challenge we're a participant in) and keep the ones this
         /// friend is the other party to.
+        ///
+        /// We keep only `.accepted` challenges: this section renders progress with
+        /// `ChallengeProgressCardView`, so showing a `.pending` invite the friend
+        /// hasn't accepted yet (or a `.declined`/`.completed` one) doesn't belong
+        /// here — those live in the Challenges tab's invites/past sections.
         func getChallenges(currentUserID: UUID, friendID: UUID) async {
             do {
                 let fetchedChallenges = try await network.request(
@@ -48,7 +53,8 @@ extension FriendDetailView {
                     method: .get,
                     responseType: [ChallengeDTO].self)
                 challenges = fetchedChallenges.filter {
-                    $0.initiator.user.id == friendID || $0.receiver.user.id == friendID
+                    $0.status == .accepted
+                        && ($0.initiator.user.id == friendID || $0.receiver.user.id == friendID)
                 }
             } catch {
                 print("❌ Error: Could not decode user challenges: \(error.localizedDescription)")

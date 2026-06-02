@@ -506,6 +506,20 @@ struct FriendsListViewModelTests {
 @Suite("FriendDetailViewModel")
 struct FriendDetailViewModelTests {
 
+    private func makeChallenge(status: ChallengeStatus, initiatorID: UUID, receiverID: UUID) -> ChallengeDTO {
+        ChallengeDTO(
+            id: UUID(),
+            initiatorHabitID: nil,
+            receiverHabitID: nil,
+            habitName: "Test",
+            startDate: Date(),
+            endDate: Date(),
+            status: status,
+            initiator: ChallengeDTO.UserProgressDTO(user: makeUserDTO(id: initiatorID), progress: 0.0, checkInCount: 0, plannedDays: 14),
+            receiver: ChallengeDTO.UserProgressDTO(user: makeUserDTO(id: receiverID), progress: 0.0, checkInCount: 0, plannedDays: 14)
+        )
+    }
+
     @Test("getUserHabits populates habits")
     @MainActor
     func getUserHabitsSuccess() async {
@@ -613,6 +627,29 @@ struct FriendDetailViewModelTests {
         let success = await vm.sendChallenge(to: UUID(), for: UUID(), durationDays: 14)
 
         #expect(!success)
+    }
+
+    @Test("getChallenges keeps only accepted challenges with this friend")
+    @MainActor
+    func getChallengesKeepsOnlyAcceptedWithFriend() async {
+        let mock = MockNetworkManager()
+        let myID = UUID()
+        let friendID = UUID()
+        let strangerID = UUID()
+
+        await mock.enqueue([
+            makeChallenge(status: .accepted, initiatorID: myID, receiverID: friendID),    // kept: active with friend
+            makeChallenge(status: .pending, initiatorID: myID, receiverID: friendID),      // dropped: friend hasn't accepted
+            makeChallenge(status: .declined, initiatorID: friendID, receiverID: myID),     // dropped: declined
+            makeChallenge(status: .completed, initiatorID: myID, receiverID: friendID),    // dropped: no longer active
+            makeChallenge(status: .accepted, initiatorID: myID, receiverID: strangerID),   // dropped: different friend
+        ])
+
+        let vm = FriendDetailView.ViewModel(network: mock)
+        await vm.getChallenges(currentUserID: myID, friendID: friendID)
+
+        #expect(vm.challenges.count == 1)
+        #expect(vm.challenges.first?.status == .accepted)
     }
 }
 
